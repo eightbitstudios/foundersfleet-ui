@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundersFleet Product Dashboard</title>
+    <!-- Removed js-yaml, now using JSON instead -->
+    <script src="https://kit.fontawesome.com/de44244fb2.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            /* Hardcore Minimal BLACK, White, Gray Palette */
+            --background: #FFFFFF;  /* Pure White */
+            --card-bg: #FFFFFF;     /* Pure White */
+            --text: #000000;        /* Pure Black */
+            --text-secondary: #666666;  /* Medium Gray */
+            --text-muted: #999999;  /* Light Gray */
+            --border: #E5E5E5;      /* Light Gray */
+            --primary: #000000;     /* Pure Black */
+            --primary-hover: #333333;  /* Dark Gray */
+            --secondary: #F5F5F5;   /* Very Light Gray */
+            --card-hover: #F5F5F5;  /* Very Light Gray */
+            --accent: #F5F5F5;      /* Very Light Gray */
+            --accent-hover: #E5E5E5;  /* Light Gray */
+            --success: #000000;     /* Pure Black */
+            --warning: #000000;     /* Pure Black */
+            --danger: #000000;      /* Pure Black */
+            --purple: #666666;      /* Medium Gray */
+            --cyan: #666666;        /* Medium Gray */
+            --radius: 16px;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --padding: 1.5rem;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: var(--card-bg);
+            color: var(--text);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        
+        /* App Navigation Corner Button */
+        .app-nav-corner-btn {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 48px;
+            height: 48px;
+            background: var(--text);
+            border-radius: 0 0 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--card-bg);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            z-index: 1001;
+            border: none;
+            text-decoration: none;
+        }
+        
+        .app-nav-corner-btn:hover {
+            background: var(--primary-hover);
+            transform: scale(1.05);
+        }
+        
+        
+        /* Requirements View Styles */
+        .requirements-view {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .requirements-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            line-height: 1.7;
+        }
+        
+        .requirements-content h1 {
+            color: var(--text);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--border);
+            padding-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .requirements-content h2 {
+            color: var(--text);
+            font-size: 1.75rem;
+            margin: 3rem 0 1.5rem 0;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .requirements-content h3 {
+            color: var(--text);
+            font-size: 1.35rem;
+            margin: 2.5rem 0 1rem 0;
+            font-weight: 600;
+        }
+        
+        .requirements-content h4 {
+            color: var(--text);
+            font-size: 1.15rem;
+            margin: 2rem 0 0.75rem 0;
+            font-weight: 600;
+        }
+        
+        .requirements-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        .requirements-content ul, .requirements-content ol {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+        
+        .requirements-content li {
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+        
+        .requirements-content strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .markdown-content code {
+            background: var(--accent);
+            padding: 0.125rem 0.25rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--text);
+        }
+        
+        .markdown-content pre {
+            background: var(--accent);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .markdown-content th, .markdown-content td {
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        
+        .markdown-content th {
+            background: var(--accent);
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .markdown-content td {
+            color: var(--text-secondary);
+        }
+        
+        /* History View Styles */
+        .history-view {
+            padding: 1rem;
+        }
+        
+        .history-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        
+        .history-header h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .history-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .history-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .history-timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        
+        .history-entry {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--warning);
+            border: 1px solid var(--border);
+        }
+        
+        .history-entry::before {
+            content: '';
+            position: absolute;
+            left: -2.25rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--warning);
+            border-radius: 50%;
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 0 0 2px var(--border);
+        }
+        
+        .history-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .history-title {
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        
+        .history-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .history-changes {
+            background: var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .history-changes h4 {
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .history-changes ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .history-changes li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 0.25rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .history-changes li::before {
+            content: '•';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--warning);
+            font-weight: bold;
+        }
+        
+        /* Feature History Modal */
+        .feature-history-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .feature-history-modal-content {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .feature-history-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-history-header h3 {
+            color: var(--text);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-history-header .feature-id {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .feature-history-timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .feature-history-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        
+        .feature-history-entry {
+            position: relative;
+            background: var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--warning);
+        }
+        
+        .feature-history-entry::before {
+            content: '';
+            position: absolute;
+            left: -1.65rem;
+            top: 1rem;
+            width: 8px;
+            height: 8px;
+            background: var(--warning);
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+        }
+        
+        .feature-history-date {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-history-change {
+            color: var(--text);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .history-button {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-left: 0.5rem;
+        }
+        
+        .history-button:hover {
+            background: var(--card-hover);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--warning);
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid #e5e7eb;
+            align-items: flex-start;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary);
+            background: var(--card-hover);
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--warning);
+        }
+        
+        .stories-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        /* Timeline List View Styles */
+        .timeline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+        }
+        
+        .timeline-item:hover {
+            box-shadow: var(--shadow-lg);
+            background: var(--card-hover);
+        }
+        
+        .timeline-card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .timeline-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        
+        .timeline-story-id {
+            background: var(--accent);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .timeline-story-title-container {
+            flex: 1;
+        }
+        
+        .timeline-story-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+        
+        .timeline-story-epic {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: var(--accent);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+        
+        .timeline-story-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .timeline-stages {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding: 1rem 0;
+            min-height: 70px;
+        }
+        
+        .stage-pill-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            position: relative;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .stage-pill-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--text);
+            border-radius: 50px;
+            transition: width 0.3s ease;
+            z-index: 1;
+        }
+        
+        .stage-pill-stages {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 1rem;
+            z-index: 2;
+        }
+        
+        .stage-pill-item {
+            flex: 1;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .stage-pill-item.completed,
+        .stage-pill-item.current {
+            color: var(--card-bg);
+        }
+        
+        .stage-pill-item.future {
+            color: var(--text-secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-item {
+                padding: 1rem;
+            }
+            
+            .timeline-stages {
+                padding: 0.75rem 0;
+                min-height: 60px;
+            }
+            
+            .stage-pill-container {
+                height: 35px;
+            }
+            
+            .stage-pill-item {
+                font-size: 0.6rem;
+            }
+        }
+        
+        .story-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--border);
+            transition: all 0.2s;
+        }
+        
+        .story-card:hover {
+            box-shadow: var(--shadow-lg);
+            background: var(--card-hover);
+        }
+        
+        .story-card.ui {
+            border-left-color: var(--primary);
+        }
+        
+        .story-card.integrate {
+            border-left-color: var(--warning);
+        }
+        
+        .story-card.execute {
+            border-left-color: var(--purple);
+        }
+        
+        .story-card.stage {
+            border-left-color: #f97316;
+        }
+        
+        .story-card.production {
+            border-left-color: var(--success);
+        }
+        
+        
+        .story-card.backlog {
+            border-left-color: var(--text-secondary);
+        }
+        
+        .story-card.to-do {
+            border-left-color: var(--text-secondary);
+        }
+        
+        .story-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .story-id {
+            background: var(--accent);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .story-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+        
+        .story-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        
+        .status-ui {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--primary);
+        }
+        
+        .status-integrate {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-execute {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--purple);
+        }
+        
+        .status-stage {
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+        }
+        
+        .status-production {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+        
+        
+        .status-backlog {
+            background: var(--accent);
+            color: var(--text-secondary);
+        }
+        
+        .status-to-do {
+            background: var(--accent);
+            color: var(--text-secondary);
+        }
+        
+        .story-epic {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--purple);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .story-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .story-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .prototype-link {
+            color: var(--warning);
+            text-decoration: none;
+        }
+        
+        .prototype-link:hover {
+            text-decoration: underline;
+        }
+        
+        .priority-high {
+            color: var(--danger);
+        }
+        
+        .priority-medium {
+            color: var(--warning);
+        }
+        
+        .priority-low {
+            color: var(--success);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--danger);
+        }
+        
+        /* View Controls */
+        .view-controls {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: nowrap;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+            flex-shrink: 0;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .view-btn.active {
+            background: var(--warning);
+            color: white;
+            border-color: var(--warning);
+        }
+        
+        .view-btn:hover {
+            border-color: var(--warning);
+            background: var(--card-hover);
+        }
+        
+        .view-btn i {
+            margin-right: 8px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 FoundersFleet Product Dashboard</h1>
+            <p>Track development progress and explore user stories</p>
+        </div>
+        
+        
+        <input type="text" class="search-box" id="search" placeholder="Search stories by title, ID, or epic...">
+        
+        <div class="view-controls">
+            <div class="view-toggle">
+                <button class="view-btn active" id="requirements-view-btn" onclick="switchView('requirements')"><i class="fas fa-clipboard-list"></i> Requirements</button>
+                <button class="view-btn" id="list-view-btn" onclick="switchView('list')"><i class="fas fa-list"></i> List (<span id="total-stories">0</span>)</button>
+                <button class="view-btn" id="history-view-btn" onclick="switchView('history')"><i class="fas fa-history"></i> History</button>
+                
+                <div class="filters" id="filters" style="display: none;">
+                    <button class="filter-btn active" data-filter="all">All Stories (<span id="total-stories-filter">0</span>)</button>
+                    <button class="filter-btn" data-filter="ui">UI</button>
+                    <button class="filter-btn" data-filter="integrate">Integrate</button>
+                    <button class="filter-btn" data-filter="execute">Execute</button>
+                    <button class="filter-btn" data-filter="stage">Stage</button>
+                    <button class="filter-btn" data-filter="production">Production</button>
+                    <button class="filter-btn" data-filter="backlog">Backlog</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">Loading stories...</div>
+        <div class="error" id="error" style="display: none;"></div>
+        
+        
+        <div class="stories-grid" id="stories-grid" style="display: none;"></div>
+        
+        <!-- Requirements View -->
+        <div class="requirements-view" id="requirements-view" style="display: block;">
+            <div class="requirements-content">
+                <div class="markdown-content" id="requirements-content"></div>
+            </div>
+        </div>
+        
+        <!-- History View -->
+        <div class="history-view" id="history-view" style="display: none;">
+            <div class="history-header">
+                <h3><i class="fas fa-history"></i> Development History</h3>
+                <p>Track of changes made by Claude during development sessions</p>
+            </div>
+            <div class="history-timeline" id="history-timeline">
+                <!-- History entries will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allStories = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let currentView = 'requirements';
+
+        function switchView(view) {
+            currentView = view;
+            
+            // Update view buttons
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(view + '-view-btn').classList.add('active');
+            
+            // Hide all views first
+            document.getElementById('stories-grid').style.display = 'none';
+            document.getElementById('history-view').style.display = 'none';
+            document.getElementById('requirements-view').style.display = 'none';
+            document.getElementById('filters').style.display = 'none';
+            
+            // Show appropriate view
+            if (view === 'requirements') {
+                document.getElementById('requirements-view').style.display = 'block';
+                displayRequirements();
+            } else if (view === 'history') {
+                document.getElementById('history-view').style.display = 'block';
+                displayHistory();
+            } else {
+                document.getElementById('stories-grid').style.display = 'block';
+                document.getElementById('filters').style.display = 'flex';
+                displayStories();
+            }
+        }
+
+        async function loadStories() {
+            try {
+                // First try to fetch from JSON file
+                try {
+                    const response = await fetch('../product-map.json');
+                    if (response.ok) {
+                        const data = await response.json();
+                        processStoriesData(data);
+                        return;
+                    }
+                } catch (fetchError) {
+                    console.warn('Could not fetch JSON file (likely CORS restriction):', fetchError);
+                }
+                
+                // Fallback: Load embedded data
+                console.log('Loading embedded data as fallback...');
+                loadEmbeddedData();
+                
+            } catch (error) {
+                console.error('Error loading stories:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').innerHTML = `
+                    <strong>Failed to load stories.</strong><br>
+                    For local development, try running: <code>python3 -m http.server 8000</code> in the project root, then visit <code>http://localhost:8000/product/docs/</code>
+                `;
+            }
+        }
+        
+        function processStoriesData(data) {
+            allStories = Object.entries(data.stories).map(([id, story]) => ({
+                id,
+                ...story
+            }));
+            
+            updateStats();
+            
+            // Initialize the correct view
+            switchView(currentView);
+            document.getElementById('loading').style.display = 'none';
+        }
+        
+        function loadEmbeddedData() {
+            // Embedded data from product-map.json (updated automatically)
+            const embeddedData = {
+                stories: {
+                    "FF-FTR-002": {
+                        title: "Main Application Layout & Navigation",
+                        status: "ui",
+                        epic: "core-app",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Core application structure with sidebar navigation, responsive layout, and view management system.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented complete sidebar navigation with 8 main sections"
+                            }
+                        ]
+                    },
+                    "FF-FTR-003": {
+                        title: "Control Dashboard",
+                        status: "ui",
+                        epic: "dashboard",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Command center dashboard showing key metrics (MRR, users, conversion rate, progress) and platform overview cards.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created Control dashboard with 4 key metrics and platform cards"
+                            }
+                        ]
+                    },
+                    "FF-FTR-004": {
+                        title: "Flightplan Progress Tracking",
+                        status: "ui",
+                        epic: "flightplan",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Founder journey roadmap with milestone tracking, stage progression (Seed Stage), and completion status.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Built Flightplan view with seed stage milestones and progress cards"
+                            }
+                        ]
+                    },
+                    "FF-FTR-005": {
+                        title: "Mission System",
+                        status: "ui",
+                        epic: "missions",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Structured founder missions with featured mission highlighting, completion tracking, and skill development.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented mission system with featured Signal Scan mission and mission cards"
+                            }
+                        ]
+                    },
+                    "FF-FTR-006": {
+                        title: "Public Founder Profile (Dispatch)",
+                        status: "integrate",
+                        epic: "profile",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Public founder profile creation with basic info, startup details, progress display, and draft mode.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created Dispatch profile system with editable form fields and status tracking"
+                            }
+                        ]
+                    },
+                    "FF-FTR-007": {
+                        title: "Drops Feed System",
+                        status: "integrate",
+                        epic: "social",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Social feed for sharing founder journey milestones with engagement features (likes, comments, shares).",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Built Drops feed with sample posts, engagement buttons, and sharing options"
+                            }
+                        ]
+                    },
+                    "FF-FTR-008": {
+                        title: "Market Signals Dashboard",
+                        status: "integrate",
+                        epic: "signals",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Real-time market monitoring with sentiment index, VC funding data, and AI interest metrics.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created Signals dashboard with market sentiment index and funding volume tracking"
+                            }
+                        ]
+                    },
+                    "FF-FTR-009": {
+                        title: "Community Hub (Hangar)",
+                        status: "integrate",
+                        epic: "community",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Community events and expert advisor system with weekly forecast sessions and networking features.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Built Hangar community hub with events calendar and expert advisor listings"
+                            }
+                        ]
+                    },
+                    "FF-FTR-010": {
+                        title: "Demo Environment (Terminal)",
+                        status: "integrate",
+                        epic: "development",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Sandbox environment for MVP deployment with branding hub, demo hosting, and developer tools.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented Terminal with branding hub, demo hosting, and developer tools sections"
+                            }
+                        ]
+                    },
+                    "FF-FTR-011": {
+                        title: "Document Management (Vault)",
+                        status: "integrate",
+                        epic: "vault",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "File and document management system with cloud storage integration, folder organization, and upload capabilities.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created Vault with document upload, cloud integration, and folder management"
+                            }
+                        ]
+                    },
+                    "FF-FTR-012": {
+                        title: "Workspace Management",
+                        status: "integrate",
+                        epic: "workspace",
+                        priority: "medium",
+                        files: ["app.html"],
+                        description: "Multi-workspace support with workspace selector, user profile integration, and workspace switching.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Added workspace header with workspace selector and user info"
+                            }
+                        ]
+                    },
+                    "FF-FTR-013": {
+                        title: "Developer Tools Integration",
+                        status: "integrate",
+                        epic: "development",
+                        priority: "medium",
+                        files: ["app.html"],
+                        description: "Integrated developer tools with corner button access and embedded product tracker modal.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented developer tools corner button with modal integration"
+                            }
+                        ]
+                    },
+                    "FF-FTR-014": {
+                        title: "Responsive Mobile Design",
+                        status: "integrate",
+                        epic: "ui-ux",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Complete responsive design implementation with mobile sidebar, overlay system, and adaptive layouts.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented responsive design with mobile menu and overlay system"
+                            }
+                        ]
+                    },
+                    "FF-FTR-015": {
+                        title: "Authentication & User Management",
+                        status: "integrate",
+                        epic: "authentication",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "User registration, login, password management, and session handling.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented authentication modal with login/signup forms, social auth, and session management"
+                            }
+                        ]
+                    },
+                    "FF-FTR-016": {
+                        title: "Real-time Data Integration",
+                        status: "integrate",
+                        epic: "data-integration",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Connect market signals, funding data, and user analytics to live data sources.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented real-time data updates for market signals, dashboard metrics, and dynamic charts"
+                            }
+                        ]
+                    },
+                    "FF-FTR-017": {
+                        title: "Mission Progress Tracking",
+                        status: "integrate",
+                        epic: "missions",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Implement mission completion tracking, progress persistence, and achievement system.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented mission progress tracking with step completion, progress bars, and localStorage persistence"
+                            }
+                        ]
+                    },
+                    "FF-FTR-018": {
+                        title: "Social Engagement Features",
+                        status: "backlog",
+                        epic: "social",
+                        priority: "medium",
+                        files: ["social-features.js"],
+                        description: "Implement likes, comments, sharing functionality for Drops feed with real user interactions."
+                    },
+                    "FF-FTR-019": {
+                        title: "File Upload & Storage",
+                        status: "integrate",
+                        epic: "vault",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Implement actual file upload, cloud storage integration (Google Drive, Dropbox, Slack), and file management.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented drag-and-drop file upload, cloud service integration, file management with preview and deletion"
+                            }
+                        ]
+                    },
+                    "FF-FTR-020": {
+                        title: "Notification System",
+                        status: "integrate",
+                        epic: "notifications",
+                        priority: "medium",
+                        files: ["app.html"],
+                        description: "Real-time notifications for mission updates, community events, and social interactions.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented notification system with toast notifications, auto-dismiss, and multiple notification types"
+                            }
+                        ]
+                    },
+                    "FF-FTR-021": {
+                        title: "Event Management System",
+                        status: "backlog",
+                        epic: "community",
+                        priority: "medium",
+                        files: ["events.js"],
+                        description: "Event scheduling, RSVP management, and calendar integration for community events."
+                    },
+                    "FF-FTR-022": {
+                        title: "Expert Advisor Matching",
+                        status: "backlog",
+                        epic: "community",
+                        priority: "medium",
+                        files: ["advisor-matching.js"],
+                        description: "Algorithm for matching founders with relevant expert advisors based on industry and needs."
+                    },
+                    "FF-FTR-023": {
+                        title: "Demo Environment Deployment",
+                        status: "backlog",
+                        epic: "development",
+                        priority: "high",
+                        files: ["deployment.js"],
+                        description: "Automated MVP deployment system with containerization and custom domain support."
+                    },
+                    "FF-FTR-024": {
+                        title: "Branding Asset Management",
+                        status: "backlog",
+                        epic: "branding",
+                        priority: "medium",
+                        files: ["branding-hub.js"],
+                        description: "Brand asset upload, template generation, and export functionality for consistent branding."
+                    },
+                    "FF-FTR-025": {
+                        title: "Analytics & Reporting",
+                        status: "backlog",
+                        epic: "analytics",
+                        priority: "medium",
+                        files: ["analytics.js"],
+                        description: "User behavior tracking, progress analytics, and custom reporting dashboard."
+                    },
+                    "FF-FTR-026": {
+                        title: "Search & Discovery",
+                        status: "backlog",
+                        epic: "search",
+                        priority: "medium",
+                        files: ["search.js"],
+                        description: "Global search functionality across missions, drops, documents, and community content."
+                    },
+                    "FF-FTR-027": {
+                        title: "Data Export & Backup",
+                        status: "backlog",
+                        epic: "data-management",
+                        priority: "low",
+                        files: ["export.js"],
+                        description: "User data export, backup functionality, and GDPR compliance features."
+                    }
+                }
+            };
+            
+            processStoriesData(embeddedData);
+        }
+
+        function updateStats() {
+            const total = allStories.length;
+            
+            // Update total count in List view button and All Stories filter
+            document.getElementById('total-stories').textContent = total;
+            if (document.getElementById('total-stories-filter')) {
+                document.getElementById('total-stories-filter').textContent = total;
+            }
+        }
+
+        function displayStories() {
+            const grid = document.getElementById('stories-grid');
+            const filteredStories = filterStories();
+            
+            if (filteredStories.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 2rem; color: #6b7280;">No stories match your filter.</div>';
+                return;
+            }
+            
+            // Create timeline list layout
+            grid.innerHTML = `<div class="timeline-list">${filteredStories.map(story => createTimelineItem(story)).join('')}</div>`;
+        }
+
+        function filterStories() {
+            return allStories.filter(story => {
+                const matchesFilter = currentFilter === 'all' || 
+                    story.status === currentFilter || 
+                    (currentFilter === 'backlog' && (story.status === 'backlog' || story.status === 'to do'));
+                
+                const matchesSearch = searchTerm === '' ||
+                    story.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    story.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    story.epic.toLowerCase().includes(searchTerm.toLowerCase());
+                
+                return matchesFilter && matchesSearch;
+            });
+        }
+
+        function createTimelineItem(story) {
+            const stages = ['backlog', 'ui', 'integrate', 'execute', 'stage', 'production'];
+            const currentStageIndex = stages.indexOf(story.status);
+            
+            // Calculate fill percentage based on current stage
+            const fillPercentage = currentStageIndex >= 0 ? ((currentStageIndex + 1) / stages.length) * 100 : 0;
+            
+            const stageItems = stages.map((stage, index) => {
+                let itemClass = 'stage-pill-item';
+                if (index < currentStageIndex) {
+                    itemClass += ' completed';
+                } else if (index === currentStageIndex) {
+                    itemClass += ' current';
+                } else {
+                    itemClass += ' future';
+                }
+                return `<div class="${itemClass}">${stage}</div>`;
+            }).join('');
+            
+            return `
+                <div class="timeline-item">
+                    <div class="timeline-card-content">
+                        <div class="timeline-card-header">
+                            <div class="timeline-story-title-container">
+                                <div class="timeline-story-title">${story.title}</div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <div class="timeline-story-epic">${story.epic}</div>
+                                <div class="timeline-story-id">${story.id}</div>
+                            </div>
+                        </div>
+                        ${story.description ? `<div class="timeline-story-description">${story.description}</div>` : ''}
+                    </div>
+                    
+                    <div class="timeline-stages">
+                        <div class="stage-pill-container">
+                            <div class="stage-pill-fill" style="width: ${fillPercentage}%"></div>
+                            <div class="stage-pill-stages">
+                                ${stageItems}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createStoryCard(story) {
+            const statusClass = story.status.replace(' ', '-').replace(/\s+/g, '-');
+            const priorityClass = `priority-${story.priority}`;
+            
+            return `
+                <div class="story-card ${statusClass}">
+                    <div class="story-header">
+                        <div class="story-id">${story.id}</div>
+                        <div class="story-title">${story.title}</div>
+                        <div class="story-status status-${statusClass}">${story.status}</div>
+                    </div>
+                    
+                    <div class="story-epic">${story.epic}</div>
+                    
+                    ${story.description ? `<div class="story-description">${story.description}</div>` : ''}
+                    
+                    <div class="story-meta">
+                        <span class="${priorityClass}">Priority: ${story.priority}</span>
+                        ${story.prototype_location ? `<a href="../../app.html" class="prototype-link"><i class="fas fa-rocket"></i> View in Prototype</a>` : ''}
+                        ${story.files && story.files.length > 0 ? `<span><i class="fas fa-folder"></i> ${story.files.length} file(s)</span>` : ''}
+                        ${story.history && story.history.length > 0 ? `<button class="history-button" onclick="showFeatureHistory('${story.id}')"><i class="fas fa-history"></i> History (${story.history.length})</button>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        
+        
+        
+        
+
+        // Event listeners
+        document.getElementById('search').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            displayStories();
+        });
+
+        document.getElementById('filters').addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                displayStories();
+            }
+        });
+
+        // Load stories on page load
+        loadStories();
+        
+        // App Navigation Function
+        function goBackToApp() {
+            // Check if we're in a window that was opened from the dev tools
+            if (window.opener) {
+                window.close();
+            } else {
+                // Navigate back to the main app
+                window.location.href = '../../app.html';
+            }
+        }
+        
+        
+        // History display function
+        function displayHistory() {
+            const timeline = document.getElementById('history-timeline');
+            
+            // Sample history data - this should be populated from a real history log
+            const historyData = [
+                {
+                    date: "July 12, 2025",
+                    title: "FoundersFleet Project Initialization",
+                    description: "Set up complete FoundersFleet development environment with product tracker, workflow tools, and documentation.",
+                    changes: [
+                        "Created project directory structure with product/ and versions/ folders",
+                        "Copied and customized product tracker dashboard from PerfumeLens template",
+                        "Created FoundersFleet-specific CLAUDE.md with project guidelines",
+                        "Initialized product-map.json with starter stories and epics",
+                        "Set up development workflow with status management",
+                        "Configured development workflow with backup and history tracking"
+                    ]
+                },
+                {
+                    date: "January 11, 2025",
+                    title: "Product Dashboard Enhancements",
+                    description: "Added History view to Product Tracker for better development tracking and navigation improvements.",
+                    changes: [
+                        "Added History view with timeline interface",
+                        "Replaced emoji icons with Font Awesome icons",
+                        "Fixed navigation links in app navigation modal",
+                        "Added corner button for quick app navigation"
+                    ]
+                },
+                {
+                    date: "January 11, 2025",
+                    title: "Consumer & Collector App Updates",
+                    description: "Implemented Pro member features, cross-app navigation, and UI improvements across both applications.",
+                    changes: [
+                        "Added Pro member designation to Profile and Settings screens",
+                        "Created cross-app navigation between Consumer and Collector apps",
+                        "Converted Create New List button to circular FAB",
+                        "Standardized search bar heights to 60px",
+                        "Updated bottle card layouts with integrated match containers"
+                    ]
+                },
+                {
+                    date: "Previous Sessions",
+                    title: "Initial Setup & Core Features",
+                    description: "Established the foundation of the PerfumeLens application with core functionality.",
+                    changes: [
+                        "Created consumer mobile app prototype with Flutter-compatible structure",
+                        "Built collector dashboard with admin interface",
+                        "Implemented product tracking system with YAML-based stories",
+                        "Added developer tools integration",
+                        "Set up widget mapping documentation for Flutter conversion"
+                    ]
+                }
+            ];
+            
+            timeline.innerHTML = '';
+            
+            historyData.forEach(entry => {
+                const historyEntry = document.createElement('div');
+                historyEntry.className = 'history-entry';
+                
+                historyEntry.innerHTML = `
+                    <div class="history-date">${entry.date}</div>
+                    <div class="history-title">${entry.title}</div>
+                    <div class="history-description">${entry.description}</div>
+                    <div class="history-changes">
+                        <h4>Changes Made:</h4>
+                        <ul>
+                            ${entry.changes.map(change => `<li>${change}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                
+                timeline.appendChild(historyEntry);
+            });
+        }
+        
+        // Feature History Functions
+        function showFeatureHistory(storyId) {
+            const story = allStories.find(s => s.id === storyId);
+            if (!story || !story.history) return;
+            
+            const modal = createFeatureHistoryModal(story);
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+        
+        function createFeatureHistoryModal(story) {
+            const modal = document.createElement('div');
+            modal.className = 'feature-history-modal';
+            modal.innerHTML = `
+                <div class="feature-history-modal-content">
+                    <button class="close-modal" onclick="closeFeatureHistory(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="feature-history-header">
+                        <h3>${story.title}</h3>
+                        <div class="feature-id">${story.id}</div>
+                    </div>
+                    <div class="feature-history-timeline">
+                        ${story.history.map(entry => `
+                            <div class="feature-history-entry">
+                                <div class="feature-history-date">${entry.date}</div>
+                                <div class="feature-history-change">${entry.change}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Close when clicking outside
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeFeatureHistory(modal.querySelector('.close-modal'));
+                }
+            });
+            
+            return modal;
+        }
+        
+        function closeFeatureHistory(button) {
+            const modal = button.closest('.feature-history-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        // Requirements display function
+        function displayRequirements() {
+            const requirementsView = document.getElementById('requirements-view');
+            
+            requirementsView.innerHTML = `
+                <div class="requirements-content">
+                    <h1>FoundersFleet Product Requirements</h1>
+                    
+                    <h2>Executive Summary</h2>
+                    <p>FoundersFleet is a comprehensive founder support platform that guides entrepreneurs through their journey from idea to scale. The application provides structured guidance, community connections, and essential tools to help founders succeed at every stage of their venture.</p>
+                    
+                    <h2>Core Product Vision</h2>
+                    <p>To create the definitive platform for founder success by providing:</p>
+                    <ul>
+                        <li><strong>Structured Guidance</strong> - Clear pathways through each stage of the founder journey</li>
+                        <li><strong>Community Connection</strong> - Meaningful networking with other founders and mentors</li>
+                        <li><strong>Essential Tools</strong> - Curated resources and applications for common founder challenges</li>
+                        <li><strong>Progress Tracking</strong> - Clear visibility into founder development and milestone completion</li>
+                    </ul>
+                    
+                    <h2>User Types</h2>
+                    <h3>Primary Users</h3>
+                    <ul>
+                        <li><strong>Solo Founders</strong> - Individual entrepreneurs building their ventures independently</li>
+                        <li><strong>Team Founders</strong> - Founding teams working together on their ventures</li>
+                        <li><strong>Aspiring Founders</strong> - Individuals considering starting their own ventures</li>
+                    </ul>
+                    
+                    <h3>Secondary Users</h3>
+                    <ul>
+                        <li><strong>Mentors</strong> - Experienced founders and advisors providing guidance</li>
+                        <li><strong>Investors</strong> - VCs and angel investors discovering new opportunities</li>
+                        <li><strong>Service Providers</strong> - Legal, accounting, and other professional services</li>
+                    </ul>
+                    
+                    <h2>Core Features</h2>
+                    
+                    <h3>1. Flightplan System</h3>
+                    <p>A structured 5-stage journey system that guides founders through:</p>
+                    <ul>
+                        <li><strong>Idea Stage</strong> - Problem identification and initial validation</li>
+                        <li><strong>Seed Stage</strong> - Customer discovery and solution validation</li>
+                        <li><strong>Build Stage</strong> - Product development and team building</li>
+                        <li><strong>Launch Stage</strong> - Go-to-market execution and early customers</li>
+                        <li><strong>Grow Stage</strong> - Scaling operations and expanding market reach</li>
+                    </ul>
+                    
+                    <h4>Mission System</h4>
+                    <ul>
+                        <li>Stage-specific missions with clear deliverables</li>
+                        <li>Mission status tracking (Start, Mark as Done, Skip)</li>
+                        <li>Progress visualization through pill-shaped progress bars</li>
+                        <li>Contextual resources and guidance for each mission</li>
+                    </ul>
+                    
+                    <h3>2. Community Platform</h3>
+                    <p>Networking and connection features including:</p>
+                    <ul>
+                        <li><strong>Founder Directory</strong> - Browse and discover other founders</li>
+                        <li><strong>Profile System</strong> - Detailed founder profiles with bio, company info, and stage</li>
+                        <li><strong>Connection Management</strong> - Send connection requests and manage relationships</li>
+                        <li><strong>Messaging System</strong> - Direct communication between founders</li>
+                        <li><strong>Solo/Team Designation</strong> - Clear identification of founder types</li>
+                    </ul>
+                    
+                    <h3>3. Events Platform</h3>
+                    <p>Event discovery and management system featuring:</p>
+                    <ul>
+                        <li><strong>Event Directory</strong> - Comprehensive listing of founder-focused events</li>
+                        <li><strong>Event Categories</strong> - Workshops, networking, webinars, conferences</li>
+                        <li><strong>Temporal Organization</strong> - Upcoming, Attending, and Past event views</li>
+                        <li><strong>Date Navigation</strong> - Smart date picker for event discovery</li>
+                        <li><strong>Event Registration</strong> - RSVP and attendance tracking</li>
+                    </ul>
+                    
+                    <h3>4. Tools Ecosystem</h3>
+                    <p>Curated tools and resources organized by:</p>
+                    <ul>
+                        <li><strong>Use Cases</strong> - Common founder challenges and solutions</li>
+                        <li><strong>Apps</strong> - Integrated applications like EconoMaestro</li>
+                        <li><strong>Missions</strong> - Task-based workflows for specific challenges</li>
+                        <li><strong>Resources</strong> - Templates, guides, and reference materials</li>
+                    </ul>
+                    
+                    <h3>5. Search & Discovery</h3>
+                    <p>Global search functionality with:</p>
+                    <ul>
+                        <li><strong>Unified Search</strong> - Search across all platform content</li>
+                        <li><strong>Filter Categories</strong> - All, Founders, Events, Tools</li>
+                        <li><strong>Smart Results</strong> - Contextual and relevant search results</li>
+                        <li><strong>Quick Access</strong> - Persistent search bar across all pages</li>
+                    </ul>
+                    
+                    <h2>Technical Architecture</h2>
+                    
+                    <h3>Frontend Architecture</h3>
+                    <ul>
+                        <li><strong>Single Page Application</strong> - Fast, responsive user experience</li>
+                        <li><strong>Hash-based Routing</strong> - Client-side navigation system</li>
+                        <li><strong>Responsive Design</strong> - Mobile-first approach with desktop optimization</li>
+                        <li><strong>Progressive Enhancement</strong> - Works across all modern browsers</li>
+                    </ul>
+                    
+                    <h3>Design System</h3>
+                    <ul>
+                        <li><strong>Minimal Theme</strong> - Black, white, and gray color palette</li>
+                        <li><strong>Typography</strong> - Inter font family for consistency</li>
+                        <li><strong>Component Library</strong> - Reusable UI components</li>
+                        <li><strong>Accessibility</strong> - WCAG compliant design patterns</li>
+                    </ul>
+                    
+                    <h3>State Management</h3>
+                    <ul>
+                        <li><strong>Local Storage</strong> - Persistent user preferences</li>
+                        <li><strong>Session State</strong> - Temporary navigation and form data</li>
+                        <li><strong>URL State</strong> - Shareable application state</li>
+                    </ul>
+                    
+                    <h2>User Experience Requirements</h2>
+                    
+                    <h3>Performance</h3>
+                    <ul>
+                        <li><strong>Load Time</strong> - Initial page load under 3 seconds</li>
+                        <li><strong>Navigation</strong> - Instant transitions between sections</li>
+                        <li><strong>Search</strong> - Real-time search results</li>
+                        <li><strong>Responsive</strong> - Smooth experience across all devices</li>
+                    </ul>
+                    
+                    <h3>Usability</h3>
+                    <ul>
+                        <li><strong>Intuitive Navigation</strong> - Clear information architecture</li>
+                        <li><strong>Consistent Interface</strong> - Unified design patterns</li>
+                        <li><strong>Accessibility</strong> - Full keyboard navigation and screen reader support</li>
+                        <li><strong>Mobile Optimization</strong> - Touch-friendly interactions</li>
+                    </ul>
+                    
+                    <h3>Content Organization</h3>
+                    <ul>
+                        <li><strong>Logical Grouping</strong> - Related content clustered together</li>
+                        <li><strong>Progressive Disclosure</strong> - Information revealed as needed</li>
+                        <li><strong>Contextual Help</strong> - Guidance available at point of need</li>
+                        <li><strong>Clear Hierarchy</strong> - Visual emphasis on important elements</li>
+                    </ul>
+                    
+                    <h2>Security & Privacy</h2>
+                    
+                    <h3>Data Protection</h3>
+                    <ul>
+                        <li><strong>Privacy by Design</strong> - Minimal data collection</li>
+                        <li><strong>Data Encryption</strong> - Secure storage and transmission</li>
+                        <li><strong>Access Controls</strong> - Role-based permissions</li>
+                        <li><strong>Audit Logging</strong> - Comprehensive activity tracking</li>
+                    </ul>
+                    
+                    <h3>Authentication</h3>
+                    <ul>
+                        <li><strong>Secure Login</strong> - Multi-factor authentication support</li>
+                        <li><strong>Session Management</strong> - Secure session handling</li>
+                        <li><strong>Password Security</strong> - Strong password requirements</li>
+                        <li><strong>Account Recovery</strong> - Secure password reset process</li>
+                    </ul>
+                    
+                    <h2>Integration Requirements</h2>
+                    
+                    <h3>Third-Party Services</h3>
+                    <ul>
+                        <li><strong>Email Services</strong> - Transactional email delivery</li>
+                        <li><strong>Calendar Integration</strong> - Event scheduling and reminders</li>
+                        <li><strong>Social Media</strong> - Profile linking and sharing</li>
+                        <li><strong>Analytics</strong> - User behavior tracking and insights</li>
+                    </ul>
+                    
+                    <h3>API Design</h3>
+                    <ul>
+                        <li><strong>RESTful APIs</strong> - Standard HTTP methods and status codes</li>
+                        <li><strong>JSON Format</strong> - Consistent data interchange format</li>
+                        <li><strong>Rate Limiting</strong> - API usage protection</li>
+                        <li><strong>Documentation</strong> - Comprehensive API documentation</li>
+                    </ul>
+                    
+                    <h2>Scalability & Performance</h2>
+                    
+                    <h3>System Scalability</h3>
+                    <ul>
+                        <li><strong>Horizontal Scaling</strong> - Add capacity through additional servers</li>
+                        <li><strong>Database Optimization</strong> - Efficient query design and indexing</li>
+                        <li><strong>Caching Strategy</strong> - Multi-layer caching for performance</li>
+                        <li><strong>CDN Integration</strong> - Global content delivery</li>
+                    </ul>
+                    
+                    <h3>Monitoring & Alerting</h3>
+                    <ul>
+                        <li><strong>Performance Metrics</strong> - Real-time system monitoring</li>
+                        <li><strong>Error Tracking</strong> - Automated error detection and reporting</li>
+                        <li><strong>User Analytics</strong> - Usage patterns and behavior analysis</li>
+                        <li><strong>Uptime Monitoring</strong> - Service availability tracking</li>
+                    </ul>
+                    
+                    <h2>Future Enhancements</h2>
+                    
+                    <h3>Advanced Features</h3>
+                    <ul>
+                        <li><strong>AI-Powered Recommendations</strong> - Personalized founder guidance</li>
+                        <li><strong>Mentor Matching</strong> - Intelligent mentor-founder pairing</li>
+                        <li><strong>Investment Tracking</strong> - Fundraising progress and metrics</li>
+                        <li><strong>Team Collaboration</strong> - Enhanced team management features</li>
+                    </ul>
+                    
+                    <h3>Platform Extensions</h3>
+                    <ul>
+                        <li><strong>Mobile Applications</strong> - Native iOS and Android apps</li>
+                        <li><strong>Browser Extensions</strong> - Quick access to platform features</li>
+                        <li><strong>Desktop Applications</strong> - Offline-capable desktop clients</li>
+                        <li><strong>API Ecosystem</strong> - Third-party developer platform</li>
+                    </ul>
+                    
+                    <h2>Success Metrics</h2>
+                    
+                    <h3>User Engagement</h3>
+                    <ul>
+                        <li><strong>Daily Active Users</strong> - Consistent platform usage</li>
+                        <li><strong>Mission Completion Rate</strong> - Founder progress tracking</li>
+                        <li><strong>Community Interactions</strong> - Founder-to-founder connections</li>
+                        <li><strong>Event Attendance</strong> - Participation in platform events</li>
+                    </ul>
+                    
+                    <h3>Business Outcomes</h3>
+                    <ul>
+                        <li><strong>Founder Success Rate</strong> - Venture milestones achieved</li>
+                        <li><strong>Community Growth</strong> - Platform member acquisition</li>
+                        <li><strong>Tool Utilization</strong> - Resource usage and effectiveness</li>
+                        <li><strong>Platform Retention</strong> - Long-term user engagement</li>
+                    </ul>
+                    
+                    <h2>Implementation Timeline</h2>
+                    
+                    <h3>Phase 1: Foundation (Months 1-3)</h3>
+                    <ul>
+                        <li>Core application architecture and navigation</li>
+                        <li>User authentication and profile system</li>
+                        <li>Basic flightplan and mission structure</li>
+                        <li>Essential UI components and design system</li>
+                    </ul>
+                    
+                    <h3>Phase 2: Community (Months 4-6)</h3>
+                    <ul>
+                        <li>Founder directory and profile management</li>
+                        <li>Connection and messaging system</li>
+                        <li>Event discovery and registration</li>
+                        <li>Search and filtering capabilities</li>
+                    </ul>
+                    
+                    <h3>Phase 3: Tools & Resources (Months 7-9)</h3>
+                    <ul>
+                        <li>Tools ecosystem and integration</li>
+                        <li>Resource library and templates</li>
+                        <li>Advanced mission workflows</li>
+                        <li>Analytics and progress tracking</li>
+                    </ul>
+                    
+                    <h3>Phase 4: Scale & Optimize (Months 10-12)</h3>
+                    <ul>
+                        <li>Performance optimization and scaling</li>
+                        <li>Advanced features and AI integration</li>
+                        <li>Mobile application development</li>
+                        <li>Platform ecosystem expansion</li>
+                    </ul>
+                    
+                    <p><em>This requirements document serves as the foundation for FoundersFleet development, ensuring alignment between product vision and technical implementation.</em></p>
+                </div>
+            `;
+        }
+    </script>
+    
+    <!-- App Navigation Corner Button -->
+    <a href="../../app.html" class="app-nav-corner-btn">
+        <i class="fas fa-home"></i>
+    </a>
+
+</body>
+</html>

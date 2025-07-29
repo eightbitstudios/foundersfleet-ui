@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundersFleet - Navigate Your Startup Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the navigation hub */
+        .nav-hub {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: var(--background);
+        }
+        
+        .hub-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .hub-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .hub-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 3rem;
+        }
+        
+        .nav-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .nav-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        
+        .nav-card-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-card-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        
+        .legacy-notice {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem 1.5rem;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .legacy-notice p {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .legacy-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .legacy-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-hub">
+        <div class="hub-header">
+            <h1 class="hub-title">
+                <i class="fas fa-rocket" style="color: var(--primary); margin-right: 1rem;"></i>
+                FoundersFleet
+            </h1>
+            <p class="hub-subtitle">
+                Your complete platform for the startup journey. Connect with founders, track progress, and access powerful tools to grow your venture.
+            </p>
+        </div>
+        
+        <div class="nav-grid">
+            <a href="founders.html" class="nav-card">
+                <div class="nav-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2 class="nav-card-title">Founders</h2>
+                <p class="nav-card-description">
+                    Connect with verified founders, join the Founding Fifty, and build your network of entrepreneurs who understand your journey.
+                </p>
+                <div class="nav-card-action">
+                    View Founders <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="squads.html" class="nav-card">
+                <div class="nav-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <h2 class="nav-card-title">Squads</h2>
+                <p class="nav-card-description">
+                    Join or form accountability groups for weekly check-ins, shared progress tracking, and peer support from founders at your stage.
+                </p>
+                <div class="nav-card-action">
+                    Explore Squads <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="flightplan.html" class="nav-card">
+                <div class="nav-icon">
+                    <i class="fas fa-route"></i>
+                </div>
+                <h2 class="nav-card-title">Flightplan</h2>
+                <p class="nav-card-description">
+                    Navigate your startup journey with our 5-stage roadmap. Track progress from idea to growth with missions and milestones.
+                </p>
+                <div class="nav-card-action">
+                    View Flightplan <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="tools.html" class="nav-card">
+                <div class="nav-icon">
+                    <i class="fas fa-toolbox"></i>
+                </div>
+                <h2 class="nav-card-title">Tools</h2>
+                <p class="nav-card-description">
+                    Access powerful tools for every stage of your journey. From idea validation to growth optimization, we've got you covered.
+                </p>
+                <div class="nav-card-action">
+                    Browse Tools <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+        
+        <div class="legacy-notice">
+            <p>This is the new modular version of FoundersFleet.</p>
+            <a href="index.html" class="legacy-link">View original single-page version →</a>
+        </div>
+    </div>
+</body>
+</html>

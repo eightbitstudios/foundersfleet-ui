@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founders Fleet – Flightplan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --background: #0a0a0a;
+      --text: #ffffff;
+      --text-secondary: #a1a1aa;
+      --card-bg: #111111;
+      --card-hover: #161616;
+      --border: #27272a;
+      --accent: #18181b;
+      --accent-hover: #1f1f23;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --padding: 1.5rem;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--background) 0%, #0f0f0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar Styles - Same as other pages */
+    .sidebar {
+      width: 280px;
+      background: var(--accent);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .workspace-header:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .workspace-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .workspace-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .workspace-select {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+    }
+
+    .workspace-select option {
+      color: black;
+      background: white;
+    }
+
+    .workspace-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .nav-link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--accent);
+      padding: 0.125rem 0.375rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: var(--primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: var(--padding);
+      max-width: calc(100vw - 280px);
+    }
+
+    .flightplan-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .flightplan-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, var(--text), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .flightplan-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .stage-overview {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stage-overview::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--success), var(--primary));
+    }
+
+    .stage-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .stage-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+
+    .stage-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      right: -50%;
+      left: 50%;
+      height: 2px;
+      background: var(--border);
+      z-index: 1;
+    }
+
+    .stage-item.completed:not(:last-child)::after {
+      background: var(--success);
+    }
+
+    .stage-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .stage-icon.completed {
+      background: var(--success);
+      color: white;
+    }
+
+    .stage-icon.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    .stage-icon.inactive {
+      background: var(--accent);
+      color: var(--text-secondary);
+      border: 2px solid var(--border);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .stage-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .stage-label.active {
+      color: var(--primary);
+    }
+
+    .stage-label.completed {
+      color: var(--success);
+    }
+
+    .current-stage {
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .current-stage::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      opacity: 0.3;
+    }
+
+    .current-stage-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .current-stage-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      color: white;
+    }
+
+    .current-stage-description {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0 0 1.5rem 0;
+      line-height: 1.6;
+    }
+
+    .stage-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stage-button {
+      background: white;
+      color: var(--primary);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .stage-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .stage-button.secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .milestones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .milestone-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .milestone-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .milestone-card.completed {
+      border-color: var(--success);
+    }
+
+    .milestone-card.completed::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--success);
+    }
+
+    .milestone-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .milestone-title {
+      font-weight: 600;
+      margin: 0;
+      font-size: 1.125rem;
+    }
+
+    .milestone-status {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .status-completed {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+
+    .status-in-progress {
+      background: rgba(59, 130, 246, 0.2);
+      color: var(--primary);
+    }
+
+    .status-pending {
+      background: rgba(161, 161, 170, 0.2);
+      color: var(--text-secondary);
+    }
+
+    .milestone-description {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 0 0 1rem 0;
+    }
+
+    .milestone-progress {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success), var(--primary));
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-text {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      min-width: 40px;
+    }
+
+    .milestone-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .milestone-button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+    }
+
+    .milestone-button:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .milestone-button.primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .milestone-button.primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .resources-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+    }
+
+    .resources-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .resources-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .resource-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .resource-item:last-child {
+      border-bottom: none;
+    }
+
+    .resource-item:hover {
+      transform: translateX(4px);
+    }
+
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .resource-content {
+      flex: 1;
+    }
+
+    .resource-title {
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .resource-description {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    .resource-arrow {
+      color: var(--text-secondary);
+      transition: transform 0.2s ease;
+    }
+
+    .resource-item:hover .resource-arrow {
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 768px) {
+      .flightplan-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .milestones-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-progress {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .stage-item:not(:last-child)::after {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+<div class="workspace-header">
+<div class="workspace-logo">F</div>
+<div class="workspace-info">
+<select class="workspace-select" onchange="handleWorkspaceChange(this)">
+<option>Eight Bit Studios</option>
+<option>Another Workspace</option>
+<option value="signout">Sign Out</option>
+</select>
+<span class="workspace-email">name@email.com</span>
+</div>
+</div>
+<nav class="nav-links">
+<a class="nav-link active" href="control.html">
+<div class="nav-link-content">
+<span>🏠</span> Control
+        </div>
+</a>
+<a class="nav-link" href="flightplan.html">
+<div class="nav-link-content">
+<span>🗺️</span> Flightplan
+        </div>
+<span class="nav-status">Idea</span>
+</a>
+<a class="nav-link" href="missions.html">
+<div class="nav-link-content">
+<span>🎯</span> Missions
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="dispatch.html">
+<div class="nav-link-content">
+<span>🪪</span> Dispatch
+        </div>
+<span class="nav-status">Draft</span>
+</a>
+<a class="nav-link" href="drops.html">
+<div class="nav-link-content">
+<span>📦</span> Drops
+        </div>
+<span class="nav-status">2</span>
+</a>
+<a class="nav-link" href="signals.html">
+<div class="nav-link-content">
+<span>📡</span> Signals
+        </div>
+<span class="nav-status">3</span>
+</a>
+<a class="nav-link" href="hangar.html">
+<div class="nav-link-content">
+<span>🏗️</span> Hangar
+        </div>
+<span class="nav-status">Friday</span>
+</a>
+<a class="nav-link" href="terminal.html">
+<div class="nav-link-content">
+<span>🏢</span> Terminal
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="vault.html">
+<div class="nav-link-content">
+<span>🗃️</span> Vault
+        </div>
+<span class="nav-status">47</span>
+</a>
+</nav>
+</aside>
+<main class="main-content">
+<div class="flightplan-header">
+<div>
+<h1 class="flightplan-title">Flightplan</h1>
+<p class="flightplan-subtitle">Roadmap &amp; Milestones</p>
+</div>
+<div style="color: var(--text-secondary); font-size: 0.875rem;">
+        15% Complete • Idea Stage
+      </div>
+</div>
+<div class="stage-overview">
+<div class="stage-progress">
+<div class="stage-item completed">
+<div class="stage-icon completed">✓</div>
+<div class="stage-label completed">Idea</div>
+</div>
+<div class="stage-item active">
+<div class="stage-icon active">💡</div>
+<div class="stage-label active">Seed</div>
+</div>
+<div class="stage-item inactive">
+<div class="stage-icon inactive">🔨</div>
+<div class="stage-label">Build</div>
+</div>
+<div class="stage-item inactive">
+<div class="stage-icon inactive">🚀</div>
+<div class="stage-label">Launch</div>
+</div>
+<div class="stage-item inactive">
+<div class="stage-icon inactive">📈</div>
+<div class="stage-label">Growth</div>
+</div>
+<div class="stage-item inactive">
+<div class="stage-icon inactive">⚡</div>
+<div class="stage-label">Scale</div>
+</div>
+</div>
+</div>
+<div class="current-stage">
+<div class="current-stage-content">
+<h2 class="current-stage-title">💡 Seed Stage</h2>
+<p class="current-stage-description">
+          Focus on customer discovery, market validation, and building your MVP foundation. This stage is about proving your concept and finding product-market fit signals.
+        </p>
+<div class="stage-actions">
+<button class="stage-button">
+<span>🎯</span>
+            Start Customer Discovery
+          </button>
+<button class="stage-button secondary">
+<span>📋</span>
+            View Stage Guide
+          </button>
+</div>
+</div>
+</div>
+<div class="milestones-grid">
+<div class="milestone-card completed">
+<div class="milestone-header">
+<h3 class="milestone-title">Problem Definition</h3>
+<span class="milestone-status status-completed">Completed</span>
+</div>
+<p class="milestone-description">
+          Clearly define the problem you're solving and identify your target customer segment.
+        </p>
+<div class="milestone-progress">
+<div class="progress-bar">
+<div class="progress-fill" style="width: 100%;"></div>
+</div>
+<span class="progress-text">100%</span>
+</div>
+<div class="milestone-actions">
+<button class="milestone-button">View Details</button>
+<button class="milestone-button">Edit</button>
+</div>
+</div>
+<div class="milestone-card">
+<div class="milestone-header">
+<h3 class="milestone-title">Customer Discovery</h3>
+<span class="milestone-status status-in-progress">In Progress</span>
+</div>
+<p class="milestone-description">
+          Conduct interviews with potential customers to validate your problem and solution hypotheses.
+        </p>
+<div class="milestone-progress">
+<div class="progress-bar">
+<div class="progress-fill" style="width: 60%;"></div>
+</div>
+<span class="progress-text">60%</span>
+</div>
+<div class="milestone-actions">
+<button class="milestone-button primary">Continue</button>
+<button class="milestone-button">Resources</button>
+</div>
+</div>
+<div class="milestone-card">
+<div class="milestone-header">
+<h3 class="milestone-title">Solution Design</h3>
+<span class="milestone-status status-pending">Pending</span>
+</div>
+<p class="milestone-description">
+          Design your solution based on customer feedback and validate your approach.
+        </p>
+<div class="milestone-progress">
+<div class="progress-bar">
+<div class="progress-fill" style="width: 0%;"></div>
+</div>
+<span class="progress-text">0%</span>
+</div>
+<div class="milestone-actions">
+<button class="milestone-button">Start</button>
+<button class="milestone-button">Learn More</button>
+</div>
+</div>
+<div class="milestone-card">
+<div class="milestone-header">
+<h3 class="milestone-title">MVP Scoping</h3>
+<span class="milestone-status status-pending">Pending</span>
+</div>
+<p class="milestone-description">
+          Define the minimum product requirements and prioritize core features.
+        </p>
+<div class="milestone-progress">
+<div class="progress-bar">
+<div class="progress-fill" style="width: 0%;"></div>
+</div>
+<span class="progress-text">0%</span>
+</div>
+<div class="milestone-actions">
+<button class="milestone-button">Start</button>
+<button class="milestone-button">Templates</button>
+</div>
+</div>
+</div>
+<div class="resources-section">
+<div class="resources-header">
+<h3 class="resources-title">Stage Resources</h3>
+<span style="color: var(--text-secondary); font-size: 0.875rem;">Seed Stage Tools</span>
+</div>
+<div class="resource-item">
+<div class="resource-icon">📝</div>
+<div class="resource-content">
+<h4 class="resource-title">Customer Interview Guide</h4>
+<p class="resource-description">Structured questions for effective customer discovery</p>
+</div>
+<span class="resource-arrow">→</span>
+</div>
+<div class="resource-item">
+<div class="resource-icon">🎯</div>
+<div class="resource-content">
+<h4 class="resource-title">Problem Statement Template</h4>
+<p class="resource-description">Framework for defining your core problem</p>
+</div>
+<span class="resource-arrow">→</span>
+</div>
+<div class="resource-item">
+<div class="resource-icon">👥</div>
+<div class="resource-content">
+<h4 class="resource-title">Persona Builder</h4>
+<p class="resource-description">Create detailed customer personas</p>
+</div>
+<span class="resource-arrow">→</span>
+</div>
+<div class="resource-item">
+<div class="resource-icon">💡</div>
+<div class="resource-content">
+<h4 class="resource-title">Solution Canvas</h4>
+<p class="resource-description">Map your solution to customer needs</p>
+</div>
+<span class="resource-arrow">→</span>
+</div>
+</div>
+</main>
+<script>
+    // Animate milestone progress bars on load
+    document.addEventListener('DOMContentLoaded', function() {
+      const progressBars = document.querySelectorAll('.progress-fill');
+      progressBars.forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+          bar.style.width = width;
+        }, 500);
+      });
+    });
+
+    // Add click handlers for buttons
+    document.querySelectorAll('.stage-button, .milestone-button').forEach(button => {
+      button.addEventListener('click', function() {
+        alert(`${this.textContent.trim()} - Coming Soon!`);
+      });
+    });
+
+    // Add click handlers for resource items
+    document.querySelectorAll('.resource-item').forEach(item => {
+      item.addEventListener('click', function() {
+        const title = this.querySelector('.resource-title').textContent;
+        alert(`${title} - Coming Soon!`);
+      });
+    });
+  </script>
+</body>
+</html>

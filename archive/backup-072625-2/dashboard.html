@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-black bg-[#C8F902] rounded-lg hover:bg-[#C8F902]/90 transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a>
+                <a href="profile.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="squads.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="flightplan.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-route"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Logout -->
+        <div class="pb-6 flex justify-center">
+            <a href="index.html" class="w-10 h-10 flex items-center justify-center text-white/50 rounded-lg hover:bg-white/10 hover:text-white/70 transition-all">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Welcome Header -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-text-primary mb-2">Welcome back, Founder</h1>
+                    <p class="text-text-secondary">Your startup journey continues here</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <!-- Active Squads -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                                <i class="fas fa-people-group text-white text-lg"></i>
+                            </div>
+                            <span class="text-3xl font-bold text-text-primary">3</span>
+                        </div>
+                        <h3 class="text-sm font-semibold text-text-primary mb-1">Active Squads</h3>
+                        <p class="text-xs text-text-muted">2 pending invites</p>
+                    </div>
+
+                    <!-- Connections -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                                <i class="fas fa-address-book text-white text-lg"></i>
+                            </div>
+                            <span class="text-3xl font-bold text-text-primary">24</span>
+                        </div>
+                        <h3 class="text-sm font-semibold text-text-primary mb-1">Founder Connections</h3>
+                        <p class="text-xs text-text-muted">+5 this week</p>
+                    </div>
+
+                    <!-- Missions -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                                <i class="fas fa-rocket text-white text-lg"></i>
+                            </div>
+                            <span class="text-3xl font-bold text-text-primary">7</span>
+                        </div>
+                        <h3 class="text-sm font-semibold text-text-primary mb-1">Missions Completed</h3>
+                        <p class="text-xs text-text-muted">3 in progress</p>
+                    </div>
+
+                    <!-- Progress -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-white text-lg"></i>
+                            </div>
+                            <span class="text-3xl font-bold text-text-primary">82%</span>
+                        </div>
+                        <h3 class="text-sm font-semibold text-text-primary mb-1">Profile Complete</h3>
+                        <p class="text-xs text-text-muted">Add 2 more details</p>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Your Squads -->
+                    <div class="lg:col-span-2">
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-2xl font-bold text-text-primary">Your Squads</h2>
+                                <a href="squads.html" class="text-sm text-text-primary hover:text-text-secondary">View all →</a>
+                            </div>
+                            
+                            <!-- Squad List -->
+                            <div class="space-y-3">
+                                <!-- Squad Alpha -->
+                                <div class="bg-card-bg border border-border rounded-lg p-5 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=alpha'">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-bold text-text-primary text-lg mb-1">Squad Alpha</h3>
+                                            <p class="text-sm text-text-secondary mb-3">SaaS • Series A</p>
+                                            <div class="flex items-center gap-4 text-xs text-text-muted">
+                                                <span>5 members</span>
+                                                <span>•</span>
+                                                <span>Founded 2 months ago</span>
+                                            </div>
+                                        </div>
+                                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">Active</span>
+                                    </div>
+                                </div>
+
+                                <!-- Squad Bravo -->
+                                <div class="bg-card-bg border border-border rounded-lg p-5 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=beta'">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-bold text-text-primary text-lg mb-1">Squad Bravo</h3>
+                                            <p class="text-sm text-text-secondary mb-3">Fintech • Pre-Seed</p>
+                                            <div class="flex items-center gap-4 text-xs text-text-muted">
+                                                <span>3 members</span>
+                                                <span>•</span>
+                                                <span>Founded 1 month ago</span>
+                                            </div>
+                                        </div>
+                                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">Active</span>
+                                    </div>
+                                </div>
+
+                                <!-- Squad Charlie -->
+                                <div class="bg-card-bg border border-border rounded-lg p-5 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=charlie'">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-bold text-text-primary text-lg mb-1">Squad Charlie</h3>
+                                            <p class="text-sm text-text-secondary mb-3">AI/ML • Seed</p>
+                                            <div class="flex items-center gap-4 text-xs text-text-muted">
+                                                <span>4 members</span>
+                                                <span>•</span>
+                                                <span>Founded 3 weeks ago</span>
+                                            </div>
+                                        </div>
+                                        <span class="px-3 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded-full">Pending</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-6">
+                        <!-- Quick Actions -->
+                        <div>
+                            <h2 class="text-xl font-bold text-text-primary mb-4">Quick Actions</h2>
+                            <div class="space-y-3">
+                                <button class="w-full text-left p-4 bg-card-bg border border-border rounded-lg hover:shadow-md transition-all group" onclick="window.location.href='squads.html'">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-background flex items-center justify-center group-hover:bg-primary/5 transition-all">
+                                            <i class="fas fa-plus text-text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-semibold text-text-primary">Join a Squad</span>
+                                    </div>
+                                </button>
+                                <button class="w-full text-left p-4 bg-card-bg border border-border rounded-lg hover:shadow-md transition-all group" onclick="window.location.href='founders.html'">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-background flex items-center justify-center group-hover:bg-primary/5 transition-all">
+                                            <i class="fas fa-user-plus text-text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-semibold text-text-primary">Connect with Founders</span>
+                                    </div>
+                                </button>
+                                <button class="w-full text-left p-4 bg-card-bg border border-border rounded-lg hover:shadow-md transition-all group" onclick="window.location.href='flightplan.html'">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-background flex items-center justify-center group-hover:bg-primary/5 transition-all">
+                                            <i class="fas fa-route text-text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-semibold text-text-primary">Update Flightplan</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div>
+                            <h2 class="text-xl font-bold text-text-primary mb-4">Recent Activity</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Sarah Chen joined Squad Alpha</p>
+                                        <p class="text-xs text-text-muted">2 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">New mission available: Product-Market Fit</p>
+                                        <p class="text-xs text-text-muted">5 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">You completed Customer Discovery mission</p>
+                                        <p class="text-xs text-text-muted">1 day ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

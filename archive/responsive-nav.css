@@ -1,0 +1,29 @@
+/* Responsive Navigation CSS - Force collapse at 1000px */
+@media (max-width: 999px) {
+    /* Force nav to collapsed state */
+    #main-nav {
+        width: 5rem !important; /* w-20 equivalent */
+    }
+    
+    /* Hide nav text and labels */
+    #nav-text,
+    .nav-label {
+        display: none !important;
+    }
+    
+    /* Center nav items when collapsed */
+    #main-nav nav > div > a {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        justify-content: center !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+    }
+    
+    /* Ensure icons are centered */
+    #main-nav nav > div > a > div:first-child {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squad Detail - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }        
+        
+        </style>
+</head>
+<body class="bg-white min-h-screen font-inter flex">
+        <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a>
+                <a href="profile.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="squads.html" class="w-10 h-10 flex items-center justify-center text-white bg-white/10 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="flightplan.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-route"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Logout -->
+        <div class="pb-6 flex justify-center">
+            <a href="index.html" class="w-10 h-10 flex items-center justify-center text-white/50 rounded-lg hover:bg-white/10 hover:text-white/70 transition-all">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-white overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Squad Header -->
+            <div class="bg-white border-b border-border sticky top-0 z-40">
+                <div class="max-w-[1200px] mx-auto px-8 py-6">
+                    <a href="squads.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all mb-4">
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="text-sm">Back to Squads</span>
+                    </a>
+                    
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start gap-4">
+                            <div class="w-16 h-16 bg-black rounded-lg flex items-center justify-center">
+                                <i id="squad-icon" class="fas fa-rocket text-white text-2xl"></i>
+                            </div>
+                            <div>
+                                <h1 id="squad-name" class="text-3xl font-bold text-text-primary">Squad Alpha</h1>
+                                <p id="squad-tagline" class="text-text-secondary mt-1">B2B SaaS • Build Stage</p>
+                                <div class="flex items-center gap-4 mt-3">
+                                    <span id="squad-status" class="px-3 py-1 bg-green-100 text-green-700 text-sm rounded">Active</span>
+                                    <span class="text-sm text-text-muted">Founded 2 months ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button onclick="inviteMember()" class="px-4 py-2 border border-border rounded hover:border-primary transition-all">
+                                <i class="fas fa-user-plus mr-2"></i>Invite Member
+                            </button>
+                            <button onclick="leaveSquad()" class="px-4 py-2 border border-red-200 text-red-600 rounded hover:bg-red-50 transition-all">
+                                Leave Squad
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Squad Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Main Content -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Squad Description -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-4">About This Squad</h2>
+                            <p id="squad-description" class="text-text-secondary">Weekly check-ins for B2B SaaS founders grinding toward MVP launch. No drift, just drops. We focus on rapid iteration, customer feedback, and getting to revenue as fast as possible.</p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                <div>
+                                    <h3 class="text-sm font-medium text-text-muted mb-1">Meeting Schedule</h3>
+                                    <p class="text-text-primary">Every Thursday, 2:00 PM EST</p>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-medium text-text-muted mb-1">Next Check-in</h3>
+                                    <p class="text-text-primary">In 3 days</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Activity Feed -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-4">Recent Activity</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3 pb-4 border-b border-border">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">AR</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-medium text-text-primary">Aisha Robinson</h4>
+                                            <span class="text-xs text-text-muted">2 hours ago</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1">Shared insights from customer interviews - seeing strong demand for our API solution!</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-3 pb-4 border-b border-border">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">SC</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-medium text-text-primary">Sarah Chen</h4>
+                                            <span class="text-xs text-text-muted">5 hours ago</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1">Hit 1000 users on the waitlist! 🎉 Time to accelerate the MVP timeline.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">JK</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between">
+                                            <h4 class="font-medium text-text-primary">James Kim</h4>
+                                            <span class="text-xs text-text-muted">1 day ago</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1">Completed the pricing model analysis. Shared the deck in our squad drive.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Post Update -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Share an Update</h3>
+                            <textarea class="w-full p-3 border border-border rounded-lg resize-none" rows="3" placeholder="What's happening with your startup?"></textarea>
+                            <div class="flex justify-end mt-3">
+                                <button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                                    Post Update
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Squad Info -->
+                    <div class="space-y-6">
+                        <!-- Squad Members -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Squad Members</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 -m-2 rounded transition-all" onclick="viewFounderProfile('aisha-robinson')">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">AR</div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-text-primary">Aisha Robinson</h4>
+                                        <p class="text-xs text-text-muted">Squad Captain • AI Infrastructure</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 -m-2 rounded transition-all" onclick="viewFounderProfile('sarah-chen')">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">SC</div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-text-primary">Sarah Chen</h4>
+                                        <p class="text-xs text-text-muted">E-commerce Analytics</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 -m-2 rounded transition-all" onclick="viewFounderProfile('james-kim')">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">JK</div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-text-primary">James Kim</h4>
+                                        <p class="text-xs text-text-muted">Dev Tools Platform</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 -m-2 rounded transition-all" onclick="viewFounderProfile('maya-patel')">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">MP</div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-text-primary">Maya Patel</h4>
+                                        <p class="text-xs text-text-muted">HR Tech Solution</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-border">
+                                <p class="text-sm text-text-muted">4/5 seats filled</p>
+                            </div>
+                        </div>
+
+                        <!-- Squad Resources -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Squad Resources</h3>
+                            <div class="space-y-3">
+                                <a href="#" class="flex items-center gap-3 text-text-secondary hover:text-primary transition-all">
+                                    <i class="fas fa-folder text-text-muted"></i>
+                                    <span class="text-sm">Shared Drive</span>
+                                </a>
+                                <a href="#" class="flex items-center gap-3 text-text-secondary hover:text-primary transition-all">
+                                    <i class="fas fa-video text-text-muted"></i>
+                                    <span class="text-sm">Meeting Recordings</span>
+                                </a>
+                                <a href="#" class="flex items-center gap-3 text-text-secondary hover:text-primary transition-all">
+                                    <i class="fas fa-book text-text-muted"></i>
+                                    <span class="text-sm">Squad Playbook</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Squad Goals -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Current Goals</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded border-2 border-primary mt-0.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-text-primary">Launch MVP by end of Q1</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded border-2 border-primary mt-0.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-text-primary">Reach 100 paying customers</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded bg-primary mt-0.5 flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-text-primary line-through text-text-muted">Complete customer discovery</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="squad-detail-content.js"></script>
+    <script>
+
+        // Squad actions
+        function inviteMember() {
+            alert('Invite member feature coming soon!');
+        }
+
+        function leaveSquad() {
+            if (confirm('Are you sure you want to leave this squad?')) {
+                alert('You have left the squad.');
+                window.location.href = 'squads.html';
+            }
+        }
+
+        function viewFounderProfile(founder) {
+            window.location.href = `founder-profile.html?founder=${founder}`;
+        }
+
+        // Initialize squad detail
+        loadSquadDetail();
+    </script>
+</body>
+</html>

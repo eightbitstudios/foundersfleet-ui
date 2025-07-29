@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Case Detail - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <!-- Sticky Header Bar -->
+        <div class="sticky top-0 z-50 bg-white border-b border-border">
+            <div class="flex items-center justify-between px-8 py-4">
+                <!-- Back Button -->
+                <button onclick="goBack()" class="flex items-center gap-2 px-4 py-2 bg-section-bg text-text-primary rounded-lg hover:bg-gray-200 transition-all">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </button>
+                
+                <!-- Title and Icon -->
+                <div class="flex items-center gap-4">
+                    <div id="header-icon" class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h1 id="header-title" class="text-xl font-semibold text-text-primary">I'm just starting out</h1>
+                </div>
+                
+                <!-- Action Button -->
+                <button onclick="startMission()" class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                    <span>Start Mission</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Starting Out Detail -->
+                <div id="starting-out-content" class="block">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left Column - Missions and Apps -->
+                        <div class="lg:col-span-2 space-y-8">
+                            <!-- Missions Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Missions</h2>
+                                <div class="space-y-4">
+                                    <!-- Mission 1 -->
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">1</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Validate Problem</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Talk to potential customers and confirm the problem exists. Conduct interviews to understand pain points and validate market demand.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Customer Interviews</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Problem Research</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Market Validation</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mission 2 -->
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">2</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Test Solution</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Build a simple prototype and get feedback. Create wireframes, mockups, or basic prototypes to test your solution concept.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Prototyping</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">User Testing</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Feedback Collection</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mission 3 -->
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">3</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Find Product-Market Fit</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Iterate until you find product-market fit signals. Look for strong demand, retention, and word-of-mouth growth indicators.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">PMF Metrics</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Iteration</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Growth Signals</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Apps Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Apps</h2>
+                                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer hover:shadow-md transition-all" onclick="showToolDetail('economaestro')">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">EconoMaestro</h3>
+                                            <p class="text-text-secondary text-sm">Economic modeling and financial planning</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-text-secondary mb-4">Build financial models and projections to validate your business case and attract investors.</p>
+                                    <div class="flex items-center gap-2 text-primary font-medium">
+                                        <span>Learn more</span>
+                                        <i class="fas fa-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Resources -->
+                        <div class="space-y-6">
+                            <!-- Resources Section -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Resources</h3>
+                                <div class="space-y-3">
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-book text-primary"></i>
+                                        <span class="text-text-primary">Customer Discovery Guide</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-video text-primary"></i>
+                                        <span class="text-text-primary">How to Find Product-Market Fit</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-file-alt text-primary"></i>
+                                        <span class="text-text-primary">MVP Planning Template</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-users text-primary"></i>
+                                        <span class="text-text-primary">Join Idea Stage Founders Group</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Quick Stats -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Stats</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Total Missions</span>
+                                        <span class="font-semibold text-text-primary">3</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Available Tools</span>
+                                        <span class="font-semibold text-text-primary">1</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Resources</span>
+                                        <span class="font-semibold text-text-primary">4</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Popular with Founders -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Popular with Founders</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-comments text-white text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-text-primary">Customer Interviews</div>
+                                            <div class="text-xs text-text-secondary">87% completion rate</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-lightbulb text-white text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-text-primary">Problem Validation</div>
+                                            <div class="text-xs text-text-secondary">92% find this helpful</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-chart-bar text-white text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-text-primary">Market Research</div>
+                                            <div class="text-xs text-text-secondary">78% completion rate</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Building Product Detail -->
+                <div id="building-product-content" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-8">
+                            <!-- Missions Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Missions</h2>
+                                <div class="space-y-4">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">1</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Plan Your Roadmap</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Create a detailed product roadmap with clear milestones and priorities. Break down features into manageable tasks.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Product Planning</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Feature Prioritization</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Timeline</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">2</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Build MVP</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Develop your minimum viable product focusing on core features that solve the main problem.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">MVP Development</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Core Features</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Quality Assurance</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">3</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Track Progress</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Monitor development progress, measure key metrics, and iterate based on user feedback.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Analytics</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">User Feedback</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Metrics</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Apps Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Apps</h2>
+                                <div class="space-y-4">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer hover:shadow-md transition-all">
+                                        <div class="flex items-start gap-4 mb-4">
+                                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-code text-blue-600 text-xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <h3 class="text-lg font-semibold text-text-primary mb-1">Project Tracker</h3>
+                                                <p class="text-text-secondary text-sm">Track development progress and manage tasks</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Keep your development on track with milestone tracking and team collaboration tools.</p>
+                                        <div class="flex items-center gap-2 text-primary font-medium">
+                                            <span>Coming Soon</span>
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Resources -->
+                        <div class="space-y-6">
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Resources</h3>
+                                <div class="space-y-3">
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-map text-primary"></i>
+                                        <span class="text-text-primary">Product Roadmap Template</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-rocket text-primary"></i>
+                                        <span class="text-text-primary">MVP Development Guide</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-chart-line text-primary"></i>
+                                        <span class="text-text-primary">Product Analytics Setup</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-users text-primary"></i>
+                                        <span class="text-text-primary">Product Builder Community</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Stats</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Total Missions</span>
+                                        <span class="font-semibold text-text-primary">3</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Available Tools</span>
+                                        <span class="font-semibold text-text-primary">1</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Resources</span>
+                                        <span class="font-semibold text-text-primary">4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Getting Customers Detail -->
+                <div id="getting-customers-content" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-8">
+                            <!-- Missions Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Missions</h2>
+                                <div class="space-y-4">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">1</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Launch Strategy</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Plan and execute your product launch to maximize visibility and early adoption.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Launch Planning</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">PR Strategy</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Early Adopters</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">2</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Growth Tactics</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Implement proven growth strategies to acquire and retain customers consistently.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Customer Acquisition</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Retention</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Viral Growth</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">3</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Scale Sales</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Build scalable sales processes and optimize conversion funnels for sustainable growth.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Sales Process</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Conversion</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Automation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Apps Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Apps</h2>
+                                <div class="space-y-4">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer hover:shadow-md transition-all">
+                                        <div class="flex items-start gap-4 mb-4">
+                                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-bullhorn text-green-600 text-xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <h3 class="text-lg font-semibold text-text-primary mb-1">Growth Toolkit</h3>
+                                                <p class="text-text-secondary text-sm">Customer acquisition and growth tools</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Comprehensive toolkit for customer acquisition, retention, and growth tracking.</p>
+                                        <div class="flex items-center gap-2 text-primary font-medium">
+                                            <span>Coming Soon</span>
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Resources -->
+                        <div class="space-y-6">
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Resources</h3>
+                                <div class="space-y-3">
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-rocket text-primary"></i>
+                                        <span class="text-text-primary">Launch Checklist</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-chart-line text-primary"></i>
+                                        <span class="text-text-primary">Growth Playbook</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-handshake text-primary"></i>
+                                        <span class="text-text-primary">Sales Templates</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-users text-primary"></i>
+                                        <span class="text-text-primary">Growth Marketing Community</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Stats</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Total Missions</span>
+                                        <span class="font-semibold text-text-primary">3</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Available Tools</span>
+                                        <span class="font-semibold text-text-primary">1</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Resources</span>
+                                        <span class="font-semibold text-text-primary">4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Raising Capital Detail -->
+                <div id="raising-capital-content" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-8">
+                            <!-- Missions Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Missions</h2>
+                                <div class="space-y-4">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">1</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Prepare Materials</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Create a compelling pitch deck, financial projections, and all necessary fundraising materials.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Pitch Deck</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Financial Model</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Data Room</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">2</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Find Investors</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Research and connect with investors who are a good fit for your stage and industry.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Investor Research</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Warm Introductions</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Cold Outreach</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">3</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Close the Round</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Navigate due diligence, negotiate terms, and successfully close your funding round.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Due Diligence</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Term Negotiation</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Legal Process</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Apps Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Apps</h2>
+                                <div class="space-y-4">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer hover:shadow-md transition-all">
+                                        <div class="flex items-start gap-4 mb-4">
+                                            <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-chart-pie text-red-600 text-xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <h3 class="text-lg font-semibold text-text-primary mb-1">Investor CRM</h3>
+                                                <p class="text-text-secondary text-sm">Track investor relationships and fundraising pipeline</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Manage your investor outreach, track conversations, and organize your fundraising process.</p>
+                                        <div class="flex items-center gap-2 text-primary font-medium">
+                                            <span>Coming Soon</span>
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Resources -->
+                        <div class="space-y-6">
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Resources</h3>
+                                <div class="space-y-3">
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-presentation text-primary"></i>
+                                        <span class="text-text-primary">Pitch Deck Template</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-calculator text-primary"></i>
+                                        <span class="text-text-primary">Financial Model Template</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-search text-primary"></i>
+                                        <span class="text-text-primary">Investor Database</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-gavel text-primary"></i>
+                                        <span class="text-text-primary">Legal Resources</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Stats</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Total Missions</span>
+                                        <span class="font-semibold text-text-primary">3</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Available Tools</span>
+                                        <span class="font-semibold text-text-primary">1</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Resources</span>
+                                        <span class="font-semibold text-text-primary">4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scaling Up Detail -->
+                <div id="scaling-up-content" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-8">
+                            <!-- Missions Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Missions</h2>
+                                <div class="space-y-4">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">1</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Build Your Team</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Hire key talent, establish team structure, and create effective onboarding processes.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Hiring Strategy</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Team Structure</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Onboarding</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">2</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Scale Operations</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Implement scalable processes, systems, and infrastructure to support growth.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Process Optimization</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Infrastructure</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Automation</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">3</div>
+                                            <h3 class="text-lg font-semibold text-text-primary">Foster Culture</h3>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Establish company values, maintain culture, and ensure team alignment as you grow.</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Company Culture</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Values</span>
+                                            <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Team Alignment</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Apps Section -->
+                            <div>
+                                <h2 class="text-2xl font-bold text-text-primary mb-6">Apps</h2>
+                                <div class="space-y-4">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer hover:shadow-md transition-all">
+                                        <div class="flex items-start gap-4 mb-4">
+                                            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-users-cog text-orange-600 text-xl"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <h3 class="text-lg font-semibold text-text-primary mb-1">Scale Toolkit</h3>
+                                                <p class="text-text-secondary text-sm">Operations and team management tools</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-text-secondary mb-4">Comprehensive tools for scaling operations, managing teams, and maintaining culture.</p>
+                                        <div class="flex items-center gap-2 text-primary font-medium">
+                                            <span>Coming Soon</span>
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Resources -->
+                        <div class="space-y-6">
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Resources</h3>
+                                <div class="space-y-3">
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-user-plus text-primary"></i>
+                                        <span class="text-text-primary">Hiring Guide</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-cogs text-primary"></i>
+                                        <span class="text-text-primary">Operations Playbook</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-heart text-primary"></i>
+                                        <span class="text-text-primary">Culture Handbook</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 hover:bg-section-bg rounded-lg transition-all">
+                                        <i class="fas fa-chart-bar text-primary"></i>
+                                        <span class="text-text-primary">KPI Dashboard Templates</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Stats</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Total Missions</span>
+                                        <span class="font-semibold text-text-primary">3</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Available Tools</span>
+                                        <span class="font-semibold text-text-primary">1</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-text-secondary">Resources</span>
+                                        <span class="font-semibold text-text-primary">4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Use case configurations
+        const useCaseConfigs = {
+            'starting-out': {
+                icon: 'fa-rocket',
+                title: "I'm just starting out",
+                description: "Validate your idea and find product-market fit"
+            },
+            'building-product': {
+                icon: 'fa-tools',
+                title: "I'm building my product",
+                description: "Track progress and manage your development"
+            },
+            'getting-customers': {
+                icon: 'fa-users',
+                title: "I'm getting customers",
+                description: "Acquire users and grow your customer base"
+            },
+            'raising-capital': {
+                icon: 'fa-chart-line',
+                title: "I'm raising capital",
+                description: "Prepare for and execute your fundraise"
+            },
+            'scaling-up': {
+                icon: 'fa-rocket',
+                title: "I'm scaling up",
+                description: "Grow your team and operations efficiently"
+            }
+        };
+
+        // Show specific use case content
+        function showUseCase(useCaseId) {
+            // Hide all content sections
+            const contentSections = document.querySelectorAll('[id$="-content"]');
+            contentSections.forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show specific content
+            const targetContent = document.getElementById(`${useCaseId}-content`);
+            if (targetContent) {
+                targetContent.classList.remove('hidden');
+            }
+
+            // Update header
+            const config = useCaseConfigs[useCaseId];
+            if (config) {
+                const headerIcon = document.getElementById('header-icon');
+                const headerTitle = document.getElementById('header-title');
+                
+                headerIcon.innerHTML = `<i class="fas ${config.icon}"></i>`;
+                headerTitle.textContent = config.title;
+                
+                // Update page title
+                document.title = `${config.title} - FoundersFleet`;
+            }
+        }
+
+        // Initialize page based on URL parameter
+        function initializePage() {
+            const useCase = getUrlParameter('use-case') || 'starting-out';
+            showUseCase(useCase);
+        }
+
+        // Go back to tools page
+        function goBack() {
+            window.location.href = 'tools.html';
+        }
+
+        // Start mission (placeholder)
+        function startMission() {
+            const useCase = getUrlParameter('use-case') || 'starting-out';
+            alert(`Starting mission for ${useCaseConfigs[useCase]?.title || useCase}! This feature is coming soon.`);
+        }
+
+        // Show tool detail
+        function showToolDetail(toolId) {
+            if (toolId === 'economaestro') {
+                window.location.href = 'tool-detail.html?tool=economaestro';
+            } else {
+                alert(`${toolId} details coming soon!`);
+            }
+        }
+
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializePage);
+
+        // Initialize navigation
+        initializeNavigation('tools');
+    </script>
+</body>
+</html>

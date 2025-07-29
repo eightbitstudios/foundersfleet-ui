@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apps - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Page Header -->
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">Apps</h1>
+                        <p class="text-text-secondary">AI-Powered Apps built to help you cut through noise and gain momentum</p>
+                    </div>
+                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="requestApp()">
+                        <i class="fas fa-plus"></i>Request App
+                    </button>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Apps Grid -->
+                    <div class="lg:col-span-2">
+                        <!-- Available Apps -->
+                        <div class="mb-8">
+                            <h2 class="text-xl font-semibold text-text-primary mb-4">Available Apps</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Economaestro Card -->
+                                <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer group" onclick="window.location.href='tool-detail-economaestro.html'">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-all">
+                                            <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-text-primary mb-1">EconoMaestro</h3>
+                                            <p class="text-sm text-text-secondary">Read the economic room without an econ degree</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-check-circle text-success"></i>
+                                            <span>Macro signal filter</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-check-circle text-success"></i>
+                                            <span>Timing strategic decisions</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-check-circle text-success"></i>
+                                            <span>AI-powered insights</span>
+                                        </div>
+                                    </div>
+                                    <button class="w-full bg-primary text-white py-2 px-4 rounded text-sm font-medium group-hover:bg-primary-hover transition-all">
+                                        Launch App →
+                                    </button>
+                                </div>
+
+                                <!-- Product Tracker (Coming Soon) -->
+                                <div class="bg-card-bg border border-dashed border-primary/30 rounded-lg p-6 opacity-75">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-rocket text-green-600 text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-text-primary mb-1">Product Tracker</h3>
+                                            <p class="text-sm text-text-secondary">Track competitors and market moves in real-time</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>Competitor monitoring</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>Feature tracking</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>Market insights</span>
+                                        </div>
+                                    </div>
+                                    <button class="w-full bg-gray-200 text-gray-500 py-2 px-4 rounded text-sm font-medium cursor-not-allowed" disabled>
+                                        Coming Soon
+                                    </button>
+                                </div>
+
+                                <!-- Pitch Perfect (Coming Soon) -->
+                                <div class="bg-card-bg border border-dashed border-primary/30 rounded-lg p-6 opacity-75">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-microphone text-blue-600 text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-text-primary mb-1">Pitch Perfect</h3>
+                                            <p class="text-sm text-text-secondary">AI coach for perfecting your pitch</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>Pitch analysis</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>Real-time feedback</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>Investor insights</span>
+                                        </div>
+                                    </div>
+                                    <button class="w-full bg-gray-200 text-gray-500 py-2 px-4 rounded text-sm font-medium cursor-not-allowed" disabled>
+                                        Coming Soon
+                                    </button>
+                                </div>
+
+                                <!-- Growth Lab (Coming Soon) -->
+                                <div class="bg-card-bg border border-dashed border-primary/30 rounded-lg p-6 opacity-75">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-flask text-orange-600 text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-text-primary mb-1">Growth Lab</h3>
+                                            <p class="text-sm text-text-secondary">Experiment tracking and growth analytics</p>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>A/B testing</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>Growth metrics</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                                            <i class="fas fa-circle text-gray-300 text-xs"></i>
+                                            <span>Experiment insights</span>
+                                        </div>
+                                    </div>
+                                    <button class="w-full bg-gray-200 text-gray-500 py-2 px-4 rounded text-sm font-medium cursor-not-allowed" disabled>
+                                        Coming Soon
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Info & Stats -->
+                    <div class="space-y-6">
+                        <!-- What are Apps? -->
+                        <div class="bg-section-bg rounded-xl p-6 border border-border">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">What are Apps?</h3>
+                            <div class="space-y-3 text-sm text-text-secondary">
+                                <p>AI-powered tools built specifically for founders, designed to:</p>
+                                <ul class="space-y-2 ml-4">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Cut through information overload</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Provide actionable insights</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Save time on routine tasks</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Make better decisions faster</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Request an App -->
+                        <div class="bg-section-bg rounded-xl p-6 border border-border">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Need a Specific App?</h3>
+                            <p class="text-sm text-text-secondary mb-4">We're building new apps based on founder feedback. Tell us what would help you most.</p>
+                            <button onclick="requestApp()" class="w-full bg-primary text-white py-2 px-4 rounded text-sm font-medium hover:bg-primary-hover transition-all">
+                                Request an App
+                            </button>
+                        </div>
+
+                        <!-- Popular Requests -->
+                        <div class="bg-section-bg rounded-xl p-6 border border-border">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Popular Requests</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-text-secondary">Legal Assistant</span>
+                                    <span class="text-xs text-text-muted">42 votes</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-text-secondary">Meeting Summarizer</span>
+                                    <span class="text-xs text-text-muted">38 votes</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-text-secondary">Investor CRM</span>
+                                    <span class="text-xs text-text-muted">35 votes</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm text-text-secondary">Code Reviewer</span>
+                                    <span class="text-xs text-text-muted">31 votes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Request app functionality
+        function requestApp() {
+            alert('App request feature coming soon! You\'ll be able to submit ideas for new AI-powered apps.');
+        }
+
+        // Initialize navigation
+        initializeNavigation('apps');
+    </script>
+</body>
+</html>

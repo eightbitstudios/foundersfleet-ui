@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founders - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+        }        
+        
+        </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+        <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a><a href="squads.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-black bg-[#C8F902] rounded-lg hover:bg-[#C8F902]/90 transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="messages.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-comment"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+                <!-- Settings -->
+        <div class="pb-6 flex justify-center">
+            <a href="account.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+        </div>
+    </div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Page Header -->
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">Connect with Founders</h1>
+                        <p class="text-text-secondary">Build your network and learn from experienced founders</p>
+                    </div>
+                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="inviteFounders()">
+                        <i class="fas fa-plus"></i>Invite Founders
+                    </button>
+                </div>
+                
+                <!-- Tabs and Filter -->
+                <div class="bg-section-bg -mx-8 px-8 py-4 mb-6">
+                    <div class="max-w-[1200px] mx-auto flex items-center justify-between">
+                        <div class="flex gap-2">
+                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-tab="all" onclick="switchFounderTab('all')">All Founders</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="connections" onclick="switchFounderTab('connections')">My Connections</button>
+                        </div>
+                        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-lg hover:border-primary transition-all" onclick="showFilterModal()">
+                            <i class="fas fa-filter text-sm"></i>
+                            <span class="text-sm font-medium">Filter</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Founders List -->
+                    <div class="lg:col-span-2">
+                        <!-- All Founders Tab -->
+                        <div id="all-founders-content" class="block">
+                            <div class="space-y-4">
+                        <!-- Founder Card 1 -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showFounderProfile('aisha-robinson')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">AR</div>
+                                    <div>
+                                        <h3 class="font-bold text-text-primary">Aisha Robinson</h3>
+                                        <p class="text-sm text-text-secondary">Founder & CEO at Nora AI</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-check-circle text-green-600 text-sm" title="Verified"></i>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-4 line-clamp-2">Building AI infrastructure to help businesses deploy ML models at scale. Previously led engineering at TechCorp.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">AI/ML</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Pre-Seed</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">B2B</span>
+                            </div>
+                        </div>
+
+                        <!-- Founder Card 2 -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showFounderProfile('marcus-park')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">MP</div>
+                                    <div>
+                                        <h3 class="font-bold text-text-primary">Marcus Park</h3>
+                                        <p class="text-sm text-text-secondary">Founder & CEO at StyleDrop</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-check-circle text-green-600 text-sm" title="Verified"></i>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-4 line-clamp-2">Building the future of sustainable fashion. Serial entrepreneur with 2 exits. Passionate about technology and sustainability.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">E-commerce</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Series A</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Fashion</span>
+                            </div>
+                        </div>
+
+                        <!-- Founder Card 3 -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showFounderProfile('sarah-chen')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">SC</div>
+                                    <div>
+                                        <h3 class="font-bold text-text-primary">Sarah Chen</h3>
+                                        <p class="text-sm text-text-secondary">Founder at ShopBoost Analytics</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-check-circle text-green-600 text-sm" title="Verified"></i>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-4 line-clamp-2">Helping e-commerce brands understand their customers through data. Former data scientist at Amazon.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Analytics</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Seed</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">SaaS</span>
+                            </div>
+                        </div>
+
+                        <!-- Founder Card 4 -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showFounderProfile('james-kim')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">JK</div>
+                                    <div>
+                                        <h3 class="font-bold text-text-primary">James Kim</h3>
+                                        <p class="text-sm text-text-secondary">Co-founder & CTO at DevTools Pro</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-4 line-clamp-2">Building developer tools that make coding more enjoyable. Open source enthusiast and technical writer.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">DevTools</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Pre-Seed</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">B2D</span>
+                            </div>
+                        </div>
+
+                        <!-- Founder Card 5 -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showFounderProfile('maya-patel')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">MP</div>
+                                    <div>
+                                        <h3 class="font-bold text-text-primary">Maya Patel</h3>
+                                        <p class="text-sm text-text-secondary">Founder at HRTech Solutions</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-check-circle text-green-600 text-sm" title="Verified"></i>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-4 line-clamp-2">Reimagining HR for the modern workplace. Building tools that put employees first and make HR delightful.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">HR Tech</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Seed</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">B2B</span>
+                            </div>
+                        </div>
+
+                        <!-- Founder Card 6 -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showFounderProfile('alex-rivera')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">AR</div>
+                                    <div>
+                                        <h3 class="font-bold text-text-primary">Alex Rivera</h3>
+                                        <p class="text-sm text-text-secondary">Founder at FinFlow</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-4 line-clamp-2">Making financial planning accessible to everyone. Former finance lead at multiple startups.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">FinTech</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Pre-Seed</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">B2C</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Connections Tab -->
+                <div id="connections-content" class="hidden">
+                    <div class="space-y-4">
+                        <!-- Connected Founder 1 -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showFounderProfile('sarah-chen')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">SC</div>
+                                    <div>
+                                        <h3 class="font-bold text-text-primary">Sarah Chen</h3>
+                                        <p class="text-sm text-text-secondary">Founder at ShopBoost Analytics</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-check-circle text-green-600 text-sm" title="Verified"></i>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-4 line-clamp-2">Helping e-commerce brands understand their customers through data. Former data scientist at Amazon.</p>
+                            <div class="flex items-center justify-between mt-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Analytics</span>
+                                    <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Seed</span>
+                                </div>
+                                <button class="text-sm text-primary hover:text-primary-hover" onclick="event.stopPropagation(); messageFounder('sarah-chen')">
+                                    <i class="fas fa-message"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Connected Founder 2 -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showFounderProfile('marcus-park')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">MP</div>
+                                    <div>
+                                        <h3 class="font-bold text-text-primary">Marcus Park</h3>
+                                        <p class="text-sm text-text-secondary">Founder & CEO at StyleDrop</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-check-circle text-green-600 text-sm" title="Verified"></i>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-4 line-clamp-2">Building the future of sustainable fashion. Serial entrepreneur with 2 exits. Passionate about technology and sustainability.</p>
+                            <div class="flex items-center justify-between mt-4">
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">E-commerce</span>
+                                    <span class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full">Series A</span>
+                                </div>
+                                <button class="text-sm text-primary hover:text-primary-hover" onclick="event.stopPropagation(); messageFounder('marcus-park')">
+                                    <i class="fas fa-message"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+
+                    <!-- Right Column - Stats and Actions -->
+                    <div class="space-y-6">
+                        <!-- Quick Stats -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-bold text-text-primary mb-4">Quick Stats</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-text-secondary">Total Founders</span>
+                                    <span class="text-xl font-bold text-text-primary">342</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-text-secondary">My Connections</span>
+                                    <span class="text-xl font-bold text-text-primary">2</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-bold text-text-primary mb-4">Quick Actions</h3>
+                            <div class="space-y-3">
+                                <button class="w-full flex items-center justify-between px-4 py-3 border border-border rounded-lg hover:border-primary transition-all text-left" onclick="inviteFounders()">
+                                    <span class="text-sm font-medium text-text-primary">Invite Founders</span>
+                                    <i class="fas fa-arrow-right text-text-secondary text-sm"></i>
+                                </button>
+                                <button class="w-full flex items-center justify-between px-4 py-3 border border-border rounded-lg hover:border-primary transition-all text-left" onclick="switchFounderTab('connections')">
+                                    <span class="text-sm font-medium text-text-primary">View Connections</span>
+                                    <i class="fas fa-arrow-right text-text-secondary text-sm"></i>
+                                </button>
+                                <button class="w-full flex items-center justify-between px-4 py-3 border border-border rounded-lg hover:border-primary transition-all text-left" onclick="showFilterModal()">
+                                    <span class="text-sm font-medium text-text-primary">Filter Founders</span>
+                                    <i class="fas fa-arrow-right text-text-secondary text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recommended Founders -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-bold text-text-primary mb-4">Recommended Founders</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-3 cursor-pointer hover:bg-section-bg p-2 -m-2 rounded-lg transition-all" onclick="showFounderProfile('maya-patel')">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold text-sm">MP</div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-medium text-text-primary text-sm truncate">Maya Patel</p>
+                                        <p class="text-xs text-text-secondary truncate">HR Tech</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 cursor-pointer hover:bg-section-bg p-2 -m-2 rounded-lg transition-all" onclick="showFounderProfile('alex-rivera')">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold text-sm">AR</div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-medium text-text-primary text-sm truncate">Alex Rivera</p>
+                                        <p class="text-xs text-text-secondary truncate">FinTech</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 cursor-pointer hover:bg-section-bg p-2 -m-2 rounded-lg transition-all" onclick="showFounderProfile('james-kim')">
+                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold text-sm">JK</div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="font-medium text-text-primary text-sm truncate">James Kim</p>
+                                        <p class="text-xs text-text-secondary truncate">DevTools</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Popular Filters -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-bold text-text-primary mb-4">Popular Filters</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-all" onclick="applyFilter('AI/ML')">
+                                    AI/ML
+                                </button>
+                                <button class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-all" onclick="applyFilter('FinTech')">
+                                    FinTech
+                                </button>
+                                <button class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-all" onclick="applyFilter('E-commerce')">
+                                    E-commerce
+                                </button>
+                                <button class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-all" onclick="applyFilter('SaaS')">
+                                    SaaS
+                                </button>
+                                <button class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-all" onclick="applyFilter('B2B')">
+                                    B2B
+                                </button>
+                                <button class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-all" onclick="applyFilter('Series A')">
+                                    Series A
+                                </button>
+                                <button class="px-3 py-1 bg-section-bg text-text-primary text-xs rounded-full hover:bg-primary hover:text-white transition-all" onclick="applyFilter('Seed')">
+                                    Seed
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // Switch between tabs
+        function switchFounderTab(tab) {
+            // Update tab styling
+            const tabs = document.querySelectorAll('[data-tab]');
+            tabs.forEach(t => {
+                if (t.dataset.tab === tab) {
+                    t.classList.remove('bg-white', 'text-text-secondary', 'border-border', 'hover:border-primary', 'hover:text-primary');
+                    t.classList.add('bg-primary', 'text-white', 'hover:bg-primary-hover');
+                } else {
+                    t.classList.remove('bg-primary', 'text-white', 'hover:bg-primary-hover');
+                    t.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border', 'hover:border-primary', 'hover:text-primary');
+                }
+            });
+            
+            // Show/hide content
+            if (tab === 'all') {
+                document.getElementById('all-founders-content').classList.remove('hidden');
+                document.getElementById('connections-content').classList.add('hidden');
+            } else {
+                document.getElementById('all-founders-content').classList.add('hidden');
+                document.getElementById('connections-content').classList.remove('hidden');
+            }
+        }
+
+        // Show founder profile
+        function showFounderProfile(founderId) {
+            window.location.href = `founder-profile.html?founder=${founderId}`;
+        }
+
+        // Show filter modal
+        function showFilterModal() {
+            alert('Filter options coming soon! You\'ll be able to filter by industry, stage, location, and more.');
+        }
+
+        // Invite founders
+        function inviteFounders() {
+            alert('Invite feature coming soon! You\'ll be able to invite other founders to join FoundersFleet.');
+        }
+
+        // Message founder
+        function messageFounder(founderId) {
+            alert(`Messaging ${founderId}... This feature is coming soon!`);
+        }
+
+        // Apply filter
+        function applyFilter(filterType) {
+            alert(`Filtering by ${filterType}... This feature is coming soon!`);
+        }
+    </script>
+</body>
+</html>

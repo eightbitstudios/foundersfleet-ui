@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Progress ring animation */
+        @keyframes progress-ring {
+            from { stroke-dashoffset: 100; }
+            to { stroke-dashoffset: 30; }
+        }
+        
+        .progress-ring {
+            animation: progress-ring 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Welcome Header -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-text-primary mb-2">Welcome back, Sarah</h1>
+                    <p class="text-text-secondary">You're making great progress on your founder journey</p>
+                </div>
+
+                <!-- Your Flight Plan -->
+                <div class="mb-8">
+                    <div class="flex items-start justify-between mb-6">
+                        <div>
+                            <h2 class="text-2xl font-bold text-text-primary mb-2">Your Founder Flight Plan</h2>
+                            <p class="text-text-secondary">Your prioritized path to success</p>
+                        </div>
+                        <button class="text-sm text-primary hover:text-primary-hover font-medium">Customize Your Plan →</button>
+                    </div>
+                    
+                    <!-- Selected Objectives in Priority Order -->
+                    <div class="space-y-4" id="selected-objectives-container">
+                            <!-- Priority 1: Idea Validation Objective -->
+                            <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-objective="idea-validation" onclick="window.location.href='objective-detail.html?objective=idea-validation'">
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-2">
+                                            <i class="fas fa-lightbulb text-white text-lg"></i>
+                                        </div>
+                                        <div class="text-center">
+                                            <span class="text-xs text-text-muted">Priority</span>
+                                            <div class="text-2xl font-bold text-primary">1</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex-1">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div>
+                                                <h3 class="font-semibold text-text-primary text-lg mb-1">Idea Validation</h3>
+                                                <p class="text-sm text-text-secondary">Research, validate, and refine your concept</p>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-text-muted"></i>
+                                        </div>
+                                        
+                                        <div class="space-y-3">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Progress</span>
+                                                <span class="text-sm font-medium text-text-primary">2 of 4 missions complete</span>
+                                            </div>
+                                            <div class="w-full bg-section-bg rounded-full h-2">
+                                                <div class="bg-success h-2 rounded-full transition-all duration-500" style="width: 50%"></div>
+                                            </div>
+                                            
+                                            <div class="pt-3 border-t border-border">
+                                                <p class="text-sm text-text-secondary mb-2">Active mission:</p>
+                                                <p class="text-sm font-medium text-text-primary">Customer Interview Sprint - 2/10 interviews done</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Priority 2: MVP Development Objective -->
+                            <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-objective="mvp-development" onclick="window.location.href='objective-detail.html?objective=mvp-development'">
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-2">
+                                            <i class="fas fa-code text-white text-lg"></i>
+                                        </div>
+                                        <div class="text-center">
+                                            <span class="text-xs text-text-muted">Priority</span>
+                                            <div class="text-2xl font-bold text-primary">2</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex-1">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div>
+                                                <h3 class="font-semibold text-text-primary text-lg mb-1">MVP Development</h3>
+                                                <p class="text-sm text-text-secondary">Build and launch your first version</p>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-text-muted"></i>
+                                        </div>
+                                        
+                                        <div class="space-y-3">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Progress</span>
+                                                <span class="text-sm font-medium text-text-primary">1 of 4 missions complete</span>
+                                            </div>
+                                            <div class="w-full bg-section-bg rounded-full h-2">
+                                                <div class="bg-warning h-2 rounded-full transition-all duration-500" style="width: 25%"></div>
+                                            </div>
+                                            
+                                            <div class="pt-3 border-t border-border">
+                                                <p class="text-sm text-text-secondary mb-2">Active mission:</p>
+                                                <p class="text-sm font-medium text-text-primary">Set up Apple Developer Account - Checkpoint 3/5</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Priority 3: Launch Your Product Objective -->
+                            <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-objective="launch-product" onclick="window.location.href='objective-detail.html?objective=launch-product'">
+                                <div class="flex items-start gap-4">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-2">
+                                            <i class="fas fa-rocket text-white text-lg"></i>
+                                        </div>
+                                        <div class="text-center">
+                                            <span class="text-xs text-text-muted">Priority</span>
+                                            <div class="text-2xl font-bold text-primary">3</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex-1">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div>
+                                                <h3 class="font-semibold text-text-primary text-lg mb-1">Launch Your Product</h3>
+                                                <p class="text-sm text-text-secondary">Ship your product to the world</p>
+                                            </div>
+                                            <i class="fas fa-chevron-right text-text-muted"></i>
+                                        </div>
+                                        
+                                        <div class="space-y-3">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-text-secondary">Progress</span>
+                                                <span class="text-sm font-medium text-text-primary">0 of 4 missions complete</span>
+                                            </div>
+                                            <div class="w-full bg-section-bg rounded-full h-2">
+                                                <div class="bg-section-bg h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+                                            </div>
+                                            
+                                            <div class="pt-3 border-t border-border">
+                                                <p class="text-sm text-text-secondary mb-2">Ready to start:</p>
+                                                <p class="text-sm font-medium text-text-primary">Set up Apple Developer Account</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    
+                    <!-- Add More Epics -->
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-text-secondary mb-3">Want to add more areas to your flight plan?</p>
+                        <button class="text-sm bg-section-bg text-text-primary px-6 py-2 rounded hover:bg-primary hover:text-white transition-all" onclick="window.location.href='customize-journey.html'">
+                            <i class="fas fa-plus mr-2"></i>Add More Objectives
+                        </button>
+                    </div>
+                </div>
+
+                    
+                    <!-- Mission Tabs -->
+                    <div class="flex gap-2 mb-6">
+                        <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-tab="active" onclick="switchMissionTab('active')">Active</button>
+                        <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="recommended" onclick="switchMissionTab('recommended')">Recommended</button>
+                        <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="past" onclick="switchMissionTab('past')">Past</button>
+                    </div>
+                    
+                    <!-- Active Missions Tab Content -->
+                    <div id="active-missions" class="mission-tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Mission Card 1 - In Progress -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="goToMission('apple-dev-account')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-mobile-alt text-white"></i>
+                                </div>
+                                <span class="text-xs px-2 py-1 bg-warning/10 text-warning rounded-full font-medium">Checkpoint 3/5</span>
+                            </div>
+                            
+                            <h3 class="font-semibold text-text-primary mb-1">Set up Apple Developer Account</h3>
+                            <p class="text-xs text-text-muted mb-3">Objective: Launch Your Product</p>
+                            
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-text-secondary">Progress</span>
+                                    <span class="font-medium text-text-primary">60%</span>
+                                </div>
+                                <div class="w-full bg-section-bg rounded-full h-2">
+                                    <div class="bg-warning h-2 rounded-full transition-all duration-500" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-border">
+                                <p class="text-xs text-text-secondary">Next: Submit verification documents</p>
+                            </div>
+                        </div>
+
+                        <!-- Mission Card 2 - Started -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-comments text-white"></i>
+                                </div>
+                                <span class="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full font-medium">Checkpoint 1/4</span>
+                            </div>
+                            
+                            <h3 class="font-semibold text-text-primary mb-1">Customer Interview Sprint</h3>
+                            <p class="text-xs text-text-muted mb-3">Objective: Find Product-Market Fit</p>
+                            
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-text-secondary">Interviews</span>
+                                    <span class="font-medium text-text-primary">2/10</span>
+                                </div>
+                                <div class="w-full bg-section-bg rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 20%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-border">
+                                <p class="text-xs text-text-secondary">Next: Schedule 3 more interviews</p>
+                            </div>
+                        </div>
+
+                        <!-- Mission Card 3 - Ready to Start -->
+                        <div class="bg-card-bg border border-dashed border-primary/30 rounded-lg p-6 hover:shadow-md transition-all cursor-pointer group">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-10 h-10 bg-section-bg rounded-lg flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                                    <i class="fas fa-credit-card text-text-secondary group-hover:text-primary transition-colors"></i>
+                                </div>
+                                <span class="text-xs px-2 py-1 bg-section-bg text-text-secondary rounded-full">Ready</span>
+                            </div>
+                            
+                            <h3 class="font-semibold text-text-primary mb-1">Set up Stripe Payments</h3>
+                            <p class="text-xs text-text-muted mb-3">Objective: Launch Your Product</p>
+                            
+                            <div class="space-y-2">
+                                <p class="text-xs text-text-secondary">Est. time: 2-3 hours</p>
+                                <p class="text-xs text-text-secondary">Difficulty: Medium</p>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-border">
+                                <button class="text-xs text-primary font-medium group-hover:text-primary-hover">Start mission →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                    <!-- Recommended Missions Tab Content -->
+                    <div id="recommended-missions" class="mission-tab-content hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Recommendation 1 -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 bg-success/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-chart-line text-success"></i>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-success/10 text-success rounded-full font-medium">Quick Win</span>
+                                </div>
+                                
+                                <h3 class="font-semibold text-text-primary mb-1">Set up Analytics Dashboard</h3>
+                                <p class="text-xs text-text-muted mb-3">Objective: MVP Development</p>
+                                
+                                <div class="space-y-2">
+                                    <p class="text-xs text-text-secondary">Track user behavior from day one</p>
+                                    <div class="flex items-center gap-4 text-xs text-text-muted">
+                                        <span><i class="fas fa-clock mr-1"></i>2 hours</span>
+                                        <span><i class="fas fa-users mr-1"></i>12 completed</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-border">
+                                    <button class="text-xs text-primary font-medium">Start mission →</button>
+                                </div>
+                            </div>
+
+                            <!-- Recommendation 2 -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-shield-alt text-primary"></i>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full font-medium">Essential</span>
+                                </div>
+                                
+                                <h3 class="font-semibold text-text-primary mb-1">Form Your Legal Entity</h3>
+                                <p class="text-xs text-text-muted mb-3">Objective: Operations & Legal</p>
+                                
+                                <div class="space-y-2">
+                                    <p class="text-xs text-text-secondary">Delaware C-Corp or LLC setup guide</p>
+                                    <div class="flex items-center gap-4 text-xs text-text-muted">
+                                        <span><i class="fas fa-clock mr-1"></i>1 week</span>
+                                        <span><i class="fas fa-users mr-1"></i>45 completed</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-border">
+                                    <button class="text-xs text-primary font-medium">Start mission →</button>
+                                </div>
+                            </div>
+
+                            <!-- Recommendation 3 -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 bg-warning/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-rocket text-warning"></i>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-warning/10 text-warning rounded-full font-medium">High Impact</span>
+                                </div>
+                                
+                                <h3 class="font-semibold text-text-primary mb-1">Launch on Product Hunt</h3>
+                                <p class="text-xs text-text-muted mb-3">Objective: Product Launch</p>
+                                
+                                <div class="space-y-2">
+                                    <p class="text-xs text-text-secondary">Complete playbook for a successful launch</p>
+                                    <div class="flex items-center gap-4 text-xs text-text-muted">
+                                        <span><i class="fas fa-clock mr-1"></i>2 weeks</span>
+                                        <span><i class="fas fa-users mr-1"></i>8 completed</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-border">
+                                    <button class="text-xs text-primary font-medium">Start mission →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Past Missions Tab Content -->
+                    <div id="past-missions" class="mission-tab-content hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Past Mission 1 -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer opacity-75">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 bg-success/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-check text-success"></i>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-success/10 text-success rounded-full font-medium">Completed</span>
+                                </div>
+                                
+                                <h3 class="font-semibold text-text-primary mb-1">Set up GitHub Repository</h3>
+                                <p class="text-xs text-text-muted mb-3">Objective: MVP Development</p>
+                                
+                                <div class="space-y-2">
+                                    <p class="text-xs text-text-secondary">Completed 2 days ago</p>
+                                    <div class="flex items-center gap-4 text-xs text-text-muted">
+                                        <span><i class="fas fa-clock mr-1"></i>30 mins</span>
+                                        <span><i class="fas fa-trophy mr-1"></i>100% complete</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-border">
+                                    <button class="text-xs text-text-secondary">View details →</button>
+                                </div>
+                            </div>
+
+                            <!-- Past Mission 2 -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer opacity-75">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 bg-success/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-check text-success"></i>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-success/10 text-success rounded-full font-medium">Completed</span>
+                                </div>
+                                
+                                <h3 class="font-semibold text-text-primary mb-1">Create Landing Page</h3>
+                                <p class="text-xs text-text-muted mb-3">Objective: MVP Development</p>
+                                
+                                <div class="space-y-2">
+                                    <p class="text-xs text-text-secondary">Completed 5 days ago</p>
+                                    <div class="flex items-center gap-4 text-xs text-text-muted">
+                                        <span><i class="fas fa-clock mr-1"></i>4 hours</span>
+                                        <span><i class="fas fa-trophy mr-1"></i>100% complete</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-border">
+                                    <button class="text-xs text-text-secondary">View details →</button>
+                                </div>
+                            </div>
+
+                            <!-- Past Mission 3 -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer opacity-75">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="w-10 h-10 bg-success/10 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-check text-success"></i>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-success/10 text-success rounded-full font-medium">Completed</span>
+                                </div>
+                                
+                                <h3 class="font-semibold text-text-primary mb-1">Validate Problem Statement</h3>
+                                <p class="text-xs text-text-muted mb-3">Objective: Idea Validation</p>
+                                
+                                <div class="space-y-2">
+                                    <p class="text-xs text-text-secondary">Completed 1 week ago</p>
+                                    <div class="flex items-center gap-4 text-xs text-text-muted">
+                                        <span><i class="fas fa-clock mr-1"></i>1 week</span>
+                                        <span><i class="fas fa-trophy mr-1"></i>100% complete</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-border">
+                                    <button class="text-xs text-text-secondary">View details →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Empty for now -->
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-6">
+                        <!-- Empty for now -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('dashboard');
+
+        // Mission navigation
+        function goToMission(missionId) {
+            window.location.href = `mission-detail.html?mission=${missionId}`;
+        }
+        
+        // Epic navigation to customize journey page
+        function customizeJourney() {
+            window.location.href = 'customize-journey.html';
+        }
+        
+        // Switch between mission tabs
+        function switchMissionTab(tab) {
+            // Update button states
+            const buttons = document.querySelectorAll('[data-tab]');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-tab') === tab) {
+                    btn.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border');
+                }
+            });
+            
+            // Show/hide tab content
+            const tabContents = document.querySelectorAll('.mission-tab-content');
+            tabContents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            if (tab === 'active') {
+                document.getElementById('active-missions').classList.remove('hidden');
+            } else if (tab === 'recommended') {
+                document.getElementById('recommended-missions').classList.remove('hidden');
+            } else if (tab === 'past') {
+                document.getElementById('past-missions').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoPilot - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --autopilot-primary: #FFE082; /* Warm yellow */
+            --autopilot-primary-dark: #FFD54F;
+            --autopilot-background: #1a1a1a;
+            --autopilot-surface: #2a2a2a;
+            --autopilot-text: #ffffff;
+            --autopilot-text-secondary: #b0b0b0;
+        }
+        
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }        
+        
+        </style>
+</head>
+<body class="bg-black min-h-screen font-inter flex">
+        <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a>
+                <a href="profile.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="squads.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="flightplan.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-route"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white bg-white/10 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Logout -->
+        <div class="pb-6 flex justify-center">
+            <a href="index.html" class="w-10 h-10 flex items-center justify-center text-white/50 rounded-lg hover:bg-white/10 hover:text-white/70 transition-all">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-black overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- AutoPilot Header -->
+            <div class="bg-black border-b border-white/10 sticky top-0 z-40">
+                <div class="max-w-[1000px] mx-auto h-[76px] flex items-center justify-between px-8">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-[var(--autopilot-primary)] rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-paper-plane text-black text-lg"></i>
+                        </div>
+                        <h1 class="text-xl font-semibold text-white">AutoPilot</h1>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <button onclick="clearChat()" class="text-sm text-white/50 hover:text-white transition-all">
+                            <i class="fas fa-trash mr-2"></i>Clear Chat
+                        </button>
+                        <button onclick="toggleAutopilotSettings()" class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
+                            <i class="fas fa-cog text-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="flex flex-col h-[calc(100vh-76px)]">
+                <!-- Messages Area -->
+                <div id="chat-messages" class="flex-1 overflow-y-auto px-8 py-6">
+                    <div class="max-w-[800px] mx-auto space-y-6">
+                        <!-- Welcome Message -->
+                        <div class="autopilot-message">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-[var(--autopilot-primary)] rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-paper-plane text-black"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="bg-[var(--autopilot-surface)] rounded-lg p-4">
+                                        <p class="text-white mb-3">Welcome to AutoPilot! I'm your AI co-pilot for navigating your startup journey. I can help you with:</p>
+                                        <ul class="text-white/80 space-y-2 ml-4">
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-[var(--autopilot-primary)]">•</span>
+                                                <span>Finding the right founders and squads to connect with</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-[var(--autopilot-primary)]">•</span>
+                                                <span>Recommendations for tools and resources based on your stage</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-[var(--autopilot-primary)]">•</span>
+                                                <span>Guidance on your next steps and missions to tackle</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-[var(--autopilot-primary)]">•</span>
+                                                <span>Insights from successful founders in your industry</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <span class="text-xs text-white/50 mt-2 inline-block">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <button onclick="askAutopilot('What squads should I join based on my profile?')" class="bg-[var(--autopilot-surface)] rounded-lg p-4 text-left hover:bg-white/10 transition-all group">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fas fa-people-group text-[var(--autopilot-primary)]"></i>
+                                    <span class="text-white font-medium">Squad Recommendations</span>
+                                </div>
+                                <p class="text-white/60 text-sm">Get personalized squad suggestions based on your industry and stage</p>
+                            </button>
+
+                            <button onclick="askAutopilot('What should I focus on this week?')" class="bg-[var(--autopilot-surface)] rounded-lg p-4 text-left hover:bg-white/10 transition-all group">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fas fa-compass text-[var(--autopilot-primary)]"></i>
+                                    <span class="text-white font-medium">Weekly Focus</span>
+                                </div>
+                                <p class="text-white/60 text-sm">Get actionable priorities for the week ahead</p>
+                            </button>
+
+                            <button onclick="askAutopilot('Who should I connect with in the community?')" class="bg-[var(--autopilot-surface)] rounded-lg p-4 text-left hover:bg-white/10 transition-all group">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fas fa-user-plus text-[var(--autopilot-primary)]"></i>
+                                    <span class="text-white font-medium">Connection Suggestions</span>
+                                </div>
+                                <p class="text-white/60 text-sm">Find founders who can help you with your current challenges</p>
+                            </button>
+
+                            <button onclick="askAutopilot('What tools do other founders at my stage use?')" class="bg-[var(--autopilot-surface)] rounded-lg p-4 text-left hover:bg-white/10 transition-all group">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fas fa-wrench text-[var(--autopilot-primary)]"></i>
+                                    <span class="text-white font-medium">Tool Stack Advice</span>
+                                </div>
+                                <p class="text-white/60 text-sm">Discover the tools successful founders use at your stage</p>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="border-t border-white/10 px-8 py-4">
+                    <div class="max-w-[800px] mx-auto">
+                        <form onsubmit="sendMessage(event)" class="flex gap-4">
+                            <input 
+                                type="text" 
+                                id="message-input"
+                                placeholder="Ask AutoPilot anything about your startup journey..."
+                                class="flex-1 bg-[var(--autopilot-surface)] text-white placeholder-white/50 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[var(--autopilot-primary)] transition-all"
+                            >
+                            <button type="submit" class="bg-[var(--autopilot-primary)] text-black rounded-lg px-6 py-3 font-medium hover:bg-[var(--autopilot-primary-dark)] transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i>
+                                <span>Send</span>
+                            </button>
+                        </form>
+                        <p class="text-xs text-white/40 mt-2">AutoPilot uses AI to provide personalized guidance. Always verify important decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // AutoPilot functionality
+        let messageHistory = [];
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Simulate AI response
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = generateResponse(message);
+                addMessage(response, 'autopilot');
+            }, 1500);
+        }
+
+        function askAutopilot(question) {
+            document.getElementById('message-input').value = question;
+            sendMessage(new Event('submit'));
+        }
+
+        function addMessage(content, sender) {
+            const messagesContainer = document.getElementById('chat-messages').querySelector('.max-w-\\[800px\\]');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'autopilot-message';
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start gap-4 justify-end">
+                        <div class="flex-1 max-w-[600px]">
+                            <div class="bg-[var(--autopilot-primary)] rounded-lg p-4">
+                                <p class="text-black">${content}</p>
+                            </div>
+                            <span class="text-xs text-white/50 mt-2 inline-block text-right">Just now</span>
+                        </div>
+                        <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-user text-white"></i>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[var(--autopilot-primary)] rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-paper-plane text-black"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-[var(--autopilot-surface)] rounded-lg p-4">
+                                <p class="text-white">${content}</p>
+                            </div>
+                            <span class="text-xs text-white/50 mt-2 inline-block">Just now</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messageHistory.push({ content, sender, timestamp: new Date() });
+            
+            // Scroll to bottom
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chat-messages').querySelector('.max-w-\\[800px\\]');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.className = 'autopilot-message';
+            typingDiv.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-[var(--autopilot-primary)] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-paper-plane text-black"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-[var(--autopilot-surface)] rounded-lg p-4">
+                            <div class="typing-indicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function generateResponse(message) {
+            const responses = {
+                'squads': 'Based on your profile as a B2B SaaS founder in the build stage, I recommend joining Squad Alpha. They focus on MVP development and have weekly check-ins that would be perfect for your current needs. Squad Gamma might also be a good fit if you\'re incorporating AI/ML into your product.',
+                'focus': 'This week, I recommend focusing on: 1) Customer interviews - aim for at least 5 conversations, 2) MVP feature prioritization based on feedback, 3) Setting up basic analytics to track user behavior. Remember, at this stage, talking to customers is your superpower!',
+                'connect': 'I\'d suggest connecting with Sarah Chen from Squad Alpha - she recently hit 1000 waitlist signups and could share her growth tactics. Also, Marcus Park has experience scaling e-commerce and might have insights on customer acquisition strategies that apply to B2B SaaS.',
+                'tools': 'At your stage, successful founders typically use: Figma for design and prototyping, Linear for task management, Mixpanel for analytics, and Stripe for payments. Many also use Notion for documentation and Calendly for scheduling customer calls. Start simple and add tools as you need them.',
+                'default': 'That\'s a great question! Based on what you\'re asking, I can help you explore different aspects of your startup journey. Would you like specific recommendations for squads, tools, connections, or strategic guidance?'
+            };
+            
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('squad')) return responses.squads;
+            if (lowerMessage.includes('focus') || lowerMessage.includes('week')) return responses.focus;
+            if (lowerMessage.includes('connect') || lowerMessage.includes('who')) return responses.connect;
+            if (lowerMessage.includes('tool') || lowerMessage.includes('stack')) return responses.tools;
+            
+            return responses.default;
+        }
+
+        function clearChat() {
+            const messagesContainer = document.getElementById('chat-messages').querySelector('.max-w-\\[800px\\]');
+            messagesContainer.innerHTML = '';
+            messageHistory = [];
+            
+            // Re-add welcome message
+            const welcomeMessage = `
+                <div class="autopilot-message">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-[var(--autopilot-primary)] rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-paper-plane text-black"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-[var(--autopilot-surface)] rounded-lg p-4">
+                                <p class="text-white mb-3">Welcome to AutoPilot! I'm your AI co-pilot for navigating your startup journey. I can help you with:</p>
+                                <ul class="text-white/80 space-y-2 ml-4">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-[var(--autopilot-primary)]">•</span>
+                                        <span>Finding the right founders and squads to connect with</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-[var(--autopilot-primary)]">•</span>
+                                        <span>Recommendations for tools and resources based on your stage</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-[var(--autopilot-primary)]">•</span>
+                                        <span>Guidance on your next steps and missions to tackle</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-[var(--autopilot-primary)]">•</span>
+                                        <span>Insights from successful founders in your industry</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-white/50 mt-2 inline-block">Just now</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button onclick="askAutopilot('What squads should I join based on my profile?')" class="bg-[var(--autopilot-surface)] rounded-lg p-4 text-left hover:bg-white/10 transition-all group">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-people-group text-[var(--autopilot-primary)]"></i>
+                            <span class="text-white font-medium">Squad Recommendations</span>
+                        </div>
+                        <p class="text-white/60 text-sm">Get personalized squad suggestions based on your industry and stage</p>
+                    </button>
+
+                    <button onclick="askAutopilot('What should I focus on this week?')" class="bg-[var(--autopilot-surface)] rounded-lg p-4 text-left hover:bg-white/10 transition-all group">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-compass text-[var(--autopilot-primary)]"></i>
+                            <span class="text-white font-medium">Weekly Focus</span>
+                        </div>
+                        <p class="text-white/60 text-sm">Get actionable priorities for the week ahead</p>
+                    </button>
+
+                    <button onclick="askAutopilot('Who should I connect with in the community?')" class="bg-[var(--autopilot-surface)] rounded-lg p-4 text-left hover:bg-white/10 transition-all group">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-user-plus text-[var(--autopilot-primary)]"></i>
+                            <span class="text-white font-medium">Connection Suggestions</span>
+                        </div>
+                        <p class="text-white/60 text-sm">Find founders who can help you with your current challenges</p>
+                    </button>
+
+                    <button onclick="askAutopilot('What tools do other founders at my stage use?')" class="bg-[var(--autopilot-surface)] rounded-lg p-4 text-left hover:bg-white/10 transition-all group">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-wrench text-[var(--autopilot-primary)]"></i>
+                            <span class="text-white font-medium">Tool Stack Advice</span>
+                        </div>
+                        <p class="text-white/60 text-sm">Discover the tools successful founders use at your stage</p>
+                    </button>
+                </div>
+            `;
+            
+            messagesContainer.innerHTML = welcomeMessage;
+        }
+
+        function toggleAutopilotSettings() {
+            alert('Settings panel coming soon! Here you\'ll be able to customize AutoPilot\'s personality, response style, and notification preferences.');
+        }
+    </script>
+</body>
+</html>

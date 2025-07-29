@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Founders Fleet – Control</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #0a0a0a;
+      --text: #ffffff;
+      --text-secondary: #a1a1aa;
+      --card-bg: #111111;
+      --card-hover: #161616;
+      --border: #27272a;
+      --accent: #18181b;
+      --accent-hover: #1f1f23;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --padding: 1.5rem;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--background) 0%, #0f0f0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 280px;
+      background: var(--accent);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .workspace-header:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .workspace-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .workspace-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .workspace-select {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+    }
+
+    .workspace-select option {
+      color: black;
+      background: white;
+    }
+
+    .workspace-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .nav-link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--accent);
+      padding: 0.125rem 0.375rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: var(--primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: var(--padding);
+      max-width: calc(100vw - 280px);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .main-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .main-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, var(--text), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .main-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .wings-status {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: linear-gradient(135deg, var(--success), #34d399);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      color: white;
+      font-weight: 600;
+    }
+
+    .wings-icon {
+      font-size: 1.5rem;
+      animation: flutter 2s ease-in-out infinite;
+    }
+
+    @keyframes flutter {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    /* Current Mission Hero Section */
+    .current-mission {
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .current-mission::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      opacity: 0.3;
+    }
+
+    .current-mission-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .mission-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .current-mission-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      color: white;
+    }
+
+    .current-mission-description {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0 0 1.5rem 0;
+      line-height: 1.6;
+    }
+
+    .mission-progress {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .progress-label {
+      color: white;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+
+    .progress-percentage {
+      color: white;
+      font-weight: 700;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: white;
+      border-radius: 4px;
+      transition: width 1s ease;
+    }
+
+    .mission-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .mission-button {
+      background: white;
+      color: var(--primary);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mission-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .mission-button.secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Flightplan Card */
+    .flightplan-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0;
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flightplan-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stage-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .stage-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+
+    .stage-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 20px;
+      right: -50%;
+      left: 50%;
+      height: 2px;
+      background: var(--border);
+      z-index: 1;
+    }
+
+    .stage-item.completed:not(:last-child)::after {
+      background: var(--success);
+    }
+
+    .stage-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .stage-icon.completed {
+      background: var(--success);
+      color: white;
+    }
+
+    .stage-icon.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+      animation: pulse 2s infinite;
+    }
+
+    .stage-icon.inactive {
+      background: var(--accent);
+      color: var(--text-secondary);
+      border: 2px solid var(--border);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .stage-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .stage-label.active {
+      color: var(--primary);
+    }
+
+    .flightplan-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      margin-top: 1rem;
+    }
+
+    .flightplan-status {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .flightplan-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .flightplan-button:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .flightplan-button::after {
+      content: '→';
+      font-size: 0.875rem;
+    }
+
+    /* My Missions Section */
+    .my-missions {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      margin-bottom: 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .see-all {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .see-all:hover {
+      transform: translateX(2px);
+    }
+
+    .my-missions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .my-mission-card {
+      background: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .my-mission-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .my-mission-card.active {
+      border-color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .my-mission-card.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--success);
+    }
+
+    .my-mission-card.completed {
+      border-color: var(--primary);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .my-mission-card.completed::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .my-mission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .my-mission-icon {
+      font-size: 1.5rem;
+    }
+
+    .my-mission-progress {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--card-bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .my-mission-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .my-mission-description {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin: 0 0 1rem 0;
+      line-height: 1.4;
+    }
+
+    .my-mission-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .my-mission-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+    }
+
+    .my-mission-button:hover {
+      background: var(--primary-hover);
+    }
+
+    .my-mission-button.secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .my-mission-button.secondary:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+
+    /* Wings Collection */
+    .wings-collection {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      margin-bottom: 2rem;
+    }
+
+    .wings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .wings-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .wings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--accent);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .badge-item.earned {
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--success);
+    }
+
+    .badge-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .badge-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: var(--card-bg);
+      flex-shrink: 0;
+    }
+
+    .badge-item.earned .badge-icon {
+      background: var(--success);
+      animation: badgeGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes badgeGlow {
+      from {
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+      }
+      to {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+      }
+    }
+
+    .badge-content {
+      flex: 1;
+    }
+
+    .badge-name {
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .badge-item.earned .badge-name {
+      color: var(--success);
+    }
+
+    .badge-description {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    /* Platform Cards */
+    .platform-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .platform-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .platform-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-content {
+      padding: var(--padding);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      gap: 2rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      flex: 1;
+    }
+
+    .info-tooltip {
+      width: 16px;
+      height: 16px;
+      background: var(--text-secondary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      cursor: help;
+      position: relative;
+      margin-left: 0.25rem;
+    }
+
+    .info-tooltip::before {
+      content: '?';
+      color: var(--background);
+      font-weight: 600;
+    }
+
+    .tooltip-content {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      color: var(--text-secondary);
+      width: 280px;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      z-index: 9999;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-tooltip:hover .tooltip-content {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .card-prompt {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+    }
+
+    .card-prompt strong {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .action-panel {
+      display: flex;
+      align-items: center;
+      background: var(--accent);
+      border-top: 1px solid var(--border);
+      border-radius: 0 0 var(--radius) var(--radius);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .card-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      padding: 1rem 1.5rem;
+      background: transparent;
+      border: none;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      flex: 1;
+      padding-left: 2.75rem;
+    }
+
+    .card-status::before {
+      content: '';
+      position: absolute;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse {
+      0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+      50% { opacity: 0.5; transform: translateY(-50%) scale(1.2); }
+    }
+
+    .card-status.warning::before {
+      background: var(--warning);
+    }
+
+    .btn {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      border-left: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '→';
+      margin-left: 0.25rem;
+      font-size: 1rem;
+      transition: transform 0.25s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.02);
+    }
+
+    .btn:hover::after {
+      transform: translateX(2px);
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        left: -280px;
+        z-index: 1000;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .sidebar.open {
+        transform: translateX(280px);
+      }
+
+      .main {
+        width: 100%;
+        max-width: 100vw;
+        padding: 1rem;
+      }
+
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .main-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .wings-status {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .missions-grid, .platform-cards, .my-missions-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .stage-progress {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .stage-item:not(:last-child)::after {
+        display: none;
+      }
+
+      .flightplan-card .stage-progress {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .flightplan-card .stage-item:not(:last-child)::after {
+        display: none;
+      }
+
+      .wings-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* Floating Tower Chat Bot */
+    .tower-chat {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      border: 3px solid var(--background);
+    }
+
+    .tower-chat:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .tower-chat::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      border-radius: 50%;
+      z-index: -1;
+      animation: chatPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes chatPulse {
+      0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.3;
+        transform: scale(1.1);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .tower-chat {
+        bottom: 1rem;
+        left: 1rem;
+        width: 50px;
+        height: 50px;
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="mobile-menu-btn" onclick="toggleSidebar()">
+    ☰
+  </button>
+  
+  <div class="overlay" onclick="closeSidebar()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="workspace-header">
+      <div class="workspace-logo">F</div>
+      <div class="workspace-info">
+        <select class="workspace-select" onchange="handleWorkspaceChange(this)">
+          <option>Eight Bit Studios</option>
+          <option>Another Workspace</option>
+          <option value="signout">Sign Out</option>
+        </select>
+        <span class="workspace-email">name@email.com</span>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a class="nav-link active" href="control.html">
+        <div class="nav-link-content">
+          <span>🏠</span> Control
+        </div>
+      </a>
+      <a class="nav-link" href="flightplan.html">
+        <div class="nav-link-content">
+          <span>🗺️</span> Flightplan
+        </div>
+        <span class="nav-status">Idea</span>
+      </a>
+      <a class="nav-link" href="missions.html">
+        <div class="nav-link-content">
+          <span>🎯</span> Missions
+        </div>
+        <span class="nav-status">Ready</span>
+      </a>
+      <a class="nav-link" href="dispatch.html">
+        <div class="nav-link-content">
+          <span>🪪</span> Dispatch
+        </div>
+        <span class="nav-status">Draft</span>
+      </a>
+      <a class="nav-link" href="drops.html">
+        <div class="nav-link-content">
+          <span>📦</span> Drops
+        </div>
+        <span class="nav-status">2</span>
+      </a>
+      <a class="nav-link" href="signals.html">
+        <div class="nav-link-content">
+          <span>📡</span> Signals
+        </div>
+        <span class="nav-status">3</span>
+      </a>
+      <a class="nav-link" href="hangar.html">
+        <div class="nav-link-content">
+          <span>🏗️</span> Hangar
+        </div>
+        <span class="nav-status">Friday</span>
+      </a>
+      <a class="nav-link" href="terminal.html">
+        <div class="nav-link-content">
+          <span>🏢</span> Terminal
+        </div>
+        <span class="nav-status">Ready</span>
+      </a>
+      <a class="nav-link" href="vault.html">
+        <div class="nav-link-content">
+          <span>🗃️</span> Vault
+        </div>
+        <span class="nav-status">47</span>
+      </a>
+    </nav>
+  </aside>
+    
+  <main class="main">
+    <div class="main-header">
+      <div>
+        <h1 class="main-title">Control</h1>
+        <h2 class="main-subtitle">Central Command Center</h2>
+      </div>
+    </div>
+
+    <!-- Flightplan Card -->
+    <div class="flightplan-card">
+      <div class="card-content">
+        <div class="card-header">
+          <h3 class="card-title">
+            🗺️ Flightplan: Roadmap & Milestones
+            <div class="info-tooltip">
+              <div class="tooltip-content">
+                Stage-based roadmap from Idea → Seed → Build → Launch → Growth → Scale. Milestone guidance including Customer Discovery, Synthesis, Design the Right Thing, and Scoping Your MVP with tailored templates and diagnostics.
+              </div>
+            </div>
+          </h3>
+        </div>
+        <p class="card-prompt">
+          <strong>Current Focus:</strong> You're in the Seed stage working on customer discovery and problem validation. Complete Signal Scan mission to advance your roadmap progress and unlock the next milestone.
+        </p>
+        <div class="stage-progress">
+          <div class="stage-item completed">
+            <div class="stage-icon completed">✓</div>
+            <div class="stage-label completed">Idea</div>
+          </div>
+          <div class="stage-item active">
+            <div class="stage-icon active">💡</div>
+            <div class="stage-label active">Seed</div>
+          </div>
+          <div class="stage-item inactive">
+            <div class="stage-icon inactive">🔨</div>
+            <div class="stage-label">Build</div>
+          </div>
+          <div class="stage-item inactive">
+            <div class="stage-icon inactive">🚀</div>
+            <div class="stage-label">Launch</div>
+          </div>
+          <div class="stage-item inactive">
+            <div class="stage-icon inactive">📈</div>
+            <div class="stage-label">Growth</div>
+          </div>
+          <div class="stage-item inactive">
+            <div class="stage-icon inactive">⚡</div>
+            <div class="stage-label">Scale</div>
+          </div>
+        </div>
+      </div>
+      <div class="action-panel">
+        <span class="card-status">15% Complete • Idea Stage</span>
+        <button class="btn" onclick="navigateTo('flightplan.html')">View Roadmap</button>
+      </div>
+    </div>
+
+    <!-- Active Missions Section -->
+    <div class="my-missions">
+      <div class="section-header">
+        <h3 class="section-title">🎯 Your Active Missions</h3>
+        <a href="missions.html" class="see-all">View All →</a>
+      </div>
+      <div class="my-missions-grid">
+        <div class="my-mission-card active" onclick="openMission('signal-scan')">
+          <div class="my-mission-header">
+            <span class="my-mission-icon">🔍</span>
+            <span class="my-mission-progress">60%</span>
+          </div>
+          <h4 class="my-mission-title">Signal Scan</h4>
+          <p class="my-mission-description">Build your customer discovery habit through structured interviews</p>
+          <div class="my-mission-actions">
+            <button class="my-mission-button" onclick="event.stopPropagation(); continueMission()">Continue</button>
+            <button class="my-mission-button secondary" onclick="event.stopPropagation(); viewTasks()">Tasks</button>
+          </div>
+        </div>
+
+        <div class="my-mission-card" onclick="openMission('customer-recon')">
+          <div class="my-mission-header">
+            <span class="my-mission-icon">🕵️</span>
+            <span class="my-mission-progress">0%</span>
+          </div>
+          <h4 class="my-mission-title">Customer Recon</h4>
+          <p class="my-mission-description">Build structured personas and problem statements</p>
+          <div class="my-mission-actions">
+            <button class="my-mission-button" onclick="event.stopPropagation(); startMission('customer-recon')">Start</button>
+            <button class="my-mission-button secondary" onclick="event.stopPropagation(); previewMission('customer-recon')">Preview</button>
+          </div>
+        </div>
+
+        <div class="my-mission-card completed" onclick="openMission('problem-definition')">
+          <div class="my-mission-header">
+            <span class="my-mission-icon">🎯</span>
+            <span class="my-mission-progress">100%</span>
+          </div>
+          <h4 class="my-mission-title">Problem Definition</h4>
+          <p class="my-mission-description">Define your core problem and target customer segment</p>
+          <div class="my-mission-actions">
+            <button class="my-mission-button secondary" onclick="event.stopPropagation(); viewResults('problem-definition')">Results</button>
+            <button class="my-mission-button secondary" onclick="event.stopPropagation(); shareDrop('problem-definition')">Share</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wings Collection -->
+    <div class="wings-collection">
+      <div class="wings-header">
+        <h3 class="wings-title">Your Wings Collection</h3>
+        <span style="color: var(--text-secondary); font-size: 0.875rem;">2 of 6 earned</span>
+      </div>
+      <div class="wings-grid">
+        <div class="badge-item earned" onclick="showBadgeDetails('Problem Solver', true)">
+          <div class="badge-icon">🎯</div>
+          <div class="badge-content">
+            <h4 class="badge-name">Problem Solver</h4>
+            <p class="badge-description">Define your core problem and target customer</p>
+          </div>
+        </div>
+        <div class="badge-item earned" onclick="showBadgeDetails('Signal Hunter', true)">
+          <div class="badge-icon">🔍</div>
+          <div class="badge-content">
+            <h4 class="badge-name">Signal Hunter</h4>
+            <p class="badge-description">Complete your first customer interview and insight synthesis</p>
+          </div>
+        </div>
+        <div class="badge-item" onclick="showBadgeDetails('Customer Detective', false)">
+          <div class="badge-icon">🕵️</div>
+          <div class="badge-content">
+            <h4 class="badge-name">Customer Detective</h4>
+            <p class="badge-description">Build 3 structured customer personas</p>
+          </div>
+        </div>
+        <div class="badge-item" onclick="showBadgeDetails('Solution Architect', false)">
+          <div class="badge-icon">💡</div>
+          <div class="badge-content">
+            <h4 class="badge-name">Solution Architect</h4>
+            <p class="badge-description">Design a validated value proposition</p>
+          </div>
+        </div>
+        <div class="badge-item" onclick="showBadgeDetails('MVP Master', false)">
+          <div class="badge-icon">🎯</div>
+          <div class="badge-content">
+            <h4 class="badge-name">MVP Master</h4>
+            <p class="badge-description">Successfully scope and prioritize your MVP</p>
+          </div>
+        </div>
+        <div class="badge-item" onclick="showBadgeDetails('Launch Commander', false)">
+          <div class="badge-icon">🚀</div>
+          <div class="badge-content">
+            <h4 class="badge-name">Launch Commander</h4>
+            <p class="badge-description">Execute a successful product launch</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Tools -->
+    <div class="platform-cards">
+      <!-- Dispatch Card -->
+      <div class="platform-card">
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">
+              🪪 Dispatch: Public Founder Profile
+              <div class="info-tooltip">
+                <div class="tooltip-content">
+                  Dynamic public founder profile at foundersfleet.com/yourname, showcasing your startup mission, Flightplan progress, and milestone Drops. Build credibility and attract advisors and investors.
+                </div>
+              </div>
+            </h3>
+          </div>
+          <p class="card-prompt">
+            <strong>Quick Start:</strong> Complete your founder profile to unlock networking opportunities. Add your mission statement, current stage, and recent wins to start attracting the right advisors and potential investors.
+          </p>
+        </div>
+        <div class="action-panel">
+          <span class="card-status warning">Profile: Draft Mode</span>
+          <button class="btn" onclick="navigateTo('dispatch.html')">Edit Profile</button>
+        </div>
+      </div>
+
+      <!-- Drops Card -->
+      <div class="platform-card">
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">
+              📦 Drops: Launch Announcements
+              <div class="info-tooltip">
+                <div class="tooltip-content">
+                  Milestone announcements for funding, launches, and traction milestones. Tools to manage external launch channels including social media and Product Hunt campaigns.
+                </div>
+              </div>
+            </h3>
+          </div>
+          <p class="card-prompt">
+            <strong>Get Started:</strong> Share your first milestone to build momentum. Whether it's your first customer interview, MVP launch, or user feedback, celebrate progress to engage your network and attract support.
+          </p>
+        </div>
+        <div class="action-panel">
+          <span class="card-status">3 Recent Drops</span>
+          <button class="btn" onclick="navigateTo('drops.html')">Create Drop</button>
+        </div>
+      </div>
+
+      <!-- Signals Card -->
+      <div class="platform-card">
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">
+              📡 Signals: Trend Monitoring Hub
+              <div class="info-tooltip">
+                <div class="tooltip-content">
+                  Data-driven signals hub to monitor macro & micro trends, benchmarks, and custom alerts. Digest-style briefings powered by StratoMetrics, delivering actionable trend insights directly to founders.
+                </div>
+              </div>
+            </h3>
+          </div>
+          <p class="card-prompt">
+            <strong>Start Here:</strong> Review this week's trend signals and set up your first industry alert. Stay ahead of macro and micro trends that could impact your startup's strategy and timing.
+          </p>
+        </div>
+        <div class="action-panel">
+          <span class="card-status">4 Reports Ready</span>
+          <button class="btn" onclick="navigateTo('signals.html')">Open Signals</button>
+        </div>
+      </div>
+
+      <!-- Hangar Card -->
+      <div class="platform-card">
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">
+              🏗️ Hangar: Community Hub
+              <div class="info-tooltip">
+                <div class="tooltip-content">
+                  Community hub with Events & Workshops, Peer Circles (4–6 founder cohorts), and access to Advisors & Investors. Your collaboration & support space for accountability, guidance, and capital access.
+                </div>
+              </div>
+            </h3>
+          </div>
+          <p class="card-prompt">
+            <strong>Join Now:</strong> Connect with fellow founders in your next Peer Circle session. Sign up for Forecast Friday to share your weekly progress and get feedback from experienced founders.
+          </p>
+        </div>
+        <div class="action-panel">
+          <span class="card-status">Next: Forecast Friday</span>
+          <button class="btn" onclick="navigateTo('hangar.html')">Join Community</button>
+        </div>
+      </div>
+
+      <!-- Terminal Card -->
+      <div class="platform-card">
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">
+              🏢 Terminal: Sandbox & Branding Hub
+              <div class="info-tooltip">
+                <div class="tooltip-content">
+                  Multi-modal hosting with demo environments at yourname.foundersfleet.com. Includes Branding Hub for brand assets, built-in auth, database, and custom domain support for rapid prototyping.
+                </div>
+              </div>
+            </h3>
+          </div>
+          <p class="card-prompt">
+            <strong>Launch Today:</strong> Set up your demo environment and Branding Hub in minutes. Upload your brand assets and create a professional presence to showcase your MVP to investors and users.
+          </p>
+        </div>
+        <div class="action-panel">
+          <span class="card-status">Demo Ready</span>
+          <button class="btn" onclick="navigateTo('terminal.html')">Launch Environment</button>
+        </div>
+      </div>
+
+      <!-- Vault Card -->
+      <div class="platform-card">
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">
+              🗃️ Vault: File & Document Hub
+              <div class="info-tooltip">
+                <div class="tooltip-content">
+                  Central repository for all uploaded and in-platform generated documents. Full-text search across all files with filtering by type, tags, and date range. Automatic indexing of new content with seamless integration to external sources like Google Drive and Slack.
+                </div>
+              </div>
+            </h3>
+          </div>
+          <p class="card-prompt">
+            <strong>Organize Everything:</strong> Upload documents, connect your Google Drive, and let Vault automatically index all content created across Founders Fleet. Search across everything with powerful filters to find what you need instantly.
+          </p>
+          <div style="margin: 1rem 0;">
+            <div style="height: 6px; background: var(--accent); border-radius: 3px; margin: 0.5rem 0; position: relative; overflow: hidden;">
+              <div style="position: absolute; left: 0; top: 0; height: 100%; width: 2%; background: linear-gradient(90deg, var(--primary), #60a5fa); border-radius: 3px; transition: width 0.3s ease;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-secondary);">
+              <span style="color: var(--primary); font-weight: 500;">100 MB used</span>
+              <span>5 GB total</span>
+            </div>
+          </div>
+        </div>
+        <div class="action-panel">
+          <span class="card-status">47 Documents</span>
+          <button class="btn" onclick="navigateTo('vault.html')">Browse Vault</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Floating Tower Chat Bot -->
+  <div class="tower-chat" onclick="openTowerChat()" title="Chat with Tower AI">
+    🤖
+  </div>
+
+  <script>
+    function handleWorkspaceChange(select) {
+      if (select.value === 'signout') {
+        window.location.href = 'index.html';
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.querySelector('.overlay');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('active');
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.querySelector('.overlay');
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    }
+
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+
+    function continueMission() {
+      alert('Continue Mission: Signal Scan\n\nThis would open the mission interface with your current tasks and progress:\n\n• Complete 3 more customer interviews\n• Synthesize insights using the Jobs-to-be-Done Mapper\n• Calculate signal strength for your top insights');
+    }
+
+    function viewTasks() {
+      alert('Mission Tasks:\n\n✅ Conduct first customer interview\n✅ Use Insight Synthesizer Board\n🔄 Complete 3 more interviews\n⏳ Use Jobs-to-be-Done Mapper\n⏳ Calculate signal strength');
+    }
+
+    function startMission(missionId) {
+      if (missionId === 'customer-recon') {
+        alert('Starting Mission: Customer Recon\n\nThis mission will help you build structured personas and problem statements based on your customer discovery insights.\n\nReady to begin?');
+      }
+    }
+
+    function previewMission(missionId) {
+      if (missionId === 'customer-recon') {
+        alert('Mission Preview: Customer Recon\n\nYou\'ll learn to:\n• Build detailed customer personas\n• Create problem statements\n• Generate interview questions\n\nEstimated time: 2-3 hours\nTools: Persona Primer, Problem Statement Generator');
+      }
+    }
+
+    function viewResults(missionId) {
+      if (missionId === 'problem-definition') {
+        alert('Mission Results: Problem Definition\n\n✅ Problem Statement: "Help early-stage founders validate their ideas faster"\n✅ Target Customer: Pre-seed founders in tech\n✅ Market Size: $2.3B TAM\n\nBadge Earned: Problem Solver 🎯');
+      }
+    }
+
+    function shareDrop(missionId) {
+      if (missionId === 'problem-definition') {
+        alert('Share Your Achievement\n\nCreate a Drop to announce:\n"🎯 Just completed Problem Definition mission! Defined our core problem and target customer segment. Ready for Customer Discovery phase!"\n\nShare on: LinkedIn, Twitter, or save as draft?');
+      }
+    }
+
+    function openMission(missionId) {
+      alert(`Opening mission: ${missionId}\n\nThis would navigate to the detailed mission view with progress, tasks, and tools.`);
+    }
+
+    function showBadgeDetails(badgeName, isEarned) {
+      if (isEarned) {
+        alert(`🎉 ${badgeName} Badge Earned!\n\nYou've successfully completed this mission challenge. This badge demonstrates your commitment to building the right foundation for your startup.`);
+      } else {
+        alert(`🔒 ${badgeName} Badge\n\nComplete the required missions to earn this badge. This achievement shows mastery of key founder skills.`);
+      }
+    }
+
+    function openTowerChat() {
+      alert('Tower AI Chat\n\nHi! I\'m Tower, your AI assistant. I can help you with:\n\n• Platform guidance and navigation\n• Startup strategy insights\n• Mission recommendations\n• Progress tracking\n• Customer discovery tips\n\nWhat would you like to know?');
+    }
+
+    // Animate mission progress on load
+    document.addEventListener('DOMContentLoaded', function() {
+      const progressFill = document.querySelector('.current-mission .progress-fill');
+      if (progressFill) {
+        const width = progressFill.style.width;
+        progressFill.style.width = '0%';
+        setTimeout(() => {
+          progressFill.style.width = width;
+        }, 500);
+      }
+
+      // Add card hover interactions
+      document.querySelectorAll('.mission-card, .platform-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-4px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(-2px)';
+        });
+      });
+
+      // Add click handlers for mission buttons
+      document.querySelectorAll('.mission-button, .card-button').forEach(button => {
+        button.addEventListener('click', function() {
+          if (!this.disabled) {
+            const text = this.textContent.trim();
+            if (text.includes('Start Mission')) {
+              alert(`Starting Mission: Customer Recon\n\nThis mission will help you build structured personas and problem statements. Ready to begin?`);
+            } else if (text.includes('Learn More')) {
+              alert(`Mission Details\n\nCustomer Recon teaches you to:\n• Build detailed customer personas\n• Create problem statements\n• Generate interview questions\n\nEstimated time: 2-3 hours`);
+            }
+          }
+        });
+      });
+
+      // Add badge hover effects
+      document.querySelectorAll('.badge-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const badgeName = this.querySelector('.badge-name').textContent;
+          const isEarned = this.classList.contains('earned');
+          showBadgeDetails(badgeName, isEarned);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

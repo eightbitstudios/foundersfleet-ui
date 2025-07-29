@@ -1,0 +1,463 @@
+/* Boarding Pass Style Components */
+
+/* CSS Custom Properties for theme colors */
+:root {
+    --autopilot-primary: #85d3c3;
+    --autopilot-primary-light: #a8e0d5;
+    --autopilot-primary-dark: #6bb5a5;
+}
+
+/* Base boarding pass card */
+.boarding-pass {
+    background: #FFFFFF;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: visible;
+    margin: 0 12px; /* Space for notches */
+}
+
+/* Boarding pass sections */
+.boarding-pass-header {
+    padding: 32px;
+    position: relative;
+}
+
+/* Boarding pass tag positioning for founder cards */
+.boarding-pass-header .boarding-pass-tag {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+}
+
+.boarding-pass-body {
+    padding: 0 32px 32px 32px;
+}
+
+.boarding-pass-footer {
+    padding: 24px 32px;
+    background: #F5F5F5;
+    border-radius: 0 0 20px 20px;
+}
+
+/* Divider with notches */
+.boarding-pass-divider {
+    position: relative;
+    height: 40px; /* Height for notch placement */
+    margin: 0; /* No negative margin */
+    overflow: visible;
+}
+
+/* Dotted line in the middle */
+.boarding-pass-divider::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 1px;
+    transform: translateY(-50%);
+    background-image: repeating-linear-gradient(
+        to right,
+        #E5E5E5,
+        #E5E5E5 5px,
+        transparent 5px,
+        transparent 10px
+    );
+}
+
+/* Left notch */
+.boarding-pass-divider::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #000000;
+    border-radius: 50%;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Right notch - using a span element */
+.boarding-pass-notch {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #000000;
+    border-radius: 50%;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Step number styling */
+.boarding-pass-step {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    text-align: right;
+}
+
+.boarding-pass-step-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #999999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.boarding-pass-step-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1;
+}
+
+/* Icon in upper left */
+.boarding-pass-icon-corner {
+    position: absolute;
+    top: 24px;
+    left: 32px;
+    width: 48px;
+    height: 48px;
+    background: #F8F9FA;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+/* Notched Logo Style */
+.logo-notched {
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    overflow: visible;
+}
+
+.logo-notched::before,
+.logo-notched::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #161616;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.logo-notched::before {
+    left: -5px;
+}
+
+.logo-notched::after {
+    right: -5px;
+}
+
+/* Main content area */
+.boarding-pass-content {
+    padding-top: 80px; /* Space for icon and step */
+}
+
+/* Tag/Badge styles */
+.boarding-pass-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    background: #000000;
+    color: #FFFFFF;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Outline style tag */
+.boarding-pass-tag-outline {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    background: transparent;
+    color: #666666;
+    border: 1px solid #E5E5E5;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Icon for links */
+.boarding-pass-link-icon {
+    width: 40px;
+    height: 40px;
+    background: #F8F9FA;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+/* Value styles */
+.boarding-pass-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.boarding-pass-value-large {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+}
+
+/* Responsive spacing utilities */
+.boarding-pass-spacing-sm { padding: 16px; }
+.boarding-pass-spacing-md { padding: 24px; }
+.boarding-pass-spacing-lg { padding: 32px; }
+.boarding-pass-spacing-xl { padding: 40px; }
+
+/* Frosted Glass Hero Card */
+.hero-frosted {
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 1px 0 0 rgba(255,255,255,0.1),
+        inset 0 -1px 0 0 rgba(255,255,255,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-frosted::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+}
+
+.hero-frosted:hover::before {
+    left: 100%;
+}
+
+/* Notched Section Styles */
+.boarding-pass-body.p-0 {
+    padding: 0 !important;
+    position: relative;
+}
+
+.boarding-pass-body.p-0 > a,
+.boarding-pass-body.p-0 > button {
+    position: relative;
+}
+
+/* Add dotted line between sections */
+.boarding-pass-body.p-0 > a:not(:last-child),
+.boarding-pass-body.p-0 > button:not(:last-child) {
+    border-bottom: 1px dashed #E5E5E5;
+    position: relative;
+}
+
+/* Add notches on the dotted lines */
+.boarding-pass-body.p-0 > a:not(:last-child)::after,
+.boarding-pass-body.p-0 > button:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: -12px;
+    width: 24px;
+    height: 24px;
+    background: #161616;
+    border-radius: 50%;
+    bottom: -12px;
+    z-index: 2;
+}
+
+.boarding-pass-body.p-0 > a:not(:last-child)::before,
+.boarding-pass-body.p-0 > button:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    right: -12px;
+    width: 24px;
+    height: 24px;
+    background: #161616;
+    border-radius: 50%;
+    bottom: -12px;
+    z-index: 2;
+}
+
+/* Ensure last item has rounded bottom corners */
+.boarding-pass-body.p-0 > a:last-child,
+.boarding-pass-body.p-0 > button:last-child {
+    border-radius: 0 0 20px 20px;
+}
+
+
+
+/* Logo notches update */
+.logo-notched::before,
+.logo-notched::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #161616;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.logo-notched::before {
+    left: -4px;
+}
+
+.logo-notched::after {
+    right: -4px;
+}
+
+/* Notches in boarding pass sections */
+.boarding-pass-body.p-0 > a:not(:last-child)::after,
+.boarding-pass-body.p-0 > button:not(:last-child)::after {
+    background: #161616;
+}
+
+.boarding-pass-body.p-0 > a:not(:last-child)::before,
+.boarding-pass-body.p-0 > button:not(:last-child)::before {
+    background: #161616;
+}
+
+/* Frosted Container Style - Main content area with frosted glass effect */
+.frosted-container {
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 1px 0 0 rgba(255,255,255,0.1),
+        inset 0 -1px 0 0 rgba(255,255,255,0.05);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    padding: 48px;
+}
+
+/* Ticker card style - compact frosted container for home page tickers */
+.ticker-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 
+        0 8px 32px 0 rgba(0, 0, 0, 0.37),
+        inset 0 1px 0 0 rgba(255,255,255,0.1),
+        inset 0 -1px 0 0 rgba(255,255,255,0.05);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hero text within frosted container */
+.frosted-container-hero {
+    text-align: center;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Content area within frosted container */
+.frosted-container-content {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+/* Ticker card content - compact padding for home page ticker cards */
+.ticker-card-content {
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+    padding: 20px;
+}
+
+/* Subtle container style for AutoPilot and dark theme pages */
+.subtle-container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle container sections */
+.subtle-container-header {
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.subtle-container-body {
+    padding: 24px;
+}
+
+.subtle-container-footer {
+    padding: 20px 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0 0 20px 20px;
+}
+
+/* AutoPilot specific styles */
+.autopilot-container {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.autopilot-container:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* AutoPilot icon containers */
+.autopilot-icon-container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Text colors for subtle containers */
+.subtle-container h1,
+.subtle-container h2,
+.subtle-container h3,
+.subtle-container h4,
+.subtle-container h5,
+.subtle-container h6,
+.autopilot-container h1,
+.autopilot-container h2,
+.autopilot-container h3,
+.autopilot-container h4,
+.autopilot-container h5,
+.autopilot-container h6 {
+    color: #FFFFFF;
+}
+
+.subtle-container p,
+.subtle-container span,
+.subtle-container div,
+.autopilot-container p,
+.autopilot-container span,
+.autopilot-container div {
+    color: rgba(255, 255, 255, 0.8);
+}

@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founders Fleet – Missions</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --background: #0a0a0a;
+      --text: #ffffff;
+      --text-secondary: #a1a1aa;
+      --card-bg: #111111;
+      --card-hover: #161616;
+      --border: #27272a;
+      --accent: #18181b;
+      --accent-hover: #1f1f23;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --padding: 1.5rem;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--background) 0%, #0f0f0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 280px;
+      background: var(--accent);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .workspace-header:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .workspace-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .workspace-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .workspace-select {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+    }
+
+    .workspace-select option {
+      color: black;
+      background: white;
+    }
+
+    .workspace-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .nav-link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--accent);
+      padding: 0.125rem 0.375rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: var(--primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: var(--padding);
+      max-width: calc(100vw - 280px);
+      animation: fadeInUp 0.6s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .main-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .main-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, var(--text), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .main-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .search-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1rem 1rem 3rem;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+    }
+
+    /* Filter Tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      padding: 0.5rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .filter-tab {
+      background: transparent;
+      color: var(--text-secondary);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .filter-tab:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+    }
+
+    .filter-tab.active {
+      color: white;
+      background: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Featured Mission Hero */
+    .featured-mission {
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .featured-mission:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .featured-mission::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      opacity: 0.3;
+    }
+
+    .featured-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: white;
+    }
+
+    .featured-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      color: white;
+    }
+
+    .featured-description {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0 0 1.5rem 0;
+      line-height: 1.6;
+    }
+
+    .featured-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.875rem;
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .featured-button {
+      background: white;
+      color: var(--primary);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .featured-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .featured-button.secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .see-all {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .see-all:hover {
+      transform: translateX(2px);
+    }
+
+    /* Mission Cards Grid */
+    .missions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .mission-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .mission-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .mission-image {
+      height: 120px;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      overflow: hidden;
+    }
+
+    .mission-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      opacity: 0.3;
+    }
+
+    .mission-icon {
+      position: relative;
+      z-index: 1;
+      color: white;
+    }
+
+    .mission-duration {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .mission-status-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background: var(--success);
+      color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .mission-status-badge.in-progress {
+      background: var(--warning);
+    }
+
+    .mission-status-badge.locked {
+      background: var(--text-secondary);
+    }
+
+    .mission-content {
+      padding: 1.5rem;
+    }
+
+    .mission-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.3;
+    }
+
+    .mission-description {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 0 0 1rem 0;
+    }
+
+    .mission-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .mission-tag {
+      background: var(--accent);
+      color: var(--text-secondary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      border: 1px solid var(--border);
+    }
+
+    .mission-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mission-rating {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--warning);
+    }
+
+    .mission-participants {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+    }
+
+    /* My Missions Section */
+    .my-missions {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      margin-bottom: 2rem;
+    }
+
+    .my-missions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .my-mission-card {
+      background: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .my-mission-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .my-mission-card.active {
+      border-color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .my-mission-card.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--success);
+    }
+
+    .my-mission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .my-mission-icon {
+      font-size: 1.5rem;
+    }
+
+    .my-mission-progress {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--card-bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .my-mission-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .my-mission-description {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin: 0 0 1rem 0;
+      line-height: 1.4;
+    }
+
+    .my-mission-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .my-mission-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+    }
+
+    .my-mission-button:hover {
+      background: var(--primary-hover);
+    }
+
+    .my-mission-button.secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .my-mission-button.secondary:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+
+    /* Categories */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .category-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .category-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .category-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .category-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .category-description {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin: 0 0 1rem 0;
+      line-height: 1.4;
+    }
+
+    .category-count {
+      background: var(--accent);
+      color: var(--text-secondary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        left: -280px;
+        z-index: 1000;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .sidebar.open {
+        transform: translateX(280px);
+      }
+
+      .main {
+        width: 100%;
+        max-width: 100vw;
+        padding: 1rem;
+      }
+
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .main-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+
+      .search-container {
+        max-width: none;
+      }
+
+      .filter-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .missions-grid,
+      .categories-grid,
+      .my-missions-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-meta {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .featured-actions {
+        flex-direction: column;
+      }
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<button class="mobile-menu-btn" onclick="toggleSidebar()">
+    ☰
+  </button>
+<div class="overlay" onclick="closeSidebar()"></div>
+<aside class="sidebar" id="sidebar">
+<div class="workspace-header">
+<div class="workspace-logo">F</div>
+<div class="workspace-info">
+<select class="workspace-select" onchange="handleWorkspaceChange(this)">
+<option>Eight Bit Studios</option>
+<option>Another Workspace</option>
+<option value="signout">Sign Out</option>
+</select>
+<span class="workspace-email">name@email.com</span>
+</div>
+</div>
+<nav class="nav-links">
+<a class="nav-link active" href="control.html">
+<div class="nav-link-content">
+<span>🏠</span> Control
+        </div>
+</a>
+<a class="nav-link" href="flightplan.html">
+<div class="nav-link-content">
+<span>🗺️</span> Flightplan
+        </div>
+<span class="nav-status">Idea</span>
+</a>
+<a class="nav-link" href="missions.html">
+<div class="nav-link-content">
+<span>🎯</span> Missions
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="dispatch.html">
+<div class="nav-link-content">
+<span>🪪</span> Dispatch
+        </div>
+<span class="nav-status">Draft</span>
+</a>
+<a class="nav-link" href="drops.html">
+<div class="nav-link-content">
+<span>📦</span> Drops
+        </div>
+<span class="nav-status">2</span>
+</a>
+<a class="nav-link" href="signals.html">
+<div class="nav-link-content">
+<span>📡</span> Signals
+        </div>
+<span class="nav-status">3</span>
+</a>
+<a class="nav-link" href="hangar.html">
+<div class="nav-link-content">
+<span>🏗️</span> Hangar
+        </div>
+<span class="nav-status">Friday</span>
+</a>
+<a class="nav-link" href="terminal.html">
+<div class="nav-link-content">
+<span>🏢</span> Terminal
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="vault.html">
+<div class="nav-link-content">
+<span>🗃️</span> Vault
+        </div>
+<span class="nav-status">47</span>
+</a>
+</nav>
+</aside>
+<main class="main">
+<div class="main-header">
+<div>
+<h1 class="main-title">Missions</h1>
+<h2 class="main-subtitle">Discover Your Next Challenge</h2>
+</div>
+<div class="search-container">
+<input class="search-input" placeholder="Search missions..." type="text"/>
+<span class="search-icon">🔍</span>
+</div>
+</div>
+<!-- Filter Tabs -->
+<div class="filter-tabs">
+<button class="filter-tab active" onclick="switchTab(this, 'my-missions')">My Missions</button>
+<button class="filter-tab" onclick="switchTab(this, 'find-missions')">Find Missions</button>
+<button class="filter-tab" onclick="switchTab(this, 'completed')">Completed</button>
+<button class="filter-tab" onclick="switchTab(this, 'recommended')">Recommended</button>
+<button class="filter-tab" onclick="switchTab(this, 'trending')">Trending</button>
+</div>
+<!-- My Missions Section -->
+<div class="tab-content" id="my-missions-section">
+<div class="my-missions">
+<div class="section-header">
+<h3 class="section-title">Active Missions</h3>
+<a class="see-all" href="#">View All →</a>
+</div>
+<div class="my-missions-grid">
+<div class="my-mission-card active" onclick="openMission('signal-scan')">
+<div class="my-mission-header">
+<span class="my-mission-icon">🔍</span>
+<span class="my-mission-progress">60%</span>
+</div>
+<h4 class="my-mission-title">Signal Scan</h4>
+<p class="my-mission-description">Build your customer discovery habit through structured interviews</p>
+<div class="my-mission-actions">
+<button class="my-mission-button">Continue</button>
+<button class="my-mission-button secondary">Details</button>
+</div>
+</div>
+<div class="my-mission-card" onclick="openMission('customer-recon')">
+<div class="my-mission-header">
+<span class="my-mission-icon">🕵️</span>
+<span class="my-mission-progress">0%</span>
+</div>
+<h4 class="my-mission-title">Customer Recon</h4>
+<p class="my-mission-description">Build structured personas and problem statements</p>
+<div class="my-mission-actions">
+<button class="my-mission-button">Start</button>
+<button class="my-mission-button secondary">Preview</button>
+</div>
+</div>
+<div class="my-mission-card" onclick="openMission('problem-definition')">
+<div class="my-mission-header">
+<span class="my-mission-icon">🎯</span>
+<span class="my-mission-progress">100%</span>
+</div>
+<h4 class="my-mission-title">Problem Definition</h4>
+<p class="my-mission-description">Define your core problem and target customer segment</p></div></div></div></div></main></body></html>

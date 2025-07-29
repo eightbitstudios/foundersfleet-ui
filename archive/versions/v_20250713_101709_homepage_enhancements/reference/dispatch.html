@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founders Fleet – Dispatch</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --background: #0a0a0a;
+      --text: #ffffff;
+      --text-secondary: #a1a1aa;
+      --card-bg: #111111;
+      --card-hover: #161616;
+      --border: #27272a;
+      --accent: #18181b;
+      --accent-hover: #1f1f23;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --padding: 1.5rem;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--background) 0%, #0f0f0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar - Same as other pages */
+    .sidebar {
+      width: 280px;
+      background: var(--accent);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .workspace-header:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .workspace-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .workspace-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .workspace-select {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+    }
+
+    .workspace-select option {
+      color: black;
+      background: white;
+    }
+
+    .workspace-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .nav-link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--accent);
+      padding: 0.125rem 0.375rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: var(--primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: var(--padding);
+      max-width: calc(100vw - 280px);
+    }
+
+    .dispatch-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .dispatch-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, var(--text), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .dispatch-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .profile-status {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--warning);
+    }
+
+    .profile-url {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .profile-preview {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-preview::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--purple));
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: white;
+      flex-shrink: 0;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .profile-avatar:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    }
+
+    .avatar-upload {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 32px;
+      height: 32px;
+      background: var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border: 3px solid var(--card-bg);
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-name {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+    }
+
+    .profile-title {
+      font-size: 1.25rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin: 0 0 1rem 0;
+    }
+
+    .profile-bio {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0 0 1.5rem 0;
+    }
+
+    .profile-stats {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .edit-sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .edit-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      transition: all 0.3s ease;
+    }
+
+    .edit-section:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-weight: 600;
+      margin: 0;
+      font-size: 1.125rem;
+    }
+
+    .section-status {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .status-complete {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+
+    .status-incomplete {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--warning);
+    }
+
+    .status-empty {
+      background: rgba(161, 161, 170, 0.2);
+      color: var(--text-secondary);
+    }
+
+    .section-content {
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      background: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      color: var(--text);
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .section-button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+    }
+
+    .section-button:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .section-button.primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .section-button.primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .milestones-display {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+    }
+
+    .milestones-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .milestones-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .milestone-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .milestone-item:last-child {
+      border-bottom: none;
+    }
+
+    .milestone-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .milestone-content {
+      flex: 1;
+    }
+
+    .milestone-title {
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .milestone-date {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    .visibility-controls {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      margin-bottom: 2rem;
+    }
+
+    .controls-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .controls-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .toggle-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .toggle-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: var(--accent);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .toggle-info {
+      flex: 1;
+    }
+
+    .toggle-title {
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .toggle-description {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    .toggle-switch {
+      width: 48px;
+      height: 24px;
+      background: var(--border);
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .toggle-switch.active {
+      background: var(--success);
+    }
+
+    .toggle-slider {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-switch.active .toggle-slider {
+      transform: translateX(24px);
+    }
+
+    @media (max-width: 768px) {
+      .dispatch-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .edit-sections {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .profile-stats {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+<div class="workspace-header">
+<div class="workspace-logo">F</div>
+<div class="workspace-info">
+<select class="workspace-select" onchange="handleWorkspaceChange(this)">
+<option>Eight Bit Studios</option>
+<option>Another Workspace</option>
+<option value="signout">Sign Out</option>
+</select>
+<span class="workspace-email">name@email.com</span>
+</div>
+</div>
+<nav class="nav-links">
+<a class="nav-link active" href="control.html">
+<div class="nav-link-content">
+<span>🏠</span> Control
+        </div>
+</a>
+<a class="nav-link" href="flightplan.html">
+<div class="nav-link-content">
+<span>🗺️</span> Flightplan
+        </div>
+<span class="nav-status">Idea</span>
+</a>
+<a class="nav-link" href="missions.html">
+<div class="nav-link-content">
+<span>🎯</span> Missions
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="dispatch.html">
+<div class="nav-link-content">
+<span>🪪</span> Dispatch
+        </div>
+<span class="nav-status">Draft</span>
+</a>
+<a class="nav-link" href="drops.html">
+<div class="nav-link-content">
+<span>📦</span> Drops
+        </div>
+<span class="nav-status">2</span>
+</a>
+<a class="nav-link" href="signals.html">
+<div class="nav-link-content">
+<span>📡</span> Signals
+        </div>
+<span class="nav-status">3</span>
+</a>
+<a class="nav-link" href="hangar.html">
+<div class="nav-link-content">
+<span>🏗️</span> Hangar
+        </div>
+<span class="nav-status">Friday</span>
+</a>
+<a class="nav-link" href="terminal.html">
+<div class="nav-link-content">
+<span>🏢</span> Terminal
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="vault.html">
+<div class="nav-link-content">
+<span>🗃️</span> Vault
+        </div>
+<span class="nav-status">47</span>
+</a>
+</nav>
+</aside>
+<main class="main-content">
+<div class="dispatch-header">
+<div>
+<h1 class="dispatch-title">Dispatch</h1>
+<p class="dispatch-subtitle">Public Founder Profile</p>
+</div>
+<div class="profile-status">
+<div class="status-badge">
+<div class="status-dot"></div>
+<span>Draft Mode</span>
+</div>
+<a class="profile-url" href="#">foundersfleet.com/yourname</a>
+</div>
+</div>
+<div class="profile-preview">
+<div class="profile-header">
+<div class="profile-avatar" onclick="uploadAvatar()">
+          👤
+          <div class="avatar-upload">📷</div>
+</div>
+<div class="profile-info">
+<h2 class="profile-name">Your Name</h2>
+<h3 class="profile-title">Founder &amp; CEO at Your Startup</h3>
+<p class="profile-bio">
+            Building the future of [your industry]. Passionate about solving [your problem] for [your target market].
+          </p>
+<div class="profile-stats">
+<div class="stat-item">
+<div class="stat-value">15%</div>
+<div class="stat-label">Progress</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">3</div>
+<div class="stat-label">Drops</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">1</div>
+<div class="stat-label">Wings</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="visibility-controls">
+<div class="controls-header">
+<h3 class="controls-title">Profile Visibility</h3>
+<span style="color: var(--text-secondary); font-size: 0.875rem;">Control what others see</span>
+</div>
+<div class="toggle-group">
+<div class="toggle-item">
+<div class="toggle-info">
+<h4 class="toggle-title">Public Profile</h4>
+<p class="toggle-description">Make your profile visible to other founders and investors</p>
+</div>
+<div class="toggle-switch" onclick="toggleSwitch(this)">
+<div class="toggle-slider"></div>
+</div>
+</div>
+<div class="toggle-item">
+<div class="toggle-info">
+<h4 class="toggle-title">Stealth Mode</h4>
+<p class="toggle-description">Hide sensitive details while keeping profile discoverable</p>
+</div>
+<div class="toggle-switch active" onclick="toggleSwitch(this)">
+<div class="toggle-slider"></div>
+</div>
+</div>
+<div class="toggle-item">
+<div class="toggle-info">
+<h4 class="toggle-title">Show Progress</h4>
+<p class="toggle-description">Display your Flightplan progress and completed missions</p>
+</div>
+<div class="toggle-switch active" onclick="toggleSwitch(this)">
+<div class="toggle-slider"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="edit-sections">
+<div class="edit-section">
+<div class="section-header">
+<h3 class="section-title">Basic Information</h3>
+<span class="section-status status-incomplete">Incomplete</span>
+</div>
+<div class="section-content">
+<div class="form-group">
+<label class="form-label">Full Name</label>
+<input class="form-input" placeholder="Enter your full name" type="text" value="Your Name"/>
+</div>
+<div class="form-group">
+<label class="form-label">Title</label>
+<input class="form-input" placeholder="e.g. Founder &amp; CEO" type="text" value="Founder &amp; CEO at Your Startup"/>
+</div>
+<div class="form-group">
+<label class="form-label">Bio</label>
+<textarea class="form-input form-textarea" placeholder="Tell your story...">Building the future of [your industry]. Passionate about solving [your problem] for [your target market].</textarea>
+</div>
+</div>
+<div class="section-actions">
+<button class="section-button primary">Save Changes</button>
+<button class="section-button">Cancel</button>
+</div>
+</div>
+<div class="edit-section">
+<div class="section-header">
+<h3 class="section-title">Startup Details</h3>
+<span class="section-status status-empty">Not Started</span>
+</div>
+<div class="section-content">
+<div class="form-group">
+<label class="form-label">Company Name</label>
+<input class="form-input" placeholder="Your startup name" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Industry</label>
+<input class="form-input" placeholder="e.g. FinTech, HealthTech, AI" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Mission Statement</label>
+<textarea class="form-input form-textarea" placeholder="What problem are you solving?"></textarea>
+</div>
+</div>
+<div class="section-actions">
+<button class="section-button primary">Save Details</button>
+<button class="section-button">Skip</button>
+</div>
+</div>
+<div class="edit-section">
+<div class="section-header">
+<h3 class="section-title">Contact &amp; Links</h3>
+<span class="section-status status-empty">Not Started</span>
+</div>
+<div class="section-content">
+<div class="form-group">
+<label class="form-label">Email</label>
+<input class="form-input" placeholder="your.email@company.com" type="email" value="name@email.com"/>
+</div>
+<div class="form-group">
+<label class="form-label">LinkedIn</label>
+<input class="form-input" placeholder="https://linkedin.com/in/yourname" type="url"/>
+</div>
+<div class="form-group">
+<label class="form-label">Company Website</label>
+<input class="form-input" placeholder="https://yourcompany.com" type="url"/>
+</div>
+</div>
+<div class="section-actions">
+<button class="section-button primary">Save Links</button>
+<button class="section-button">Skip</button>
+</div>
+</div>
+<div class="edit-section">
+<div class="section-header">
+<h3 class="section-title">Looking For</h3>
+<span class="section-status status-empty">Not Started</span>
+</div>
+<div class="section-content">
+<div class="form-group">
+<label class="form-label">Seeking</label>
+<input class="form-input" placeholder="e.g. Co-founder, Advisors, Funding" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Stage</label>
+<input class="form-input" placeholder="e.g. Pre-seed, Seed, Series A" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Additional Notes</label>
+<textarea class="form-input form-textarea" placeholder="What specific help or connections are you looking for?"></textarea>
+</div>
+</div>
+<div class="section-actions">
+<button class="section-button primary">Save Preferences</button>
+<button class="section-button">Skip</button>
+</div>
+</div>
+</div>
+<div class="milestones-display">
+<div class="milestones-header">
+<h3 class="milestones-title">Recent Milestones</h3>
+<span style="color: var(--text-secondary); font-size: 0.875rem;">Automatically synced from Drops</span>
+</div>
+<div class="milestone-item">
+<div class="milestone-icon">🎯</div>
+<div class="milestone-content">
+<h4 class="milestone-title">Completed Signal Scan Mission</h4>
+<p class="milestone-date">2 days ago</p>
+</div>
+</div>
+<div class="milestone-item">
+<div class="milestone-icon">📝</div>
+<div class="milestone-content">
+<h4 class="milestone-title">Defined Problem Statement</h4>
+<p class="milestone-date">1 week ago</p>
+</div>
+</div>
+<div class="milestone-item">
+<div class="milestone-icon">🚀</div>
+<div class="milestone-content">
+<h4 class="milestone-title">Joined Founders Fleet</h4>
+<p class="milestone-date">2 weeks ago</p>
+</div>
+</div>
+</div>
+</main>
+<script></script></body></html>

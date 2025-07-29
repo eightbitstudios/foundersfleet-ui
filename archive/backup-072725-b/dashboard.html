@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Journey line animation */
+        @keyframes progress-line {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        .journey-line {
+            animation: progress-line 1.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Welcome Header with Journey Progress -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-text-primary mb-2">Welcome back, Founder</h1>
+                    <p class="text-text-secondary">Your startup journey continues here</p>
+                </div>
+
+                <!-- Founder Journey Progress Bar -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-semibold text-text-primary">Your Founder Journey</h2>
+                        <span class="text-sm text-text-secondary">Stage 3 of 5</span>
+                    </div>
+                    
+                    <!-- Journey Stages -->
+                    <div class="relative">
+                        <!-- Progress Line -->
+                        <div class="absolute top-5 left-0 right-0 h-0.5 bg-border"></div>
+                        <div class="absolute top-5 left-0 h-0.5 bg-primary journey-line" style="width: 50%;"></div>
+                        
+                        <!-- Stage Markers -->
+                        <div class="relative grid grid-cols-5 gap-4">
+                            <!-- PREFLIGHT Stage -->
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold mb-2 mx-auto">
+                                    <i class="fas fa-check text-sm"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary text-sm">PREFLIGHT</h3>
+                                <p class="text-xs text-text-muted mt-1">Completed</p>
+                            </div>
+                            
+                            <!-- IDEA Stage -->
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold mb-2 mx-auto">
+                                    <i class="fas fa-check text-sm"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary text-sm">IDEA</h3>
+                                <p class="text-xs text-text-muted mt-1">Completed</p>
+                            </div>
+                            
+                            <!-- BUILD Stage -->
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold mb-2 mx-auto ring-4 ring-primary/20">
+                                    3
+                                </div>
+                                <h3 class="font-semibold text-text-primary text-sm">BUILD</h3>
+                                <p class="text-xs text-primary mt-1">In Progress</p>
+                            </div>
+                            
+                            <!-- LAUNCH Stage -->
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-section-bg rounded-full flex items-center justify-center text-text-muted font-bold mb-2 mx-auto">
+                                    4
+                                </div>
+                                <h3 class="font-semibold text-text-muted text-sm">LAUNCH</h3>
+                                <p class="text-xs text-text-muted mt-1">Not Started</p>
+                            </div>
+                            
+                            <!-- SCALE Stage -->
+                            <div class="text-center">
+                                <div class="w-10 h-10 bg-section-bg rounded-full flex items-center justify-center text-text-muted font-bold mb-2 mx-auto">
+                                    5
+                                </div>
+                                <h3 class="font-semibold text-text-muted text-sm">SCALE</h3>
+                                <p class="text-xs text-text-muted mt-1">Not Started</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Stage Progress -->
+                    <div class="mt-6 pt-6 border-t border-border">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm font-medium text-text-primary">BUILD Stage Progress</span>
+                            <span class="text-sm font-medium text-text-primary">50%</span>
+                        </div>
+                        <div class="w-full bg-section-bg rounded-full h-2">
+                            <div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Primary Actions & Current Stage -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Current Stage Tasks -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-xl font-semibold text-text-primary">BUILD Stage Tasks</h2>
+                                <a href="flightplan.html" class="text-sm text-primary hover:text-primary-hover">View all →</a>
+                            </div>
+                            
+                            <!-- Stage Checklist -->
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded bg-primary mt-0.5 flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Define MVP feature set</p>
+                                        <p class="text-xs text-text-muted">Completed 2 weeks ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded bg-primary mt-0.5 flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Set up development environment</p>
+                                        <p class="text-xs text-text-muted">Completed 10 days ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded border-2 border-primary mt-0.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Build core features</p>
+                                        <p class="text-xs text-text-muted">In progress</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-3">
+                                    <div class="w-5 h-5 rounded border-2 border-border mt-0.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-secondary">Conduct user testing</p>
+                                        <p class="text-xs text-text-muted">Not started</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Your Squads -->
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-xl font-semibold text-text-primary">Your Squads</h2>
+                                <a href="squads.html" class="text-sm text-primary hover:text-primary-hover">View all →</a>
+                            </div>
+                            
+                            <!-- Squad List -->
+                            <div class="space-y-3">
+                                <!-- Squad Alpha -->
+                                <div class="bg-card-bg border border-border rounded-lg p-5 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=alpha'">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-bold text-text-primary text-lg mb-1">Squad Alpha</h3>
+                                            <p class="text-sm text-text-secondary mb-3">SaaS • Series A</p>
+                                            <div class="flex items-center gap-4 text-xs text-text-muted">
+                                                <span>5 members</span>
+                                                <span>•</span>
+                                                <span>Founded 2 months ago</span>
+                                            </div>
+                                        </div>
+                                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">Active</span>
+                                    </div>
+                                </div>
+
+                                <!-- Squad Bravo -->
+                                <div class="bg-card-bg border border-border rounded-lg p-5 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=beta'">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-bold text-text-primary text-lg mb-1">Squad Bravo</h3>
+                                            <p class="text-sm text-text-secondary mb-3">Fintech • Pre-Seed</p>
+                                            <div class="flex items-center gap-4 text-xs text-text-muted">
+                                                <span>3 members</span>
+                                                <span>•</span>
+                                                <span>Founded 1 month ago</span>
+                                            </div>
+                                        </div>
+                                        <span class="px-3 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full">Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Quick Stats & Actions -->
+                    <div class="space-y-6">
+                        <!-- Quick Stats -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Active Squads -->
+                            <div class="bg-card-bg border border-border rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-2xl font-bold text-text-primary">3</span>
+                                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-people-group text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                <h3 class="text-xs font-semibold text-text-primary">Active Squads</h3>
+                                <p class="text-xs text-text-muted">2 pending invites</p>
+                            </div>
+
+                            <!-- Connections -->
+                            <div class="bg-card-bg border border-border rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-2xl font-bold text-text-primary">24</span>
+                                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-address-book text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                <h3 class="text-xs font-semibold text-text-primary">Connections</h3>
+                                <p class="text-xs text-text-muted">+5 this week</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                            <div class="space-y-3">
+                                <button class="w-full text-left p-4 bg-card-bg border border-border rounded-lg hover:shadow-md transition-all group" onclick="window.location.href='squads.html'">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-background flex items-center justify-center group-hover:bg-primary/5 transition-all">
+                                            <i class="fas fa-plus text-text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-semibold text-text-primary">Join a Squad</span>
+                                    </div>
+                                </button>
+                                <button class="w-full text-left p-4 bg-card-bg border border-border rounded-lg hover:shadow-md transition-all group" onclick="window.location.href='founders.html'">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-background flex items-center justify-center group-hover:bg-primary/5 transition-all">
+                                            <i class="fas fa-user-plus text-text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-semibold text-text-primary">Connect with Founders</span>
+                                    </div>
+                                </button>
+                                <button class="w-full text-left p-4 bg-card-bg border border-border rounded-lg hover:shadow-md transition-all group" onclick="window.location.href='tools.html'">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-background flex items-center justify-center group-hover:bg-primary/5 transition-all">
+                                            <i class="fas fa-rocket text-text-primary"></i>
+                                        </div>
+                                        <span class="text-sm font-semibold text-text-primary">Start a Mission</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Preflight Checklist (if incomplete) -->
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <h3 class="text-sm font-semibold text-yellow-900 mb-3">Complete Your Preflight</h3>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-check-circle text-green-600 text-sm"></i>
+                                    <span class="text-xs text-gray-700">Profile created</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-circle text-yellow-500 text-sm"></i>
+                                    <span class="text-xs text-gray-700">Join your first squad</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="far fa-circle text-gray-400 text-sm"></i>
+                                    <span class="text-xs text-gray-700">Complete profile details</span>
+                                </div>
+                            </div>
+                            <button class="w-full mt-4 px-4 py-2 bg-yellow-600 text-white text-sm rounded hover:bg-yellow-700 transition-all">
+                                Complete Setup
+                            </button>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div>
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Recent Activity</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Started BUILD Stage</p>
+                                        <p class="text-xs text-text-muted">2 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Sarah Chen joined Squad Alpha</p>
+                                        <p class="text-xs text-text-muted">5 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Completed Customer Discovery</p>
+                                        <p class="text-xs text-text-muted">1 day ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('dashboard');
+    </script>
+</body>
+</html>

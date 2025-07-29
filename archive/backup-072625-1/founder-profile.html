@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founder Profile - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }        
+        
+        </style>
+</head>
+<body class="bg-white min-h-screen font-inter flex">
+        <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a>
+                <a href="profile.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-white bg-white/10 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="squads.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="flightplan.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-route"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Logout -->
+        <div class="pb-6 flex justify-center">
+            <a href="index.html" class="w-10 h-10 flex items-center justify-center text-white/50 rounded-lg hover:bg-white/10 hover:text-white/70 transition-all">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-white overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Profile Header -->
+            <div class="bg-white border-b border-border sticky top-0 z-40">
+                <div class="max-w-[1200px] mx-auto px-8 py-6">
+                    <a href="founders.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all mb-4">
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="text-sm">Back to Founders</span>
+                    </a>
+                    
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start gap-6">
+                            <div class="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold" id="founder-avatar">
+                                AR
+                            </div>
+                            <div>
+                                <h1 id="founder-name" class="text-3xl font-bold text-text-primary">Aisha Robinson</h1>
+                                <p id="founder-title" class="text-xl text-text-secondary mt-1">Founder & CEO at Nora AI</p>
+                                <div class="flex items-center gap-6 mt-3">
+                                    <span class="flex items-center gap-2 text-sm text-text-muted">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span id="founder-location">San Francisco, CA</span>
+                                    </span>
+                                    <span class="flex items-center gap-2 text-sm text-text-muted">
+                                        <i class="fas fa-calendar"></i>
+                                        <span id="founder-joined">Joined March 2024</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button onclick="sendMessage()" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                                <i class="fas fa-paper-plane mr-2"></i>Send Message
+                            </button>
+                            <button onclick="connectWithFounder()" class="px-4 py-2 border border-border rounded hover:border-primary transition-all">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Main Content -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- About -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-4">About</h2>
+                            <p id="founder-bio" class="text-text-secondary leading-relaxed">
+                                Building AI infrastructure to help businesses deploy ML models at scale. Previously led engineering at TechCorp and founded two successful startups. Passionate about making AI accessible to every business.
+                            </p>
+                        </div>
+
+                        <!-- Experience -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-4">Experience</h2>
+                            <div class="space-y-4" id="experience-container">
+                                <div class="pb-4 border-b border-border">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">Founder & CEO</h3>
+                                            <p class="text-text-secondary">Nora AI</p>
+                                        </div>
+                                        <span class="text-sm text-text-muted">2023 - Present</span>
+                                    </div>
+                                    <p class="text-sm text-text-secondary mt-2">Building next-gen AI infrastructure for enterprise deployment</p>
+                                </div>
+                                
+                                <div class="pb-4 border-b border-border">
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">VP Engineering</h3>
+                                            <p class="text-text-secondary">TechCorp</p>
+                                        </div>
+                                        <span class="text-sm text-text-muted">2020 - 2023</span>
+                                    </div>
+                                    <p class="text-sm text-text-secondary mt-2">Led team of 50+ engineers building cloud infrastructure</p>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex items-start justify-between">
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">Co-founder & CTO</h3>
+                                            <p class="text-text-secondary">DataFlow (Acquired)</p>
+                                        </div>
+                                        <span class="text-sm text-text-muted">2018 - 2020</span>
+                                    </div>
+                                    <p class="text-sm text-text-secondary mt-2">Built real-time data processing platform, acquired by TechCorp</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-4">Recent Activity</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-1.5"></div>
+                                    <div>
+                                        <p class="text-sm text-text-primary">Shared insights on Squad Alpha about customer interviews</p>
+                                        <p class="text-xs text-text-muted">2 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-1.5"></div>
+                                    <div>
+                                        <p class="text-sm text-text-primary">Completed AI Infrastructure mission</p>
+                                        <p class="text-xs text-text-muted">3 days ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-primary rounded-full mt-1.5"></div>
+                                    <div>
+                                        <p class="text-sm text-text-primary">Connected with 5 new founders</p>
+                                        <p class="text-xs text-text-muted">1 week ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Quick Info -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Info</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Industry</p>
+                                    <p class="text-sm font-medium text-text-primary" id="founder-industry">AI/ML</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Stage</p>
+                                    <p class="text-sm font-medium text-text-primary" id="founder-stage">Pre-Seed</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Looking For</p>
+                                    <p class="text-sm font-medium text-text-primary" id="founder-looking">Co-founders, Advisors</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squads -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Active Squads</h3>
+                            <div class="space-y-3" id="founder-squads">
+                                <a href="squad-detail.html?squad=alpha" class="flex items-center gap-3 text-text-secondary hover:text-primary transition-all">
+                                    <div class="w-8 h-8 bg-black rounded flex items-center justify-center">
+                                        <i class="fas fa-rocket text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Squad Alpha</p>
+                                        <p class="text-xs text-text-muted">B2B SaaS • Build Stage</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Skills -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Skills & Expertise</h3>
+                            <div class="flex flex-wrap gap-2" id="founder-skills">
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded">Python</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded">Machine Learning</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded">Product Strategy</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded">Fundraising</span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded">Team Building</span>
+                            </div>
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Connect</h3>
+                            <div class="space-y-3">
+                                <a href="#" class="flex items-center gap-3 text-text-secondary hover:text-primary transition-all">
+                                    <i class="fab fa-linkedin text-text-muted"></i>
+                                    <span class="text-sm">LinkedIn</span>
+                                </a>
+                                <a href="#" class="flex items-center gap-3 text-text-secondary hover:text-primary transition-all">
+                                    <i class="fab fa-twitter text-text-muted"></i>
+                                    <span class="text-sm">Twitter</span>
+                                </a>
+                                <a href="#" class="flex items-center gap-3 text-text-secondary hover:text-primary transition-all">
+                                    <i class="fas fa-globe text-text-muted"></i>
+                                    <span class="text-sm">Website</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // Founder data
+        const founderData = {
+            'aisha-robinson': {
+                avatar: 'AR',
+                name: 'Aisha Robinson',
+                title: 'Founder & CEO at Nora AI',
+                location: 'San Francisco, CA',
+                joined: 'March 2024',
+                bio: 'Building AI infrastructure to help businesses deploy ML models at scale. Previously led engineering at TechCorp and founded two successful startups. Passionate about making AI accessible to every business.',
+                industry: 'AI/ML',
+                stage: 'Pre-Seed',
+                lookingFor: 'Co-founders, Advisors',
+                skills: ['Python', 'Machine Learning', 'Product Strategy', 'Fundraising', 'Team Building'],
+                experience: [
+                    {
+                        role: 'Founder & CEO',
+                        company: 'Nora AI',
+                        period: '2023 - Present',
+                        description: 'Building next-gen AI infrastructure for enterprise deployment'
+                    },
+                    {
+                        role: 'VP Engineering',
+                        company: 'TechCorp',
+                        period: '2020 - 2023',
+                        description: 'Led team of 50+ engineers building cloud infrastructure'
+                    },
+                    {
+                        role: 'Co-founder & CTO',
+                        company: 'DataFlow (Acquired)',
+                        period: '2018 - 2020',
+                        description: 'Built real-time data processing platform, acquired by TechCorp'
+                    }
+                ],
+                squads: [
+                    { id: 'alpha', name: 'Squad Alpha', description: 'B2B SaaS • Build Stage', icon: 'fa-rocket' }
+                ]
+            },
+            'sarah-chen': {
+                avatar: 'SC',
+                name: 'Sarah Chen',
+                title: 'Founder at ShopBoost Analytics',
+                location: 'Austin, TX',
+                joined: 'February 2024',
+                bio: 'Helping e-commerce brands understand their customers through data. Former data scientist at Amazon. Building tools to democratize e-commerce analytics.',
+                industry: 'E-commerce',
+                stage: 'Seed',
+                lookingFor: 'Customers, Investors',
+                skills: ['Data Science', 'E-commerce', 'Python', 'Customer Analytics', 'Growth'],
+                experience: [
+                    {
+                        role: 'Founder',
+                        company: 'ShopBoost Analytics',
+                        period: '2023 - Present',
+                        description: 'Building e-commerce analytics platform for DTC brands'
+                    },
+                    {
+                        role: 'Senior Data Scientist',
+                        company: 'Amazon',
+                        period: '2019 - 2023',
+                        description: 'Led analytics for seller performance optimization'
+                    }
+                ],
+                squads: [
+                    { id: 'alpha', name: 'Squad Alpha', description: 'B2B SaaS • Build Stage', icon: 'fa-rocket' },
+                    { id: 'beta', name: 'Squad Beta', description: 'E-commerce • Growth Stage', icon: 'fa-chart-line' }
+                ]
+            },
+            'marcus-park': {
+                avatar: 'MP',
+                name: 'Marcus Park',
+                title: 'Founder & CEO at StyleDrop',
+                location: 'Los Angeles, CA',
+                joined: 'January 2024',
+                bio: 'Building the future of sustainable fashion. Serial entrepreneur with 2 exits. Passionate about combining fashion, technology, and sustainability.',
+                industry: 'E-commerce',
+                stage: 'Series A',
+                lookingFor: 'Team Members, Partners',
+                skills: ['E-commerce', 'Fashion', 'Supply Chain', 'Marketing', 'Sustainability'],
+                experience: [
+                    {
+                        role: 'Founder & CEO',
+                        company: 'StyleDrop',
+                        period: '2022 - Present',
+                        description: 'DTC sustainable fashion brand with $5M ARR'
+                    },
+                    {
+                        role: 'Founder',
+                        company: 'QuickShip (Acquired)',
+                        period: '2018 - 2021',
+                        description: 'Same-day delivery platform, acquired by DoorDash'
+                    }
+                ],
+                squads: [
+                    { id: 'beta', name: 'Squad Beta', description: 'E-commerce • Growth Stage', icon: 'fa-chart-line' }
+                ]
+            }
+        };
+
+        // Load founder profile based on URL parameter
+        function loadFounderProfile() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const founderId = urlParams.get('founder') || 'aisha-robinson';
+            const founder = founderData[founderId];
+            
+            if (!founder) {
+                window.location.href = 'founders.html';
+                return;
+            }
+            
+            // Update profile header
+            document.getElementById('founder-avatar').textContent = founder.avatar;
+            document.getElementById('founder-name').textContent = founder.name;
+            document.getElementById('founder-title').textContent = founder.title;
+            document.getElementById('founder-location').textContent = founder.location;
+            document.getElementById('founder-joined').textContent = 'Joined ' + founder.joined;
+            
+            // Update bio
+            document.getElementById('founder-bio').textContent = founder.bio;
+            
+            // Update quick info
+            document.getElementById('founder-industry').textContent = founder.industry;
+            document.getElementById('founder-stage').textContent = founder.stage;
+            document.getElementById('founder-looking').textContent = founder.lookingFor;
+            
+            // Update experience
+            const experienceContainer = document.getElementById('experience-container');
+            experienceContainer.innerHTML = founder.experience.map((exp, index) => `
+                <div class="${index < founder.experience.length - 1 ? 'pb-4 border-b border-border' : ''}">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h3 class="font-semibold text-text-primary">${exp.role}</h3>
+                            <p class="text-text-secondary">${exp.company}</p>
+                        </div>
+                        <span class="text-sm text-text-muted">${exp.period}</span>
+                    </div>
+                    <p class="text-sm text-text-secondary mt-2">${exp.description}</p>
+                </div>
+            `).join('');
+            
+            // Update squads
+            const squadsContainer = document.getElementById('founder-squads');
+            squadsContainer.innerHTML = founder.squads.map(squad => `
+                <a href="squad-detail.html?squad=${squad.id}" class="flex items-center gap-3 text-text-secondary hover:text-primary transition-all">
+                    <div class="w-8 h-8 bg-black rounded flex items-center justify-center">
+                        <i class="fas ${squad.icon} text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium">${squad.name}</p>
+                        <p class="text-xs text-text-muted">${squad.description}</p>
+                    </div>
+                </a>
+            `).join('');
+            
+            // Update skills
+            const skillsContainer = document.getElementById('founder-skills');
+            skillsContainer.innerHTML = founder.skills.map(skill => `
+                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded">${skill}</span>
+            `).join('');
+        }
+
+        // Founder actions
+        function sendMessage() {
+            alert('Messaging feature coming soon!');
+        }
+
+        function connectWithFounder() {
+            alert('Connection request sent!');
+        }
+
+        // Initialize on load
+        loadFounderProfile();
+    </script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Autopilot color variable */
+        :root {
+            --autopilot-primary: #85d3c3;
+        }
+        
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+                <main class="h-full overflow-auto">
+                <!-- Main Content Area -->
+        <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Page Header -->
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">Tools</h1>
+                        <p class="text-text-secondary">Third-party tools curated by fellow founders</p>
+                    </div>
+                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="contributeResource()">
+                        <i class="fas fa-plus"></i>Contribute
+                    </button>
+                </div>
+                
+                <!-- Category Filter Section -->
+                <div class="bg-section-bg -mx-8 px-8 py-4 mb-6">
+                    <div class="max-w-[1200px] mx-auto">
+                        <div class="flex gap-2 overflow-x-auto">
+                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all whitespace-nowrap" data-category="all" onclick="filterToolsByCategory('all')">All Tools</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="product" onclick="filterToolsByCategory('product')">Product</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="marketing" onclick="filterToolsByCategory('marketing')">Marketing</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="sales" onclick="filterToolsByCategory('sales')">Sales</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="analytics" onclick="filterToolsByCategory('analytics')">Analytics</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="finance" onclick="filterToolsByCategory('finance')">Finance</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="operations" onclick="filterToolsByCategory('operations')">Operations</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="legal" onclick="filterToolsByCategory('legal')">Legal</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Section -->
+                <div>
+                    <!-- Grid Layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left Column - Tools Grid -->
+                        <div class="lg:col-span-2">
+                            <!-- Tools Grid -->
+                            <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Notion -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="product,operations">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-file-alt text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Notion</h3>
+                                            <p class="text-sm text-text-secondary">All-in-one workspace for notes, docs, and collaboration</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
+                                        </div>
+                                        <a href="https://notion.so" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Figma -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="product">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-purple-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-pen-nib text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Figma</h3>
+                                            <p class="text-sm text-text-secondary">Collaborative design tool for UI/UX and prototyping</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
+                                        </div>
+                                        <a href="https://figma.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Stripe -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="finance,operations">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-indigo-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-credit-card text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Stripe</h3>
+                                            <p class="text-sm text-text-secondary">Payment processing and financial infrastructure</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Finance</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
+                                        </div>
+                                        <a href="https://stripe.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Mixpanel -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="analytics,product">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-chart-bar text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Mixpanel</h3>
+                                            <p class="text-sm text-text-secondary">Product analytics and user behavior tracking</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Analytics</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
+                                        </div>
+                                        <a href="https://mixpanel.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- HubSpot -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="marketing,sales">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-orange-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-magnet text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">HubSpot</h3>
+                                            <p class="text-sm text-text-secondary">CRM, marketing, and sales platform</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Marketing</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Sales</span>
+                                        </div>
+                                        <a href="https://hubspot.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Linear -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="product,operations">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-tasks text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Linear</h3>
+                                            <p class="text-sm text-text-secondary">Issue tracking and project management for teams</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
+                                        </div>
+                                        <a href="https://linear.app" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Airtable -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="operations,product">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-yellow-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-table text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Airtable</h3>
+                                            <p class="text-sm text-text-secondary">Spreadsheet-database hybrid for flexible workflows</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
+                                        </div>
+                                        <a href="https://airtable.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Calendly -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="sales,operations">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-green-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-calendar-check text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Calendly</h3>
+                                            <p class="text-sm text-text-secondary">Automated scheduling for meetings and calls</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Sales</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
+                                        </div>
+                                        <a href="https://calendly.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Typeform -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="marketing,product">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-teal-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-poll text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Typeform</h3>
+                                            <p class="text-sm text-text-secondary">Beautiful forms and surveys for user feedback</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Marketing</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
+                                        </div>
+                                        <a href="https://typeform.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Clerky -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="legal">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-red-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-gavel text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Clerky</h3>
+                                            <p class="text-sm text-text-secondary">Legal paperwork for startups and incorporation</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Legal</span>
+                                        </div>
+                                        <a href="https://clerky.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Column - Stats and Actions -->
+                        <div class="lg:col-span-1 space-y-6">
+                            <!-- Quick Stats -->
+                            <div class="bg-section-bg rounded-xl p-6 border border-border">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Stats</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="text-2xl font-bold text-text-primary">50+</div>
+                                        <div class="text-sm text-text-secondary">Total Tools</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-text-primary">8</div>
+                                        <div class="text-sm text-text-secondary">Categories</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-text-primary">10</div>
+                                        <div class="text-sm text-text-secondary">New This Month</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Recommended for You -->
+                            <div class="bg-section-bg rounded-xl p-6 border border-border">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended for You</h3>
+                                <p class="text-sm text-text-secondary mb-4">Based on your current stage</p>
+                                <div class="space-y-3">
+                                    <a href="#" class="flex items-center gap-3 p-3 bg-white rounded hover:bg-primary hover:text-white transition-all group">
+                                        <i class="fas fa-comments text-primary group-hover:text-white"></i>
+                                        <span class="text-sm">Customer Interview Tools</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 bg-white rounded hover:bg-primary hover:text-white transition-all group">
+                                        <i class="fas fa-chart-line text-primary group-hover:text-white"></i>
+                                        <span class="text-sm">Analytics Setup Guide</span>
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 p-3 bg-white rounded hover:bg-primary hover:text-white transition-all group">
+                                        <i class="fas fa-credit-card text-primary group-hover:text-white"></i>
+                                        <span class="text-sm">Payment Integration</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </main>
+    </div>
+
+        <!-- AutoPilot Message Injector -->
+    <div id="autopilot-injector" class="fixed bottom-6 right-6 hidden z-50">
+        <div class="bg-[var(--autopilot-primary)] rounded-lg shadow-2xl p-4 max-w-sm border border-black/20">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-paper-plane text-[var(--autopilot-primary)]"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-semibold mb-1 text-black">AutoPilot Tip</h4>
+                    <p id="autopilot-message" class="text-sm text-black"></p>
+                    <div class="flex gap-2 mt-3">
+                        <button onclick="dismissAutoPilotMessage()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded hover:bg-black/80">Dismiss</button>
+                        <button onclick="openAutoPilot()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded font-semibold hover:bg-black/80">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // Filter tools by category
+        function filterToolsByCategory(category) {
+            // Update button states
+            const buttons = document.querySelectorAll('[data-category]');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border');
+                }
+            });
+            
+            // Filter tool cards
+            const toolCards = document.querySelectorAll('.tool-card');
+            toolCards.forEach(card => {
+                const categories = card.getAttribute('data-categories').split(',');
+                if (category === 'all' || categories.includes(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Contribute resource
+        function contributeResource() {
+            alert('Thank you for your interest in contributing! This feature is coming soon.');
+        }
+
+        // AutoPilot functions
+        function dismissAutoPilotMessage() {
+            document.getElementById('autopilot-injector').classList.add('hidden');
+        }
+
+        function openAutoPilot() {
+            window.location.href = 'autopilot.html';
+        }
+
+        // Initialize
+        filterToolsByCategory('all');
+
+        // Initialize navigation
+        initializeNavigation('tools');
+    </script>
+</body>
+</html>

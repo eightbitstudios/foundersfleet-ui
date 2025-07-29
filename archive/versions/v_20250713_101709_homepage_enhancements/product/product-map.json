@@ -1,0 +1,338 @@
+{
+  "stories": {
+    "FF-FTR-001": {
+      "title": "Initial Project Setup",
+      "status": "production",
+      "epic": "infrastructure",
+      "priority": "high",
+      "files": ["app.html", "product/docs/index.html", "CLAUDE.md"],
+      "description": "Set up basic project structure with product tracker, CLAUDE.md, and development workflow.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Created project structure with product tracker and CLAUDE.md"
+        },
+        {
+          "date": "July 12, 2025",
+          "change": "Initialized product-map.json with starter stories"
+        }
+      ]
+    },
+    "FF-FTR-002": {
+      "title": "Main Application Layout & Navigation",
+      "status": "integrate",
+      "epic": "core-app",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Core application structure with sidebar navigation, responsive layout, and view management system.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented complete sidebar navigation with 8 main sections"
+        }
+      ]
+    },
+    "FF-FTR-003": {
+      "title": "Control Dashboard",
+      "status": "integrate",
+      "epic": "dashboard",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Command center dashboard showing key metrics (MRR, users, conversion rate, progress) and platform overview cards.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Created Control dashboard with 4 key metrics and platform cards"
+        }
+      ]
+    },
+    "FF-FTR-004": {
+      "title": "Flightplan Progress Tracking",
+      "status": "integrate",
+      "epic": "flightplan",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Founder journey roadmap with milestone tracking, stage progression (Seed Stage), and completion status.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Built Flightplan view with seed stage milestones and progress cards"
+        }
+      ]
+    },
+    "FF-FTR-005": {
+      "title": "Mission System",
+      "status": "integrate",
+      "epic": "missions",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Structured founder missions with featured mission highlighting, completion tracking, and skill development.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented mission system with featured Signal Scan mission and mission cards"
+        }
+      ]
+    },
+    "FF-FTR-006": {
+      "title": "Public Founder Profile (Dispatch)",
+      "status": "integrate",
+      "epic": "profile",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Public founder profile creation with basic info, startup details, progress display, and draft mode.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Created Dispatch profile system with editable form fields and status tracking"
+        }
+      ]
+    },
+    "FF-FTR-007": {
+      "title": "Drops Feed System",
+      "status": "integrate",
+      "epic": "social",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Social feed for sharing founder journey milestones with engagement features (likes, comments, shares).",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Built Drops feed with sample posts, engagement buttons, and sharing options"
+        }
+      ]
+    },
+    "FF-FTR-008": {
+      "title": "Market Signals Dashboard",
+      "status": "integrate",
+      "epic": "signals",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Real-time market monitoring with sentiment index, VC funding data, and AI interest metrics.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Created Signals dashboard with market sentiment index and funding volume tracking"
+        }
+      ]
+    },
+    "FF-FTR-009": {
+      "title": "Community Hub (Hangar)",
+      "status": "integrate",
+      "epic": "community",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Community events and expert advisor system with weekly forecast sessions and networking features.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Built Hangar community hub with events calendar and expert advisor listings"
+        }
+      ]
+    },
+    "FF-FTR-010": {
+      "title": "Demo Environment (Terminal)",
+      "status": "integrate",
+      "epic": "development",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Sandbox environment for MVP deployment with branding hub, demo hosting, and developer tools.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented Terminal with branding hub, demo hosting, and developer tools sections"
+        }
+      ]
+    },
+    "FF-FTR-011": {
+      "title": "Document Management (Vault)",
+      "status": "integrate",
+      "epic": "vault",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "File and document management system with cloud storage integration, folder organization, and upload capabilities.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Created Vault with document upload, cloud integration, and folder management"
+        }
+      ]
+    },
+    "FF-FTR-012": {
+      "title": "Workspace Management",
+      "status": "integrate",
+      "epic": "workspace",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Multi-workspace support with workspace selector, user profile integration, and workspace switching.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Added workspace header with workspace selector and user info"
+        }
+      ]
+    },
+    "FF-FTR-013": {
+      "title": "Developer Tools Integration",
+      "status": "integrate",
+      "epic": "development",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Integrated developer tools with corner button access and embedded product tracker modal.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented developer tools corner button with modal integration"
+        }
+      ]
+    },
+    "FF-FTR-014": {
+      "title": "Responsive Mobile Design",
+      "status": "integrate",
+      "epic": "ui-ux",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Complete responsive design implementation with mobile sidebar, overlay system, and adaptive layouts.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented responsive design with mobile menu and overlay system"
+        }
+      ]
+    },
+    "FF-FTR-015": {
+      "title": "Authentication & User Management",
+      "status": "integrate",
+      "epic": "authentication",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "User registration, login, password management, and session handling.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented authentication modal with login/signup forms, social auth, and session management"
+        }
+      ]
+    },
+    "FF-FTR-016": {
+      "title": "Real-time Data Integration",
+      "status": "integrate",
+      "epic": "data-integration",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Connect market signals, funding data, and user analytics to live data sources.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented real-time data updates for market signals, dashboard metrics, and dynamic charts"
+        }
+      ]
+    },
+    "FF-FTR-017": {
+      "title": "Mission Progress Tracking",
+      "status": "integrate",
+      "epic": "missions",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Implement mission completion tracking, progress persistence, and achievement system.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented mission progress tracking with step completion, progress bars, and localStorage persistence"
+        }
+      ]
+    },
+    "FF-FTR-018": {
+      "title": "Social Engagement Features",
+      "status": "backlog",
+      "epic": "social",
+      "priority": "medium",
+      "files": ["social-features.js"],
+      "description": "Implement likes, comments, sharing functionality for Drops feed with real user interactions."
+    },
+    "FF-FTR-019": {
+      "title": "File Upload & Storage",
+      "status": "integrate",
+      "epic": "vault",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Implement actual file upload, cloud storage integration (Google Drive, Dropbox, Slack), and file management.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented drag-and-drop file upload, cloud service integration, file management with preview and deletion"
+        }
+      ]
+    },
+    "FF-FTR-020": {
+      "title": "Notification System",
+      "status": "integrate",
+      "epic": "notifications",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Real-time notifications for mission updates, community events, and social interactions.",
+      "history": [
+        {
+          "date": "July 12, 2025",
+          "change": "Implemented notification system with toast notifications, auto-dismiss, and multiple notification types"
+        }
+      ]
+    },
+    "FF-FTR-021": {
+      "title": "Event Management System",
+      "status": "backlog",
+      "epic": "community",
+      "priority": "medium",
+      "files": ["events.js"],
+      "description": "Event scheduling, RSVP management, and calendar integration for community events."
+    },
+    "FF-FTR-022": {
+      "title": "Expert Advisor Matching",
+      "status": "backlog",
+      "epic": "community",
+      "priority": "medium",
+      "files": ["advisor-matching.js"],
+      "description": "Algorithm for matching founders with relevant expert advisors based on industry and needs."
+    },
+    "FF-FTR-023": {
+      "title": "Demo Environment Deployment",
+      "status": "backlog",
+      "epic": "development",
+      "priority": "high",
+      "files": ["deployment.js"],
+      "description": "Automated MVP deployment system with containerization and custom domain support."
+    },
+    "FF-FTR-024": {
+      "title": "Branding Asset Management",
+      "status": "backlog",
+      "epic": "branding",
+      "priority": "medium",
+      "files": ["branding-hub.js"],
+      "description": "Brand asset upload, template generation, and export functionality for consistent branding."
+    },
+    "FF-FTR-025": {
+      "title": "Analytics & Reporting",
+      "status": "backlog",
+      "epic": "analytics",
+      "priority": "medium",
+      "files": ["analytics.js"],
+      "description": "User behavior tracking, progress analytics, and custom reporting dashboard."
+    },
+    "FF-FTR-026": {
+      "title": "Search & Discovery",
+      "status": "backlog",
+      "epic": "search",
+      "priority": "medium",
+      "files": ["search.js"],
+      "description": "Global search functionality across missions, drops, documents, and community content."
+    },
+    "FF-FTR-027": {
+      "title": "Data Export & Backup",
+      "status": "backlog",
+      "epic": "data-management",
+      "priority": "low",
+      "files": ["export.js"],
+      "description": "User data export, backup functionality, and GDPR compliance features."
+    }
+  }
+}

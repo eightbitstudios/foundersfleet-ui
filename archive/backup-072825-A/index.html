@@ -56,47 +56,7 @@
             overflow: visible !important;
         }
         
-        /* Boarding pass notches */
-        .boarding-pass::before,
-        .boarding-pass::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #000;
-            border-radius: 50%;
-            z-index: 100;
-        }
-        
-        /* Desktop - top and bottom notches */
-        @media (min-width: 768px) {
-            .boarding-pass::before {
-                top: -10px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            
-            .boarding-pass::after {
-                bottom: -10px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-        }
-        
-        /* Mobile - left and right notches */
-        @media (max-width: 767px) {
-            .boarding-pass::before {
-                left: -10px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-            
-            .boarding-pass::after {
-                right: -10px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-        }
+        /* Remove default notches */
         
         
         /* Landscape adjustments */
@@ -636,17 +596,21 @@
     <!-- Boarding Pass Modal -->
     <div id="boardingPassModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-6 md:p-4">
         <div class="w-full max-w-[900px] md:max-h-[90vh] h-[calc(100%-3rem)] md:h-auto relative flex items-center justify-center">
+            <!-- Close Button - Outside boarding pass -->
+            <button onclick="closeBoardingPass()" class="absolute -top-2 -right-2 z-30 w-12 h-12 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-all">
+                <i class="fas fa-times text-white text-lg"></i>
+            </button>
             
             <div class="boarding-pass relative bg-white rounded-2xl h-full md:h-auto w-full" style="box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);">
-                <!-- Close Button - Inside boarding pass -->
-                <button onclick="closeBoardingPass()" class="absolute top-4 left-4 z-30 w-8 h-8 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-all">
-                    <i class="fas fa-times text-white text-sm"></i>
-                </button>
                 
                 <!-- Wide Screen Layout - Horizontal -->
                 <div class="flex items-stretch min-h-[320px] h-full md:h-auto">
                     <!-- Left Section - Destination Graphic (50%) -->
                     <div class="destination-section w-1/2 p-6 md:p-8 flex items-center justify-center border-r-2 border-dashed border-gray-300 relative overflow-visible">
+                        <!-- Close Button - Mobile Only in Top Section -->
+                        <button onclick="closeBoardingPass()" class="absolute top-4 right-4 z-10 w-8 h-8 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-all md:hidden">
+                            <i class="fas fa-times text-white text-sm"></i>
+                        </button>
                         
                         <!-- Default Logo View -->
                         <div id="logoView" class="destination-content flex flex-col items-center justify-center gap-4 text-center h-full">
@@ -678,7 +642,10 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <h2 class="text-xl font-bold text-black mb-2">Number Not Recognized</h2>
+                                <h2 class="text-xl font-bold text-black mb-2">Access Status for Your Invite</h2>
+                                <div class="inline-block px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium mb-3">
+                                    Not Recognized
+                                </div>
                                 <p class="text-base text-gray-900 font-medium">
                                     It looks like your number isn't recognized.
                                 </p>
@@ -760,6 +727,24 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Boarding Pass Notches - Top/Bottom for wide screens, Side for mobile -->
+                <!-- Top notch - desktop only, aligned with center dotted line -->
+                <div class="hidden md:block absolute -top-3" style="left: 50%; transform: translateX(-50%);">
+                    <div class="w-6 h-6 bg-black/80 rounded-full"></div>
+                </div>
+                <!-- Bottom notch - desktop only, aligned with center dotted line -->
+                <div class="hidden md:block absolute -bottom-3" style="left: 50%; transform: translateX(-50%);">
+                    <div class="w-6 h-6 bg-black/80 rounded-full"></div>
+                </div>
+                <!-- Left notch - mobile only -->
+                <div class="md:hidden absolute -left-3 top-1/2 -translate-y-1/2">
+                    <div class="w-6 h-6 bg-black/80 rounded-full"></div>
+                </div>
+                <!-- Right notch - mobile only -->
+                <div class="md:hidden absolute -right-3 top-1/2 -translate-y-1/2">
+                    <div class="w-6 h-6 bg-black/80 rounded-full"></div>
                 </div>
             </div>
         </div>

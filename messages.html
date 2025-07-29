@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .conversation-item {
+            transition: background 0.2s ease;
+        }
+        .conversation-item:hover {
+            background: var(--tw-color-section-bg);
+        }
+        .conversation-item.active {
+            background: var(--tw-color-section-bg);
+            border-left: 3px solid #000000;
+        }
+        .message-bubble {
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .message-bubble.own {
+            background: #000000;
+            color: white;
+            margin-left: auto;
+        }
+        .message-bubble.other {
+            background: #F8F9FA;
+            color: #000000;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Page Header -->
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">Connect & Collaborate</h1>
+                        <p class="text-text-secondary">Messages with founders and squad members</p>
+                    </div>
+                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="newMessage()">
+                        <i class="fas fa-plus"></i>New Message
+                    </button>
+                </div>
+                
+                <!-- Message Type Tabs -->
+                <div class="mb-6">
+                    <div class="flex gap-2">
+                        <button id="direct-tab" class="px-6 py-2 bg-primary text-white rounded-lg transition-all" onclick="switchTab('direct')">
+                            Direct Messages
+                        </button>
+                        <button id="squad-tab" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all" onclick="switchTab('squad')">
+                            Squad Messages
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Chat Interface -->
+                <div id="direct-messages" class="bg-card-bg border border-border rounded-lg h-[calc(100vh-200px)] flex">
+                    <!-- Conversations List -->
+                    <div class="w-80 border-r border-border flex flex-col">
+                        <!-- Search -->
+                        <div class="p-4 border-b border-border">
+                            <input type="text" placeholder="Search conversations..." class="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <!-- Conversations -->
+                        <div class="flex-1 overflow-y-auto">
+                            <!-- Active Conversation -->
+                            <div class="conversation-item active p-4 cursor-pointer" onclick="selectConversation(1)">
+                                <div class="flex gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold flex-shrink-0">BC</div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="font-semibold text-text-primary text-sm">Brian Chesky</h4>
+                                            <span class="text-xs text-text-muted">2h</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1 truncate">Hey! Loved your thoughts on marketplace dynamics...</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">Airbnb</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">CEO</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Other Conversations -->
+                            <div class="conversation-item p-4 cursor-pointer" onclick="selectConversation(2)">
+                                <div class="flex gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold flex-shrink-0">MP</div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="font-semibold text-text-primary text-sm">Melanie Perkins</h4>
+                                            <span class="text-xs text-text-muted">1d</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1 truncate">Thanks for the intro! Would love to connect...</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">Canva</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">CEO</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="conversation-item p-4 cursor-pointer" onclick="selectConversation(3)">
+                                <div class="flex gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold flex-shrink-0">DF</div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="font-semibold text-text-primary text-sm">Dylan Field</h4>
+                                            <span class="text-xs text-text-muted">3d</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1 truncate">Great meeting you at the conference!</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">Figma</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">CEO</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="conversation-item p-4 cursor-pointer" onclick="selectConversation(4)">
+                                <div class="flex gap-3">
+                                    <div class="w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center font-semibold flex-shrink-0">SH</div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="font-semibold text-text-primary text-sm">Stewart Hoffman</h4>
+                                            <span class="text-xs text-text-muted">5d</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1 truncate">Your approach to customer acquisition is interesting...</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">B2B SaaS</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">Growth</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Area -->
+                    <div class="flex-1 flex flex-col">
+                        <!-- Chat Header -->
+                        <div class="p-4 border-b border-border">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold">BC</div>
+                                <div>
+                                    <h3 class="font-semibold text-text-primary">Brian Chesky</h3>
+                                    <p class="text-sm text-text-secondary">Co-founder & CEO at Airbnb</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Messages -->
+                        <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                            <!-- Other person's message -->
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">BC</div>
+                                <div class="message-bubble other rounded-lg p-3">
+                                    <p class="text-sm">Hey! Loved your thoughts on marketplace dynamics. Have you considered the network effects in your model?</p>
+                                    <span class="text-xs text-text-muted mt-1 block">2 hours ago</span>
+                                </div>
+                            </div>
+
+                            <!-- Your message -->
+                            <div class="flex justify-end">
+                                <div class="message-bubble own rounded-lg p-3">
+                                    <p class="text-sm">Thanks Brian! Yes, we're focusing heavily on supply-side incentives first. The demand naturally follows when you have quality supply.</p>
+                                    <span class="text-xs text-white/70 mt-1 block text-right">2 hours ago</span>
+                                </div>
+                            </div>
+
+                            <!-- Other person's message -->
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">BC</div>
+                                <div class="message-bubble other rounded-lg p-3">
+                                    <p class="text-sm">Exactly! That's how we approached it too. The supply constraint was our biggest challenge early on. What's your strategy for ensuring supply quality?</p>
+                                    <span class="text-xs text-text-muted mt-1 block">1 hour ago</span>
+                                </div>
+                            </div>
+
+                            <!-- Your message -->
+                            <div class="flex justify-end">
+                                <div class="message-bubble own rounded-lg p-3">
+                                    <p class="text-sm">We're implementing a tiered verification system - basic verification for entry, then performance-based tier upgrades. Also building in peer review mechanisms.</p>
+                                    <span class="text-xs text-white/70 mt-1 block text-right">45 minutes ago</span>
+                                </div>
+                            </div>
+
+                            <!-- Typing indicator -->
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">BC</div>
+                                <div class="message-bubble other rounded-lg p-3">
+                                    <div class="flex space-x-1">
+                                        <div class="w-2 h-2 bg-text-muted rounded-full animate-bounce"></div>
+                                        <div class="w-2 h-2 bg-text-muted rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                                        <div class="w-2 h-2 bg-text-muted rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Message Input -->
+                        <div class="p-4 border-t border-border">
+                            <form onsubmit="sendMessage(event)" class="flex gap-3">
+                                <input type="text" id="message-input" placeholder="Type a message..." class="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <button type="submit" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Squad Messages Interface -->
+                <div id="squad-messages" class="bg-card-bg border border-border rounded-lg h-[calc(100vh-200px)] flex hidden">
+                    <!-- Squad Conversations List -->
+                    <div class="w-80 border-r border-border flex flex-col">
+                        <!-- Search -->
+                        <div class="p-4 border-b border-border">
+                            <input type="text" placeholder="Search squads..." class="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        
+                        <!-- Squad Conversations -->
+                        <div class="flex-1 overflow-y-auto">
+                            <!-- Active Squad Conversation -->
+                            <div class="conversation-item active p-4 cursor-pointer" onclick="selectSquadConversation(1)">
+                                <div class="flex gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-primary text-white flex items-center justify-center font-semibold flex-shrink-0">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="font-semibold text-text-primary text-sm">B2B SaaS Squad</h4>
+                                            <span class="text-xs text-text-muted">10m</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1 truncate">Sarah: Just launched our beta! 🚀</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">12 members</span>
+                                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">3 online</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Other Squad Conversations -->
+                            <div class="conversation-item p-4 cursor-pointer" onclick="selectSquadConversation(2)">
+                                <div class="flex gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-purple-600 text-white flex items-center justify-center font-semibold flex-shrink-0">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="font-semibold text-text-primary text-sm">Marketplace Builders</h4>
+                                            <span class="text-xs text-text-muted">2h</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1 truncate">Mike: Anyone dealt with payment splits?</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">8 members</span>
+                                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">2 online</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="conversation-item p-4 cursor-pointer" onclick="selectSquadConversation(3)">
+                                <div class="flex gap-3">
+                                    <div class="w-12 h-12 rounded-lg bg-blue-600 text-white flex items-center justify-center font-semibold flex-shrink-0">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="font-semibold text-text-primary text-sm">AI/ML Founders</h4>
+                                            <span class="text-xs text-text-muted">1d</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-1 truncate">Emma: New GPT-4 API features are amazing!</p>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">15 members</span>
+                                            <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Offline</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Squad Chat Area -->
+                    <div class="flex-1 flex flex-col">
+                        <!-- Squad Chat Header -->
+                        <div class="p-4 border-b border-border">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center font-semibold">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">B2B SaaS Squad</h3>
+                                        <p class="text-sm text-text-secondary">12 members • 3 online</p>
+                                    </div>
+                                </div>
+                                <button class="text-primary hover:text-primary-hover">
+                                    <i class="fas fa-info-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Squad Messages -->
+                        <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                            <!-- System message -->
+                            <div class="text-center">
+                                <span class="text-xs text-text-muted bg-section-bg px-3 py-1 rounded-full">Today</span>
+                            </div>
+
+                            <!-- Squad member message -->
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">SC</div>
+                                <div>
+                                    <div class="flex items-baseline gap-2 mb-1">
+                                        <span class="font-medium text-sm text-text-primary">Sarah Chen</span>
+                                        <span class="text-xs text-text-muted">10:32 AM</span>
+                                    </div>
+                                    <div class="message-bubble other rounded-lg p-3">
+                                        <p class="text-sm">Just launched our beta! 🚀 First 10 customers onboarded and the feedback is incredible!</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Your message -->
+                            <div class="flex justify-end">
+                                <div>
+                                    <div class="text-right mb-1">
+                                        <span class="text-xs text-text-muted">10:35 AM</span>
+                                    </div>
+                                    <div class="message-bubble own rounded-lg p-3">
+                                        <p class="text-sm">Congrats Sarah! That's amazing progress. What's been the most surprising feedback so far?</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Another squad member -->
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">MR</div>
+                                <div>
+                                    <div class="flex items-baseline gap-2 mb-1">
+                                        <span class="font-medium text-sm text-text-primary">Marcus Rodriguez</span>
+                                        <span class="text-xs text-text-muted">10:36 AM</span>
+                                    </div>
+                                    <div class="message-bubble other rounded-lg p-3">
+                                        <p class="text-sm">Awesome Sarah! We're launching next week. Any last minute tips?</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sarah's reply -->
+                            <div class="flex gap-3">
+                                <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">SC</div>
+                                <div>
+                                    <div class="flex items-baseline gap-2 mb-1">
+                                        <span class="font-medium text-sm text-text-primary">Sarah Chen</span>
+                                        <span class="text-xs text-text-muted">10:38 AM</span>
+                                    </div>
+                                    <div class="message-bubble other rounded-lg p-3">
+                                        <p class="text-sm">@Don The UI simplicity - they love how clean it is compared to competitors!</p>
+                                        <p class="text-sm mt-2">@Marcus Make sure your onboarding emails are ready. We had to scramble on that front 😅</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squad Message Input -->
+                        <div class="p-4 border-t border-border">
+                            <form onsubmit="sendSquadMessage(event)" class="flex gap-3">
+                                <input type="text" id="squad-message-input" placeholder="Message B2B SaaS Squad..." class="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <button type="submit" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Tab switching functionality
+        function switchTab(tabType) {
+            const directTab = document.getElementById('direct-tab');
+            const squadTab = document.getElementById('squad-tab');
+            const directMessages = document.getElementById('direct-messages');
+            const squadMessages = document.getElementById('squad-messages');
+            
+            if (tabType === 'direct') {
+                directTab.className = 'px-6 py-2 bg-primary text-white rounded-lg transition-all';
+                squadTab.className = 'px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all';
+                directMessages.classList.remove('hidden');
+                squadMessages.classList.add('hidden');
+            } else {
+                directTab.className = 'px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all';
+                squadTab.className = 'px-6 py-2 bg-primary text-white rounded-lg transition-all';
+                directMessages.classList.add('hidden');
+                squadMessages.classList.remove('hidden');
+            }
+        }
+        
+        // Message functionality
+        function selectConversation(id) {
+            // Update active conversation
+            document.querySelectorAll('#direct-messages .conversation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // In a real app, this would load the conversation messages
+            console.log('Selected conversation:', id);
+        }
+        
+        function selectSquadConversation(id) {
+            // Update active conversation
+            document.querySelectorAll('#squad-messages .conversation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // In a real app, this would load the squad conversation messages
+            console.log('Selected squad conversation:', id);
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add message to chat (in a real app, this would send to server)
+            console.log('Sending message:', message);
+            input.value = '';
+        }
+        
+        function sendSquadMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('squad-message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add message to squad chat (in a real app, this would send to server)
+            console.log('Sending squad message:', message);
+            input.value = '';
+        }
+
+        function newMessage() {
+            // In a real app, this would open a new message modal or interface
+            alert('New message feature coming soon!');
+        }
+
+        // Initialize navigation
+        initializeNavigation('messages');
+    </script>
+</body>
+</html>

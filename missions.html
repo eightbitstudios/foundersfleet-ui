@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missions - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Mission card hover effect */
+        .mission-card {
+            transition: all 0.2s ease;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Filter pill active state */
+        .filter-active {
+            background-color: #000000;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Header -->
+            <div class="bg-white border-b border-border sticky top-0 z-40">
+                <div class="max-w-[1200px] mx-auto px-8 py-6">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h1 class="text-3xl font-bold text-text-primary mb-2">Mission Library</h1>
+                            <p class="text-text-secondary">Step-by-step guides from founders who've done it</p>
+                        </div>
+                        <button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                            <i class="fas fa-plus mr-2"></i>Suggest Mission
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="bg-section-bg border-b border-border sticky top-[88px] z-30">
+                <div class="max-w-[1200px] mx-auto px-8 py-4">
+                    <div class="flex flex-wrap gap-6">
+                        <!-- Use Case Filter -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-medium text-text-secondary">Epic:</span>
+                            <select class="px-3 py-1.5 bg-white border border-border rounded text-sm">
+                                <option>All Epics</option>
+                                <option>I'm just starting out</option>
+                                <option>I need my first customers</option>
+                                <option>I'm ready to fundraise</option>
+                                <option>Time to hire</option>
+                                <option>Scale the business</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Category Filter -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-medium text-text-secondary">Category:</span>
+                            <div class="flex gap-2">
+                                <button class="px-3 py-1.5 bg-white border border-border rounded text-sm hover:border-primary transition-all filter-active">All</button>
+                                <button class="px-3 py-1.5 bg-white border border-border rounded text-sm hover:border-primary transition-all">Technical</button>
+                                <button class="px-3 py-1.5 bg-white border border-border rounded text-sm hover:border-primary transition-all">Business</button>
+                                <button class="px-3 py-1.5 bg-white border border-border rounded text-sm hover:border-primary transition-all">Marketing</button>
+                                <button class="px-3 py-1.5 bg-white border border-border rounded text-sm hover:border-primary transition-all">Legal</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Other Filters -->
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-medium text-text-secondary">Show:</span>
+                            <div class="flex gap-2">
+                                <button class="px-3 py-1.5 bg-white border border-border rounded text-sm hover:border-primary transition-all flex items-center gap-1">
+                                    <i class="fas fa-check-circle text-success text-xs"></i>
+                                    Ready for me
+                                </button>
+                                <button class="px-3 py-1.5 bg-white border border-border rounded text-sm hover:border-primary transition-all flex items-center gap-1">
+                                    <i class="fas fa-users text-primary text-xs"></i>
+                                    Squad missions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Featured Missions -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-semibold text-text-primary mb-4">Popular Right Now</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Mission: Launch on Product Hunt -->
+                        <div class="mission-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-lg cursor-pointer" onclick="goToMission('launch-product-hunt')">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 bg-warning/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-rocket text-warning text-xl"></i>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs px-2 py-1 bg-warning/10 text-warning rounded-full font-medium">Hot</span>
+                                    <span class="text-xs text-text-muted">45 active</span>
+                                </div>
+                            </div>
+                            
+                            <h3 class="font-semibold text-text-primary mb-1">Launch on Product Hunt</h3>
+                            <p class="text-xs text-text-muted mb-2">Epic: I need my first customers</p>
+                            <p class="text-sm text-text-secondary mb-4">Complete playbook for a successful Product Hunt launch that gets you to #1</p>
+                            
+                            <div class="flex items-center justify-between text-xs">
+                                <div class="flex items-center gap-3 text-text-muted">
+                                    <span><i class="fas fa-clock mr-1"></i>2 weeks</span>
+                                    <span><i class="fas fa-signal mr-1"></i>Medium</span>
+                                </div>
+                                <span class="text-success font-medium">127 completed</span>
+                            </div>
+                        </div>
+
+                        <!-- Mission: Set up Analytics -->
+                        <div class="mission-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-lg cursor-pointer">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-success text-xl"></i>
+                                </div>
+                                <span class="text-xs text-text-muted">12 active</span>
+                            </div>
+                            
+                            <h3 class="font-semibold text-text-primary mb-1">Set up Analytics Dashboard</h3>
+                            <p class="text-xs text-text-muted mb-2">Epic: I need my first customers</p>
+                            <p class="text-sm text-text-secondary mb-4">Implement Google Analytics, Mixpanel, and custom events to track what matters</p>
+                            
+                            <div class="flex items-center justify-between text-xs">
+                                <div class="flex items-center gap-3 text-text-muted">
+                                    <span><i class="fas fa-clock mr-1"></i>3 hours</span>
+                                    <span><i class="fas fa-signal mr-1"></i>Easy</span>
+                                </div>
+                                <span class="text-success font-medium">234 completed</span>
+                            </div>
+                        </div>
+
+                        <!-- Mission: Form Legal Entity -->
+                        <div class="mission-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-lg cursor-pointer">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-primary text-xl"></i>
+                                </div>
+                                <span class="text-xs text-text-muted">8 active</span>
+                            </div>
+                            
+                            <h3 class="font-semibold text-text-primary mb-1">Form Delaware C-Corp</h3>
+                            <p class="text-xs text-text-muted mb-2">Epic: I'm ready to fundraise</p>
+                            <p class="text-sm text-text-secondary mb-4">Step-by-step guide to incorporate properly for future investment</p>
+                            
+                            <div class="flex items-center justify-between text-xs">
+                                <div class="flex items-center gap-3 text-text-muted">
+                                    <span><i class="fas fa-clock mr-1"></i>1 week</span>
+                                    <span><i class="fas fa-signal mr-1"></i>Medium</span>
+                                </div>
+                                <span class="text-success font-medium">156 completed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission Categories -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Main Mission Grid -->
+                    <div class="lg:col-span-2">
+                        <!-- Getting Started Missions -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Getting Started</h3>
+                            <div class="space-y-3">
+                                <!-- Mission Row -->
+                                <div class="bg-card-bg border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-info/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-lightbulb text-info"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h4 class="font-medium text-text-primary">Validate Your Idea</h4>
+                                                    <p class="text-xs text-text-secondary mt-1">Talk to 20 potential customers in 5 days</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-xs text-text-muted">5 days • Easy</p>
+                                                    <p class="text-xs text-success mt-1">312 completed</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mission Row -->
+                                <div class="bg-card-bg border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-globe text-primary"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h4 class="font-medium text-text-primary">Create Landing Page</h4>
+                                                    <p class="text-xs text-text-secondary mt-1">Build a conversion-optimized landing page</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-xs text-text-muted">1 day • Medium</p>
+                                                    <p class="text-xs text-success mt-1">278 completed</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mission Row with Prerequisites -->
+                                <div class="bg-card-bg border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer opacity-75">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-section-bg rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-lock text-text-muted"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h4 class="font-medium text-text-secondary">Build MVP</h4>
+                                                    <p class="text-xs text-text-muted mt-1">Requires: Validated idea</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-xs text-text-muted">2-4 weeks • High</p>
+                                                    <p class="text-xs text-text-muted mt-1">Locked</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Technical Setup Missions -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Technical Setup</h3>
+                            <div class="space-y-3">
+                                <!-- Mission Row -->
+                                <div class="bg-card-bg border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-code-branch text-primary"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h4 class="font-medium text-text-primary">Set up GitHub Repository</h4>
+                                                    <p class="text-xs text-text-secondary mt-1">Configure repo, CI/CD, and branch protection</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-xs text-text-muted">2 hours • Easy</p>
+                                                    <p class="text-xs text-success mt-1">423 completed</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Squad Mission -->
+                                <div class="bg-card-bg border-2 border-primary/20 rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-users text-white"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <div class="flex items-center gap-2">
+                                                        <h4 class="font-medium text-text-primary">Security Audit Sprint</h4>
+                                                        <span class="text-xs px-2 py-0.5 bg-primary text-white rounded-full">Squad Mission</span>
+                                                    </div>
+                                                    <p class="text-xs text-text-secondary mt-1">Review each other's code for vulnerabilities</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-xs text-text-muted">1 week • Medium</p>
+                                                    <p class="text-xs text-primary mt-1">3 squads active</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Marketing Missions -->
+                        <div class="mb-8">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Marketing & Growth</h3>
+                            <div class="space-y-3">
+                                <!-- Mission Row -->
+                                <div class="bg-card-bg border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-success/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-envelope text-success"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h4 class="font-medium text-text-primary">Build Email List</h4>
+                                                    <p class="text-xs text-text-secondary mt-1">Get your first 100 subscribers</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-xs text-text-muted">1 week • Easy</p>
+                                                    <p class="text-xs text-success mt-1">189 completed</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mission Row -->
+                                <div class="bg-card-bg border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-info/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-bullhorn text-info"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between">
+                                                <div>
+                                                    <h4 class="font-medium text-text-primary">Run First Ad Campaign</h4>
+                                                    <p class="text-xs text-text-secondary mt-1">Facebook/Google ads that actually convert</p>
+                                                </div>
+                                                <div class="text-right">
+                                                    <p class="text-xs text-text-muted">3 days • Medium</p>
+                                                    <p class="text-xs text-success mt-1">94 completed</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Your Mission Path -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-semibold text-text-primary mb-4">Your Mission Path</h3>
+                            <p class="text-xs text-text-secondary mb-4">Based on your progress and goals</p>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-success rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-white text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Validate Idea</p>
+                                        <p class="text-xs text-text-muted">Completed</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-warning rounded-full flex items-center justify-center animate-pulse">
+                                        <span class="text-white text-xs font-bold">2</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Customer Interviews</p>
+                                        <p class="text-xs text-warning">In progress</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-section-bg rounded-full flex items-center justify-center">
+                                        <span class="text-text-muted text-xs font-bold">3</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-secondary">Build MVP</p>
+                                        <p class="text-xs text-text-muted">Up next</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full mt-4 px-3 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
+                                View Full Path →
+                            </button>
+                        </div>
+
+                        <!-- Mission Stats -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-semibold text-text-primary mb-4">Mission Stats</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <span class="text-sm text-text-secondary">Total Missions</span>
+                                        <span class="text-lg font-bold text-text-primary">127</span>
+                                    </div>
+                                    <div class="text-xs text-text-muted">23 added this month</div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <span class="text-sm text-text-secondary">Active Now</span>
+                                        <span class="text-lg font-bold text-warning">89</span>
+                                    </div>
+                                    <div class="text-xs text-text-muted">Founders working on missions</div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between items-baseline mb-1">
+                                        <span class="text-sm text-text-secondary">Completed</span>
+                                        <span class="text-lg font-bold text-success">3,421</span>
+                                    </div>
+                                    <div class="text-xs text-text-muted">Total completions</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Create Mission CTA -->
+                        <div class="bg-section-bg border border-border rounded-lg p-6 text-center">
+                            <i class="fas fa-lightbulb text-warning text-2xl mb-3"></i>
+                            <h3 class="font-semibold text-text-primary mb-2">Have a mission idea?</h3>
+                            <p class="text-sm text-text-secondary mb-4">Help other founders by sharing what you've learned</p>
+                            <button class="px-4 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
+                                Suggest Mission
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('tools');
+
+        // Mission navigation
+        function goToMission(missionId) {
+            window.location.href = `mission-detail.html?mission=${missionId}`;
+        }
+
+        // Filter toggle
+        document.querySelectorAll('.filter-active').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('filter-active');
+            });
+        });
+    </script>
+</body>
+</html>

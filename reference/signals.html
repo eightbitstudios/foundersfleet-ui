@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founders Fleet – Signals</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --background: #0a0a0a;
+      --text: #ffffff;
+      --text-secondary: #a1a1aa;
+      --card-bg: #111111;
+      --card-hover: #161616;
+      --border: #27272a;
+      --accent: #18181b;
+      --accent-hover: #1f1f23;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --padding: 1.5rem;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--background) 0%, #0f0f0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 280px;
+      background: var(--accent);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .workspace-header:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .workspace-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .workspace-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .workspace-select {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+    }
+
+    .workspace-select option {
+      color: black;
+      background: white;
+    }
+
+    .workspace-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .nav-link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--accent);
+      padding: 0.125rem 0.375rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: var(--primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: var(--padding);
+      max-width: calc(100vw - 280px);
+    }
+
+    .signals-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .signals-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, var(--text), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .signals-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .signals-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .time-filter {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem;
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .time-filter button {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .time-filter button.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      opacity: 0.3;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .cta-headline {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      color: white;
+      line-height: 1.2;
+    }
+
+    .cta-subheadline {
+      font-size: 1rem;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.4;
+    }
+
+    .cta-button {
+      background: white;
+      color: var(--primary);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      margin-left: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .alerts-ticker {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 2rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .alerts-ticker-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .alerts-ticker-content {
+      display: flex;
+      gap: 2rem;
+      animation: scroll 30s linear infinite;
+    }
+
+    .ticker-alert {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+      padding: 0.75rem 1rem;
+      background: var(--accent);
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+      min-width: 300px;
+    }
+
+    .ticker-alert.warning {
+      border-left-color: var(--warning);
+    }
+
+    .ticker-alert.success {
+      border-left-color: var(--success);
+    }
+
+    .ticker-icon {
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .ticker-content {
+      flex: 1;
+    }
+
+    .ticker-title {
+      font-weight: 600;
+      margin: 0;
+      font-size: 0.875rem;
+      line-height: 1.2;
+    }
+
+    .ticker-description {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    @keyframes scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .alerts-ticker:hover .alerts-ticker-content {
+      animation-play-state: paused;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .main-chart-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .chart-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .chart-value {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .trend-indicator {
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .trend-up {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+
+    .trend-down {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+    }
+
+    .chart-canvas {
+      width: 100%;
+      height: 300px;
+      position: relative;
+    }
+
+    .signals-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .signal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signal-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .signal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .signal-title {
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin: 0;
+    }
+
+    .signal-status {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .status-critical {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--danger);
+    }
+
+    .status-warning {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--warning);
+    }
+
+    .status-normal {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+
+    .signal-metric {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0.5rem 0;
+    }
+
+    .signal-change {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .mini-chart {
+      height: 40px;
+      margin-top: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--purple));
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .signals-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .signals-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .cta-button {
+        margin-left: 0;
+        margin-top: 1rem;
+      }
+    }
+
+    /* SVG Line Chart Styles */
+    .chart-line {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .chart-area {
+      fill: url(#gradient);
+      opacity: 0.3;
+    }
+
+    .chart-grid {
+      stroke: var(--border);
+      stroke-width: 1;
+      opacity: 0.5;
+    }
+
+    .chart-axis {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+
+    .chart-label {
+      fill: var(--text-secondary);
+      font-size: 12px;
+      font-family: var(--font-family);
+    }
+
+    .data-point {
+      fill: var(--primary);
+      stroke: var(--background);
+      stroke-width: 2;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .chart-canvas:hover .data-point {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+<div class="workspace-header">
+<div class="workspace-logo">F</div>
+<div class="workspace-info">
+<select class="workspace-select" onchange="handleWorkspaceChange(this)">
+<option>Eight Bit Studios</option>
+<option>Another Workspace</option>
+<option value="signout">Sign Out</option>
+</select>
+<span class="workspace-email">name@email.com</span>
+</div>
+</div>
+<nav class="nav-links">
+<a class="nav-link active" href="control.html">
+<div class="nav-link-content">
+<span>🏠</span> Control
+        </div>
+</a>
+<a class="nav-link" href="flightplan.html">
+<div class="nav-link-content">
+<span>🗺️</span> Flightplan
+        </div>
+<span class="nav-status">Idea</span>
+</a>
+<a class="nav-link" href="missions.html">
+<div class="nav-link-content">
+<span>🎯</span> Missions
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="dispatch.html">
+<div class="nav-link-content">
+<span>🪪</span> Dispatch
+        </div>
+<span class="nav-status">Draft</span>
+</a>
+<a class="nav-link" href="drops.html">
+<div class="nav-link-content">
+<span>📦</span> Drops
+        </div>
+<span class="nav-status">2</span>
+</a>
+<a class="nav-link" href="signals.html">
+<div class="nav-link-content">
+<span>📡</span> Signals
+        </div>
+<span class="nav-status">3</span>
+</a>
+<a class="nav-link" href="hangar.html">
+<div class="nav-link-content">
+<span>🏗️</span> Hangar
+        </div>
+<span class="nav-status">Friday</span>
+</a>
+<a class="nav-link" href="terminal.html">
+<div class="nav-link-content">
+<span>🏢</span> Terminal
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="vault.html">
+<div class="nav-link-content">
+<span>🗃️</span> Vault
+        </div>
+<span class="nav-status">47</span>
+</a>
+</nav>
+</aside>
+<main class="main-content">
+<div class="signals-header">
+<div>
+<h1 class="signals-title">Signals</h1>
+<p class="signals-subtitle">Trend Monitoring Hub</p>
+</div>
+<div class="signals-controls">
+<div class="time-filter">
+<button>1H</button>
+<button>24H</button>
+<button class="active">7D</button>
+<button>30D</button>
+<button>3M</button>
+</div>
+<div class="live-indicator">
+<div class="live-dot"></div>
+<span>Live Data</span>
+</div>
+</div>
+</div>
+<div class="cta-section">
+<div class="cta-content">
+<h2 class="cta-headline">Get Your Startup Signals Report</h2>
+<p class="cta-subheadline">Imagine asking the top 100 economists to review your startup idea and timing</p>
+</div>
+<button class="cta-button" onclick="openSignalsReport()">
+<span>📊</span>
+        Get My Report
+      </button>
+</div>
+<div class="alerts-ticker">
+<div class="alerts-ticker-header">
+<h3 style="margin: 0; font-size: 1rem; font-weight: 600;">🚨 Recent Alerts</h3>
+<span style="color: var(--text-secondary); font-size: 0.875rem;">Live updates</span>
+</div>
+<div class="alerts-ticker-content">
+<div class="ticker-alert">
+<div class="ticker-icon">📈</div>
+<div class="ticker-content">
+<h4 class="ticker-title">AI Funding Surge Detected</h4>
+<p class="ticker-description">3 major AI funding rounds announced today totaling $890M</p>
+</div>
+</div>
+<div class="ticker-alert warning">
+<div class="ticker-icon">⚠️</div>
+<div class="ticker-content">
+<h4 class="ticker-title">Developer Talent Shortage</h4>
+<p class="ticker-description">Senior developer job postings up 34% while applications down 12%</p>
+</div>
+</div>
+<div class="ticker-alert success">
+<div class="ticker-icon">💡</div>
+<div class="ticker-content">
+<h4 class="ticker-title">B2B SaaS Growth Opportunity</h4>
+<p class="ticker-description">B2B SaaS companies showing 23% higher retention rates</p>
+</div>
+</div>
+<div class="ticker-alert">
+<div class="ticker-icon">📊</div>
+<div class="ticker-content">
+<h4 class="ticker-title">Market Volatility Alert</h4>
+<p class="ticker-description">Tech stocks showing increased volatility patterns</p>
+</div>
+</div>
+<div class="ticker-alert success">
+<div class="ticker-icon">🚀</div>
+<div class="ticker-content">
+<h4 class="ticker-title">Startup Formation Spike</h4>
+<p class="ticker-description">New startup registrations up 23% this quarter</p>
+</div>
+</div>
+</div>
+</div>
+<div class="dashboard-grid">
+<div class="main-chart-container">
+<div class="chart-header">
+<h3 class="chart-title">Market Sentiment Index</h3>
+<div class="chart-value">
+<span style="font-size: 1.5rem; font-weight: 700;">84.2</span>
+<span class="trend-indicator trend-up">+12.3%</span>
+</div>
+</div>
+<div class="chart-canvas">
+<svg height="100%" viewbox="0 0 800 300" width="100%">
+<defs>
+<lineargradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:rgb(59,130,246);stop-opacity:0.3"></stop>
+<stop offset="100%" style="stop-color:rgb(59,130,246);stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<g class="grid">
+<line class="chart-grid" x1="0" x2="800" y1="60" y2="60"></line>
+<line class="chart-grid" x1="0" x2="800" y1="120" y2="120"></line>
+<line class="chart-grid" x1="0" x2="800" y1="180" y2="180"></line>
+<line class="chart-grid" x1="0" x2="800" y1="240" y2="240"></line>
+</g>
+<!-- Main Chart Line -->
+<path class="chart-area" d="M 50 200 L 150 180 L 250 160 L 350 140 L 450 120 L 550 100 L 650 110 L 750 90 L 750 300 L 50 300 Z"></path>
+<path class="chart-line" d="M 50 200 L 150 180 L 250 160 L 350 140 L 450 120 L 550 100 L 650 110 L 750 90"></path>
+<!-- Data Points -->
+<circle class="data-point" cx="50" cy="200" r="4"></circle>
+<circle class="data-point" cx="150" cy="180" r="4"></circle>
+<circle class="data-point" cx="250" cy="160" r="4"></circle>
+<circle class="data-point" cx="350" cy="140" r="4"></circle>
+<circle class="data-point" cx="450" cy="120" r="4"></circle>
+<circle class="data-point" cx="550" cy="100" r="4"></circle>
+<circle class="data-point" cx="650" cy="110" r="4"></circle>
+<circle class="data-point" cx="750" cy="90" r="4"></circle>
+<!-- Axis Labels -->
+<text class="chart-label" x="50" y="290">Mon</text>
+<text class="chart-label" x="200" y="290">Tue</text>
+<text class="chart-label" x="350" y="290">Wed</text>
+<text class="chart-label" x="500" y="290">Thu</text>
+<text class="chart-label" x="650" y="290">Fri</text>
+</svg>
+</div>
+</div>
+<div class="signals-sidebar">
+<div class="signal-card">
+<div class="signal-header">
+<h4 class="signal-title">VC Funding Volume</h4>
+<span class="signal-status status-critical">Critical</span>
+</div>
+<div class="signal-metric">$2.1B</div>
+<div class="signal-change">-23.4% vs last week</div>
+<div class="mini-chart">
+<svg height="100%" viewbox="0 0 200 40" width="100%">
+<path class="chart-line" d="M 0 20 L 40 15 L 80 25 L 120 30 L 160 35 L 200 38" stroke="var(--danger)" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="signal-card">
+<div class="signal-header">
+<h4 class="signal-title">Tech Talent Demand</h4>
+<span class="signal-status status-warning">Warning</span>
+</div>
+<div class="signal-metric">156K</div>
+<div class="signal-change">+8.2% vs last week</div>
+<div class="mini-chart">
+<svg height="100%" viewbox="0 0 200 40" width="100%">
+<path class="chart-line" d="M 0 30 L 40 25 L 80 20 L 120 15 L 160 10 L 200 8" stroke="var(--warning)" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<div class="signal-card">
+<div class="signal-header">
+<h4 class="signal-title">AI Interest Score</h4>
+<span class="signal-status status-normal">Normal</span>
+</div>
+<div class="signal-metric">92.4</div>
+<div class="signal-change">+5.1% vs last week</div>
+<div class="mini-chart">
+</div></div></div></div></main></body></html>

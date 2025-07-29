@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }        
+
+        </style>
+</head>
+<body class="bg-black min-h-screen font-inter flex">
+            <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a>
+                <a href="profile.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="squads.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="flightplan.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-route"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-black bg-[#C8F902] rounded-lg hover:bg-[#C8F902]/90 transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Logout -->
+        <div class="pb-6 flex justify-center">
+            <a href="index.html" class="w-10 h-10 flex items-center justify-center text-white/50 rounded-lg hover:bg-white/10 hover:text-white/70 transition-all">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-black overflow-hidden">
+                <main class="h-full overflow-auto">
+        <!-- Page Navigation Bar -->
+        <div class="bg-black border-b border-white/10 sticky top-0 z-40">
+            <div class="max-w-[1000px] mx-auto h-[76px] flex items-center justify-between px-8">
+                <!-- Page Header with Icon -->
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                        <i class="fas fa-wrench text-black text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-semibold text-white">Tools</h1>
+                </div>
+                
+                <!-- Tabs and Actions -->
+                <div class="flex items-center gap-6">
+                    <div class="flex gap-4">
+                        <button class="text-sm font-medium text-white/70 hover:text-white transition-all" data-filter="usecase" onclick="filterTools('usecase')">Use Cases</button>
+                        <button class="text-sm font-medium text-white/70 hover:text-white transition-all" data-filter="apps" onclick="filterTools('apps')">Apps</button>
+                        <button class="text-sm font-medium text-white/70 hover:text-white transition-all" data-filter="missions" onclick="filterTools('missions')">Missions</button>
+                        <button class="text-sm font-medium text-white/70 hover:text-white transition-all" data-filter="resources" onclick="filterTools('resources')">Resources</button>
+                    </div>
+                    <button class="flex items-center gap-2 px-6 py-2 bg-white text-black border border-white rounded text-sm font-medium transition-all hover:bg-white/90" onclick="contributeResource()">
+                        <i class="fas fa-plus"></i>Contribute
+                    </button>
+                </div>
+            </div>
+        </div>
+
+                <!-- Main Content Area with Frosted Container -->
+        <div class="max-w-[1000px] mx-auto px-8 py-8">
+            <div class="frosted-container">
+                <!-- Hero Section -->
+                <div class="frosted-container-hero">
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-4">
+                        <div class="text-center">
+                            <div class="text-xl sm:text-2xl font-bold text-white">CURRENT</div>
+                            <div class="text-xl sm:text-2xl font-bold text-white">STATE</div>
+                        </div>
+                        
+                        <div class="flex items-center gap-2 sm:gap-3 px-2 sm:px-6">
+                            <div class="h-[2px] w-12 sm:w-16 bg-white/40"></div>
+                            <i class="fas fa-plane text-lg text-white"></i>
+                            <div class="h-[2px] w-12 sm:w-16 bg-white/40"></div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="text-xl sm:text-2xl font-bold text-white">NEXT</div>
+                            <div class="text-xl sm:text-2xl font-bold text-white">LEVEL</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-sm text-white/60 leading-relaxed max-w-2xl mx-auto">Keep Climbing - Gain altitude with the tools and guidance designed to push your startup to its next milestone. From planning to progress tracking, it's all here to help you ascend.</p>
+                </div>
+                
+                <!-- Content Section -->
+                <div class="frosted-container-content">
+                    <!-- Use Case View -->
+                    <div id="tools-usecase-view" class="block">
+                        <div class="grid grid-cols-1 gap-6">
+                            <!-- Starting Out -->
+                            <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" data-usecase="starting-out" onclick="showUseCaseDetail('starting-out')" style="background: #FFFFFF;">
+                                <div class="boarding-pass-header">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-rocket text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl font-semibold mb-2" style="color: #000000;">I'm just starting out</h3>
+                                            <p class="text-sm" style="color: #666666;">Validate your idea and find product-market fit</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-divider">
+                                    <span class="boarding-pass-notch"></span>
+                                </div>
+                                <div class="boarding-pass-body">
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Idea Validation</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Customer Discovery</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">MVP</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Building Product -->
+                            <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" data-usecase="building-product" onclick="showUseCaseDetail('building-product')" style="background: #FFFFFF;">
+                                <div class="boarding-pass-header">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-tools text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl font-semibold mb-2" style="color: #000000;">I'm building my product</h3>
+                                            <p class="text-sm" style="color: #666666;">Track progress and manage your development</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-divider">
+                                    <span class="boarding-pass-notch"></span>
+                                </div>
+                                <div class="boarding-pass-body">
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Roadmap Planning</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Progress Tracking</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Team Alignment</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Getting Customers -->
+                            <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" data-usecase="getting-customers" onclick="showUseCaseDetail('getting-customers')" style="background: #FFFFFF;">
+                                <div class="boarding-pass-header">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-users text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl font-semibold mb-2" style="color: #000000;">I'm getting customers</h3>
+                                            <p class="text-sm" style="color: #666666;">Acquire users and grow your customer base</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-divider">
+                                    <span class="boarding-pass-notch"></span>
+                                </div>
+                                <div class="boarding-pass-body">
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Growth Tactics</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Sales Playbooks</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Marketing</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Raising Capital -->
+                            <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" data-usecase="raising-capital" onclick="showUseCaseDetail('raising-capital')" style="background: #FFFFFF;">
+                                <div class="boarding-pass-header">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-chart-line text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl font-semibold mb-2" style="color: #000000;">I'm raising capital</h3>
+                                            <p class="text-sm" style="color: #666666;">Prepare for and execute your fundraise</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-divider">
+                                    <span class="boarding-pass-notch"></span>
+                                </div>
+                                <div class="boarding-pass-body">
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Pitch Deck</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Investor CRM</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Due Diligence</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Scaling Up -->
+                            <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" data-usecase="scaling-up" onclick="showUseCaseDetail('scaling-up')" style="background: #FFFFFF;">
+                                <div class="boarding-pass-header">
+                                    <div class="flex items-start gap-4">
+                                        <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-rocket text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl font-semibold mb-2" style="color: #000000;">I'm scaling up</h3>
+                                            <p class="text-sm" style="color: #666666;">Grow your team and operations efficiently</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-divider">
+                                    <span class="boarding-pass-notch"></span>
+                                </div>
+                                <div class="boarding-pass-body">
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Hiring</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Operations</span>
+                                        <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">Culture</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Apps View -->
+                    <div id="tools-apps-view" class="hidden">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="boarding-pass">
+                                <div class="boarding-pass-header">
+                                    <h3 class="text-xl font-semibold mb-2">Apps Coming Soon</h3>
+                                    <p class="text-sm text-text-secondary">Integrated tools and applications for your startup journey</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Missions View -->
+                    <div id="tools-missions-view" class="hidden">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="boarding-pass">
+                                <div class="boarding-pass-header">
+                                    <h3 class="text-xl font-semibold mb-2">Missions Coming Soon</h3>
+                                    <p class="text-sm text-text-secondary">Guided challenges to push your startup forward</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resources View -->
+                    <div id="tools-resources-view" class="hidden">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="boarding-pass">
+                                <div class="boarding-pass-header">
+                                    <h3 class="text-xl font-semibold mb-2">Resources Coming Soon</h3>
+                                    <p class="text-sm text-text-secondary">Curated content and guides for founders</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </main>
+    </div>
+
+        <script src="app.js"></script>
+        <!-- AutoPilot Message Injector -->
+    <div id="autopilot-injector" class="fixed bottom-6 right-6 hidden z-50">
+        <div class="bg-[var(--autopilot-primary)] rounded-lg shadow-2xl p-4 max-w-sm border border-black/20">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-paper-plane text-[var(--autopilot-primary)]"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-semibold mb-1 text-black">AutoPilot Tip</h4>
+                    <p id="autopilot-message" class="text-sm text-black"></p>
+                    <div class="flex gap-2 mt-3">
+                        <button onclick="dismissAutoPilotMessage()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded hover:bg-black/80">Dismiss</button>
+                        <button onclick="openAutoPilot()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded font-semibold hover:bg-black/80">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // Filter tools by category
+        function filterTools(category) {
+            // Update button states
+            const buttons = document.querySelectorAll('[data-filter]');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.classList.remove('text-white/70');
+                    btn.classList.add('text-white');
+                } else {
+                    btn.classList.remove('text-white');
+                    btn.classList.add('text-white/70');
+                }
+            });
+            
+            // Show/hide views
+            const views = ['usecase', 'apps', 'missions', 'resources'];
+            views.forEach(view => {
+                const element = document.getElementById(`tools-${view}-view`);
+                if (view === category) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+
+        // Show use case detail
+        function showUseCaseDetail(useCase) {
+            window.location.href = `usecase-detail.html?use-case=${useCase}`;
+        }
+
+        // Contribute resource
+        function contributeResource() {
+            alert('Thank you for your interest in contributing! This feature is coming soon.');
+        }
+
+        // AutoPilot functions
+        function dismissAutoPilotMessage() {
+            document.getElementById('autopilot-injector').classList.add('hidden');
+        }
+
+        function openAutoPilot() {
+            window.location.href = 'autopilot.html';
+        }
+
+        // Initialize
+        filterTools('usecase');
+    </script>
+</body>
+</html>

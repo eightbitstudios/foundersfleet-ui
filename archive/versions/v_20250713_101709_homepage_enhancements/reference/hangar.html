@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founders Fleet – Hangar</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --background: #0a0a0a;
+      --text: #ffffff;
+      --text-secondary: #a1a1aa;
+      --card-bg: #111111;
+      --card-hover: #161616;
+      --border: #27272a;
+      --accent: #18181b;
+      --accent-hover: #1f1f23;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --padding: 1.5rem;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--background) 0%, #0f0f0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar - Same as other pages */
+    .sidebar {
+      width: 280px;
+      background: var(--accent);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .workspace-header:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .workspace-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .workspace-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .workspace-select {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+    }
+
+    .workspace-select option {
+      color: black;
+      background: white;
+    }
+
+    .workspace-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .nav-link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--accent);
+      padding: 0.125rem 0.375rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: var(--primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: var(--padding);
+      max-width: calc(100vw - 280px);
+    }
+
+    .hangar-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hangar-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, var(--text), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hangar-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .next-event {
+      background: linear-gradient(135deg, var(--success), #34d399);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+    }
+
+    .event-icon {
+      font-size: 1.5rem;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .featured-event {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-event::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+      pointer-events: none;
+    }
+
+    .featured-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .featured-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 1rem 0;
+    }
+
+    .featured-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0 0 1.5rem 0;
+      font-size: 1rem;
+    }
+
+    .featured-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--accent);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .detail-icon {
+      font-size: 1.25rem;
+    }
+
+    .detail-text {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .featured-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .featured-button:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .featured-button.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .featured-button.secondary:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .sections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      transition: all 0.3s ease;
+    }
+
+    .section-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-count {
+      background: var(--accent);
+      color: var(--text-secondary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--accent);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .list-item:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: var(--card-bg);
+      flex-shrink: 0;
+    }
+
+    .item-content {
+      flex: 1;
+    }
+
+    .item-title {
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .item-meta {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    .item-action {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+
+    .list-item:hover .item-action {
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .peer-circles {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+    }
+
+    .circles-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .circles-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .join-circle-btn {
+      background: var(--success);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .join-circle-btn:hover {
+      background: #059669;
+      transform: translateY(-1px);
+    }
+
+    .circle-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .circle-item:last-child {
+      border-bottom: none;
+    }
+
+    .circle-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .circle-info {
+      flex: 1;
+    }
+
+    .circle-name {
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .circle-details {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    .circle-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--success);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    @media (max-width: 1024px) {
+      .sections-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hangar-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .featured-details {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+<div class="workspace-header">
+<div class="workspace-logo">F</div>
+<div class="workspace-info">
+<select class="workspace-select" onchange="handleWorkspaceChange(this)">
+<option>Eight Bit Studios</option>
+<option>Another Workspace</option>
+<option value="signout">Sign Out</option>
+</select>
+<span class="workspace-email">name@email.com</span>
+</div>
+</div>
+<nav class="nav-links">
+<a class="nav-link active" href="control.html">
+<div class="nav-link-content">
+<span>🏠</span> Control
+        </div>
+</a>
+<a class="nav-link" href="flightplan.html">
+<div class="nav-link-content">
+<span>🗺️</span> Flightplan
+        </div>
+<span class="nav-status">Idea</span>
+</a>
+<a class="nav-link" href="missions.html">
+<div class="nav-link-content">
+<span>🎯</span> Missions
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="dispatch.html">
+<div class="nav-link-content">
+<span>🪪</span> Dispatch
+        </div>
+<span class="nav-status">Draft</span>
+</a>
+<a class="nav-link" href="drops.html">
+<div class="nav-link-content">
+<span>📦</span> Drops
+        </div>
+<span class="nav-status">2</span>
+</a>
+<a class="nav-link" href="signals.html">
+<div class="nav-link-content">
+<span>📡</span> Signals
+        </div>
+<span class="nav-status">3</span>
+</a>
+<a class="nav-link" href="hangar.html">
+<div class="nav-link-content">
+<span>🏗️</span> Hangar
+        </div>
+<span class="nav-status">Friday</span>
+</a>
+<a class="nav-link" href="terminal.html">
+<div class="nav-link-content">
+<span>🏢</span> Terminal
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="vault.html">
+<div class="nav-link-content">
+<span>🗃️</span> Vault
+        </div>
+<span class="nav-status">47</span>
+</a>
+</nav>
+</aside>
+<main class="main-content">
+<div class="hangar-header">
+<div>
+<h1 class="hangar-title">Hangar</h1>
+<p class="hangar-subtitle">Community Hub</p>
+</div>
+<div class="next-event">
+<span class="event-icon">📊</span>
+<span>Next: Forecast Friday</span>
+</div>
+</div>
+<div class="featured-event">
+<div class="featured-content">
+<div class="featured-badge">
+<span>📊</span>
+<span>This Friday</span>
+</div>
+<h2 class="featured-title">Forecast Accuracy Friday</h2>
+<p class="featured-description">
+          Join fellow founders for our weekly progress sharing session. Present your weekly forecasts, share wins and challenges, and get feedback from experienced founders. It's accountability meets community support.
+        </p>
+<div class="featured-details">
+<div class="detail-item">
+<span class="detail-icon">🕐</span>
+<span class="detail-text">Friday, 2:00 PM PST</span>
+</div>
+<div class="detail-item">
+<span class="detail-icon">👥</span>
+<span class="detail-text">12 founders attending</span>
+</div>
+<div class="detail-item">
+<span class="detail-icon">⏱️</span>
+<span class="detail-text">60 minutes</span>
+</div>
+<div class="detail-item">
+<span class="detail-icon">🎯</span>
+<span class="detail-text">All stages welcome</span>
+</div>
+</div>
+<div class="featured-actions">
+<button class="featured-button" onclick="joinEvent()">
+<span>✋</span>
+            Join This Friday
+          </button>
+<button class="featured-button secondary" onclick="learnMore()">
+<span>📋</span>
+            View Agenda
+          </button>
+</div>
+</div>
+</div>
+<div class="sections-grid">
+<div class="section-card">
+<div class="section-header">
+<h3 class="section-title">
+<span>🗓️</span>
+            Upcoming Events
+          </h3>
+<span class="section-count">4 this week</span>
+</div>
+<div class="item-list">
+<div class="list-item" onclick="viewEvent('forecast-friday')">
+<div class="item-icon">📊</div>
+<div class="item-content">
+<h4 class="item-title">Forecast Accuracy Friday</h4>
+<p class="item-meta">Friday, 2:00 PM • Weekly progress sharing</p>
+</div>
+<span class="item-action">→</span>
+</div>
+<div class="list-item" onclick="viewEvent('customer-discovery')">
+<div class="item-icon">🕵️</div>
+<div class="item-content">
+<h4 class="item-title">Customer Discovery Workshop</h4>
+<p class="item-meta">Monday, 10:00 AM • Learn interview techniques</p>
+</div>
+<span class="item-action">→</span>
+</div>
+<div class="list-item" onclick="viewEvent('pitch-practice')">
+<div class="item-icon">🎤</div>
+<div class="item-content">
+<h4 class="item-title">Pitch Practice Session</h4>
+<p class="item-meta">Wednesday, 4:00 PM • Get feedback on your pitch</p>
+</div>
+<span class="item-action">→</span>
+</div>
+<div class="list-item" onclick="viewEvent('founder-stories')">
+<div class="item-icon">💡</div>
+<div class="item-content">
+<h4 class="item-title">Founder Stories: Failure Edition</h4>
+<p class="item-meta">Thursday, 6:00 PM • Learn from setbacks</p>
+</div>
+<span class="item-action">→</span>
+</div>
+</div>
+</div>
+<div class="section-card">
+<div class="section-header">
+<h3 class="section-title">
+<span>👨‍🏫</span>
+            Expert Advisors
+          </h3>
+<span class="section-count">8 available</span>
+</div>
+<div class="item-list">
+<div class="list-item" onclick="connectAdvisor('sarah-chen')">
+<div class="item-icon">👩‍💼</div>
+<div class="item-content">
+<h4 class="item-title">Sarah Chen</h4>
+<p class="item-meta">Former VP Product at Stripe • FinTech expert</p>
+</div>
+<span class="item-action">💬</span>
+</div>
+<div class="list-item" onclick="connectAdvisor('mike-rodriguez')">
+<div class="item-icon">👨‍💼</div>
+<div class="item-content">
+<h4 class="item-title">Mike Rodriguez</h4>
+<p class="item-meta">3x founder, 2 exits • B2B SaaS specialist</p>
+</div>
+<span class="item-action">💬</span>
+</div>
+<div class="list-item" onclick="connectAdvisor('lisa-kim')">
+<div class="item-icon">👩‍💼</div>
+<div class="item-content">
+<h4 class="item-title">Lisa Kim</h4>
+<p class="item-meta">Partner at Andreessen Horowitz • AI/ML focus</p>
+</div>
+<span class="item-action">💬</span>
+</div>
+<div class="list-item" onclick="connectAdvisor('david-park')">
+<div class="item-icon">👨‍💼</div>
+<div class="item-content">
+<h4 class="item-title">David Park</h4>
+<p class="item-meta">Head of Growth at Notion • Growth hacking expert</p>
+</div>
+<span class="item-action">💬</span>
+</div>
+</div>
+</div>
+</div>
+<div class="peer-circles">
+<div class="circles-header">
+<h3 class="circles-title">👥 Your Peer Circles</h3>
+<button class="join-circle-btn" onclick="joinCircle()">Join New Circle</button>
+</div>
+<div class="circle-item">
+<div class="circle-avatar">🚀</div>
+<div class="circle-info">
+<h4 class="circle-name">Pre-Seed SaaS Founders</h4>
+<p class="circle-details">6 members • Monthly check-ins • Next: Dec 20</p>
+</div>
+<div class="circle-status">
+<div class="status-dot"></div>
+<span>Active Member</span>
+</div>
+</div>
+<div class="circle-item">
+<div class="circle-avatar">💡</div>
+<div class="circle-info">
+<h4 class="circle-name">First-Time Founders</h4>
+<p class="circle-details">8 members • Bi-weekly sessions • Next: Dec 22</p>
+</div>
+<div class="circle-status">
+<div class="status-dot"></div>
+<span>Active Member</span>
+</div>
+</div>
+<div class="circle-item">
+<div class="circle-avatar">🎯</div>
+<div class="circle-info">
+<h4 class="circle-name">Customer Discovery Cohort</h4>
+<p class="circle-details">5 members • Weekly practice • Next: Dec 18</p>
+</div>
+<div class="circle-status">
+<div class="status-dot"></div>
+<span>Active Member</span>
+</div>
+</div>
+</div>
+</main>
+<script></script></body></html>

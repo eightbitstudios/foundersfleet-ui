@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundersFleet Product Dashboard</title>
+    <!-- Removed js-yaml, now using JSON instead -->
+    <script src="https://kit.fontawesome.com/de44244fb2.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --background: #ffffff;
+            --text: #1f2937;
+            --text-secondary: #6b7280;
+            --card-bg: #ffffff;
+            --card-hover: #f9fafb;
+            --border: #e5e7eb;
+            --accent: #f8fafc;
+            --accent-hover: #f1f5f9;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --cyan: #06b6d4;
+            --radius: 16px;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --padding: 1.5rem;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: var(--card-bg);
+            color: var(--text);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        
+        /* App Navigation Corner Button */
+        .app-nav-corner-btn {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--warning), #d97706);
+            border-radius: 0 0 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            z-index: 1001;
+            border: none;
+        }
+        
+        .app-nav-corner-btn:hover {
+            background: linear-gradient(135deg, #d97706, var(--warning));
+            transform: scale(1.05);
+        }
+        
+        /* App Navigation Modal */
+        .app-nav-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+        }
+        
+        .app-nav-modal-content {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            border-radius: var(--radius);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+        
+        .app-nav-modal-header {
+            background: var(--accent);
+            color: var(--text);
+            padding: 24px;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--border);
+            border-radius: var(--radius) var(--radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .app-nav-modal-body {
+            padding: 24px;
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .app-nav-modal h3 {
+            margin-bottom: 0;
+            color: var(--text);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .app-nav-option {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 1px solid var(--primary);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .app-nav-option:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .app-nav-option:last-child {
+            margin-bottom: 0;
+        }
+        
+        .close-modal {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+        }
+        
+        .close-modal:hover {
+            background: var(--card-hover);
+            border-color: var(--primary);
+        }
+        
+        /* History View Styles */
+        .history-view {
+            padding: 1rem;
+        }
+        
+        .history-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        
+        .history-header h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .history-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .history-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .history-timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        
+        .history-entry {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--warning);
+            border: 1px solid var(--border);
+        }
+        
+        .history-entry::before {
+            content: '';
+            position: absolute;
+            left: -2.25rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--warning);
+            border-radius: 50%;
+            border: 3px solid var(--card-bg);
+            box-shadow: 0 0 0 2px var(--border);
+        }
+        
+        .history-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .history-title {
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        
+        .history-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .history-changes {
+            background: var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .history-changes h4 {
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .history-changes ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .history-changes li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding: 0.25rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .history-changes li::before {
+            content: '•';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--warning);
+            font-weight: bold;
+        }
+        
+        /* Feature History Modal */
+        .feature-history-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .feature-history-modal-content {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .feature-history-header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-history-header h3 {
+            color: var(--text);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-history-header .feature-id {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .feature-history-timeline {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .feature-history-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        
+        .feature-history-entry {
+            position: relative;
+            background: var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--warning);
+        }
+        
+        .feature-history-entry::before {
+            content: '';
+            position: absolute;
+            left: -1.65rem;
+            top: 1rem;
+            width: 8px;
+            height: 8px;
+            background: var(--warning);
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+        }
+        
+        .feature-history-date {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-history-change {
+            color: var(--text);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .history-button {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-left: 0.5rem;
+        }
+        
+        .history-button:hover {
+            background: var(--card-hover);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--warning);
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid #e5e7eb;
+            align-items: flex-start;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            height: 40px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary);
+            background: var(--card-hover);
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--warning);
+        }
+        
+        .stories-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .story-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--border);
+            transition: all 0.2s;
+        }
+        
+        .story-card:hover {
+            box-shadow: var(--shadow-lg);
+            background: var(--card-hover);
+        }
+        
+        .story-card.markup {
+            border-left-color: var(--primary);
+        }
+        
+        .story-card.integrate {
+            border-left-color: var(--warning);
+        }
+        
+        .story-card.execute {
+            border-left-color: var(--purple);
+        }
+        
+        .story-card.stage {
+            border-left-color: #f97316;
+        }
+        
+        .story-card.production {
+            border-left-color: var(--success);
+        }
+        
+        
+        .story-card.backlog {
+            border-left-color: var(--text-secondary);
+        }
+        
+        .story-card.to-do {
+            border-left-color: var(--text-secondary);
+        }
+        
+        .story-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .story-id {
+            background: var(--accent);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .story-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+        
+        .story-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        
+        .status-markup {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--primary);
+        }
+        
+        .status-integrate {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+        
+        .status-execute {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--purple);
+        }
+        
+        .status-stage {
+            background: rgba(249, 115, 22, 0.2);
+            color: #f97316;
+        }
+        
+        .status-production {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+        
+        
+        .status-backlog {
+            background: var(--accent);
+            color: var(--text-secondary);
+        }
+        
+        .status-to-do {
+            background: var(--accent);
+            color: var(--text-secondary);
+        }
+        
+        .story-epic {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--purple);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .story-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .story-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .prototype-link {
+            color: var(--warning);
+            text-decoration: none;
+        }
+        
+        .prototype-link:hover {
+            text-decoration: underline;
+        }
+        
+        .priority-high {
+            color: var(--danger);
+        }
+        
+        .priority-medium {
+            color: var(--warning);
+        }
+        
+        .priority-low {
+            color: var(--success);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--danger);
+        }
+        
+        /* View Controls */
+        .view-controls {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: nowrap;
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+            flex-shrink: 0;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .view-btn.active {
+            background: var(--warning);
+            color: white;
+            border-color: var(--warning);
+        }
+        
+        .view-btn:hover {
+            border-color: var(--warning);
+            background: var(--card-hover);
+        }
+        
+        .view-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Kanban Board */
+        .kanban-board {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        
+        .kanban-column {
+            min-width: 280px;
+            flex: 1;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--accent);
+            border-bottom: 1px solid var(--border);
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .column-header h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        
+        .column-count {
+            background: var(--warning);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .column-content {
+            padding: 1rem;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        /* Kanban Story Cards */
+        .kanban-story-card {
+            background: var(--card-bg);
+            border-radius: 6px;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .kanban-story-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-1px);
+            background: var(--card-hover);
+        }
+        
+        .kanban-story-card.markup {
+            border-left-color: var(--primary);
+        }
+        
+        .kanban-story-card.integrate {
+            border-left-color: var(--warning);
+        }
+        
+        .kanban-story-card.execute {
+            border-left-color: var(--purple);
+        }
+        
+        .kanban-story-card.stage {
+            border-left-color: #f97316;
+        }
+        
+        .kanban-story-card.production {
+            border-left-color: var(--success);
+        }
+        
+        
+        .kanban-story-card.backlog,
+        .kanban-story-card.to-do {
+            border-left-color: var(--text-secondary);
+        }
+        
+        .kanban-story-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+        
+        .kanban-story-id {
+            background: var(--accent);
+            color: var(--text-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .kanban-story-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .kanban-story-epic {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--purple);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .kanban-story-description {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        
+        .kanban-story-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Hide filters in kanban view */
+        .kanban-board ~ .filters {
+            display: none;
+        }
+        
+        /* Drag and Drop Styles */
+        .kanban-story-card.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+        
+        .kanban-column.drag-over {
+            background: rgba(245, 158, 11, 0.1);
+            border: 2px dashed var(--warning);
+        }
+        
+        .kanban-story-card {
+            cursor: grab;
+        }
+        
+        .kanban-story-card:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 FoundersFleet Product Dashboard</h1>
+            <p>Track development progress and explore user stories</p>
+        </div>
+        
+        
+        <input type="text" class="search-box" id="search" placeholder="Search stories by title, ID, or epic...">
+        
+        <div class="view-controls">
+            <div class="view-toggle">
+                <button class="view-btn active" id="kanban-view-btn" onclick="switchView('kanban')"><i class="fas fa-columns"></i> Kanban</button>
+                <button class="view-btn" id="list-view-btn" onclick="switchView('list')"><i class="fas fa-list"></i> List (<span id="total-stories">0</span>)</button>
+                <button class="view-btn" id="history-view-btn" onclick="switchView('history')"><i class="fas fa-history"></i> History</button>
+                
+                <div class="filters" id="filters" style="display: none;">
+                    <button class="filter-btn active" data-filter="all">All Stories (<span id="total-stories-filter">0</span>)</button>
+                    <button class="filter-btn" data-filter="markup">Markup</button>
+                    <button class="filter-btn" data-filter="integrate">Integrate</button>
+                    <button class="filter-btn" data-filter="execute">Execute</button>
+                    <button class="filter-btn" data-filter="stage">Stage</button>
+                    <button class="filter-btn" data-filter="production">Production</button>
+                    <button class="filter-btn" data-filter="backlog">Backlog</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">Loading stories...</div>
+        <div class="error" id="error" style="display: none;"></div>
+        
+        <div class="kanban-board" id="kanban-board">
+            <div class="kanban-column">
+                <div class="column-header">
+                    <h3>Backlog</h3>
+                    <span class="column-count" id="backlog-count">0</span>
+                </div>
+                <div class="column-content" id="backlog-column"></div>
+            </div>
+            
+            <div class="kanban-column">
+                <div class="column-header">
+                    <h3>Markup</h3>
+                    <span class="column-count" id="markup-count">0</span>
+                </div>
+                <div class="column-content" id="markup-column"></div>
+            </div>
+            
+            <div class="kanban-column">
+                <div class="column-header">
+                    <h3>Integrate</h3>
+                    <span class="column-count" id="integrate-count">0</span>
+                </div>
+                <div class="column-content" id="integrate-column"></div>
+            </div>
+            
+            <div class="kanban-column">
+                <div class="column-header">
+                    <h3>Execute</h3>
+                    <span class="column-count" id="execute-count">0</span>
+                </div>
+                <div class="column-content" id="execute-column"></div>
+            </div>
+            
+            <div class="kanban-column">
+                <div class="column-header">
+                    <h3>Stage</h3>
+                    <span class="column-count" id="stage-count">0</span>
+                </div>
+                <div class="column-content" id="stage-column"></div>
+            </div>
+            
+            <div class="kanban-column">
+                <div class="column-header">
+                    <h3>Production</h3>
+                    <span class="column-count" id="production-count">0</span>
+                </div>
+                <div class="column-content" id="production-column"></div>
+            </div>
+        </div>
+        
+        <div class="stories-grid" id="stories-grid" style="display: none;"></div>
+        
+        <!-- History View -->
+        <div class="history-view" id="history-view" style="display: none;">
+            <div class="history-header">
+                <h3><i class="fas fa-history"></i> Development History</h3>
+                <p>Track of changes made by Claude during development sessions</p>
+            </div>
+            <div class="history-timeline" id="history-timeline">
+                <!-- History entries will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allStories = [];
+        let currentFilter = 'all';
+        let searchTerm = '';
+        let currentView = 'kanban';
+
+        function switchView(view) {
+            currentView = view;
+            
+            // Update view buttons
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(view + '-view-btn').classList.add('active');
+            
+            // Show/hide appropriate view
+            if (view === 'kanban') {
+                document.getElementById('kanban-board').style.display = 'flex';
+                document.getElementById('stories-grid').style.display = 'none';
+                document.getElementById('history-view').style.display = 'none';
+                document.getElementById('filters').style.display = 'none';
+                displayKanbanBoard();
+            } else if (view === 'history') {
+                document.getElementById('kanban-board').style.display = 'none';
+                document.getElementById('stories-grid').style.display = 'none';
+                document.getElementById('history-view').style.display = 'block';
+                document.getElementById('filters').style.display = 'none';
+                displayHistory();
+            } else {
+                document.getElementById('kanban-board').style.display = 'none';
+                document.getElementById('stories-grid').style.display = 'grid';
+                document.getElementById('history-view').style.display = 'none';
+                document.getElementById('filters').style.display = 'flex';
+                displayStories();
+            }
+        }
+
+        async function loadStories() {
+            try {
+                // First try to fetch from JSON file
+                try {
+                    const response = await fetch('../product-map.json');
+                    if (response.ok) {
+                        const data = await response.json();
+                        processStoriesData(data);
+                        return;
+                    }
+                } catch (fetchError) {
+                    console.warn('Could not fetch JSON file (likely CORS restriction):', fetchError);
+                }
+                
+                // Fallback: Load embedded data
+                console.log('Loading embedded data as fallback...');
+                loadEmbeddedData();
+                
+            } catch (error) {
+                console.error('Error loading stories:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').innerHTML = `
+                    <strong>Failed to load stories.</strong><br>
+                    For local development, try running: <code>python3 -m http.server 8000</code> in the project root, then visit <code>http://localhost:8000/product/docs/</code>
+                `;
+            }
+        }
+        
+        function processStoriesData(data) {
+            allStories = Object.entries(data.stories).map(([id, story]) => ({
+                id,
+                ...story
+            }));
+            
+            updateStats();
+            if (currentView === 'kanban') {
+                displayKanbanBoard();
+            } else {
+                displayStories();
+            }
+            document.getElementById('loading').style.display = 'none';
+        }
+        
+        function loadEmbeddedData() {
+            // Embedded data from product-map.json (updated automatically)
+            const embeddedData = {
+                stories: {
+                    "FF-FTR-001": {
+                        title: "Initial Project Setup",
+                        status: "production",
+                        epic: "infrastructure",
+                        priority: "high",
+                        files: ["app.html", "product/docs/index.html", "CLAUDE.md"],
+                        description: "Set up basic project structure with product tracker, CLAUDE.md, and development workflow.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created project structure with product tracker and CLAUDE.md"
+                            },
+                            {
+                                date: "July 12, 2025",
+                                change: "Initialized product-map.json with starter stories"
+                            }
+                        ]
+                    },
+                    "FF-FTR-002": {
+                        title: "Main Application Layout & Navigation",
+                        status: "integrate",
+                        epic: "core-app",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Core application structure with sidebar navigation, responsive layout, and view management system.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented complete sidebar navigation with 8 main sections"
+                            }
+                        ]
+                    },
+                    "FF-FTR-003": {
+                        title: "Control Dashboard",
+                        status: "integrate",
+                        epic: "dashboard",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Command center dashboard showing key metrics (MRR, users, conversion rate, progress) and platform overview cards.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created Control dashboard with 4 key metrics and platform cards"
+                            }
+                        ]
+                    },
+                    "FF-FTR-004": {
+                        title: "Flightplan Progress Tracking",
+                        status: "integrate",
+                        epic: "flightplan",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Founder journey roadmap with milestone tracking, stage progression (Seed Stage), and completion status.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Built Flightplan view with seed stage milestones and progress cards"
+                            }
+                        ]
+                    },
+                    "FF-FTR-005": {
+                        title: "Mission System",
+                        status: "integrate",
+                        epic: "missions",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Structured founder missions with featured mission highlighting, completion tracking, and skill development.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented mission system with featured Signal Scan mission and mission cards"
+                            }
+                        ]
+                    },
+                    "FF-FTR-006": {
+                        title: "Public Founder Profile (Dispatch)",
+                        status: "integrate",
+                        epic: "profile",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Public founder profile creation with basic info, startup details, progress display, and draft mode.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created Dispatch profile system with editable form fields and status tracking"
+                            }
+                        ]
+                    },
+                    "FF-FTR-007": {
+                        title: "Drops Feed System",
+                        status: "integrate",
+                        epic: "social",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Social feed for sharing founder journey milestones with engagement features (likes, comments, shares).",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Built Drops feed with sample posts, engagement buttons, and sharing options"
+                            }
+                        ]
+                    },
+                    "FF-FTR-008": {
+                        title: "Market Signals Dashboard",
+                        status: "integrate",
+                        epic: "signals",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Real-time market monitoring with sentiment index, VC funding data, and AI interest metrics.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created Signals dashboard with market sentiment index and funding volume tracking"
+                            }
+                        ]
+                    },
+                    "FF-FTR-009": {
+                        title: "Community Hub (Hangar)",
+                        status: "integrate",
+                        epic: "community",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Community events and expert advisor system with weekly forecast sessions and networking features.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Built Hangar community hub with events calendar and expert advisor listings"
+                            }
+                        ]
+                    },
+                    "FF-FTR-010": {
+                        title: "Demo Environment (Terminal)",
+                        status: "integrate",
+                        epic: "development",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Sandbox environment for MVP deployment with branding hub, demo hosting, and developer tools.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented Terminal with branding hub, demo hosting, and developer tools sections"
+                            }
+                        ]
+                    },
+                    "FF-FTR-011": {
+                        title: "Document Management (Vault)",
+                        status: "integrate",
+                        epic: "vault",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "File and document management system with cloud storage integration, folder organization, and upload capabilities.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Created Vault with document upload, cloud integration, and folder management"
+                            }
+                        ]
+                    },
+                    "FF-FTR-012": {
+                        title: "Workspace Management",
+                        status: "integrate",
+                        epic: "workspace",
+                        priority: "medium",
+                        files: ["app.html"],
+                        description: "Multi-workspace support with workspace selector, user profile integration, and workspace switching.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Added workspace header with workspace selector and user info"
+                            }
+                        ]
+                    },
+                    "FF-FTR-013": {
+                        title: "Developer Tools Integration",
+                        status: "integrate",
+                        epic: "development",
+                        priority: "medium",
+                        files: ["app.html"],
+                        description: "Integrated developer tools with corner button access and embedded product tracker modal.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented developer tools corner button with modal integration"
+                            }
+                        ]
+                    },
+                    "FF-FTR-014": {
+                        title: "Responsive Mobile Design",
+                        status: "integrate",
+                        epic: "ui-ux",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Complete responsive design implementation with mobile sidebar, overlay system, and adaptive layouts.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented responsive design with mobile menu and overlay system"
+                            }
+                        ]
+                    },
+                    "FF-FTR-015": {
+                        title: "Authentication & User Management",
+                        status: "integrate",
+                        epic: "authentication",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "User registration, login, password management, and session handling.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented authentication modal with login/signup forms, social auth, and session management"
+                            }
+                        ]
+                    },
+                    "FF-FTR-016": {
+                        title: "Real-time Data Integration",
+                        status: "integrate",
+                        epic: "data-integration",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Connect market signals, funding data, and user analytics to live data sources.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented real-time data updates for market signals, dashboard metrics, and dynamic charts"
+                            }
+                        ]
+                    },
+                    "FF-FTR-017": {
+                        title: "Mission Progress Tracking",
+                        status: "integrate",
+                        epic: "missions",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Implement mission completion tracking, progress persistence, and achievement system.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented mission progress tracking with step completion, progress bars, and localStorage persistence"
+                            }
+                        ]
+                    },
+                    "FF-FTR-018": {
+                        title: "Social Engagement Features",
+                        status: "backlog",
+                        epic: "social",
+                        priority: "medium",
+                        files: ["social-features.js"],
+                        description: "Implement likes, comments, sharing functionality for Drops feed with real user interactions."
+                    },
+                    "FF-FTR-019": {
+                        title: "File Upload & Storage",
+                        status: "integrate",
+                        epic: "vault",
+                        priority: "high",
+                        files: ["app.html"],
+                        description: "Implement actual file upload, cloud storage integration (Google Drive, Dropbox, Slack), and file management.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented drag-and-drop file upload, cloud service integration, file management with preview and deletion"
+                            }
+                        ]
+                    },
+                    "FF-FTR-020": {
+                        title: "Notification System",
+                        status: "integrate",
+                        epic: "notifications",
+                        priority: "medium",
+                        files: ["app.html"],
+                        description: "Real-time notifications for mission updates, community events, and social interactions.",
+                        history: [
+                            {
+                                date: "July 12, 2025",
+                                change: "Implemented notification system with toast notifications, auto-dismiss, and multiple notification types"
+                            }
+                        ]
+                    },
+                    "FF-FTR-021": {
+                        title: "Event Management System",
+                        status: "backlog",
+                        epic: "community",
+                        priority: "medium",
+                        files: ["events.js"],
+                        description: "Event scheduling, RSVP management, and calendar integration for community events."
+                    },
+                    "FF-FTR-022": {
+                        title: "Expert Advisor Matching",
+                        status: "backlog",
+                        epic: "community",
+                        priority: "medium",
+                        files: ["advisor-matching.js"],
+                        description: "Algorithm for matching founders with relevant expert advisors based on industry and needs."
+                    },
+                    "FF-FTR-023": {
+                        title: "Demo Environment Deployment",
+                        status: "backlog",
+                        epic: "development",
+                        priority: "high",
+                        files: ["deployment.js"],
+                        description: "Automated MVP deployment system with containerization and custom domain support."
+                    },
+                    "FF-FTR-024": {
+                        title: "Branding Asset Management",
+                        status: "backlog",
+                        epic: "branding",
+                        priority: "medium",
+                        files: ["branding-hub.js"],
+                        description: "Brand asset upload, template generation, and export functionality for consistent branding."
+                    },
+                    "FF-FTR-025": {
+                        title: "Analytics & Reporting",
+                        status: "backlog",
+                        epic: "analytics",
+                        priority: "medium",
+                        files: ["analytics.js"],
+                        description: "User behavior tracking, progress analytics, and custom reporting dashboard."
+                    },
+                    "FF-FTR-026": {
+                        title: "Search & Discovery",
+                        status: "backlog",
+                        epic: "search",
+                        priority: "medium",
+                        files: ["search.js"],
+                        description: "Global search functionality across missions, drops, documents, and community content."
+                    },
+                    "FF-FTR-027": {
+                        title: "Data Export & Backup",
+                        status: "backlog",
+                        epic: "data-management",
+                        priority: "low",
+                        files: ["export.js"],
+                        description: "User data export, backup functionality, and GDPR compliance features."
+                    }
+                }
+            };
+            
+            processStoriesData(embeddedData);
+        }
+
+        function updateStats() {
+            const total = allStories.length;
+            const markupStories = allStories.filter(s => s.status === 'markup').length;
+            const integrateStories = allStories.filter(s => s.status === 'integrate').length;
+            const executeStories = allStories.filter(s => s.status === 'execute').length;
+            const stageStories = allStories.filter(s => s.status === 'stage').length;
+            const productionStories = allStories.filter(s => s.status === 'production').length;
+            const backlog = allStories.filter(s => s.status === 'backlog' || s.status === 'to do').length;
+            
+            // Update total count in List view button and All Stories filter
+            document.getElementById('total-stories').textContent = total;
+            if (document.getElementById('total-stories-filter')) {
+                document.getElementById('total-stories-filter').textContent = total;
+            }
+            
+            // Update kanban column counts
+            if (document.getElementById('markup-count')) {
+                document.getElementById('backlog-count').textContent = backlog;
+                document.getElementById('markup-count').textContent = markupStories;
+                document.getElementById('integrate-count').textContent = integrateStories;
+                document.getElementById('execute-count').textContent = executeStories;
+                document.getElementById('stage-count').textContent = stageStories;
+                document.getElementById('production-count').textContent = productionStories;
+            }
+        }
+
+        function displayStories() {
+            const grid = document.getElementById('stories-grid');
+            const filteredStories = filterStories();
+            
+            if (filteredStories.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 2rem; color: #6b7280;">No stories match your filter.</div>';
+                return;
+            }
+            
+            grid.innerHTML = filteredStories.map(story => createStoryCard(story)).join('');
+        }
+
+        function filterStories() {
+            return allStories.filter(story => {
+                const matchesFilter = currentFilter === 'all' || 
+                    story.status === currentFilter || 
+                    (currentFilter === 'backlog' && (story.status === 'backlog' || story.status === 'to do'));
+                
+                const matchesSearch = searchTerm === '' ||
+                    story.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    story.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    story.epic.toLowerCase().includes(searchTerm.toLowerCase());
+                
+                return matchesFilter && matchesSearch;
+            });
+        }
+
+        function createStoryCard(story) {
+            const statusClass = story.status.replace(' ', '-').replace(/\s+/g, '-');
+            const priorityClass = `priority-${story.priority}`;
+            
+            return `
+                <div class="story-card ${statusClass}">
+                    <div class="story-header">
+                        <div class="story-id">${story.id}</div>
+                        <div class="story-title">${story.title}</div>
+                        <div class="story-status status-${statusClass}">${story.status}</div>
+                    </div>
+                    
+                    <div class="story-epic">${story.epic}</div>
+                    
+                    ${story.description ? `<div class="story-description">${story.description}</div>` : ''}
+                    
+                    <div class="story-meta">
+                        <span class="${priorityClass}">Priority: ${story.priority}</span>
+                        ${story.prototype_location ? `<a href="../../app.html" class="prototype-link"><i class="fas fa-rocket"></i> View in Prototype</a>` : ''}
+                        ${story.files && story.files.length > 0 ? `<span><i class="fas fa-folder"></i> ${story.files.length} file(s)</span>` : ''}
+                        ${story.history && story.history.length > 0 ? `<button class="history-button" onclick="showFeatureHistory('${story.id}')"><i class="fas fa-history"></i> History (${story.history.length})</button>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function displayKanbanBoard() {
+            const columns = {
+                'backlog': document.getElementById('backlog-column'),
+                'markup': document.getElementById('markup-column'),
+                'integrate': document.getElementById('integrate-column'),
+                'execute': document.getElementById('execute-column'),
+                'stage': document.getElementById('stage-column'),
+                'production': document.getElementById('production-column')
+            };
+            
+            // Clear all columns
+            Object.values(columns).forEach(column => column.innerHTML = '');
+            
+            // Add drag and drop listeners to columns
+            document.querySelectorAll('.kanban-column').forEach(column => {
+                column.addEventListener('dragover', handleDragOver);
+                column.addEventListener('drop', handleDrop);
+                column.addEventListener('dragleave', handleDragLeave);
+            });
+            
+            // Filter stories based on search
+            const filteredStories = allStories.filter(story => {
+                const matchesSearch = searchTerm === '' ||
+                    story.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    story.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    story.epic.toLowerCase().includes(searchTerm.toLowerCase());
+                
+                return matchesSearch;
+            });
+            
+            // Distribute stories to columns
+            filteredStories.forEach(story => {
+                let columnKey = story.status;
+                
+                // Map statuses to columns - include backlog items now
+                if (story.status === 'to do' || story.status === 'backlog') {
+                    columnKey = 'backlog';
+                } else if (story.status === 'icebox' || story.status === 'unknown' || story.status === 'in progress') {
+                    return; // Skip these statuses
+                }
+                
+                const column = columns[columnKey];
+                if (column) {
+                    column.appendChild(createKanbanCard(story));
+                }
+            });
+        }
+        
+        function createKanbanCard(story) {
+            const card = document.createElement('div');
+            card.className = `kanban-story-card ${story.status.replace(' ', '-')}`;
+            card.draggable = true;
+            card.dataset.storyId = story.id;
+            card.dataset.currentStatus = story.status;
+            
+            const priorityClass = `priority-${story.priority}`;
+            
+            card.innerHTML = `
+                <div class="kanban-story-header">
+                    <div class="kanban-story-id">${story.id}</div>
+                </div>
+                <div class="kanban-story-title">${story.title}</div>
+                <div class="kanban-story-epic">${story.epic}</div>
+                ${story.description ? `<div class="kanban-story-description">${story.description}</div>` : ''}
+                <div class="kanban-story-meta">
+                    <span class="${priorityClass}">★ ${story.priority}</span>
+                    ${story.prototype_location ? `<span><i class="fas fa-mobile-alt"></i> Prototype</span>` : ''}
+                    ${story.history && story.history.length > 0 ? `<button class="history-button" onclick="showFeatureHistory('${story.id}')"><i class="fas fa-history"></i> ${story.history.length}</button>` : ''}
+                </div>
+            `;
+            
+            // Add drag event listeners
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragend', handleDragEnd);
+            
+            return card;
+        }
+        
+        // Drag and Drop Functions
+        let draggedCard = null;
+        
+        function handleDragStart(e) {
+            draggedCard = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', e.target.innerHTML);
+        }
+        
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            draggedCard = null;
+            
+            // Remove all drag-over classes
+            document.querySelectorAll('.kanban-column').forEach(col => {
+                col.classList.remove('drag-over');
+            });
+        }
+        
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            
+            const column = e.target.closest('.kanban-column');
+            if (column && !column.classList.contains('drag-over')) {
+                column.classList.add('drag-over');
+            }
+            
+            return false;
+        }
+        
+        function handleDragLeave(e) {
+            const column = e.target.closest('.kanban-column');
+            if (column && e.target === column) {
+                column.classList.remove('drag-over');
+            }
+        }
+        
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            const column = e.target.closest('.kanban-column');
+            if (!column || !draggedCard) return;
+            
+            column.classList.remove('drag-over');
+            
+            // Get the new status from the column
+            const columnContent = column.querySelector('.column-content');
+            const newStatus = columnContent.id.replace('-column', '');
+            
+            // Update the story status
+            const storyId = draggedCard.dataset.storyId;
+            const story = allStories.find(s => s.id === storyId);
+            if (story) {
+                // Update status - for backlog column, use 'backlog' status
+                story.status = newStatus;
+                
+                // Add the card to the new column
+                columnContent.appendChild(draggedCard);
+                
+                // Update the card's visual status
+                draggedCard.className = `kanban-story-card ${newStatus}`;
+                draggedCard.dataset.currentStatus = newStatus;
+                
+                // Update counts
+                updateStats();
+                
+                // Show notification
+                showStatusChangeNotification(story.title, newStatus);
+            }
+            
+            return false;
+        }
+        
+        function showStatusChangeNotification(storyTitle, newStatus) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #10b981;
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.innerHTML = `
+                <strong>${storyTitle}</strong><br>
+                Moved to <strong>${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)}</strong>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Add CSS animations for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Event listeners
+        document.getElementById('search').addEventListener('input', (e) => {
+            searchTerm = e.target.value;
+            if (currentView === 'kanban') {
+                displayKanbanBoard();
+            } else {
+                displayStories();
+            }
+        });
+
+        document.getElementById('filters').addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                displayStories();
+            }
+        });
+
+        // Load stories on page load
+        loadStories();
+        
+        // App Navigation Function
+        function goBackToApp() {
+            // Check if we're in a window that was opened from the dev tools
+            if (window.opener) {
+                window.close();
+            } else {
+                // Navigate back to the main app
+                window.location.href = '../../app.html';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('app-nav-modal');
+            if (modal && event.target === modal) {
+                closeAppNavigation();
+            }
+        });
+        
+        // History display function
+        function displayHistory() {
+            const timeline = document.getElementById('history-timeline');
+            
+            // Sample history data - this should be populated from a real history log
+            const historyData = [
+                {
+                    date: "July 12, 2025",
+                    title: "FoundersFleet Project Initialization",
+                    description: "Set up complete FoundersFleet development environment with product tracker, workflow tools, and documentation.",
+                    changes: [
+                        "Created project directory structure with product/ and versions/ folders",
+                        "Copied and customized product tracker dashboard from PerfumeLens template",
+                        "Created FoundersFleet-specific CLAUDE.md with project guidelines",
+                        "Initialized product-map.json with starter stories and epics",
+                        "Set up drag-and-drop Kanban board with status management",
+                        "Configured development workflow with backup and history tracking"
+                    ]
+                },
+                {
+                    date: "January 11, 2025",
+                    title: "Product Dashboard Enhancements",
+                    description: "Added History view to Product Tracker for better development tracking and navigation improvements.",
+                    changes: [
+                        "Added History view with timeline interface",
+                        "Replaced emoji icons with Font Awesome icons",
+                        "Fixed navigation links in app navigation modal",
+                        "Added corner button for quick app navigation"
+                    ]
+                },
+                {
+                    date: "January 11, 2025",
+                    title: "Consumer & Collector App Updates",
+                    description: "Implemented Pro member features, cross-app navigation, and UI improvements across both applications.",
+                    changes: [
+                        "Added Pro member designation to Profile and Settings screens",
+                        "Created cross-app navigation between Consumer and Collector apps",
+                        "Converted Create New List button to circular FAB",
+                        "Standardized search bar heights to 60px",
+                        "Updated bottle card layouts with integrated match containers"
+                    ]
+                },
+                {
+                    date: "Previous Sessions",
+                    title: "Initial Setup & Core Features",
+                    description: "Established the foundation of the PerfumeLens application with core functionality.",
+                    changes: [
+                        "Created consumer mobile app prototype with Flutter-compatible structure",
+                        "Built collector dashboard with admin interface",
+                        "Implemented product tracking system with YAML-based stories",
+                        "Added developer tools integration",
+                        "Set up widget mapping documentation for Flutter conversion"
+                    ]
+                }
+            ];
+            
+            timeline.innerHTML = '';
+            
+            historyData.forEach(entry => {
+                const historyEntry = document.createElement('div');
+                historyEntry.className = 'history-entry';
+                
+                historyEntry.innerHTML = `
+                    <div class="history-date">${entry.date}</div>
+                    <div class="history-title">${entry.title}</div>
+                    <div class="history-description">${entry.description}</div>
+                    <div class="history-changes">
+                        <h4>Changes Made:</h4>
+                        <ul>
+                            ${entry.changes.map(change => `<li>${change}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                
+                timeline.appendChild(historyEntry);
+            });
+        }
+        
+        // Feature History Functions
+        function showFeatureHistory(storyId) {
+            const story = allStories.find(s => s.id === storyId);
+            if (!story || !story.history) return;
+            
+            const modal = createFeatureHistoryModal(story);
+            document.body.appendChild(modal);
+            modal.style.display = 'flex';
+        }
+        
+        function createFeatureHistoryModal(story) {
+            const modal = document.createElement('div');
+            modal.className = 'feature-history-modal';
+            modal.innerHTML = `
+                <div class="feature-history-modal-content">
+                    <button class="close-modal" onclick="closeFeatureHistory(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="feature-history-header">
+                        <h3>${story.title}</h3>
+                        <div class="feature-id">${story.id}</div>
+                    </div>
+                    <div class="feature-history-timeline">
+                        ${story.history.map(entry => `
+                            <div class="feature-history-entry">
+                                <div class="feature-history-date">${entry.date}</div>
+                                <div class="feature-history-change">${entry.change}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Close when clicking outside
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeFeatureHistory(modal.querySelector('.close-modal'));
+                }
+            });
+            
+            return modal;
+        }
+        
+        function closeFeatureHistory(button) {
+            const modal = button.closest('.feature-history-modal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+    </script>
+
+    <!-- App Navigation Corner Button -->
+    <button class="app-nav-corner-btn" onclick="toggleAppNavigation()">
+        <i class="fas fa-home"></i>
+    </button>
+
+    <!-- App Navigation Modal will be created dynamically -->
+</body>
+</html>

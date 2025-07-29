@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundersFleet - Where Your Founder Journey Takes Flight</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+    
+    
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Center navigation items when nav is collapsed */
+        #main-nav.w-20 nav {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        #main-nav.w-20 nav > div > a {
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        #main-nav.w-20 nav > div > a > div:first-child {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        #main-nav.w-20 nav > div > a {
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+        }
+        
+        #main-nav.w-20 nav > div {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        #main-nav.w-20 .h-\[76px\] {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        #main-nav.w-20 .h-\[76px\] > a {
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        /* Hide full text when collapsed */
+        #main-nav.w-20 #nav-text {
+            display: none;
+        }
+        
+        /* Show abbreviated text when collapsed */
+        #main-nav.w-20 #nav-text-collapsed {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            /* Extra small screens - stack flight path vertically if needed */
+            .frosted-container-hero .flex {
+                min-width: 0;
+            }
+        }
+        
+        
+        /* Responsive Navigation - Force collapse at 1000px */
+    @media (max-width: 999px) {
+        /* Force nav to collapsed state */
+        #main-nav {
+            width: 5rem !important; /* w-20 equivalent */
+        }
+        
+        /* Hide nav text and labels */
+        #nav-text,
+        .nav-label {
+            display: none !important;
+        }
+        
+        /* Center nav items when collapsed */
+        #main-nav nav > div > a {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            justify-content: center !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            width: 100% !important;
+        }
+        
+        /* Ensure toggle icon changes */
+        #main-nav.w-56 #nav-toggle-icon::before {
+            content: "054" !important; /* fa-chevron-right */
+        }
+    }
+    
+    
+    /* Add periodic gradient animation to frosted containers */
+    .frosted-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        z-index: 0;
+        animation: gradientSweep 4s ease-in-out infinite;
+    }
+    
+    @keyframes gradientSweep {
+        0%, 90% { left: -100%; }
+        50% { left: 100%; }
+    }
+    
+    .frosted-container-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Ticker Animation */
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    
+    @keyframes scrollReverse {
+        0% {
+            transform: translateX(-50%);
+        }
+        100% {
+            transform: translateX(0);
+        }
+    }
+    
+    .animate-scroll {
+        animation: scroll 30s linear infinite;
+    }
+    
+    .animate-scroll-reverse {
+        animation: scrollReverse 30s linear infinite;
+    }
+    
+    </style>
+</head>
+<body class="bg-black min-h-screen font-inter">
+    <!-- Header with Boarding Pass Button -->
+    <header class="fixed top-0 left-0 right-0 z-50 px-8 py-6">
+        <div class="flex items-center justify-between">
+            <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                <i class="fas fa-paper-plane text-black text-lg"></i>
+            </div>
+            <button onclick="openBoardingPass()" class="px-6 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-white/90 transition-all">
+                Boarding Pass
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content - Vertical Centered -->
+    <div class="min-h-screen flex flex-col justify-center items-center px-4 py-20">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Logo -->
+            <div class="mb-12">
+                <h1 class="text-4xl font-bold text-white">FoundersFleet</h1>
+            </div>
+
+            <!-- Headline -->
+            <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+                Turn Solo Starts into<br>
+                <span class="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Shared Momentum</span>
+            </h2>
+
+            <!-- Description -->
+            <p class="text-xl text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed">
+                FoundersFleet is a private network of verified startup builders, helping each other move faster. Access is invite-only.
+            </p>
+
+            <!-- Verified Founders Only -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-white mb-4">Verified Founders Only.</h3>
+                <p class="text-lg text-white/60">
+                    No Tourists.<br>
+                    No Soliciting.<br>
+                    No Jerks.
+                </p>
+            </div>
+
+            <!-- Destination Graphic -->
+            <div class="flex items-center justify-center gap-6 mb-20">
+                <div class="text-center">
+                    <div class="text-base font-semibold text-white uppercase tracking-wider">FLYING</div>
+                    <div class="text-base font-semibold text-white uppercase tracking-wider">SOLO</div>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="h-[1px] w-16 bg-white/40"></div>
+                    <i class="fas fa-plane text-xl text-white"></i>
+                    <div class="h-[1px] w-16 bg-white/40"></div>
+                </div>
+                <div class="text-center">
+                    <div class="text-base font-semibold text-white uppercase tracking-wider">CONNECTED</div>
+                    <div class="text-base font-semibold text-white uppercase tracking-wider">NETWORK</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tickers at Bottom -->
+    <div class="fixed bottom-0 left-0 right-0 bg-black overflow-hidden">
+    <!-- Boarding Pass Modal -->
+    <div id="boardingPassModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+        <div class="w-full max-w-[400px] relative">
+            <!-- Close Button -->
+            <button onclick="closeBoardingPass()" class="absolute -top-12 right-0 text-white hover:text-white/70 transition-all">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            
+            <div class="boarding-pass flex flex-col" style="background: #FFFFFF; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);">
+                    <div class="boarding-pass-header" style="padding: 40px 32px;">
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                <i class="fas fa-paper-plane text-white text-xl"></i>
+                            </div>
+                            <h1 class="text-3xl font-bold text-black">FoundersFleet</h1>
+                        </div>
+                    </div>
+                    
+                    <div class="boarding-pass-divider my-0">
+                        <span class="boarding-pass-notch"></span>
+                    </div>
+                    
+                    <!-- Section 2: Verified Founders Only -->
+                    <div class="boarding-pass-body flex-shrink-0">
+                        <div class="py-6 text-center">
+                            <h2 class="text-xl font-bold text-black mb-2">Verified Founders Only.</h2>
+                            <p class="text-sm text-text-secondary">No Tourists.<br>No Soliciting.<br>No Jerks.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="boarding-pass-divider my-0">
+                        <span class="boarding-pass-notch"></span>
+                    </div>
+                    
+                    <!-- Section 3: Sign Up/Sign In Form -->
+                    <div class="boarding-pass-body flex-1 flex flex-col justify-end">
+                        <div class="py-8">
+                            <div class="text-center mb-6">
+                                <h3 class="text-base font-bold text-black mb-3">Invite-Only Access</h3>
+                                <p class="text-xs text-text-secondary">
+                                    To join the Fleet, you must receive an invite from an existing member. Your Mobile Number is Your Access Code.
+                                </p>
+                            </div>
+                            
+                            <!-- Input and Arrow -->
+                            <div class="mb-4 w-full">
+                                <form onsubmit="handlePhoneSubmit(event)">
+                                    <div class="relative">
+                                        <input 
+                                            type="tel" 
+                                            class="w-full p-3 pr-14 border-2 border-black rounded-lg text-base bg-gray-50 text-black placeholder-text-secondary transition-colors focus:outline-none focus:bg-white focus:border-primary" 
+                                            placeholder="Mobile Number"
+                                            id="phoneInputSticky"
+                                        >
+                                        <a 
+                                            href="dashboard.html"
+                                            class="absolute right-1 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black text-white rounded text-base font-semibold transition-colors hover:bg-gray-800 flex items-center justify-center no-underline"
+                                        >
+                                            <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Legal Text -->
+                            <p class="text-xs text-text-muted text-center">
+                                By continuing, you accept <a href="#" class="text-primary hover:underline">Terms</a>, <a href="#" class="text-primary hover:underline">Privacy</a> & SMS.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Hero Content -->
+            <div class="flex-1 bg-black flex flex-col lg:h-screen lg:overflow-hidden relative">
+                <!-- Hero Content -->
+                <div class="flex-1 flex flex-col relative pb-32">
+                    <!-- Headline and Subhead - Top Section -->
+                    <div class="px-4 md:px-8 pt-16">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+                            Turn Solo Starts into<br>
+                            <span class="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Shared Momentum</span>
+                        </h2>
+                        
+                        <!-- Network Text -->
+                        <div class="max-w-2xl mx-auto">
+                            <p class="text-white/70 leading-relaxed">
+                                FoundersFleet is a private network of verified startup builders, helping each other move faster. Access is invite-only.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Destination Graphic -->
+                    <div class="px-4 md:px-8 py-16 relative z-20">
+                        <div class="flex items-center justify-center gap-4">
+                            <div class="text-center">
+                                <div class="text-sm font-semibold text-white uppercase tracking-wider">FLYING</div>
+                                <div class="text-sm font-semibold text-white uppercase tracking-wider">SOLO</div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="h-[1px] w-12 bg-white/40"></div>
+                                <i class="fas fa-plane text-lg text-white"></i>
+                                <div class="h-[1px] w-12 bg-white/40"></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-semibold text-white uppercase tracking-wider">CONNECTED</div>
+                                <div class="text-sm font-semibold text-white uppercase tracking-wider">NETWORK</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Squads Ticker at bottom of hero -->
+                <div class="absolute bottom-0 left-0 right-0 bg-black overflow-hidden z-10 lg:left-[-400px] xl:left-[-500px] pb-4">
+                    <!-- First row scrolling left -->
+                    <div class="relative py-3">
+                        <div class="flex animate-scroll gap-4">
+                <!-- Founder cards will repeat for seamless scrolling -->
+                <div class="flex gap-4">
+                    <!-- Sarah Chen -->
+                    <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content p-5">
+                            <div class="mb-2">
+                                <h3 class="text-base font-bold text-white">Sarah Chen</h3>
+                                <p class="text-white/60 text-xs">Founder @ DataSync</p>
+                            </div>
+                            <p class="text-white/70 text-sm mb-2 leading-relaxed">Building the future of real-time data collaboration for enterprises.</p>
+                            <div class="flex items-center gap-4 text-xs">
+                                <span class="text-white/50">B2B SaaS</span>
+                                <span class="text-white/30">•</span>
+                                <span class="text-white/50">Series A</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Marcus Johnson -->
+                    <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content p-5">
+                            <div class="mb-2">
+                                <h3 class="text-base font-bold text-white">Marcus Johnson</h3>
+                                <p class="text-white/60 text-xs">Founder @ FlowState</p>
+                            </div>
+                            <p class="text-white/70 text-sm mb-2 leading-relaxed">Revolutionizing productivity with AI-powered workflow automation.</p>
+                            <div class="flex items-center gap-4 text-xs">
+                                <span class="text-white/50">AI/ML</span>
+                                <span class="text-white/30">•</span>
+                                <span class="text-white/50">Seed</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Elena Rodriguez -->
+                    <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content p-5">
+                            <div class="mb-2">
+                                <h3 class="text-base font-bold text-white">Elena Rodriguez</h3>
+                                <p class="text-white/60 text-xs">Founder @ GreenCart</p>
+                            </div>
+                            <p class="text-white/70 text-sm mb-2 leading-relaxed">Sustainable e-commerce platform connecting conscious consumers.</p>
+                            <div class="flex items-center gap-4 text-xs">
+                                <span class="text-white/50">E-commerce</span>
+                                <span class="text-white/30">•</span>
+                                <span class="text-white/50">Growth</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Alex Kim -->
+                    <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content p-5">
+                            <div class="mb-2">
+                                <h3 class="text-base font-bold text-white">Alex Kim</h3>
+                                <p class="text-white/60 text-xs">Founder @ HealthPal</p>
+                            </div>
+                            <p class="text-white/70 text-sm mb-2 leading-relaxed">Making healthcare accessible through telemedicine innovation.</p>
+                            <div class="flex items-center gap-4 text-xs">
+                                <span class="text-white/50">HealthTech</span>
+                                <span class="text-white/30">•</span>
+                                <span class="text-white/50">Pre-Seed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Duplicate for seamless loop -->
+                <div class="flex gap-4">
+                    <!-- Squad Alpha -->
+                    <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content p-5">
+                            <div class="flex items-start gap-3 mb-3">
+                                <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-rocket text-white"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-base font-bold text-white">Squad Alpha</h3>
+                                    <p class="text-white/60 text-xs">B2B SaaS • Build Stage</p>
+                                </div>
+                            </div>
+                            <p class="text-white/70 text-sm mb-3 leading-relaxed">Weekly check-ins for B2B SaaS founders grinding toward MVP launch.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/50 text-xs font-medium uppercase">4/5 SEATS FILLED</span>
+                                <i class="fas fa-lock text-white/50"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Marcus Johnson -->
+                    <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content p-5">
+                            <div class="mb-2">
+                                <h3 class="text-base font-bold text-white">Marcus Johnson</h3>
+                                <p class="text-white/60 text-xs">Founder @ FlowState</p>
+                            </div>
+                            <p class="text-white/70 text-sm mb-2 leading-relaxed">Revolutionizing productivity with AI-powered workflow automation.</p>
+                            <div class="flex items-center gap-4 text-xs">
+                                <span class="text-white/50">AI/ML</span>
+                                <span class="text-white/30">•</span>
+                                <span class="text-white/50">Seed</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Elena Rodriguez -->
+                    <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content p-5">
+                            <div class="mb-2">
+                                <h3 class="text-base font-bold text-white">Elena Rodriguez</h3>
+                                <p class="text-white/60 text-xs">Founder @ GreenCart</p>
+                            </div>
+                            <p class="text-white/70 text-sm mb-2 leading-relaxed">Sustainable e-commerce platform connecting conscious consumers.</p>
+                            <div class="flex items-center gap-4 text-xs">
+                                <span class="text-white/50">E-commerce</span>
+                                <span class="text-white/30">•</span>
+                                <span class="text-white/50">Growth</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Alex Kim -->
+                    <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content p-5">
+                            <div class="mb-2">
+                                <h3 class="text-base font-bold text-white">Alex Kim</h3>
+                                <p class="text-white/60 text-xs">Founder @ HealthPal</p>
+                            </div>
+                            <p class="text-white/70 text-sm mb-2 leading-relaxed">Making healthcare accessible through telemedicine innovation.</p>
+                            <div class="flex items-center gap-4 text-xs">
+                                <span class="text-white/50">HealthTech</span>
+                                <span class="text-white/30">•</span>
+                                <span class="text-white/50">Pre-Seed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Second row scrolling right -->
+                    <div class="relative py-3 pb-8">
+                        <div class="flex animate-scroll-reverse gap-4">
+                            <!-- Different squad cards for variety -->
+                            <div class="flex gap-4">
+                                <!-- Squad Delta -->
+                                <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                                    <div class="frosted-container-content p-5">
+                                        <div class="mb-2">
+                                            <h3 class="text-base font-bold text-white">Squad Delta</h3>
+                                            <p class="text-white/60 text-xs">Mobile • Pre-Seed</p>
+                                        </div>
+                                        <p class="text-white/70 text-sm mb-2 leading-relaxed">Mobile-first founders revolutionizing everyday experiences.</p>
+                                        <div class="mb-2">
+                                            <span class="text-white/50 text-xs">Mobile Apps • Pre-Seed Stage</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-white/50 text-xs font-medium uppercase">3/5 SEATS FILLED</span>
+                                            <i class="fas fa-lock text-white/50"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Squad Echo -->
+                                <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                                    <div class="frosted-container-content p-5">
+                                        <div class="mb-2">
+                                            <h3 class="text-base font-bold text-white">Squad Echo</h3>
+                                            <p class="text-white/60 text-xs">HealthTech • Series A</p>
+                                        </div>
+                                        <p class="text-white/70 text-sm mb-2 leading-relaxed">Digital health pioneers improving patient outcomes.</p>
+                                        <div class="mb-2">
+                                            <span class="text-white/50 text-xs">Digital Health • Series A</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-white/50 text-xs font-medium uppercase">5/5 SEATS FILLED</span>
+                                            <i class="fas fa-lock text-white/50"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Squad Foxtrot -->
+                                <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                                    <div class="frosted-container-content p-5">
+                                        <div class="mb-2">
+                                            <h3 class="text-base font-bold text-white">Squad Foxtrot</h3>
+                                            <p class="text-white/60 text-xs">EdTech • Growth</p>
+                                        </div>
+                                        <p class="text-white/70 text-sm mb-2 leading-relaxed">Reimagining education for the next generation.</p>
+                                        <div class="mb-2">
+                                            <span class="text-white/50 text-xs">Education Tech • Growth Stage</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-white/50 text-xs font-medium uppercase">2/5 SEATS FILLED</span>
+                                            <i class="fas fa-lock text-white/50"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Duplicate for seamless loop -->
+                            <div class="flex gap-4">
+                                <!-- Squad Delta -->
+                                <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                                    <div class="frosted-container-content p-5">
+                                        <div class="mb-2">
+                                            <h3 class="text-base font-bold text-white">Squad Delta</h3>
+                                            <p class="text-white/60 text-xs">Mobile • Pre-Seed</p>
+                                        </div>
+                                        <p class="text-white/70 text-sm mb-2 leading-relaxed">Mobile-first founders revolutionizing everyday experiences.</p>
+                                        <div class="mb-2">
+                                            <span class="text-white/50 text-xs">Mobile Apps • Pre-Seed Stage</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-white/50 text-xs font-medium uppercase">3/5 SEATS FILLED</span>
+                                            <i class="fas fa-lock text-white/50"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Squad Echo -->
+                                <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                                    <div class="frosted-container-content p-5">
+                                        <div class="mb-2">
+                                            <h3 class="text-base font-bold text-white">Squad Echo</h3>
+                                            <p class="text-white/60 text-xs">HealthTech • Series A</p>
+                                        </div>
+                                        <p class="text-white/70 text-sm mb-2 leading-relaxed">Digital health pioneers improving patient outcomes.</p>
+                                        <div class="mb-2">
+                                            <span class="text-white/50 text-xs">Digital Health • Series A</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-white/50 text-xs font-medium uppercase">5/5 SEATS FILLED</span>
+                                            <i class="fas fa-lock text-white/50"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Squad Foxtrot -->
+                                <div class="frosted-container flex-shrink-0 w-72 cursor-pointer" onclick="scrollToLogin()">
+                                    <div class="frosted-container-content p-5">
+                                        <div class="mb-2">
+                                            <h3 class="text-base font-bold text-white">Squad Foxtrot</h3>
+                                            <p class="text-white/60 text-xs">EdTech • Growth</p>
+                                        </div>
+                                        <p class="text-white/70 text-sm mb-2 leading-relaxed">Reimagining education for the next generation.</p>
+                                        <div class="mb-2">
+                                            <span class="text-white/50 text-xs">Education Tech • Growth Stage</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-white/50 text-xs font-medium uppercase">2/5 SEATS FILLED</span>
+                                            <i class="fas fa-lock text-white/50"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Featured Squads Section (Hidden for now) -->
+    <div class="w-full px-4 md:px-8 py-16 bg-black border-t border-white/10 hidden">
+            <div class="max-w-[1200px] mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Featured Squads</h2>
+                    <p class="text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">Elite founder squads. Verified members only. No tourists.</p>
+                </div>
+                
+                <!-- Squad Cards Grid -->
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-12 max-w-4xl xl:max-w-6xl mx-auto">
+                    <!-- Squad Alpha -->
+                    <div class="frosted-container group cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-rocket text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Squad Alpha</h3>
+                                    <p class="text-white/60 text-xs">B2B SaaS • Build Stage</p>
+                                </div>
+                            </div>
+                            <p class="text-white/70 text-sm mb-4 leading-relaxed">
+                                Weekly check-ins for B2B SaaS founders grinding toward MVP launch. No drift, just drops.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/50 text-xs font-medium">4/5 SEATS FILLED</span>
+                                <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-lock text-white/70 text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Squad Beta -->
+                    <div class="frosted-container group cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Squad Beta</h3>
+                                    <p class="text-white/60 text-xs">E-commerce • Growth Stage</p>
+                                </div>
+                            </div>
+                            <p class="text-white/70 text-sm mb-4 leading-relaxed">
+                                Scaling e-commerce to 7-figures through shared tactics and relentless accountability.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/50 text-xs font-medium">4/5 SEATS FILLED</span>
+                                <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-lock text-white/70 text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Squad Gamma -->
+                    <div class="frosted-container group cursor-pointer" onclick="scrollToLogin()">
+                        <div class="frosted-container-content">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-brain text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Squad Gamma</h3>
+                                    <p class="text-white/60 text-xs">AI/ML • Seed Stage</p>
+                                </div>
+                            </div>
+                            <p class="text-white/70 text-sm mb-4 leading-relaxed">
+                                Deep tech founders building intelligent systems. Technical depth meets business velocity.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-white/50 text-xs font-medium">5/5 SEATS FILLED</span>
+                                <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-lock text-white/70 text-xs"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <!-- Sign Up Modal (simplified) -->
+    <div class="fixed inset-0 bg-background z-[10000] hidden" id="signUpModal">
+        <header class="bg-black px-8 py-6 sticky top-0 z-50">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 no-underline text-white">
+                    <div class="w-10 h-10 bg-white rounded flex items-center justify-center text-black text-lg"><i class="fas fa-paper-plane"></i></div>
+                    <span class="text-xl font-semibold">FoundersFleet</span>
+                </a>
+                
+                <div>
+                    <button class="px-6 py-2 bg-transparent text-white border border-white/20 rounded text-sm font-medium hover:bg-white/10 transition-all" onclick="closeSignUpModal()">Cancel</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="flex justify-center items-center min-h-[calc(100vh-80px)] p-8">
+            <div class="bg-white rounded-lg p-12 w-full max-w-[400px] shadow-lg border border-border">
+                <div class="text-center mb-8">
+                    <h1 class="text-[1.75rem] font-bold text-black">Sign up or log in</h1>
+                </div>
+            
+                <form class="mb-6" onsubmit="handlePhoneSubmit(event)">
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold text-black mb-2">Phone Number</label>
+                        <input type="tel" class="w-full p-3.5 border border-border rounded text-base bg-white text-black transition-colors focus:outline-none focus:border-primary" placeholder="Enter your phone number" id="phoneInput">
+                    </div>
+                    
+                    <button type="submit" class="w-full p-3.5 bg-primary text-white rounded text-base font-semibold cursor-pointer transition-colors hover:bg-primary-hover">Continue</button>
+                </form>
+                
+                <div class="text-xs text-text-secondary leading-relaxed text-center">
+                    <p class="mb-2">By clicking Continue, you agree to FoundersFleet's <a href="#" class="text-primary no-underline hover:underline">Terms and Conditions</a> and <a href="#" class="text-primary no-underline hover:underline">Privacy Policy</a> and to receiving SMS messages from FoundersFleet.</p>
+                    <p>This site is protected by reCAPTCHA and the <a href="#" class="text-primary no-underline hover:underline">Google Privacy Policy</a> and <a href="#" class="text-primary no-underline hover:underline">Terms of Service</a> apply.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple authentication modal functions
+        function openSignUpModal() {
+            document.getElementById('signUpModal').classList.remove('hidden');
+        }
+        
+        function closeSignUpModal() {
+            document.getElementById('signUpModal').classList.add('hidden');
+        }
+        
+        function handlePhoneSubmit(event) {
+            event.preventDefault();
+            // Handle phone submission
+            const phoneInput = document.getElementById('phoneInputSticky') || document.getElementById('phoneInputMain') || document.getElementById('phoneInput');
+            console.log('Phone submitted:', phoneInput.value);
+            // In a real app, this would send the phone number to your backend
+            alert('Welcome to FoundersFleet! Check your phone for a verification code.');
+        }
+        
+        function showAuthPrompt() {
+            // Show auth prompt when clicking on squad cards
+            openSignUpModal();
+        }
+        
+        function scrollToLogin() {
+            // Focus the phone input in the top right
+            const phoneInput = document.getElementById('phoneInputSticky');
+            if (phoneInput) {
+                phoneInput.focus();
+            }
+        }
+        
+    </script>
+    
+    <script src="app.js"></script>
+        <!-- AutoPilot Message Injector -->
+    <div id="autopilot-injector" class="fixed bottom-6 right-6 hidden z-50">
+        <div class="bg-[var(--autopilot-primary)] rounded-lg shadow-2xl p-4 max-w-sm border border-black/20">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-paper-plane text-[var(--autopilot-primary)]"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-semibold mb-1 text-black">AutoPilot Tip</h4>
+                    <p id="autopilot-message" class="text-sm text-black"></p>
+                    <div class="flex gap-2 mt-3">
+                        <button onclick="dismissAutoPilotMessage()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded hover:bg-black/80">Dismiss</button>
+                        <button onclick="openAutoPilot()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded font-semibold hover:bg-black/80">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+</body>

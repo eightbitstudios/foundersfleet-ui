@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoPilot - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+        }
+        
+        /* Typing indicator animation */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: #666666;
+            border-radius: 50%;
+            display: inline-block;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+            }
+            30% {
+                opacity: 1;
+            }
+        }
+        </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Page Header -->
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">AutoPilot</h1>
+                        <p class="text-text-secondary">Get AI-powered guidance for your startup journey</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="flex gap-2">
+                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-filter="new-chat" onclick="switchChatMode('new-chat')">New Chat</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-filter="chat-history" onclick="switchChatMode('chat-history')">Chat History</button>
+                        </div>
+                        <button onclick="toggleAutopilotSettings()" class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-all">
+                            <i class="fas fa-cog text-text-primary"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <!-- New Chat View -->
+                <div id="new-chat-view" class="block">
+                    <!-- Chat Container (Full Width) -->
+                    <div class="flex flex-col h-[calc(100vh-180px)]">
+                                <!-- Messages Area -->
+                            <div id="chat-messages" class="flex-1 overflow-y-auto bg-section-bg rounded-xl p-6 border border-border">
+                                <div class="space-y-6">
+                        <!-- Welcome Message -->
+                        <div class="autopilot-message">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-paper-plane text-white"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="bg-card-bg rounded-lg p-4 border border-border">
+                                        <p class="text-text-primary mb-3">Welcome to AutoPilot! I'm your AI co-pilot for navigating your startup journey. I can help you with:</p>
+                                        <ul class="text-text-secondary space-y-2 ml-4">
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-primary">•</span>
+                                                <span>Finding the right founders and squads to connect with</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-primary">•</span>
+                                                <span>Recommendations for tools and resources based on your stage</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-primary">•</span>
+                                                <span>Guidance on your next steps and missions to tackle</span>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-primary">•</span>
+                                                <span>Insights from successful founders in your industry</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <span class="text-xs text-text-muted mt-2 inline-block">Just now</span>
+                                    
+                                    <!-- Quick Action Suggestions -->
+                                    <div class="mt-4">
+                                        <p class="text-sm text-text-secondary mb-3">Try one of these to get started:</p>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <button onclick="askAutopilot('What squads should I join based on my profile?')" class="bg-gray-50 rounded-lg p-3 text-left hover:bg-gray-100 transition-all group">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fas fa-people-group text-primary"></i>
+                                                    <span class="text-sm font-medium text-text-primary">Squad Recommendations</span>
+                                                </div>
+                                            </button>
+
+                                            <button onclick="askAutopilot('What should I focus on this week?')" class="bg-gray-50 rounded-lg p-3 text-left hover:bg-gray-100 transition-all group">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fas fa-compass text-primary"></i>
+                                                    <span class="text-sm font-medium text-text-primary">Weekly Focus</span>
+                                                </div>
+                                            </button>
+
+                                            <button onclick="askAutopilot('Who should I connect with in the community?')" class="bg-gray-50 rounded-lg p-3 text-left hover:bg-gray-100 transition-all group">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fas fa-user-plus text-primary"></i>
+                                                    <span class="text-sm font-medium text-text-primary">Connection Suggestions</span>
+                                                </div>
+                                            </button>
+
+                                            <button onclick="askAutopilot('What tools do other founders at my stage use?')" class="bg-gray-50 rounded-lg p-3 text-left hover:bg-gray-100 transition-all group">
+                                                <div class="flex items-center gap-3">
+                                                    <i class="fas fa-wrench text-primary"></i>
+                                                    <span class="text-sm font-medium text-text-primary">Tool Stack Advice</span>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Input Area -->
+                            <div class="mt-4">
+                                <form onsubmit="sendMessage(event)" class="flex gap-4">
+                                    <input 
+                                        type="text" 
+                                        id="message-input"
+                                        placeholder="Ask AutoPilot anything about your startup journey..."
+                                        class="flex-1 bg-card-bg text-text-primary placeholder-text-muted rounded-lg px-4 py-3 border border-border focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                                    >
+                                    <button type="submit" class="bg-primary text-white rounded-lg px-6 py-3 font-medium hover:bg-primary-hover transition-all flex items-center gap-2">
+                                        <i class="fa-solid fa-paper-plane"></i>
+                                        <span>Send</span>
+                                    </button>
+                                </form>
+                                <p class="text-xs text-text-muted mt-2">AutoPilot uses AI to provide personalized guidance. Always verify important decisions.</p>
+                            </div>
+                        </div>
+                </div>
+                
+                <!-- Chat History View -->
+                <div id="chat-history-view" class="hidden">
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h2 class="text-xl font-semibold text-text-primary mb-6">Chat History</h2>
+                        
+                        <div class="space-y-4">
+                            <!-- Sample Chat History Items -->
+                            <div class="bg-section-bg rounded-lg p-4 hover:bg-gray-100 transition-all cursor-pointer">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-text-primary text-sm">Squad Recommendations Discussion</h3>
+                                        <p class="text-text-secondary text-xs mt-1">What squads should I join based on my B2B SaaS startup?</p>
+                                        <span class="text-text-muted text-xs mt-2 inline-block">Yesterday, 2:30 PM</span>
+                                    </div>
+                                    <button class="text-text-muted hover:text-text-primary transition-all">
+                                        <i class="fas fa-chevron-right text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-section-bg rounded-lg p-4 hover:bg-gray-100 transition-all cursor-pointer">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-text-primary text-sm">Weekly Focus Planning</h3>
+                                        <p class="text-text-secondary text-xs mt-1">Help me prioritize tasks for my MVP development...</p>
+                                        <span class="text-text-muted text-xs mt-2 inline-block">2 days ago, 10:15 AM</span>
+                                    </div>
+                                    <button class="text-text-muted hover:text-text-primary transition-all">
+                                        <i class="fas fa-chevron-right text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-section-bg rounded-lg p-4 hover:bg-gray-100 transition-all cursor-pointer">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-text-primary text-sm">Tool Stack Advice</h3>
+                                        <p class="text-text-secondary text-xs mt-1">What tools do other B2B SaaS founders use for analytics?</p>
+                                        <span class="text-text-muted text-xs mt-2 inline-block">1 week ago, 4:45 PM</span>
+                                    </div>
+                                    <button class="text-text-muted hover:text-text-primary transition-all">
+                                        <i class="fas fa-chevron-right text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-section-bg rounded-lg p-4 hover:bg-gray-100 transition-all cursor-pointer">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-text-primary text-sm">Founder Connections</h3>
+                                        <p class="text-text-secondary text-xs mt-1">Who should I connect with for customer discovery insights?</p>
+                                        <span class="text-text-muted text-xs mt-2 inline-block">2 weeks ago, 1:20 PM</span>
+                                    </div>
+                                    <button class="text-text-muted hover:text-text-primary transition-all">
+                                        <i class="fas fa-chevron-right text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 text-center">
+                            <button class="text-primary hover:text-primary-hover transition-all text-sm font-medium">Load More Conversations</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // AutoPilot functionality
+        let messageHistory = [];
+        
+        // Switch between New Chat and Chat History
+        function switchChatMode(mode) {
+            // Update button states
+            const buttons = document.querySelectorAll('[data-filter]');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-filter') === mode) {
+                    btn.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border');
+                }
+            });
+            
+            // Show/hide views
+            if (mode === 'new-chat') {
+                document.getElementById('new-chat-view').classList.remove('hidden');
+                document.getElementById('chat-history-view').classList.add('hidden');
+            } else {
+                document.getElementById('new-chat-view').classList.add('hidden');
+                document.getElementById('chat-history-view').classList.remove('hidden');
+            }
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Simulate AI response
+            setTimeout(() => {
+                removeTypingIndicator();
+                const response = generateResponse(message);
+                addMessage(response, 'autopilot');
+            }, 1500);
+        }
+
+        function askAutopilot(question) {
+            document.getElementById('message-input').value = question;
+            sendMessage(new Event('submit'));
+        }
+
+        function addMessage(content, sender) {
+            const messagesContainer = document.getElementById('chat-messages').querySelector('.space-y-6');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'autopilot-message';
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start gap-4 justify-end">
+                        <div class="flex-1 max-w-[600px]">
+                            <div class="bg-primary text-white rounded-lg p-4">
+                                <p>${content}</p>
+                            </div>
+                            <span class="text-xs text-text-muted mt-2 inline-block text-right">Just now</span>
+                        </div>
+                        <div class="w-10 h-10 bg-section-bg rounded-lg flex items-center justify-center flex-shrink-0 border border-border">
+                            <i class="fas fa-user text-text-primary"></i>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-paper-plane text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-card-bg rounded-lg p-4 border border-border">
+                                <p class="text-text-primary">${content}</p>
+                            </div>
+                            <span class="text-xs text-text-muted mt-2 inline-block">Just now</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messageHistory.push({ content, sender, timestamp: new Date() });
+            
+            // Scroll to bottom
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chat-messages').querySelector('.space-y-6');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.className = 'autopilot-message';
+            typingDiv.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-paper-plane text-white"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="typing-indicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function generateResponse(message) {
+            const responses = {
+                'squads': 'Based on your profile as a B2B SaaS founder in the build stage, I recommend joining Squad Alpha. They focus on MVP development and have weekly check-ins that would be perfect for your current needs. Squad Gamma might also be a good fit if you\'re incorporating AI/ML into your product.',
+                'focus': 'This week, I recommend focusing on: 1) Customer interviews - aim for at least 5 conversations, 2) MVP feature prioritization based on feedback, 3) Setting up basic analytics to track user behavior. Remember, at this stage, talking to customers is your superpower!',
+                'connect': 'I\'d suggest connecting with Sarah Chen from Squad Alpha - she recently hit 1000 waitlist signups and could share her growth tactics. Also, Marcus Park has experience scaling e-commerce and might have insights on customer acquisition strategies that apply to B2B SaaS.',
+                'tools': 'At your stage, successful founders typically use: Figma for design and prototyping, Linear for task management, Mixpanel for analytics, and Stripe for payments. Many also use Notion for documentation and Calendly for scheduling customer calls. Start simple and add tools as you need them.',
+                'default': 'That\'s a great question! Based on what you\'re asking, I can help you explore different aspects of your startup journey. Would you like specific recommendations for squads, tools, connections, or strategic guidance?'
+            };
+            
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('squad')) return responses.squads;
+            if (lowerMessage.includes('focus') || lowerMessage.includes('week')) return responses.focus;
+            if (lowerMessage.includes('connect') || lowerMessage.includes('who')) return responses.connect;
+            if (lowerMessage.includes('tool') || lowerMessage.includes('stack')) return responses.tools;
+            
+            return responses.default;
+        }
+
+        function clearChat() {
+            const messagesContainer = document.getElementById('chat-messages').querySelector('.space-y-6');
+            messagesContainer.innerHTML = '';
+            messageHistory = [];
+            
+            // Re-add welcome message
+            const welcomeMessage = `
+                <div class="autopilot-message">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-paper-plane text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-card-bg rounded-lg p-4 border border-border">
+                                <p class="text-text-primary mb-3">Welcome to AutoPilot! I'm your AI co-pilot for navigating your startup journey. I can help you with:</p>
+                                <ul class="text-text-secondary space-y-2 ml-4">
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Finding the right founders and squads to connect with</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Recommendations for tools and resources based on your stage</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Guidance on your next steps and missions to tackle</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Insights from successful founders in your industry</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="text-xs text-text-muted mt-2 inline-block">Just now</span>
+                            
+                            <!-- Quick Action Suggestions -->
+                            <div class="mt-4">
+                                <p class="text-sm text-text-secondary mb-3">Try one of these to get started:</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <button onclick="askAutopilot('What squads should I join based on my profile?')" class="bg-gray-50 rounded-lg p-3 text-left hover:bg-gray-100 transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fas fa-people-group text-primary"></i>
+                                            <span class="text-sm font-medium text-text-primary">Squad Recommendations</span>
+                                        </div>
+                                    </button>
+
+                                    <button onclick="askAutopilot('What should I focus on this week?')" class="bg-gray-50 rounded-lg p-3 text-left hover:bg-gray-100 transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fas fa-compass text-primary"></i>
+                                            <span class="text-sm font-medium text-text-primary">Weekly Focus</span>
+                                        </div>
+                                    </button>
+
+                                    <button onclick="askAutopilot('Who should I connect with in the community?')" class="bg-gray-50 rounded-lg p-3 text-left hover:bg-gray-100 transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fas fa-user-plus text-primary"></i>
+                                            <span class="text-sm font-medium text-text-primary">Connection Suggestions</span>
+                                        </div>
+                                    </button>
+
+                                    <button onclick="askAutopilot('What tools do other founders at my stage use?')" class="bg-gray-50 rounded-lg p-3 text-left hover:bg-gray-100 transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i class="fas fa-wrench text-primary"></i>
+                                            <span class="text-sm font-medium text-text-primary">Tool Stack Advice</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            messagesContainer.innerHTML = welcomeMessage;
+        }
+
+        function toggleAutopilotSettings() {
+            alert('Settings panel coming soon! Here you\'ll be able to customize AutoPilot\'s personality, response style, and notification preferences.');
+        }
+
+        // Initialize navigation
+        initializeNavigation('autopilot');
+    </script>
+</body>
+</html>

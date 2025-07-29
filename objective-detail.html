@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objective Detail - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="missions-data.js"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Breadcrumb and Action Button -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-2 text-sm text-text-secondary">
+                        <a href="dashboard.html" class="underline hover:text-primary transition-all">Flight Plan</a>
+                        <i class="fas fa-chevron-right text-xs"></i>
+                        <span class="text-text-primary">Objective</span>
+                    </div>
+                    
+                    <div class="relative">
+                        <button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all" onclick="toggleDropdown()">
+                            <span>Actions</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div id="action-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-border rounded-lg shadow-lg z-10">
+                            <a href="#" class="block px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-all">
+                                <i class="fas fa-edit mr-2"></i>Edit Objective
+                            </a>
+                            <a href="#" class="block px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-all">
+                                <i class="fas fa-share mr-2"></i>Share Progress
+                            </a>
+                            <a href="#" class="block px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-all">
+                                <i class="fas fa-archive mr-2"></i>Archive
+                            </a>
+                            <div class="border-t border-border"></div>
+                            <a href="#" class="block px-4 py-2 text-sm text-danger hover:bg-gray-50 transition-all">
+                                <i class="fas fa-trash mr-2"></i>Remove from Plan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Objective Overview -->
+                <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="flex items-start justify-between mb-3">
+                                <div id="objective-icon" class="w-12 h-12 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-lightbulb text-xl text-white"></i>
+                                </div>
+                            </div>
+                            <h2 id="objective-title" class="text-2xl font-bold text-text-primary mb-2">Idea Validation</h2>
+                            <p id="objective-description" class="text-text-secondary mb-4">Research, validate, and refine your concept to ensure you're solving a real problem that people will pay for.</p>
+                            <div class="flex items-center gap-3 text-sm text-text-muted">
+                                <span><i class="fas fa-tasks mr-1"></i>4 missions</span>
+                                <span>|</span>
+                                <span><i class="fas fa-clock mr-1"></i>2-4 weeks</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-section-bg rounded-lg px-8 py-6 text-center w-full">
+                                <p class="text-4xl font-bold text-text-primary">2/4</p>
+                                <p class="text-sm text-text-secondary uppercase tracking-wide mt-2">Missions Complete</p>
+                                <p class="text-sm text-success mt-3">Active</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Missions -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Missions Section -->
+                        <div>
+                            <div class="flex items-center gap-4 mb-6">
+                                <button id="active-filter" onclick="filterMissions('active')" class="px-4 py-2 bg-primary text-white rounded-lg transition-all">
+                                    Active Missions
+                                </button>
+                                <button id="completed-filter" onclick="filterMissions('completed')" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all">
+                                    Completed Missions
+                                </button>
+                            </div>
+                            <div class="space-y-4" id="missions-container">
+                                <!-- Mission cards will be dynamically loaded here -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column - Support & Stats -->
+                    <div class="space-y-6">
+                        <!-- Squad Members on Same Objective -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Squad Members Here</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                        <span class="text-white text-xs font-medium">JK</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">James Kim</p>
+                                        <p class="text-xs text-text-secondary">Customer Interviews - 3/10</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                        <span class="text-white text-xs font-medium">MP</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Maya Patel</p>
+                                        <p class="text-xs text-text-secondary">Market Research - Completed</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full mt-4 px-3 py-2 bg-section-bg text-text-primary rounded hover:bg-primary hover:text-white transition-all text-sm">
+                                <i class="fas fa-comments mr-2"></i>Start Discussion
+                            </button>
+                        </div>
+
+                        <!-- Objective Benefits -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Why This Objective Matters</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
+                                    <p class="text-sm text-text-secondary">Avoid building something nobody wants</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
+                                    <p class="text-sm text-text-secondary">Save time and money by validating early</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
+                                    <p class="text-sm text-text-secondary">Build confidence in your direction</p>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
+                                    <p class="text-sm text-text-secondary">Attract early supporters and advisors</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recommended Apps -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended Apps</h3>
+                            <div class="space-y-3">
+                                <a href="apps.html" class="flex items-center gap-3 p-3 bg-purple-50 border border-purple-200 rounded hover:bg-purple-100 transition-all group">
+                                    <i class="fas fa-chart-line text-purple-600"></i>
+                                    <div class="flex-1">
+                                        <span class="text-sm font-medium text-text-primary">EconoMaestro</span>
+                                        <p class="text-xs text-text-secondary">Time your market entry</p>
+                                    </div>
+                                </a>
+                                <a href="apps.html" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
+                                    <i class="fas fa-rocket text-primary group-hover:text-white"></i>
+                                    <div class="flex-1">
+                                        <span class="text-sm text-text-primary group-hover:text-white">Product Tracker</span>
+                                        <p class="text-xs text-text-secondary group-hover:text-white/80">Coming Soon</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <a href="apps.html" class="text-xs text-primary hover:text-primary-hover mt-3 inline-block">View all apps →</a>
+                        </div>
+
+                        <!-- AutoPilot Assistant -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Ask AutoPilot</h3>
+                            <p class="text-sm text-text-secondary mb-4">Get AI guidance for this objective</p>
+                            <div class="space-y-3">
+                                <button onclick="askAutoPilotAbout('How do I validate my idea effectively?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
+                                    <p class="text-sm text-text-primary">How do I validate my idea?</p>
+                                </button>
+                                <button onclick="askAutoPilotAbout('What are common validation mistakes?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
+                                    <p class="text-sm text-text-primary">Common validation mistakes?</p>
+                                </button>
+                                <button onclick="askAutoPilotAbout('How many customers should I interview?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
+                                    <p class="text-sm text-text-primary">How many interviews needed?</p>
+                                </button>
+                            </div>
+                            <button onclick="window.location.href='autopilot.html'" class="w-full mt-4 bg-primary text-white py-2 px-4 rounded text-sm font-medium hover:bg-primary-hover transition-all">
+                                <i class="fas fa-paper-plane mr-2"></i>Open AutoPilot
+                            </button>
+                        </div>
+
+                        <!-- Recommended Tools -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended Tools</h3>
+                            <div class="space-y-3">
+                                <a href="tools.html" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
+                                    <i class="fas fa-poll text-primary group-hover:text-white"></i>
+                                    <span class="text-sm">Survey Tools</span>
+                                </a>
+                                <a href="tools.html" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
+                                    <i class="fas fa-calendar text-primary group-hover:text-white"></i>
+                                    <span class="text-sm">Interview Scheduling</span>
+                                </a>
+                                <a href="tools.html" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
+                                    <i class="fas fa-sticky-note text-primary group-hover:text-white"></i>
+                                    <span class="text-sm">Note Taking Apps</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Filter missions by status - moved to top for availability
+        let currentFilter = 'active';
+        
+        // Objective data
+        const objectiveData = {
+            'idea-validation': {
+                title: 'Idea Validation',
+                icon: 'fa-lightbulb',
+                description: 'Research, validate, and refine your concept to ensure you\'re solving a real problem that people will pay for.',
+                missions: ['mom-test', 'customer-discovery-workshop', 'validate-idea', 'customer-interviews', 'landing-page', 'analytics-setup'],
+                progress: 2,
+                total: 6
+            },
+            'mvp-development': {
+                title: 'MVP Development',
+                icon: 'fa-code',
+                description: 'Build and launch your first version to test with real users and gather feedback.',
+                missions: ['github-setup', 'landing-page', 'stripe-setup', 'analytics-setup'],
+                progress: 1,
+                total: 4
+            },
+            'operations-legal': {
+                title: 'Operations & Legal',
+                icon: 'fa-shield-alt',
+                description: 'Set up your business foundation with proper legal structure and operational systems.',
+                missions: ['business-entity', 'stripe-setup', 'security-audit', 'analytics-setup'],
+                progress: 0,
+                total: 4
+            },
+            'growth-traction': {
+                title: 'Growth & Traction',
+                icon: 'fa-chart-line',
+                description: 'Scale your user base and revenue through systematic growth experiments.',
+                missions: ['analytics-setup', 'landing-page', 'customer-interviews', 'launch-product-hunt'],
+                progress: 0,
+                total: 4
+            },
+            'fundraising': {
+                title: 'Fundraising',
+                icon: 'fa-hand-holding-usd',
+                description: 'Prepare for and successfully raise investment to fuel your growth.',
+                missions: ['business-entity', 'analytics-setup', 'validate-idea', 'customer-interviews'],
+                progress: 0,
+                total: 4
+            },
+            'team-building': {
+                title: 'Team Building',
+                icon: 'fa-users',
+                description: 'Hire and manage your team to build a strong company culture.',
+                missions: ['github-setup', 'security-audit', 'analytics-setup', 'business-entity'],
+                progress: 0,
+                total: 5
+            },
+            'launch-product': {
+                title: 'Launch Your Product',
+                icon: 'fa-rocket',
+                description: 'Ship your product to the world with all the necessary infrastructure and distribution channels.',
+                missions: ['apple-dev-account', 'launch-product-hunt', 'landing-page', 'stripe-setup'],
+                progress: 0,
+                total: 4
+            },
+            'product-launch': {
+                title: 'Product Launch',
+                icon: 'fa-rocket',
+                description: 'Launch your product with maximum impact through strategic planning and execution.',
+                missions: ['launch-product-hunt', 'landing-page', 'analytics-setup', 'stripe-setup'],
+                progress: 0,
+                total: 4
+            },
+            'scale-optimize': {
+                title: 'Scale & Optimize',
+                icon: 'fa-expand-arrows-alt',
+                description: 'Optimize your operations for sustainable growth and expansion.',
+                missions: ['stripe-setup', 'analytics-setup', 'customer-interviews', 'security-audit'],
+                progress: 0,
+                total: 4
+            }
+        };
+
+        // Initialize page when DOM is ready
+        function initializePage() {
+            // Get objective from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const objectiveId = urlParams.get('objective') || 'idea-validation';
+            const objective = objectiveData[objectiveId];
+
+            // Update page content
+            if (objective) {
+                // Breadcrumb removed - no longer needed
+                document.getElementById('objective-icon').innerHTML = `<i class="fas ${objective.icon} text-2xl text-white"></i>`;
+                document.getElementById('objective-title').textContent = objective.title;
+                document.getElementById('objective-description').textContent = objective.description;
+                
+                // Update progress display
+                const progressDisplay = document.querySelector('.bg-section-bg p.text-4xl');
+                if (progressDisplay) {
+                    progressDisplay.textContent = `${objective.progress}/${objective.total}`;
+                }
+                
+                // Update status - Active if any missions are in progress
+                const statusDisplay = document.querySelector('.bg-section-bg p.text-success');
+                if (statusDisplay) {
+                    if (objective.progress === 0) {
+                        statusDisplay.textContent = 'Not Started';
+                        statusDisplay.className = 'text-sm text-text-muted mt-3';
+                    } else if (objective.progress === objective.total) {
+                        statusDisplay.textContent = 'Completed';
+                        statusDisplay.className = 'text-sm text-success mt-3';
+                    } else {
+                        statusDisplay.textContent = 'Active';
+                        statusDisplay.className = 'text-sm text-success mt-3';
+                    }
+                }
+                
+                // Load missions
+                loadMissions(objective.missions, objective);
+            }
+        }
+        
+        // Call initialization immediately
+        initializePage();
+
+        function loadMissions(missionIds, objective) {
+            const container = document.getElementById('missions-container');
+            container.innerHTML = '';
+            
+            
+            // If missionData is not available yet, wait and retry
+            if (typeof missionData === 'undefined' || !missionData || !missionData.missions) {
+                console.log('Mission data not loaded yet, retrying...');
+                setTimeout(() => loadMissions(missionIds, objective), 500);
+                return;
+            }
+            
+            missionIds.forEach((missionId, index) => {
+                const mission = missionData.missions[missionId];
+                if (mission) {
+                    const isCompleted = index < objective.progress;
+                    const isActive = index === objective.progress;
+                    const isLocked = index > objective.progress;
+                    
+                    // Filter based on current filter
+                    // Active = not completed (includes in-progress and locked/not started)
+                    // Completed = only completed missions
+                    if (currentFilter === 'active' && isCompleted) return;
+                    if (currentFilter === 'completed' && !isCompleted) return;
+                    
+                    const missionCard = document.createElement('div');
+                    missionCard.className = `bg-card-bg border ${isLocked ? 'border-dashed border-gray-300' : 'border-border'} rounded-lg p-6 hover:shadow-md cursor-pointer transition-all`;
+                    missionCard.onclick = () => window.location.href = `mission-detail.html?mission=${missionId}`;
+                    
+                    // Determine checkpoint status
+                    let checkpointText = '';
+                    let statusBadge = '';
+                    if (isCompleted) {
+                        statusBadge = '<span class="text-xs px-2 py-1 bg-success/10 text-success rounded-full font-medium">Completed</span>';
+                    } else if (isActive) {
+                        // For active missions, show checkpoint progress (example: 3/5)
+                        checkpointText = '<span class="text-xs px-2 py-1 bg-warning/10 text-warning rounded-full font-medium">Checkpoint 3/5</span>';
+                    } else if (!isLocked) {
+                        statusBadge = '<span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">Ready</span>';
+                    }
+                    
+                    missionCard.innerHTML = `
+                        <div class="flex items-start justify-between mb-4">
+                            ${isCompleted ? '<i class="fas fa-check text-2xl text-black"></i>' : mission.icon ? `<i class="fas ${mission.icon} text-2xl text-black"></i>` : '<i class="fas fa-rocket text-2xl text-black"></i>'}
+                            ${checkpointText || statusBadge}
+                        </div>
+                        
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">${mission.title}</h3>
+                        <p class="text-sm text-text-secondary mb-3">Objective: ${objective.title}</p>
+                        
+                        ${isActive ? `
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex items-center justify-between text-sm mb-1">
+                                        <span class="text-text-secondary">Progress</span>
+                                        <span class="font-medium text-text-primary">60%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-warning h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-text-secondary">Next: ${mission.nextStep || 'Continue to next checkpoint'}</p>
+                            </div>
+                        ` : isCompleted ? `
+                            <p class="text-sm text-text-secondary">Completed successfully</p>
+                        ` : `
+                            <div class="space-y-1">
+                                <p class="text-sm text-text-secondary">Est. time: ${mission.estimatedTime}</p>
+                                <p class="text-sm text-text-secondary">Difficulty: ${mission.difficulty}</p>
+                            </div>
+                            <button class="text-sm text-primary font-medium mt-4">${!isLocked ? 'Start mission →' : 'View mission →'}</button>
+                        `}
+                    `;
+                    
+                    container.appendChild(missionCard);
+                } else {
+                    console.warn(`Mission not found: ${missionId}`);
+                }
+            });
+            
+            // If no missions were loaded, show a message
+            if (container.children.length === 0) {
+                const message = currentFilter === 'active' 
+                    ? '<p class="text-text-secondary">No active missions. All missions have been completed!</p>'
+                    : '<p class="text-text-secondary">No completed missions yet. Start working on your missions!</p>';
+                container.innerHTML = message;
+            }
+        }
+
+        function goBack() {
+            window.location.href = 'dashboard.html';
+        }
+        
+        // Toggle action dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('action-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('action-dropdown');
+            const button = event.target.closest('button[onclick="toggleDropdown()"]');
+            
+            if (!button && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        
+        function filterMissions(filter) {
+            currentFilter = filter;
+            
+            // Update button styles
+            const activeBtn = document.getElementById('active-filter');
+            const completedBtn = document.getElementById('completed-filter');
+            
+            if (filter === 'active') {
+                activeBtn.className = 'px-4 py-2 bg-primary text-white rounded-lg transition-all';
+                completedBtn.className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all';
+            } else {
+                activeBtn.className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all';
+                completedBtn.className = 'px-4 py-2 bg-primary text-white rounded-lg transition-all';
+            }
+            
+            // Reload missions with filter
+            const urlParams = new URLSearchParams(window.location.search);
+            const objectiveId = urlParams.get('objective') || 'idea-validation';
+            const objective = objectiveData[objectiveId];
+            if (objective) {
+                loadMissions(objective.missions, objective);
+            }
+        }
+
+        function startNextMission() {
+            const nextMissionIndex = objective.progress;
+            if (nextMissionIndex < objective.missions.length) {
+                const nextMissionId = objective.missions[nextMissionIndex];
+                window.location.href = `mission-detail.html?mission=${nextMissionId}`;
+            }
+        }
+
+        // AutoPilot integration
+        function askAutoPilotAbout(question) {
+            // Store the question in sessionStorage and redirect to AutoPilot
+            sessionStorage.setItem('autopilot_question', question);
+            window.location.href = 'autopilot.html';
+        }
+
+        // Initialize navigation
+        initializeNavigation('dashboard');
+        
+        // Ensure missions data is loaded
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                // Re-initialize page to ensure all data is loaded
+                initializePage();
+            }, 100);
+        });
+    </script>
+</body>
+</html>

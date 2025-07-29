@@ -1,0 +1,424 @@
+{
+  "stories": {
+    "FF-FTR-001": {
+      "title": "Core Application Layout & Navigation",
+      "status": "production",
+      "epic": "core-app",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Main application structure with header navigation, logo, search bar, and section routing system. Fully responsive with mobile support.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented complete navigation system with 8 main sections and responsive design"
+        }
+      ]
+    },
+    "FF-FTR-002": {
+      "title": "Hardcore Minimal Black/White/Gray Theme",
+      "status": "production",
+      "epic": "ui-ux",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Complete design system with minimal black, white, and gray color palette. Includes CSS variables and consistent styling across all components.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented comprehensive minimal theme with subtle gray background and white card containers"
+        }
+      ]
+    },
+    "FF-FTR-003": {
+      "title": "Home Page & Hero Section",
+      "status": "production",
+      "epic": "home",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Landing page with hero section, value proposition, Get in Formation CTA, and three platform overview cards (Connect, Gather, Grow).",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Completed home page with hero section, CTA, and interactive platform overview cards"
+        }
+      ]
+    },
+    "FF-FTR-004": {
+      "title": "Flightplan System - Core Structure",
+      "status": "production",
+      "epic": "flightplan",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "5-stage founder journey system (Idea → Seed → Build → Launch → Grow) with stage navigation and mission organization.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented complete flightplan system with 5 stages and mission organization"
+        }
+      ]
+    },
+    "FF-FTR-005": {
+      "title": "Flightplan Stages & Missions",
+      "status": "stage",
+      "epic": "flightplan",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Individual stage content with specific missions for each stage. Includes mission cards with Start/Done/Skip actions and progress tracking.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Built out all 5 stages with stage-specific missions and interactive mission cards"
+        }
+      ]
+    },
+    "FF-FTR-006": {
+      "title": "Flightplan Pill Progress Bar",
+      "status": "production",
+      "epic": "flightplan",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Modern pill-shaped progress bar for flightplan stages with visual fill indication and clickable stage navigation.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Redesigned stages navigation as pill progress bar with smooth animations and visual feedback"
+        }
+      ]
+    },
+    "FF-FTR-007": {
+      "title": "Events Page & Event Directory",
+      "status": "stage",
+      "epic": "events",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Event discovery and management system with event cards, date organization, and event details. Single-column layout with full event information.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented events page with event cards, date headers, and full event details"
+        }
+      ]
+    },
+    "FF-FTR-008": {
+      "title": "Events Date Picker Modal",
+      "status": "production",
+      "epic": "events",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Interactive date picker modal for event navigation with native date input and smart date display (Today/formatted dates).",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Built functional date picker modal with native date input and smart date formatting"
+        }
+      ]
+    },
+    "FF-FTR-009": {
+      "title": "Tools Page & Use Case Directory",
+      "status": "stage",
+      "epic": "tools",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Tool discovery system organized by use cases (starting out, building product, ready to launch) with tool cards and launch functionality.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented tools page with use case organization and tool cards"
+        }
+      ]
+    },
+    "FF-FTR-010": {
+      "title": "Tools Use Case Detail Pages",
+      "status": "stage",
+      "epic": "tools",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Detailed use case pages with missions, apps, and resources organized by founder challenge. Includes EconoMaestro app integration.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Built detailed use case pages with mission workflows and app integration"
+        }
+      ]
+    },
+    "FF-FTR-011": {
+      "title": "Community Page & Founder Directory",
+      "status": "stage",
+      "epic": "community",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Founder networking system with founder cards, profile views, and connection features. Includes Solo/Team founder designation.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented community page with founder cards and Solo/Team designation system"
+        }
+      ]
+    },
+    "FF-FTR-012": {
+      "title": "Founder Profile Detail View",
+      "status": "stage",
+      "epic": "community",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Detailed founder profile view with bio, company information, connect/message actions, and profile navigation.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Built founder profile detail view with comprehensive profile information and actions"
+        }
+      ]
+    },
+    "FF-FTR-013": {
+      "title": "Solo/Team Founder Designation System",
+      "status": "production",
+      "epic": "community",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "System to identify and display Solo vs Team founders across community cards, profile views, and settings toggle.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented comprehensive Solo/Team designation system across all founder touchpoints"
+        }
+      ]
+    },
+    "FF-FTR-014": {
+      "title": "Global Search System",
+      "status": "stage",
+      "epic": "search",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Search functionality with results page, filter tabs (All, Founders, Events, Tools), and search result organization.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented search system with results page and filter tabs"
+        }
+      ]
+    },
+    "FF-FTR-015": {
+      "title": "Profile Management System",
+      "status": "integrate",
+      "epic": "profile",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "User profile editing interface with personal information fields, activity feed, and two-column layout.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Built profile management interface with editing forms and activity display"
+        }
+      ]
+    },
+    "FF-FTR-016": {
+      "title": "Messages System Foundation",
+      "status": "ui",
+      "epic": "messaging",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Basic messaging interface structure with conversation list and message display area.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Created messaging system foundation with UI structure"
+        }
+      ]
+    },
+    "FF-FTR-017": {
+      "title": "Settings Management",
+      "status": "ui",
+      "epic": "profile",
+      "priority": "low",
+      "files": ["app.html"],
+      "description": "Application settings interface with user preferences and configuration options.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Added settings page structure with Solo/Team toggle"
+        }
+      ]
+    },
+    "FF-FTR-018": {
+      "title": "Sticky Action Bars System",
+      "status": "production",
+      "epic": "navigation",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Sticky navigation bars for Events, Tools, and Community pages with tabs, filters, and date picker integration.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented sticky action bars across all main pages with consistent functionality"
+        }
+      ]
+    },
+    "FF-FTR-019": {
+      "title": "Modal System",
+      "status": "stage",
+      "epic": "ui-ux",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Modal management system including signup modal, date picker modal, and filter modals with backdrop and keyboard support.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Built modal system with multiple modal types and proper event handling"
+        }
+      ]
+    },
+    "FF-FTR-020": {
+      "title": "Responsive Design System",
+      "status": "production",
+      "epic": "ui-ux",
+      "priority": "high",
+      "files": ["app.html"],
+      "description": "Complete responsive design with mobile-friendly navigation, adaptive layouts, and touch-friendly interactions.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented comprehensive responsive design system across all components"
+        }
+      ]
+    },
+    "FF-FTR-021": {
+      "title": "Developer Tools Integration",
+      "status": "production",
+      "epic": "development",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Developer tools corner button with product tracker integration and debug information access.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Added developer tools corner button with product tracker integration"
+        }
+      ]
+    },
+    "FF-FTR-022": {
+      "title": "Product Tracker System",
+      "status": "production",
+      "epic": "development",
+      "priority": "high",
+      "files": ["app.html", "product/docs/index.html", "product/product-map.json"],
+      "description": "Complete product tracking system with visual UI, timeline view, and story management for development workflow.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Built comprehensive product tracker with timeline view and story management"
+        }
+      ]
+    },
+    "FF-FTR-023": {
+      "title": "Mission Action Dropdowns",
+      "status": "stage",
+      "epic": "flightplan",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Interactive mission cards with Start/Mark as Done/Skip dropdown actions and status tracking.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented mission action dropdowns with three-dot menu and status options"
+        }
+      ]
+    },
+    "FF-FTR-024": {
+      "title": "Event Registration System",
+      "status": "ui",
+      "epic": "events",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Event registration buttons and RSVP functionality for event participation tracking.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Added event registration UI elements and RSVP buttons"
+        }
+      ]
+    },
+    "FF-FTR-025": {
+      "title": "Community Filtering System",
+      "status": "stage",
+      "epic": "community",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Founder filtering by type (Solo/Team), industry, and other criteria with filter modal and active filter display.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented community filtering with modal and active filter tracking"
+        }
+      ]
+    },
+    "FF-FTR-026": {
+      "title": "Tool Launch Integration",
+      "status": "ui",
+      "epic": "tools",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Tool launching functionality with integration points for external tools and services.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Added tool launch UI with integration preparation for external services"
+        }
+      ]
+    },
+    "FF-FTR-027": {
+      "title": "Workspace Switching System",
+      "status": "stage",
+      "epic": "core-app",
+      "priority": "low",
+      "files": ["app.html"],
+      "description": "Multi-workspace support with workspace selector dropdown and switching functionality.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented workspace switching UI with dropdown selector"
+        }
+      ]
+    },
+    "FF-FTR-028": {
+      "title": "Animation & Transition System",
+      "status": "production",
+      "epic": "ui-ux",
+      "priority": "low",
+      "files": ["app.html"],
+      "description": "Comprehensive animation system with hover effects, transitions, and interactive feedback across all components.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented consistent animation system with hover effects and smooth transitions"
+        }
+      ]
+    },
+    "FF-FTR-029": {
+      "title": "Event Tab System",
+      "status": "production",
+      "epic": "events",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Event categorization with Upcoming, Attending, and Past tabs for event organization and filtering.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented event tab system with temporal organization of events"
+        }
+      ]
+    },
+    "FF-FTR-030": {
+      "title": "Tools Category System",
+      "status": "production",
+      "epic": "tools",
+      "priority": "medium",
+      "files": ["app.html"],
+      "description": "Tool organization by categories (Use Cases, Apps, Missions, Resources) with tab navigation and filtering.",
+      "history": [
+        {
+          "date": "July 17, 2025",
+          "change": "Implemented tools category system with tab navigation and section organization"
+        }
+      ]
+    }
+  }
+}

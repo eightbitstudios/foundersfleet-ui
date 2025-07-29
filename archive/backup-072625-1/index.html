@@ -38,160 +38,31 @@
         /* Keep minimal custom styles for Tailwind config */
         .hidden { display: none !important; }
         
-        /* Radar animation */
-        @keyframes radar-sweep {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .radar-sweep {
-            animation: radar-sweep 3s linear infinite;
-        }
-        
-        /* Boarding Pass Base */
-        .boarding-pass {
+        /* Boarding Pass with Notches */
+        .boarding-pass-horizontal {
             position: relative;
             background: white;
             border-radius: 16px;
-            overflow: visible !important;
         }
         
-        /* Boarding pass notches */
-        .boarding-pass::before,
-        .boarding-pass::after {
+        .boarding-pass-horizontal::before,
+        .boarding-pass-horizontal::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background: #000;
+            width: 40px;
+            height: 40px;
+            background: #000000;
             border-radius: 50%;
-            z-index: 100;
+            left: 50%;
+            transform: translateX(-50%);
         }
         
-        /* Desktop - top and bottom notches */
-        @media (min-width: 768px) {
-            .boarding-pass::before {
-                top: -10px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            
-            .boarding-pass::after {
-                bottom: -10px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
+        .boarding-pass-horizontal::before {
+            top: -20px;
         }
         
-        /* Mobile - left and right notches */
-        @media (max-width: 767px) {
-            .boarding-pass::before {
-                left: -10px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-            
-            .boarding-pass::after {
-                right: -10px;
-                top: 50%;
-                transform: translateY(-50%);
-            }
-        }
-        
-        
-        /* Landscape adjustments */
-        @media (min-width: 768px) and (max-height: 600px) {
-            .boarding-pass {
-                max-height: 80vh;
-            }
-            
-            .boarding-pass > div {
-                min-height: 280px !important;
-            }
-            
-            .destination-section {
-                padding: 1.5rem 2rem !important;
-            }
-            
-            .signin-section {
-                padding: 1.5rem 2rem !important;
-            }
-        }
-        
-        /* Mobile - Stack content */
-        @media (max-width: 767px) {
-            
-            /* Stack content vertically on mobile */
-            .boarding-pass > div {
-                flex-direction: column !important;
-                min-height: auto !important;
-            }
-            
-            .boarding-pass .destination-section,
-            .boarding-pass .signin-section {
-                width: 100% !important;
-                min-height: 50% !important;
-                flex: 1 !important;
-            }
-            
-            .boarding-pass .border-r-2 {
-                border-right: 0 !important;
-                border-bottom: 2px dashed #e5e7eb !important;
-            }
-            
-            /* Adjust destination graphic for mobile */
-            .destination-section {
-                padding: 1.5rem !important;
-                min-height: auto !important;
-            }
-            
-            .destination-section .w-10 {
-                width: 2.5rem !important;
-                height: 2.5rem !important;
-            }
-            
-            
-            /* Adjust sign-in section for mobile */
-            .signin-section {
-                padding: 1.5rem !important;
-                flex: 1 !important;
-            }
-            
-            .signin-section h3 {
-                font-size: 1.25rem !important;
-            }
-            
-            .signin-section .text-sm {
-                font-size: 0.875rem !important;
-            }
-            
-            .signin-section .mb-8 {
-                margin-bottom: 1.5rem !important;
-            }
-        }
-        
-        /* Phone input styling */
-        .phone-input-group {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        
-        .phone-digit {
-            border: 2px solid #e5e5e5;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            transition: all 0.2s;
-            background: white;
-            color: black;
-        }
-        
-        .phone-digit:focus {
-            border-color: #000;
-            outline: none;
-            background: #f9f9f9;
+        .boarding-pass-horizontal::after {
+            bottom: -20px;
         }
         
         /* Ticker Animation */
@@ -220,131 +91,38 @@
         .animate-scroll-reverse {
             animation: scrollReverse 30s linear infinite;
         }
-        
-        /* Gradient animation for cards */
-        @keyframes gradient-shine {
-            0% {
-                background-position: -200% center;
-            }
-            100% {
-                background-position: 200% center;
-            }
-        }
-        
-        @keyframes periodic-shine-1 {
-            0%, 100% { background-position: -200% center; }
-            2%, 8% { background-position: 200% center; }
-        }
-        
-        @keyframes periodic-shine-2 {
-            0%, 100% { background-position: -200% center; }
-            2%, 8% { background-position: 200% center; }
-        }
-        
-        @keyframes periodic-shine-3 {
-            0%, 100% { background-position: -200% center; }
-            2%, 8% { background-position: 200% center; }
-        }
-        
-        @keyframes periodic-shine-4 {
-            0%, 100% { background-position: -200% center; }
-            2%, 8% { background-position: 200% center; }
-        }
-        
-        .ticker-card {
-            position: relative;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        
-        /* Gradient overlay */
-        .ticker-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                105deg,
-                transparent 40%,
-                rgba(255, 255, 255, 0.08) 50%,
-                transparent 60%
-            );
-            background-size: 200% 100%;
-            background-position: -200% center;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        
-        /* Hover effect */
-        .ticker-card:hover {
-            transform: scale(1.02);
-        }
-        
-        .ticker-card:hover::before {
-            animation: gradient-shine 1.5s ease-out !important;
-        }
-        
-        /* Apply gradient animation periodically with staggered timing */
-        .ticker-card:nth-child(1)::before {
-            animation: periodic-shine-1 20s infinite;
-            animation-delay: 2s;
-        }
-        
-        .ticker-card:nth-child(2)::before {
-            animation: periodic-shine-2 20s infinite;
-            animation-delay: 7s;
-        }
-        
-        .ticker-card:nth-child(3)::before {
-            animation: periodic-shine-3 20s infinite;
-            animation-delay: 12s;
-        }
-        
-        .ticker-card:nth-child(4)::before {
-            animation: periodic-shine-4 20s infinite;
-            animation-delay: 17s;
-        }
-        
-        .ticker-card-content {
-            position: relative;
-            z-index: 1;
-        }
     </style>
 </head>
-<body class="bg-black font-inter">
-    <!-- Sticky Header -->
-    <header class="fixed top-0 left-0 right-0 h-[76px] bg-black z-50 border-b border-white/10">
-        <div class="h-full flex items-center justify-between">
-            <!-- Logo -->
-            <div class="w-20 h-full flex items-center justify-center">
-                <a href="dashboard.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
-                    <span class="text-black text-xl font-bold">F</span>
-                </a>
-            </div>
-            
-            <!-- FoundersFleet text -->
-            <div class="flex-1 flex items-center">
-                <span class="text-white text-xl font-semibold">FoundersFleet</span>
-            </div>
-            
-            <!-- Right side buttons -->
-            <div class="flex items-center gap-4 pr-5">
-                <span class="text-white/60 text-sm">Invite Only. Verification Required.</span>
-                <button onclick="openBoardingPass()" class="px-6 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-white/90 transition-all">
-                    Board the Fleet
-                </button>
-            </div>
+<body class="bg-black min-h-screen font-inter">
+    <!-- Logo - matches dashboard positioning -->
+    <div class="fixed top-0 left-0 w-20 h-[76px] bg-black z-50 flex items-center justify-center border-b border-white/10">
+        <a href="dashboard.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+            <span class="text-black text-xl font-bold">F</span>
+        </a>
+    </div>
+    
+    <!-- FoundersFleet text -->
+    <div class="fixed top-0 left-20 h-[76px] z-50 flex items-center">
+        <span class="text-white text-xl font-semibold">FoundersFleet</span>
+    </div>
+    
+    <!-- Right side header -->
+    <div class="fixed top-0 left-20 right-0 h-[76px] z-50 flex items-center justify-end pr-5 py-4">
+        <div class="flex items-center gap-4">
+            <span class="text-white/60 text-sm">Invite Only. Verification Required.</span>
+            <button onclick="openBoardingPass()" class="px-6 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-white/90 transition-all">
+                Boarding Pass
+            </button>
         </div>
-    </header>
+    </div>
 
     <!-- Main Content -->
-    <div class="pt-32">
+    <div class="pt-32 pb-20">
         <div class="max-w-4xl mx-auto text-center px-4">
             <!-- Headline -->
             <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
-                Turn Solo Starts into <span class="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Shared Momentum</span>
+                Turn Solo Starts into<br>
+                <span class="bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">Shared Momentum</span>
             </h2>
 
             <!-- Subhead -->
@@ -502,7 +280,7 @@
         </div>
         
         <!-- Ticker row 2 - Squad Cards (scrolling reverse) -->
-        <div class="w-full py-3">
+        <div class="w-full py-3 pb-8">
             <div class="relative overflow-hidden">
                 <div class="flex animate-scroll-reverse gap-4">
                     <!-- Different squad cards for variety -->
@@ -624,7 +402,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="px-8 pt-12 pb-12 text-center">
+    <footer class="px-8 py-8 text-center">
         <p class="text-white/40 text-sm">
             © 2025 Eight Bit Studios, LLC. Founders Fleet is owned and operated by Eight Bit Studios, LLC. 
             <a href="#" class="text-white/60 hover:text-white transition-all">Privacy</a> | 
@@ -634,137 +412,141 @@
     </footer>
 
     <!-- Boarding Pass Modal -->
-    <div id="boardingPassModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-6 md:p-4">
-        <div class="w-full max-w-[900px] md:max-h-[90vh] h-[calc(100%-3rem)] md:h-auto relative flex items-center justify-center">
-            
-            <div class="boarding-pass relative bg-white rounded-2xl h-full md:h-auto w-full" style="box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);">
-                <!-- Close Button - Inside boarding pass -->
-                <button onclick="closeBoardingPass()" class="absolute top-4 left-4 z-30 w-8 h-8 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-all">
-                    <i class="fas fa-times text-white text-sm"></i>
+    <div id="boardingPassModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="w-full max-w-[900px] lg:max-w-[800px] relative">
+            <div class="boarding-pass boarding-pass-horizontal relative" style="background: #FFFFFF; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); margin: 40px 0;">
+                <!-- Close Button Inside -->
+                <button onclick="closeBoardingPass()" class="absolute top-6 right-6 z-10 text-gray-400 hover:text-gray-600 transition-all">
+                    <i class="fas fa-times text-xl"></i>
                 </button>
                 
-                <!-- Wide Screen Layout - Horizontal -->
-                <div class="flex items-stretch min-h-[320px] h-full md:h-auto">
-                    <!-- Left Section - Destination Graphic (50%) -->
-                    <div class="destination-section w-1/2 p-6 md:p-8 flex items-center justify-center border-r-2 border-dashed border-gray-300 relative overflow-visible">
-                        
-                        <!-- Default Logo View -->
-                        <div id="logoView" class="destination-content flex flex-col items-center justify-center gap-4 text-center h-full">
-                            <!-- FoundersFleet Logo Stacked -->
-                            <div class="flex flex-col items-center gap-4">
-                                <div class="w-20 h-20 bg-black rounded-2xl flex items-center justify-center">
-                                    <span class="text-white text-4xl font-bold">F</span>
-                                </div>
-                                <div class="text-center">
-                                    <h2 class="text-3xl font-bold text-black">FoundersFleet</h2>
-                                </div>
+                <!-- Wide Screen Layout (>1000px) - Horizontal -->
+                <div class="hidden lg:flex items-stretch">
+                    <!-- Left Section - Destination Graphic -->
+                    <div class="flex-1 p-10 flex items-center justify-center border-r-2 border-dashed border-gray-300">
+                        <div class="flex items-center gap-6">
+                            <div class="text-center">
+                                <div class="text-xs text-gray-500 uppercase tracking-wider">FLYING</div>
+                                <div class="text-3xl font-bold text-black uppercase tracking-wider">SOLO</div>
                             </div>
-                        </div>
-                        
-                        <!-- Status View with Radar -->
-                        <div id="leftStatusView" class="hidden destination-content flex flex-col items-center justify-center gap-4 text-center h-full cursor-pointer" onclick="backToPhoneInput()">
-                            <!-- Radar Animation -->
-                            <div class="relative w-32 h-32">
-                                <div class="absolute inset-0 rounded-full border-2 border-gray-300"></div>
-                                <div class="absolute inset-2 rounded-full border-2 border-gray-200"></div>
-                                <div class="absolute inset-4 rounded-full border-2 border-gray-100"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="radar-sweep absolute inset-0 z-0">
-                                        <div class="absolute top-1/2 left-1/2 w-1/2 h-[2px] bg-gradient-to-r from-black to-transparent origin-left"></div>
-                                    </div>
-                                    <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center relative z-10">
-                                        <i class="fas fa-user text-white text-lg"></i>
-                                    </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-20 h-[2px] bg-black"></div>
+                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-paper-plane text-white text-xl"></i>
                                 </div>
+                                <div class="w-20 h-[2px] bg-black"></div>
                             </div>
                             <div class="text-center">
-                                <h2 class="text-xl font-bold text-black mb-2">Number Not Recognized</h2>
-                                <p class="text-base text-gray-900 font-medium">
-                                    It looks like your number isn't recognized.
-                                </p>
+                                <div class="text-xs text-gray-500 uppercase tracking-wider">CONNECTED</div>
+                                <div class="text-3xl font-bold text-black uppercase tracking-wider">SQUAD</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Right Section - Invite and Sign In Content (50%) -->
-                    <div class="signin-section w-1/2 flex items-center justify-center p-8 relative">
-                        <!-- Phone Input View -->
-                        <div id="phoneInputView" class="w-full max-w-md">
-                            <div class="text-center mb-8">
-                                <h3 class="text-2xl font-bold text-black mb-3">To board the Fleet, you must be invited by an existing member.</h3>
+                    <!-- Right Section - Invite and Sign In Content -->
+                    <div class="flex-1 flex items-center justify-center">
+                        <div class="w-full max-w-sm">
+                            <div class="text-center mb-6">
+                                <h3 class="text-xl font-bold text-black mb-3">Invite-Only Access</h3>
+                                <p class="text-sm text-text-secondary">
+                                    To join the Fleet, you must receive an invite from an existing member. Your Mobile Number is Your Access Code.
+                                </p>
                             </div>
                             
-                            <!-- Phone Input -->
-                            <div class="mb-8">
-                                <label class="block text-xs text-gray-500 uppercase tracking-wider mb-4 text-center">Your Mobile Number is Your Access Code</label>
-                                
-                                <!-- Country and Phone on same line -->
-                                <div class="flex gap-2 justify-center">
-                                    <!-- Country Selector -->
-                                    <select class="w-24 px-3 py-4 bg-black text-white rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all appearance-none cursor-pointer">
-                                        <option value="+1">USA (+1)</option>
-                                        <option value="+44">UK (+44)</option>
-                                        <option value="+33">FRA (+33)</option>
-                                        <option value="+49">GER (+49)</option>
-                                        <option value="+81">JPN (+81)</option>
-                                        <option value="+86">CHN (+86)</option>
-                                        <option value="+91">IND (+91)</option>
-                                        <option value="+61">AUS (+61)</option>
-                                        <option value="+7">RUS (+7)</option>
-                                        <option value="+55">BRA (+55)</option>
-                                    </select>
-                                    
-                                    <!-- Phone Number Input -->
-                                    <div class="relative max-w-[200px]">
+                            <!-- Input and Arrow -->
+                            <div class="mb-4 w-full">
+                                <form onsubmit="handlePhoneSubmit(event)">
+                                    <div class="relative">
                                         <input 
                                             type="tel" 
+                                            class="w-full p-3 pr-14 border-2 border-black rounded-lg text-base bg-gray-50 text-black placeholder-text-secondary transition-colors focus:outline-none focus:bg-white focus:border-primary" 
+                                            placeholder="Mobile Number"
                                             id="phoneInputModal"
-                                            placeholder="(555) 123-4567"
-                                            class="w-full px-4 py-4 pr-16 bg-black text-white rounded-lg text-sm font-medium placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-all"
                                         >
-                                        <button 
-                                            type="button"
-                                            onclick="showInviteStatus(event)"
-                                            class="absolute right-[6px] top-1/2 transform -translate-y-1/2 w-[44px] h-[44px] bg-white text-black rounded-[8px] font-semibold transition-all hover:bg-gray-200 flex items-center justify-center"
+                                        <a 
+                                            href="dashboard.html"
+                                            class="absolute right-1 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black text-white rounded text-base font-semibold transition-colors hover:bg-gray-800 flex items-center justify-center no-underline"
                                         >
                                             <i class="fas fa-arrow-right"></i>
-                                        </button>
+                                        </a>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             
                             <!-- Legal Text -->
-                            <p class="text-xs text-gray-500 text-center">
-                                By continuing, you accept <a href="#" class="text-black font-medium hover:underline">Terms</a>, <a href="#" class="text-black font-medium hover:underline">Privacy</a> & <a href="#" class="text-black font-medium hover:underline">SMS</a>.
+                            <p class="text-xs text-text-muted text-center">
+                                By continuing, you accept <a href="#" class="text-primary hover:underline">Terms</a>, <a href="#" class="text-primary hover:underline">Privacy</a> & SMS.
                             </p>
                         </div>
-                        
-                        <!-- Status View (Hidden by default) -->
-                        <div id="statusView" class="w-full max-w-md hidden">
-                            <!-- Status Content -->
-                            <div class="text-center space-y-4">
-                                <p class="text-base text-gray-600">
-                                    You must be invited by an existing member to join the Fleet.
+                    </div>
+                </div>
+                
+                <!-- Mobile Layout (<1000px) - Vertical -->
+                <div class="lg:hidden block">
+                    <!-- Destination Graphic -->
+                    <div class="boarding-pass-header" style="padding: 40px 20px;">
+                        <div class="flex flex-col items-center justify-center gap-3">
+                            <div class="text-center">
+                                <div class="text-xs text-gray-500 uppercase tracking-wider">FLYING</div>
+                                <div class="text-xl font-bold text-black uppercase tracking-wider">SOLO</div>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <div class="h-8 w-[2px] bg-black"></div>
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-paper-plane text-white text-sm"></i>
+                                </div>
+                                <div class="h-8 w-[2px] bg-black"></div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-xs text-gray-500 uppercase tracking-wider">CONNECTED</div>
+                                <div class="text-xl font-bold text-black uppercase tracking-wider">SQUAD</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="boarding-pass-divider my-0">
+                        <span class="boarding-pass-notch"></span>
+                    </div>
+                    
+                    <!-- Combined Invite and Sign In Section -->
+                    <div class="boarding-pass-body">
+                        <div class="py-8">
+                            <div class="text-center mb-6">
+                                <h3 class="text-base font-bold text-black mb-3">Invite-Only Access</h3>
+                                <p class="text-xs text-text-secondary">
+                                    To join the Fleet, you must receive an invite from an existing member. Your Mobile Number is Your Access Code.
                                 </p>
+                            </div>
+                            <!-- Input and Arrow -->
+                            <div class="mb-4 w-full">
+                                <form onsubmit="handlePhoneSubmit(event)">
+                                    <div class="relative">
+                                        <input 
+                                            type="tel" 
+                                            class="w-full p-3 pr-14 border-2 border-black rounded-lg text-base bg-gray-50 text-black placeholder-text-secondary transition-colors focus:outline-none focus:bg-white focus:border-primary" 
+                                            placeholder="Mobile Number"
+                                            id="phoneInputModalMobile"
+                                        >
+                                        <a 
+                                            href="dashboard.html"
+                                            class="absolute right-1 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black text-white rounded text-base font-semibold transition-colors hover:bg-gray-800 flex items-center justify-center no-underline"
+                                        >
+                                            <i class="fas fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </form>
                             </div>
                             
-                            <!-- Expedited Access Section -->
-                            <div class="bg-gray-50 rounded-lg p-6 mt-8">
-                                <p class="text-gray-700 font-medium mb-2">Want expedited access?</p>
-                                <p class="text-gray-600 mb-4 text-sm">
-                                    Form a Squad of 3–5 verified founders and you'll be bumped to the top of the verification list.
-                                </p>
-                                <button class="w-full py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition-all">
-                                    Start a Squad Request
-                                </button>
-                            </div>
+                            <!-- Legal Text -->
+                            <p class="text-xs text-text-muted text-center">
+                                By continuing, you accept <a href="#" class="text-primary hover:underline">Terms</a>, <a href="#" class="text-primary hover:underline">Privacy</a> & SMS.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <script>
         // Modal functions
@@ -778,56 +560,13 @@
             document.getElementById('boardingPassModal').classList.add('hidden');
             document.getElementById('boardingPassModal').classList.remove('flex');
             document.body.style.overflow = 'auto';
-            // Reset to phone input view
-            backToPhoneInput();
         }
         
         function handlePhoneSubmit(event) {
             event.preventDefault();
             const phoneInput = document.getElementById('phoneInputModal') || document.getElementById('phoneInputModalMobile');
-            if (phoneInput.value.trim()) {
-                console.log('Phone submitted:', phoneInput.value);
-                window.location.href = 'dashboard.html';
-            }
-        }
-        
-        // Show invite status within boarding pass
-        function showInviteStatus(event) {
-            event.preventDefault();
-            // Switch right section
-            document.getElementById('phoneInputView').classList.add('hidden');
-            document.getElementById('statusView').classList.remove('hidden');
-            // Switch left section
-            document.getElementById('logoView').classList.add('hidden');
-            document.getElementById('leftStatusView').classList.remove('hidden');
-        }
-        
-        // Back to phone input
-        function backToPhoneInput() {
-            // Switch right section
-            document.getElementById('statusView').classList.add('hidden');
-            document.getElementById('phoneInputView').classList.remove('hidden');
-            // Switch left section
-            document.getElementById('leftStatusView').classList.add('hidden');
-            document.getElementById('logoView').classList.remove('hidden');
-        }
-        
-        // Share invite
-        function shareInvite() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Join FoundersFleet',
-                    text: 'I just joined FoundersFleet! Join me and connect with amazing founders.',
-                    url: window.location.href
-                }).catch(err => console.log('Error sharing:', err));
-            } else {
-                // Fallback for browsers that don't support Web Share API
-                navigator.clipboard.writeText(window.location.href).then(() => {
-                    alert('Link copied to clipboard!');
-                }).catch(err => {
-                    alert('Share link: ' + window.location.href);
-                });
-            }
+            console.log('Phone submitted:', phoneInput.value);
+            alert('Welcome to FoundersFleet! Check your phone for a verification code.');
         }
         
         // Close modal on escape key

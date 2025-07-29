@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squad Accountability - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Squad Header -->
+            <div class="bg-white border-b border-border sticky top-0 z-40">
+                <div class="max-w-[1200px] mx-auto px-8 py-6">
+                    <div class="flex items-center gap-2 text-sm text-text-secondary mb-4">
+                        <a href="squads.html" class="hover:text-primary transition-all">Squads</a>
+                        <i class="fas fa-chevron-right text-xs"></i>
+                        <a href="squad-detail.html?squad=alpha" class="hover:text-primary transition-all">Squad Alpha</a>
+                        <i class="fas fa-chevron-right text-xs"></i>
+                        <span class="text-text-primary">Accountability</span>
+                    </div>
+                    
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold text-text-primary">Squad Alpha Accountability</h1>
+                            <p class="text-text-secondary mt-1">Support each other's individual journeys</p>
+                        </div>
+                        
+                        <button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                            <i class="fas fa-calendar-check mr-2"></i>Schedule Check-in
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Squad Members Current Missions -->
+                <div class="mb-8">
+                    <h2 class="text-xl font-semibold text-text-primary mb-4">What Everyone's Working On</h2>
+                    <p class="text-sm text-text-secondary mb-6">Different missions, shared accountability</p>
+                    
+                    <div class="grid grid-cols-1 gap-4">
+                        <!-- Sarah's Mission -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                                        <span class="text-white text-sm font-medium">SC</span>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">Sarah Chen - ShopBoost Analytics</h3>
+                                        <p class="text-sm text-text-secondary">Working on: Launch on Product Hunt</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-warning/10 text-warning rounded-full font-medium">Week 2/2</span>
+                            </div>
+                            
+                            <div class="ml-14 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <p class="text-sm text-text-secondary">This week's commitment:</p>
+                                    <span class="text-sm font-medium text-text-primary">Launch Tuesday 12:01 AM</span>
+                                </div>
+                                
+                                <div class="bg-section-bg rounded-lg p-3">
+                                    <p class="text-sm text-text-secondary mb-2">Squad support needed:</p>
+                                    <p class="text-sm font-medium text-text-primary">🚀 Everyone upvote at launch + 3 comments throughout the day</p>
+                                </div>
+                                
+                                <div class="flex items-center gap-4 text-xs text-text-muted">
+                                    <span><i class="fas fa-check-circle text-success mr-1"></i>Assets ready</span>
+                                    <span><i class="fas fa-check-circle text-success mr-1"></i>30 hunters lined up</span>
+                                    <span><i class="fas fa-spinner text-warning mr-1"></i>Final copy review</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- James's Mission -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                                        <span class="text-white text-sm font-medium">JK</span>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">James Kim - DevTools Pro</h3>
+                                        <p class="text-sm text-text-secondary">Working on: Customer Interview Sprint</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full font-medium">Week 1/2</span>
+                            </div>
+                            
+                            <div class="ml-14 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <p class="text-sm text-text-secondary">This week's commitment:</p>
+                                    <span class="text-sm font-medium text-text-primary">5 developer interviews</span>
+                                </div>
+                                
+                                <div class="bg-section-bg rounded-lg p-3">
+                                    <p class="text-sm text-text-secondary mb-2">Progress update:</p>
+                                    <p class="text-sm font-medium text-text-primary">3/5 completed. Key insight: developers want GitHub integration first</p>
+                                </div>
+                                
+                                <div class="flex items-center gap-4 text-xs text-text-muted">
+                                    <span><i class="fas fa-calendar mr-1"></i>2 more scheduled</span>
+                                    <span><i class="fas fa-sticky-note mr-1"></i>Interview notes shared</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Maya's Mission -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                                        <span class="text-white text-sm font-medium">MP</span>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">Maya Patel - HRTech Solutions</h3>
+                                        <p class="text-sm text-text-secondary">Working on: Set up Stripe Payments</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs px-3 py-1 bg-danger/10 text-danger rounded-full font-medium">Blocked</span>
+                            </div>
+                            
+                            <div class="ml-14 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <p class="text-sm text-text-secondary">This week's commitment:</p>
+                                    <span class="text-sm font-medium text-text-primary">Accept first payment</span>
+                                </div>
+                                
+                                <div class="bg-danger/10 rounded-lg p-3">
+                                    <p class="text-sm text-text-secondary mb-2">Blocker:</p>
+                                    <p class="text-sm font-medium text-danger">Business verification rejected - need help with documents</p>
+                                </div>
+                                
+                                <div class="flex items-center gap-2">
+                                    <button class="text-xs text-primary hover:text-primary-hover font-medium">
+                                        <i class="fas fa-hand-helping mr-1"></i>Offer help
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Accountability Activities -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Weekly Commitments -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">This Week's Commitments</h3>
+                            
+                            <div class="space-y-4">
+                                <!-- Commitment Check -->
+                                <div class="flex items-start gap-3">
+                                    <input type="checkbox" checked class="mt-1" />
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Sarah: Launch on Product Hunt</p>
+                                        <p class="text-xs text-text-secondary">Due: Tuesday 12:01 AM PST</p>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-success/10 text-success rounded">On track</span>
+                                </div>
+                                
+                                <div class="flex items-start gap-3">
+                                    <input type="checkbox" class="mt-1" />
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">James: Complete 5 developer interviews</p>
+                                        <p class="text-xs text-text-secondary">Due: Friday EOD</p>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-warning/10 text-warning rounded">In progress</span>
+                                </div>
+                                
+                                <div class="flex items-start gap-3">
+                                    <input type="checkbox" class="mt-1" />
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Maya: Accept first customer payment</p>
+                                        <p class="text-xs text-text-secondary">Due: Friday EOD</p>
+                                    </div>
+                                    <span class="text-xs px-2 py-1 bg-danger/10 text-danger rounded">At risk</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-4 border-t border-border">
+                                <p class="text-sm text-text-secondary">Next check-in: <span class="font-medium text-text-primary">Friday 2:00 PM PST</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Shared Learning -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Shared Learnings This Week</h3>
+                            
+                            <div class="space-y-4">
+                                <div class="p-4 bg-section-bg rounded-lg">
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white text-xs font-medium">JK</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-text-primary mb-1">Interview Technique Tip</p>
+                                            <p class="text-sm text-text-secondary">"Ask 'what did you do last time' instead of 'what would you do' - gets real behavior not hypotheticals"</p>
+                                            <p class="text-xs text-text-muted mt-2">From Customer Interviews mission</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-4 bg-section-bg rounded-lg">
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white text-xs font-medium">SC</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-text-primary mb-1">Product Hunt Strategy</p>
+                                            <p class="text-sm text-text-secondary">"Built relationships with 50 hunters over 2 weeks. 80% responded positively to personalized messages"</p>
+                                            <p class="text-xs text-text-muted mt-2">From Product Hunt Launch mission</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Support Exchange -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Active Support Exchanges</h3>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 border border-success/30 rounded-lg bg-success/5">
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Code Review Exchange</p>
+                                        <p class="text-xs text-text-secondary mt-1">Sarah reviewing James's auth flow • James reviewing Sarah's analytics setup</p>
+                                    </div>
+                                    <span class="text-xs text-success font-medium">Active</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 border border-border rounded-lg hover:border-primary transition-all cursor-pointer">
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">User Testing Sessions</p>
+                                        <p class="text-xs text-text-secondary mt-1">Test each other's products and provide feedback</p>
+                                    </div>
+                                    <button class="text-xs text-primary font-medium">Join</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Squad Health -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-semibold text-text-primary mb-4">Squad Health</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between items-baseline mb-2">
+                                        <span class="text-sm text-text-secondary">Commitment Rate</span>
+                                        <span class="text-lg font-bold text-success">92%</span>
+                                    </div>
+                                    <div class="w-full bg-section-bg rounded-full h-2">
+                                        <div class="bg-success h-2 rounded-full" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between items-baseline mb-2">
+                                        <span class="text-sm text-text-secondary">Check-in Attendance</span>
+                                        <span class="text-lg font-bold text-primary">100%</span>
+                                    </div>
+                                    <p class="text-xs text-text-muted">12 weeks streak! 🔥</p>
+                                </div>
+                                
+                                <div>
+                                    <div class="flex justify-between items-baseline mb-2">
+                                        <span class="text-sm text-text-secondary">Mutual Support</span>
+                                        <span class="text-lg font-bold text-warning">High</span>
+                                    </div>
+                                    <p class="text-xs text-text-muted">23 help exchanges this month</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Activities -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-semibold text-text-primary mb-4">Upcoming</h3>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 bg-warning/10 rounded flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-rocket text-warning text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Sarah's Launch</p>
+                                        <p class="text-xs text-text-secondary">Tuesday 12:01 AM</p>
+                                        <p class="text-xs text-warning mt-1">Action required</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 bg-primary/10 rounded flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-video text-primary text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Weekly Check-in</p>
+                                        <p class="text-xs text-text-secondary">Friday 2:00 PM</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-3">
+                                    <div class="w-8 h-8 bg-info/10 rounded flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-graduation-cap text-info text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium text-text-primary">Learning Sprint</p>
+                                        <p class="text-xs text-text-secondary">Next: SEO Basics</p>
+                                        <p class="text-xs text-text-muted">Starts Monday</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-semibold text-text-primary mb-4">Quick Actions</h3>
+                            <div class="space-y-2">
+                                <button class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all">
+                                    <i class="fas fa-hand-helping mr-2 text-text-muted"></i>
+                                    Offer help to Maya
+                                </button>
+                                <button class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all">
+                                    <i class="fas fa-calendar-plus mr-2 text-text-muted"></i>
+                                    Schedule 1-on-1
+                                </button>
+                                <button class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all">
+                                    <i class="fas fa-share mr-2 text-text-muted"></i>
+                                    Share a win
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('squads');
+    </script>
+</body>
+</html>

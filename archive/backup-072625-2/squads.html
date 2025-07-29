@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squads - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }        
+        
+        </style>
+</head>
+<body class="bg-white min-h-screen font-inter flex">
+        <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a>
+                <a href="profile.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="squads.html" class="w-10 h-10 flex items-center justify-center text-black bg-[#C8F902] rounded-lg hover:bg-[#C8F902]/90 transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="flightplan.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-route"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Logout -->
+        <div class="pb-6 flex justify-center">
+            <a href="index.html" class="w-10 h-10 flex items-center justify-center text-white/50 rounded-lg hover:bg-white/10 hover:text-white/70 transition-all">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-white overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Navigation Bar -->
+            <div class="bg-white border-b border-border sticky top-0 z-40">
+                <div class="max-w-[1200px] mx-auto px-8 py-6 flex items-center justify-between">
+                    <div class="flex items-center gap-8">
+                        <!-- Tabs -->
+                        <div class="flex gap-4">
+                            <button class="text-base font-medium text-primary py-3 border-b-2 border-primary transition-all" data-tab="your-squads" onclick="switchTab('your-squads')">Your Squads</button>
+                            <button class="text-base font-medium text-text-secondary py-3 border-b-2 border-transparent hover:text-primary transition-all" data-tab="discover" onclick="switchTab('discover')">Discover</button>
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-2xl font-semibold text-text-primary">Squads</h1>
+                    
+                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white border border-primary rounded text-sm font-medium transition-all hover:bg-primary-hover hover:border-primary-hover" onclick="createSquad()">
+                        <i class="fas fa-plus"></i>Create Squad
+                    </button>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Your Squads Tab -->
+                <div id="your-squads-content" class="block">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Squad Alpha -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="window.location.href='squad-detail.html?squad=alpha'">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-rocket text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Alpha</h3>
+                                            <p class="text-text-secondary text-xs">B2B SaaS • Build Stage</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Active</span>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Weekly check-ins for B2B SaaS founders grinding toward MVP launch. No drift, just drops.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex -space-x-2">
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">AR</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">SC</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">JK</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">+1</div>
+                                    </div>
+                                    <span class="text-text-muted text-xs font-medium uppercase">4/5 SEATS FILLED</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squad Beta -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="window.location.href='squad-detail.html?squad=beta'">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-chart-line text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Beta</h3>
+                                            <p class="text-text-secondary text-xs">E-commerce • Growth Stage</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Active</span>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Scaling e-commerce to 7-figures through shared tactics and relentless accountability.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex -space-x-2">
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">MP</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">CR</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">TS</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">+1</div>
+                                    </div>
+                                    <span class="text-text-muted text-xs font-medium uppercase">4/5 SEATS FILLED</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squad Charlie (Pending) -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg opacity-75" onclick="window.location.href='squad-detail.html?squad=charlie'">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-brain text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Charlie</h3>
+                                            <p class="text-text-secondary text-xs">AI/ML • Seed Stage</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded">Pending</span>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Deep tech founders building intelligent systems. Technical depth meets business velocity.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-muted text-xs">Waiting for approval</span>
+                                    <span class="text-text-muted text-xs font-medium uppercase">3/5 SEATS FILLED</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Discover Tab -->
+                <div id="discover-content" class="hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Squad Gamma -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showSquadDetails('gamma')">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-brain text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Gamma</h3>
+                                            <p class="text-text-secondary text-xs">AI/ML • Seed Stage</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <i class="fas fa-lock text-text-muted text-xs"></i>
+                                        <span class="text-text-muted text-xs">Private</span>
+                                    </div>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Deep tech founders building intelligent systems. Technical depth meets business velocity.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-muted text-xs font-medium uppercase">5/5 SEATS FILLED</span>
+                                    <button class="px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-all" onclick="event.stopPropagation(); requestToJoin('gamma')">
+                                        Request to Join
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squad Delta -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showSquadDetails('delta')">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-mobile-alt text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Delta</h3>
+                                            <p class="text-text-secondary text-xs">Mobile • Pre-Seed</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Open</span>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Mobile-first founders revolutionizing everyday experiences through innovative apps.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-muted text-xs font-medium uppercase">3/5 SEATS FILLED</span>
+                                    <button class="px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-all" onclick="event.stopPropagation(); joinSquad('delta')">
+                                        Join Squad
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squad Echo -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showSquadDetails('echo')">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-heartbeat text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Echo</h3>
+                                            <p class="text-text-secondary text-xs">HealthTech • Series A</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <i class="fas fa-lock text-text-muted text-xs"></i>
+                                        <span class="text-text-muted text-xs">Private</span>
+                                    </div>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Digital health pioneers improving patient outcomes through technology and innovation.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-muted text-xs font-medium uppercase">5/5 SEATS FILLED</span>
+                                    <span class="text-text-muted text-xs">Waitlist: 3 founders</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squad Foxtrot -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showSquadDetails('foxtrot')">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Foxtrot</h3>
+                                            <p class="text-text-secondary text-xs">EdTech • Growth</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Open</span>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Reimagining education for the next generation of learners and educators.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-muted text-xs font-medium uppercase">2/5 SEATS FILLED</span>
+                                    <button class="px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-all" onclick="event.stopPropagation(); joinSquad('foxtrot')">
+                                        Join Squad
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squad Golf -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showSquadDetails('golf')">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-coins text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Golf</h3>
+                                            <p class="text-text-secondary text-xs">FinTech • Series B</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <i class="fas fa-check-circle text-green-600 text-xs"></i>
+                                        <span class="text-green-600 text-xs">Verified Only</span>
+                                    </div>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Disrupting traditional finance with blockchain, DeFi, and next-gen payment solutions.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-muted text-xs font-medium uppercase">4/5 SEATS FILLED</span>
+                                    <button class="px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-all" onclick="event.stopPropagation(); applyToSquad('golf')">
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Squad Hotel -->
+                        <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showSquadDetails('hotel')">
+                            <div class="boarding-pass-header">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-leaf text-white text-xl"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad Hotel</h3>
+                                            <p class="text-text-secondary text-xs">Climate Tech • Seed</p>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">New</span>
+                                </div>
+                                <p class="text-text-secondary text-sm line-clamp-2">Building sustainable solutions to combat climate change and create a greener future.</p>
+                            </div>
+                            <div class="boarding-pass-notch boarding-pass-divider"></div>
+                            <div class="boarding-pass-body">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-muted text-xs font-medium uppercase">1/5 SEATS FILLED</span>
+                                    <button class="px-3 py-1 bg-primary text-white text-xs rounded hover:bg-primary-hover transition-all" onclick="event.stopPropagation(); joinSquad('hotel')">
+                                        Be a Founding Member
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // Switch tabs
+        function switchTab(tab) {
+            // Update tab styling
+            const tabs = document.querySelectorAll('[data-tab]');
+            tabs.forEach(t => {
+                t.classList.remove('text-primary', 'border-primary');
+                t.classList.add('text-text-secondary', 'border-transparent');
+            });
+            
+            const activeTab = document.querySelector(`[data-tab="${tab}"]`);
+            activeTab.classList.remove('text-text-secondary', 'border-transparent');
+            activeTab.classList.add('text-primary', 'border-primary');
+            
+            // Show/hide content
+            if (tab === 'your-squads') {
+                document.getElementById('your-squads-content').classList.remove('hidden');
+                document.getElementById('discover-content').classList.add('hidden');
+            } else {
+                document.getElementById('your-squads-content').classList.add('hidden');
+                document.getElementById('discover-content').classList.remove('hidden');
+            }
+        }
+
+        // Squad actions
+        function createSquad() {
+            console.log('Create squad');
+            // In a real app, this would open a create squad modal
+        }
+
+        function showSquadDetails(squadId) {
+            console.log('Show squad details:', squadId);
+            // In a real app, this would open a squad details modal
+        }
+
+        function joinSquad(squadId) {
+            console.log('Join squad:', squadId);
+            alert(`You've joined Squad ${squadId.charAt(0).toUpperCase() + squadId.slice(1)}!`);
+        }
+
+        function requestToJoin(squadId) {
+            console.log('Request to join squad:', squadId);
+            alert(`Your request to join Squad ${squadId.charAt(0).toUpperCase() + squadId.slice(1)} has been sent!`);
+        }
+
+        function applyToSquad(squadId) {
+            console.log('Apply to squad:', squadId);
+            alert(`Please complete the application for Squad ${squadId.charAt(0).toUpperCase() + squadId.slice(1)}`);
+        }
+    </script>
+</body>
+</html>

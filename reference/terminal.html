@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founders Fleet – Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --background: #0a0a0a;
+      --text: #ffffff;
+      --text-secondary: #a1a1aa;
+      --card-bg: #111111;
+      --card-hover: #161616;
+      --border: #27272a;
+      --accent: #18181b;
+      --accent-hover: #1f1f23;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --padding: 1.5rem;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--background) 0%, #0f0f0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar - Same as other pages */
+    .sidebar {
+      width: 280px;
+      background: var(--accent);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .workspace-header:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .workspace-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .workspace-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .workspace-select {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+    }
+
+    .workspace-select option {
+      color: black;
+      background: white;
+    }
+
+    .workspace-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .nav-link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--accent);
+      padding: 0.125rem 0.375rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: var(--primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: var(--padding);
+      max-width: calc(100vw - 280px);
+    }
+
+    .terminal-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .terminal-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, var(--text), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .terminal-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .demo-status {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+    }
+
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .demo-url {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .quick-launch {
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quick-launch::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      opacity: 0.3;
+    }
+
+    .launch-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .launch-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 1rem 0;
+      color: white;
+    }
+
+    .launch-description {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0 0 1.5rem 0;
+      line-height: 1.6;
+    }
+
+    .launch-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .launch-button {
+      background: white;
+      color: var(--primary);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .launch-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .launch-button.secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .feature-card.branding::before { background: var(--success); }
+    .feature-card.hosting::before { background: var(--warning); }
+    .feature-card.tools::before { background: var(--purple); }
+
+    .feature-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .feature-icon.branding { background: rgba(16, 185, 129, 0.2); }
+    .feature-icon.hosting { background: rgba(245, 158, 11, 0.2); }
+    .feature-icon.tools { background: rgba(139, 92, 246, 0.2); }
+
+    .feature-status {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+
+    .feature-title {
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      font-size: 1.125rem;
+    }
+
+    .feature-description {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 0 0 1rem 0;
+    }
+
+    .feature-items {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1rem 0;
+    }
+
+    .feature-items li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .feature-items li::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .feature-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .feature-button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex: 1;
+    }
+
+    .feature-button:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .feature-button.primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .feature-button.primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .environments-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+    }
+
+    .environments-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .environments-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .create-env-btn {
+      background: var(--success);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .create-env-btn:hover {
+      background: #059669;
+      transform: translateY(-1px);
+    }
+
+    .env-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .env-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--accent);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .env-item:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .env-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      background: var(--card-bg);
+      flex-shrink: 0;
+    }
+
+    .env-info {
+      flex: 1;
+    }
+
+    .env-name {
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .env-url {
+      color: var(--primary);
+      font-size: 0.75rem;
+      text-decoration: none;
+      margin: 0;
+    }
+
+    .env-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .env-button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .env-button:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      .terminal-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .launch-actions {
+        flex-direction: column;
+      }
+
+      .demo-status {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+<div class="workspace-header">
+<div class="workspace-logo">F</div>
+<div class="workspace-info">
+<select class="workspace-select" onchange="handleWorkspaceChange(this)">
+<option>Eight Bit Studios</option>
+<option>Another Workspace</option>
+<option value="signout">Sign Out</option>
+</select>
+<span class="workspace-email">name@email.com</span>
+</div>
+</div>
+<nav class="nav-links">
+<a class="nav-link active" href="control.html">
+<div class="nav-link-content">
+<span>🏠</span> Control
+        </div>
+</a>
+<a class="nav-link" href="flightplan.html">
+<div class="nav-link-content">
+<span>🗺️</span> Flightplan
+        </div>
+<span class="nav-status">Idea</span>
+</a>
+<a class="nav-link" href="missions.html">
+<div class="nav-link-content">
+<span>🎯</span> Missions
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="dispatch.html">
+<div class="nav-link-content">
+<span>🪪</span> Dispatch
+        </div>
+<span class="nav-status">Draft</span>
+</a>
+<a class="nav-link" href="drops.html">
+<div class="nav-link-content">
+<span>📦</span> Drops
+        </div>
+<span class="nav-status">2</span>
+</a>
+<a class="nav-link" href="signals.html">
+<div class="nav-link-content">
+<span>📡</span> Signals
+        </div>
+<span class="nav-status">3</span>
+</a>
+<a class="nav-link" href="hangar.html">
+<div class="nav-link-content">
+<span>🏗️</span> Hangar
+        </div>
+<span class="nav-status">Friday</span>
+</a>
+<a class="nav-link" href="terminal.html">
+<div class="nav-link-content">
+<span>🏢</span> Terminal
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="vault.html">
+<div class="nav-link-content">
+<span>🗃️</span> Vault
+        </div>
+<span class="nav-status">47</span>
+</a>
+</nav>
+</aside>
+<main class="main-content">
+<div class="terminal-header">
+<div>
+<h1 class="terminal-title">Terminal</h1>
+<p class="terminal-subtitle">Sandbox &amp; Branding Hub</p>
+</div>
+<div class="demo-status">
+<div class="status-indicator"></div>
+<span>Demo Environment Active</span>
+<a class="demo-url" href="#">productname.foundersfleet.com</a>
+</div>
+</div>
+<div class="quick-launch">
+<div class="launch-content">
+<h2 class="launch-title">🚀 Launch Your Demo in Minutes</h2>
+<p class="launch-description">
+          Get your MVP online instantly with our containerized demo environment. Built-in auth, database, and custom domain support included.
+        </p>
+<div class="launch-actions">
+<button class="launch-button" onclick="quickDeploy()">
+<span>⚡</span>
+            Quick Deploy
+          </button>
+<button class="launch-button secondary" onclick="viewTemplates()">
+<span>📋</span>
+            Browse Templates
+          </button>
+</div>
+</div>
+</div>
+<div class="features-grid">
+<div class="feature-card branding">
+<div class="feature-header">
+<div class="feature-icon branding">🎨</div>
+<span class="feature-status">Ready</span>
+</div>
+<h3 class="feature-title">Branding Hub</h3>
+<p class="feature-description">
+          Centralized brand asset management with export-ready templates for consistent branding across all platforms.
+        </p>
+<ul class="feature-items">
+<li>Logo library (SVG, PNG variants)</li>
+<li>Color palette with HEX/RGB values)</li>
+<li>Typography &amp; messaging guidelines</li>
+<li>Social media mockups</li>
+</ul>
+<div class="feature-actions">
+<button class="feature-button primary" onclick="openBrandingHub()">Open Hub</button>
+<button class="feature-button" onclick="uploadAssets()">Upload Assets</button>
+</div>
+</div>
+<div class="feature-card hosting">
+<div class="feature-header">
+<div class="feature-icon hosting">🌐</div>
+<span class="feature-status">Active</span>
+</div>
+<h3 class="feature-title">Demo Hosting</h3>
+<p class="feature-description">
+          Multi-modal hosting with Rails + React + PostgreSQL stack. Perfect for showcasing your MVP to investors and users.
+        </p>
+<ul class="feature-items">
+<li>productname.foundersfleet.com subdomain</li>
+<li>Custom domain support</li>
+<li>Built-in authentication</li>
+<li>PostgreSQL database</li>
+</ul>
+<div class="feature-actions">
+<button class="feature-button primary" onclick="viewDemo()">View Demo</button>
+<button class="feature-button" onclick="configureHosting()">Configure</button>
+</div>
+</div>
+<div class="feature-card tools">
+<div class="feature-header">
+<div class="feature-icon tools">🛠️</div>
+<span class="feature-status">Available</span>
+</div>
+<h3 class="feature-title">Developer Tools</h3>
+<p class="feature-description">
+          Containerized environments with feature flags, monitoring, and deployment automation for rapid iteration.
+        </p>
+<ul class="feature-items">
+<li>Config-driven feature flags</li>
+<li>Automated deployments</li>
+<li>Performance monitoring</li>
+<li>Staging &amp; production environments</li>
+</ul>
+<div class="feature-actions">
+<button class="feature-button primary" onclick="accessTools()">Access Tools</button>
+<button class="feature-button" onclick="viewDocs()">Documentation</button>
+</div>
+</div>
+</div>
+<div class="environments-section">
+<div class="environments-header">
+<h3 class="environments-title">🔧 Your Environments</h3>
+<button class="create-env-btn" onclick="createEnvironment()">
+<span>+</span>
+          Create Environment
+        </button>
+</div>
+<div class="env-list">
+<div class="env-item">
+<div class="env-icon">🚀</div>
+<div class="env-info">
+<h4 class="env-name">Production Demo</h4>
+<a class="env-url" href="#">productname.foundersfleet.com</a>
+</div>
+<div class="env-actions">
+<button class="env-button" onclick="editEnv('prod')">Edit</button>
+<button class="env-button" onclick="viewLogs('prod')">Logs</button>
+<button class="env-button" onclick="deployEnv('prod')">Deploy</button>
+</div>
+</div>
+<div class="env-item">
+<div class="env-icon">🧪</div>
+<div class="env-info">
+<h4 class="env-name">Staging Environment</h4>
+<a class="env-url" href="#">staging-productname.foundersfleet.com</a>
+</div>
+<div class="env-actions">
+<button class="env-button" onclick="editEnv('staging')">Edit</button>
+<button class="env-button" onclick="viewLogs('staging')">Logs</button>
+<button class="env-button" onclick="deployEnv('staging')">Deploy</button>
+</div>
+</div>
+<div class="env-item">
+<div class="env-icon">🔧</div>
+<div class="env-info">
+<h4 class="env-name">Development Sandbox</h4>
+<a class="env-url" href="#">dev-productname.foundersfleet.com</a>
+</div>
+<div class="env-actions">
+<button class="env-button" onclick="editEnv('dev')">Edit</button>
+<button class="env-button" onclick="viewLogs('dev')">Logs</button>
+<button class="env-button" onclick="deployEnv('dev')">Deploy</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+    function quickDeploy() {
+      alert('⚡ Quick Deploy\n\nThis will deploy your latest code to production in under 2 minutes. Ready to launch?');
+    }
+
+    function viewTemplates() {
+      alert('📋 Browse Templates\n\nChoose from React, Vue, Angular, or custom templates optimized for rapid MVP development.');
+    }
+
+    function openBrandingHub() {
+      alert('🎨 Branding Hub\n\nAccess your logo library, color palette, and brand guidelines. Export assets for social, web, and presentations.');
+    }
+
+    function uploadAssets() {
+      alert('📤 Upload Assets\n\nDrag and drop your brand assets. We\'ll automatically generate variations and export formats.');
+    }
+
+    function viewDemo() {
+      alert('🌐 View Demo\n\nThis will open your live demo environment: productname.foundersfleet.com');
+    }
+
+    function configureHosting() {
+      alert('⚙️ Configure Hosting\n\nSet up custom domains, SSL certificates, and deployment settings.');
+    }
+
+    function accessTools() {
+      alert('🛠️ Developer Tools\n\nAccess deployment logs, feature flags, database admin, and monitoring dashboard.');
+    }
+
+    function viewDocs() {
+      alert('📚 Documentation\n\nExplore our comprehensive guides and API references to get the most out of your developer tools.');
+    }
+  </script>
+</body>
+</html>

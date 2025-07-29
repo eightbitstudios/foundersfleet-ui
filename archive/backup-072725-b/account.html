@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Editable field styles */
+        .editable-field {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .editable-field:hover .edit-icon {
+            opacity: 1;
+        }
+        
+        .edit-icon {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .editing .editable-field {
+            background-color: #FAFAFA;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #E5E5E5;
+        }
+        
+        [contenteditable="true"]:focus {
+            outline: 2px solid #000;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        
+        .skill-tag {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .skill-tag:hover .remove-skill {
+            display: flex;
+        }
+        
+        .remove-skill {
+            display: none;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FF4444;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        /* Experience item editing styles */
+        .experience-item {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .experience-item:hover .experience-actions {
+            opacity: 1;
+        }
+        
+        .experience-actions {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }        
+        
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-white overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Profile Header -->
+            <div class="bg-white border-b border-border sticky top-0 z-40">
+                <div class="max-w-[1200px] mx-auto px-8 py-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <a href="founder-profile.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all">
+                            <i class="fas fa-eye"></i>
+                            <span class="text-sm">View Public Profile</span>
+                        </a>
+                        <button id="edit-mode-toggle" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                            <i class="fas fa-edit mr-2"></i>Edit Mode
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start gap-6">
+                            <div class="relative group">
+                                <div class="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold">
+                                    DB
+                                </div>
+                                <button class="absolute inset-0 w-24 h-24 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                            </div>
+                            <div>
+                                <h1 class="text-3xl font-bold text-text-primary editable-field inline-flex items-center gap-2" contenteditable="false" id="profile-name">
+                                    Don Bora
+                                    <i class="fas fa-pencil text-sm text-text-muted edit-icon"></i>
+                                </h1>
+                                <p class="text-xl text-text-secondary mt-1 editable-field inline-flex items-center gap-2" contenteditable="false" id="profile-title">
+                                    Founder & CEO at FoundersFleet
+                                    <i class="fas fa-pencil text-sm text-text-muted edit-icon"></i>
+                                </p>
+                                <div class="flex items-center gap-6 mt-3">
+                                    <span class="flex items-center gap-2 text-sm text-text-muted">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span class="editable-field inline-flex items-center gap-1" contenteditable="false" id="profile-location">
+                                            San Francisco, CA
+                                            <i class="fas fa-pencil text-xs edit-icon"></i>
+                                        </span>
+                                    </span>
+                                    <span class="flex items-center gap-2 text-sm text-text-muted">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Joined January 2024</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-3" id="action-buttons">
+                            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-all hidden" id="save-changes">
+                                <i class="fas fa-check mr-2"></i>Save Changes
+                            </button>
+                            <button class="px-4 py-2 border border-border rounded hover:border-primary transition-all hidden" id="cancel-changes">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Main Content -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- About -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-xl font-semibold text-text-primary">About</h2>
+                                <i class="fas fa-pencil text-text-muted edit-icon"></i>
+                            </div>
+                            <p class="text-text-secondary leading-relaxed editable-field" contenteditable="false" id="profile-bio">
+                                Building the future of founder collaboration. Serial entrepreneur with 3 exits. Passionate about helping founders succeed through peer accountability.
+                            </p>
+                        </div>
+
+                        <!-- Experience -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-xl font-semibold text-text-primary">Experience</h2>
+                                <button class="text-primary hover:text-primary-hover transition-all hidden" id="add-experience">
+                                    <i class="fas fa-plus mr-1"></i>Add Experience
+                                </button>
+                            </div>
+                            <div class="space-y-4" id="experience-container">
+                                <div class="pb-4 border-b border-border experience-item">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-text-primary editable-field inline-block" contenteditable="false">Founder & CEO</h3>
+                                            <p class="text-text-secondary editable-field" contenteditable="false">FoundersFleet</p>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-sm text-text-muted editable-field" contenteditable="false">2023 - Present</span>
+                                            <div class="experience-actions flex gap-2">
+                                                <button class="text-text-muted hover:text-primary transition-all">
+                                                    <i class="fas fa-edit text-sm"></i>
+                                                </button>
+                                                <button class="text-text-muted hover:text-red-600 transition-all">
+                                                    <i class="fas fa-trash text-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-text-secondary mt-2 editable-field" contenteditable="false">Building a platform for founder peer accountability and collaboration</p>
+                                </div>
+                                
+                                <div class="pb-4 border-b border-border experience-item">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-text-primary editable-field inline-block" contenteditable="false">VP Product</h3>
+                                            <p class="text-text-secondary editable-field" contenteditable="false">TechStartup Inc</p>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-sm text-text-muted editable-field" contenteditable="false">2020 - 2023</span>
+                                            <div class="experience-actions flex gap-2">
+                                                <button class="text-text-muted hover:text-primary transition-all">
+                                                    <i class="fas fa-edit text-sm"></i>
+                                                </button>
+                                                <button class="text-text-muted hover:text-red-600 transition-all">
+                                                    <i class="fas fa-trash text-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-text-secondary mt-2 editable-field" contenteditable="false">Led product team for B2B SaaS platform, grew ARR from $2M to $10M</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills & Expertise -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-xl font-semibold text-text-primary">Skills & Expertise</h2>
+                                <button class="text-primary hover:text-primary-hover transition-all hidden" id="add-skill">
+                                    <i class="fas fa-plus mr-1"></i>Add Skill
+                                </button>
+                            </div>
+                            <div class="flex flex-wrap gap-2" id="skills-container">
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
+                                    Product Strategy
+                                    <span class="remove-skill">×</span>
+                                </span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
+                                    Fundraising
+                                    <span class="remove-skill">×</span>
+                                </span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
+                                    Team Building
+                                    <span class="remove-skill">×</span>
+                                </span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
+                                    B2B SaaS
+                                    <span class="remove-skill">×</span>
+                                </span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
+                                    Growth Marketing
+                                    <span class="remove-skill">×</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-4">Social Links</h2>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <i class="fab fa-linkedin text-text-muted w-5"></i>
+                                    <input type="url" placeholder="LinkedIn URL" value="https://linkedin.com/in/donbora" 
+                                           class="flex-1 px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" 
+                                           disabled id="linkedin-url">
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i class="fab fa-twitter text-text-muted w-5"></i>
+                                    <input type="url" placeholder="Twitter URL" value="https://twitter.com/donbora" 
+                                           class="flex-1 px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" 
+                                           disabled id="twitter-url">
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-globe text-text-muted w-5"></i>
+                                    <input type="url" placeholder="Website URL" value="https://foundersfleet.com" 
+                                           class="flex-1 px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" 
+                                           disabled id="website-url">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Quick Info -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Startup Information</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Industry</p>
+                                    <select class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" disabled id="industry-select">
+                                        <option selected>B2B SaaS</option>
+                                        <option>E-commerce</option>
+                                        <option>Fintech</option>
+                                        <option>Health Tech</option>
+                                        <option>AI/ML</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Stage</p>
+                                    <select class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" disabled id="stage-select">
+                                        <option>Pre-Seed</option>
+                                        <option selected>Seed</option>
+                                        <option>Series A</option>
+                                        <option>Series B+</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Team Size</p>
+                                    <input type="number" value="12" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" disabled id="team-size">
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Looking For</p>
+                                    <input type="text" value="Co-founders, Advisors" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" disabled id="looking-for">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Settings -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Account Settings</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-text-primary text-sm">Email Notifications</h4>
+                                        <p class="text-xs text-text-secondary">Squad updates and messages</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-text-primary text-sm">Public Profile</h4>
+                                        <p class="text-xs text-text-secondary">Visible to other founders</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 pt-6 border-t border-border space-y-2">
+                                <button class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all">
+                                    <i class="fas fa-key mr-2 text-text-muted"></i>
+                                    Change Password
+                                </button>
+                                <button class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all">
+                                    <i class="fas fa-shield-alt mr-2 text-text-muted"></i>
+                                    Privacy Settings
+                                </button>
+                                <button class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all">
+                                    <i class="fas fa-download mr-2 text-text-muted"></i>
+                                    Download Data
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Profile Completion -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Profile Completion</h3>
+                            <div class="mb-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm text-text-secondary">82% Complete</span>
+                                    <span class="text-sm font-medium text-primary">+18%</span>
+                                </div>
+                                <div class="w-full bg-section-bg rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Basic information</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Experience added</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Skills listed</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-circle text-text-muted"></i>
+                                    <span class="text-text-secondary">Profile photo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Edit mode management
+        let isEditMode = false;
+        const editModeToggle = document.getElementById('edit-mode-toggle');
+        const saveButton = document.getElementById('save-changes');
+        const cancelButton = document.getElementById('cancel-changes');
+        const actionButtons = document.getElementById('action-buttons');
+        
+        // Store original values
+        let originalValues = {};
+        
+        // Toggle edit mode
+        editModeToggle.addEventListener('click', function() {
+            isEditMode = !isEditMode;
+            toggleEditMode();
+        });
+        
+        function toggleEditMode() {
+            document.body.classList.toggle('editing', isEditMode);
+            
+            // Toggle contenteditable on all editable fields
+            const editableFields = document.querySelectorAll('.editable-field');
+            editableFields.forEach(field => {
+                field.contentEditable = isEditMode;
+                if (isEditMode && !originalValues[field.id]) {
+                    originalValues[field.id] = field.textContent.trim();
+                }
+            });
+            
+            // Toggle form inputs
+            const formInputs = document.querySelectorAll('input[type="url"], input[type="text"], input[type="number"], select');
+            formInputs.forEach(input => {
+                input.disabled = !isEditMode;
+                if (isEditMode && !originalValues[input.id]) {
+                    originalValues[input.id] = input.value;
+                }
+            });
+            
+            // Show/hide buttons
+            if (isEditMode) {
+                editModeToggle.innerHTML = '<i class="fas fa-times mr-2"></i>Exit Edit Mode';
+                editModeToggle.classList.remove('bg-primary', 'hover:bg-primary-hover');
+                editModeToggle.classList.add('bg-gray-600', 'hover:bg-gray-700');
+                saveButton.classList.remove('hidden');
+                cancelButton.classList.remove('hidden');
+                document.getElementById('add-experience').classList.remove('hidden');
+                document.getElementById('add-skill').classList.remove('hidden');
+                
+                // Show remove buttons on skills
+                document.querySelectorAll('.remove-skill').forEach(btn => {
+                    btn.style.display = 'flex';
+                });
+            } else {
+                editModeToggle.innerHTML = '<i class="fas fa-edit mr-2"></i>Edit Mode';
+                editModeToggle.classList.add('bg-primary', 'hover:bg-primary-hover');
+                editModeToggle.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+                saveButton.classList.add('hidden');
+                cancelButton.classList.add('hidden');
+                document.getElementById('add-experience').classList.add('hidden');
+                document.getElementById('add-skill').classList.add('hidden');
+                
+                // Hide remove buttons on skills
+                document.querySelectorAll('.remove-skill').forEach(btn => {
+                    btn.style.display = 'none';
+                });
+            }
+        }
+        
+        // Save changes
+        saveButton.addEventListener('click', function() {
+            // Here you would normally save to backend
+            alert('Changes saved successfully!');
+            originalValues = {}; // Reset original values
+            isEditMode = false;
+            toggleEditMode();
+        });
+        
+        // Cancel changes
+        cancelButton.addEventListener('click', function() {
+            // Restore original values
+            Object.keys(originalValues).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    if (element.hasAttribute('contenteditable')) {
+                        element.textContent = originalValues[id];
+                    } else {
+                        element.value = originalValues[id];
+                    }
+                }
+            });
+            
+            originalValues = {};
+            isEditMode = false;
+            toggleEditMode();
+        });
+        
+        // Add skill functionality
+        document.getElementById('add-skill').addEventListener('click', function() {
+            const skillName = prompt('Enter skill name:');
+            if (skillName) {
+                const skillsContainer = document.getElementById('skills-container');
+                const newSkill = document.createElement('span');
+                newSkill.className = 'px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag';
+                newSkill.innerHTML = `
+                    ${skillName}
+                    <span class="remove-skill" style="display: flex;">×</span>
+                `;
+                skillsContainer.appendChild(newSkill);
+                
+                // Add remove functionality
+                newSkill.querySelector('.remove-skill').addEventListener('click', function() {
+                    newSkill.remove();
+                });
+            }
+        });
+        
+        // Remove skill functionality
+        document.querySelectorAll('.remove-skill').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (isEditMode) {
+                    this.parentElement.remove();
+                }
+            });
+        });
+        
+        // Add experience functionality
+        document.getElementById('add-experience').addEventListener('click', function() {
+            const experienceContainer = document.getElementById('experience-container');
+            const newExperience = document.createElement('div');
+            newExperience.className = 'pb-4 border-b border-border experience-item';
+            newExperience.innerHTML = `
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-text-primary editable-field inline-block" contenteditable="true">New Role</h3>
+                        <p class="text-text-secondary editable-field" contenteditable="true">Company Name</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-sm text-text-muted editable-field" contenteditable="true">Year - Present</span>
+                        <div class="experience-actions flex gap-2" style="opacity: 1;">
+                            <button class="text-text-muted hover:text-primary transition-all">
+                                <i class="fas fa-edit text-sm"></i>
+                            </button>
+                            <button class="text-text-muted hover:text-red-600 transition-all" onclick="this.closest('.experience-item').remove()">
+                                <i class="fas fa-trash text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-sm text-text-secondary mt-2 editable-field" contenteditable="true">Description of role and achievements</p>
+            `;
+            experienceContainer.appendChild(newExperience);
+        });
+        
+        // Handle enter key in contenteditable fields to prevent line breaks
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.contentEditable === 'true') {
+                e.preventDefault();
+                e.target.blur();
+            }
+        });
+
+        // Initialize navigation
+        initializeNavigation('account');
+    </script>
+</body>
+</html>

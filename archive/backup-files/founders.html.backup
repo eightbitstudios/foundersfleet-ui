@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Founders - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#000000'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hidden { display: none !important; }
+        /* Ensure tab borders are visible */
+        button[data-tab] {
+            position: relative;
+        }
+        button[data-tab].border-primary {
+            border-bottom-color: #000000 !important;
+        }
+        button[data-tab].border-transparent {
+            border-bottom-color: transparent !important;
+        }
+    </style>
+</head>
+<body class="bg-black p-4 min-h-screen font-inter">
+    <div class="bg-black rounded-[32px] min-h-[calc(100vh-2rem)] overflow-hidden flex flex-col">
+        <!-- Header -->
+    <header class="bg-black px-8 py-6 sticky top-0 z-50 rounded-t-[32px]">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-black text-sm font-bold">
+                    FF
+                </div>
+                <a href="index.html" class="text-white no-underline">
+                    <span class="text-lg font-semibold">FoundersFleet</span>
+                </a>
+            </div>
+            
+            <div class="flex items-center gap-8">
+                <nav class="flex gap-8">
+                    <a href="founders.html" class="text-white font-medium py-2 border-b-2 border-white opacity-100 transition-all hover:opacity-100">Founders</a>
+                    <a href="squads.html" class="text-white font-medium py-2 border-b-2 border-transparent opacity-80 transition-all hover:opacity-100">Squads</a>
+                    <a href="flightplan.html" class="text-white font-medium py-2 border-b-2 border-transparent opacity-80 transition-all hover:opacity-100">Flightplan</a>
+                    <a href="tools.html" class="text-white font-medium py-2 border-b-2 border-transparent opacity-80 transition-all hover:opacity-100">Tools</a>
+                    <a href="fleetlog.html" class="text-white font-medium py-2 border-b-2 border-transparent opacity-80 transition-all hover:opacity-100">Log</a>
+                </nav>
+                <button class="w-10 h-10 rounded-full bg-transparent text-white flex items-center justify-center text-lg opacity-80 transition-all hover:bg-white/10 hover:opacity-100" id="authBtn" onclick="location.href='profile.html'">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 bg-background rounded-[32px] overflow-auto">
+    <!-- Founders Section -->
+    <div id="founders" class="block">
+        <!-- Page Navigation Bar -->
+        <div class="bg-white border-b border-border px-8 py-6 flex items-center justify-between gap-8">
+            <div class="flex items-center gap-8">
+                <!-- Community Tabs -->
+                <div class="flex gap-4">
+                    <button class="text-base font-medium text-primary py-3 border-b-2 border-primary transition-all" data-tab="all" onclick="switchCommunityTab('all')">All</button>
+                    <button class="text-base font-medium text-text-secondary py-3 border-b-2 border-transparent hover:text-primary transition-all" data-tab="connections" onclick="switchCommunityTab('connections')">My Connections</button>
+                </div>
+            </div>
+            
+            
+            <div class="flex items-center gap-4">
+                <!-- Filters -->
+                <button class="flex items-center gap-2 px-4 py-2 bg-transparent border border-border rounded-full text-sm font-medium text-text-primary transition-all hover:bg-section-bg hover:border-text-secondary" onclick="showFilterModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Filter
+                </button>
+                <div id="activeFilters" class="inline-flex gap-2">
+                    <!-- Active filters will be displayed here -->
+                </div>
+                
+                <!-- Action Button -->
+                <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white border border-primary rounded text-sm font-medium transition-all hover:bg-primary-hover hover:border-primary-hover" onclick="inviteFounders()">
+                    <i class="fas fa-plus"></i>Invite Founders
+                </button>
+            </div>
+        </div>
+        
+        
+        <div class="p-8">
+        
+        <!-- All Founders Content -->
+        <div id="all-founders-content" class="block">
+            <!-- All Founders Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Founding Member #1 - Brian Chesky -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('brian-chesky')">
+                        <div class="boarding-pass-header">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">BC</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="font-semibold text-text-primary">Brian Chesky</h3>
+                                            <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                        </div>
+                                        <p class="text-text-secondary text-sm">Co-founder & CEO at Airbnb</p>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-tag">FF01</div>
+                            </div>
+                            <p class="text-text-secondary text-sm line-clamp-2">Revolutionizing hospitality through the sharing economy. Designer turned entrepreneur building a global community.</p>
+                        </div>
+                        <div class="boarding-pass-notch boarding-pass-divider"></div>
+                        <div class="boarding-pass-body">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Marketplace</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Travel</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Design</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #2 - Patrick Collison -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('patrick-collison')">
+                        <div class="boarding-pass-header">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">PC</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="font-semibold text-text-primary">Patrick Collison</h3>
+                                            <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                        </div>
+                                        <p class="text-text-secondary text-sm">Co-founder & CEO at Stripe</p>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-tag">FF02</div>
+                            </div>
+                            <p class="text-text-secondary text-sm line-clamp-2">Building the economic infrastructure of the internet. Making it easier for companies to accept payments globally.</p>
+                        </div>
+                        <div class="boarding-pass-notch boarding-pass-divider"></div>
+                        <div class="boarding-pass-body">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Payments</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Infrastructure</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">API</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #3 - Melanie Perkins -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('melanie-perkins')">
+                        <div class="boarding-pass-header">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">MP</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="font-semibold text-text-primary">Melanie Perkins</h3>
+                                            <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                        </div>
+                                        <p class="text-text-secondary text-sm">Co-founder & CEO at Canva</p>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-tag">FF03</div>
+                            </div>
+                            <p class="text-text-secondary text-sm line-clamp-2">Democratizing design with simple, collaborative tools. Making professional design accessible to everyone.</p>
+                        </div>
+                        <div class="boarding-pass-notch boarding-pass-divider"></div>
+                        <div class="boarding-pass-body">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Design Tools</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">SaaS</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Collaboration</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #4 - Daniel Ek -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('daniel-ek')">
+                        <div class="boarding-pass-header">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">DE</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="font-semibold text-text-primary">Daniel Ek</h3>
+                                            <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                        </div>
+                                        <p class="text-text-secondary text-sm">Co-founder & CEO at Spotify</p>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-tag">FF04</div>
+                            </div>
+                            <p class="text-text-secondary text-sm line-clamp-2">Transforming how the world experiences music. Building the audio platform that connects creators with fans globally.</p>
+                        </div>
+                        <div class="boarding-pass-notch boarding-pass-divider"></div>
+                        <div class="boarding-pass-body">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Music Tech</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Streaming</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Platform</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #5 - Whitney Wolfe Herd -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('whitney-wolfe-herd')">
+                        <div class="boarding-pass-header">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">WW</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="font-semibold text-text-primary">Whitney Wolfe Herd</h3>
+                                            <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                        </div>
+                                        <p class="text-text-secondary text-sm">Founder & CEO at Bumble</p>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-tag">FF05</div>
+                            </div>
+                            <p class="text-text-secondary text-sm line-clamp-2">Redefining connections by empowering women to make the first move. Building safer, kinder digital spaces.</p>
+                        </div>
+                        <div class="boarding-pass-notch boarding-pass-divider"></div>
+                        <div class="boarding-pass-body">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Social Impact</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Dating Tech</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Women-Led</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #6 - Evan Spiegel -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('evan-spiegel')">
+                        <div class="boarding-pass-header">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">ES</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="font-semibold text-text-primary">Evan Spiegel</h3>
+                                            <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                        </div>
+                                        <p class="text-text-secondary text-sm">Co-founder & CEO at Snap Inc.</p>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-tag">FF06</div>
+                            </div>
+                            <p class="text-text-secondary text-sm line-clamp-2">Pioneering ephemeral communication and AR experiences. Reimagining how people share moments and connect.</p>
+                        </div>
+                        <div class="boarding-pass-notch boarding-pass-divider"></div>
+                        <div class="boarding-pass-body">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Social Media</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">AR/VR</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Mobile</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #7 - Dylan Field -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('dylan-field')">
+                        <div class="boarding-pass-header">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">DF</div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <h3 class="font-semibold text-text-primary">Dylan Field</h3>
+                                            <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                        </div>
+                                        <p class="text-text-secondary text-sm">Co-founder & CEO at Figma</p>
+                                    </div>
+                                </div>
+                                <div class="boarding-pass-tag">FF07</div>
+                            </div>
+                            <p class="text-text-secondary text-sm line-clamp-2">Revolutionizing design collaboration in the browser. Making design tools collaborative and accessible to entire teams.</p>
+                        </div>
+                        <div class="boarding-pass-notch boarding-pass-divider"></div>
+                        <div class="boarding-pass-body">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Design Tools</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Collaboration</span>
+                                <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #8 - Tony Xu -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('tony-xu')">
+                        <div class="absolute top-4 right-4 bg-primary text-white px-2 py-1 rounded text-xs font-semibold">FF08</div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">TX</div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h3 class="font-semibold text-text-primary">Tony Xu</h3>
+                                    <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                </div>
+                                <p class="text-text-secondary text-sm">Co-founder & CEO at DoorDash</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-sm mb-4 line-clamp-2">Building the local commerce platform. Empowering local economies through last-mile delivery infrastructure.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Logistics</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Marketplace</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Delivery</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #9 - Tobi Lütke -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('tobi-lutke')">
+                        <div class="absolute top-4 right-4 bg-primary text-white px-2 py-1 rounded text-xs font-semibold">FF09</div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">TL</div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h3 class="font-semibold text-text-primary">Tobi Lütke</h3>
+                                    <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                </div>
+                                <p class="text-text-secondary text-sm">Founder & CEO at Shopify</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-sm mb-4 line-clamp-2">Empowering entrepreneurs worldwide with commerce infrastructure. Making commerce better for everyone.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">E-commerce</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Platform</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Infrastructure</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Founding Member #10 - Drew Houston -->
+                    <div class="boarding-pass cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('drew-houston')">
+                        <div class="absolute top-4 right-4 bg-primary text-white px-2 py-1 rounded text-xs font-semibold">FF10</div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">DH</div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h3 class="font-semibold text-text-primary">Drew Houston</h3>
+                                    <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                </div>
+                                <p class="text-text-secondary text-sm">Co-founder & CEO at Dropbox</p>
+                            </div>
+                        </div>
+                        <p class="text-text-secondary text-sm mb-4 line-clamp-2">Simplifying how people work together. Building tools that help teams collaborate seamlessly across the cloud.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Cloud Storage</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Collaboration</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Enterprise</span>
+                        </div>
+                    </div>
+                
+                <!-- Founder Card 1 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('alex-rivera')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">AR</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Alex Rivera</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                            </div>
+                            <p class="text-text-secondary text-sm">Co-founder & CTO at FlexiTech</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Building B2B SaaS tools for remote team collaboration. Passionate about developer experience and scalable architectures.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">B2B SaaS</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Remote Work</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Technical</span>
+                    </div>
+                </div>
+
+                <!-- Founder Card 2 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('sarah-chen')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">SC</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Sarah Chen</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                            </div>
+                            <p class="text-text-secondary text-sm">Founder & CEO at Acme Corp</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Leading the next generation of sustainable e-commerce solutions. Former Google PM with 8+ years in product strategy.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">E-commerce</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Sustainability</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Product</span>
+                    </div>
+                </div>
+
+                <!-- Founder Card 3 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('jordan-kim')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">JK</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Jordan Kim</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                            </div>
+                            <p class="text-text-secondary text-sm">CTO at DevTools Inc</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Building developer tools that make coding more efficient. Open source advocate and former Microsoft engineer.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Developer Tools</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Open Source</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Enterprise</span>
+                    </div>
+                </div>
+
+                <!-- Founder Card 4 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('taylor-smith')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">TS</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Taylor Smith</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                            </div>
+                            <p class="text-text-secondary text-sm">Founder at BuildSaaS</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Creating no-code tools for rapid SaaS development. Helping non-technical founders build and scale their ideas.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">No-Code</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">SaaS Tools</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Education</span>
+                    </div>
+                </div>
+
+                <!-- Founder Card 5 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('maya-patel')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">MP</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Maya Patel</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                            </div>
+                            <p class="text-text-secondary text-sm">Co-founder at HealthTech Solutions</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Revolutionizing healthcare through AI-powered diagnostics. Stanford MD/MBA focused on accessible medical technology.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">HealthTech</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">AI/ML</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Medical</span>
+                    </div>
+                </div>
+
+                <!-- Founder Card 6 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('carlos-rodriguez')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">CR</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Carlos Rodriguez</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                            </div>
+                            <p class="text-text-secondary text-sm">Founder & CEO at FinTech Innovations</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Building financial inclusion tools for underbanked communities. Former JP Morgan analyst with fintech expertise.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">FinTech</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Financial Inclusion</span>
+                        <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Banking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- My Connections Content -->
+        <div id="my-connections-content" class="hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Connected Founder 1 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('alex-rivera')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">AR</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Alex Rivera</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                <span class="bg-success/10 text-success px-2 py-0.5 rounded-full text-xs font-medium">Connected</span>
+                            </div>
+                            <p class="text-text-secondary text-sm">Co-founder & CTO at FlexiTech</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Building B2B SaaS tools for remote team collaboration. Passionate about developer experience and scalable architectures.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">B2B SaaS</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Remote Work</span>
+                        </div>
+                        <span class="text-xs text-text-muted">Connected 3 days ago</span>
+                    </div>
+                </div>
+
+                <!-- Connected Founder 2 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('sarah-chen')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">SC</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Sarah Chen</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                <span class="bg-success/10 text-success px-2 py-0.5 rounded-full text-xs font-medium">Connected</span>
+                            </div>
+                            <p class="text-text-secondary text-sm">Founder & CEO at Acme Corp</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Leading the next generation of sustainable e-commerce solutions. Former Google PM with 8+ years in product strategy.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">E-commerce</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Sustainability</span>
+                        </div>
+                        <span class="text-xs text-text-muted">Connected 1 week ago</span>
+                    </div>
+                </div>
+
+                <!-- Connected Founder 3 -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-lg" onclick="showFounderProfile('jordan-kim')">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold">JK</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <h3 class="font-semibold text-text-primary">Jordan Kim</h3>
+                                <i class="fa-solid fa-signature text-primary text-sm" title="Verified Founder"></i>
+                                <span class="bg-success/10 text-success px-2 py-0.5 rounded-full text-xs font-medium">Connected</span>
+                            </div>
+                            <p class="text-text-secondary text-sm">CTO at DevTools Inc</p>
+                        </div>
+                    </div>
+                    <p class="text-text-secondary text-sm mb-4 line-clamp-2">Building developer tools that make coding more efficient. Open source advocate and former Microsoft engineer.</p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Developer Tools</span>
+                            <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-xs">Open Source</span>
+                        </div>
+                        <span class="text-xs text-text-muted">Connected 2 weeks ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </main>
+    </div>
+
+    <!-- Founder Profile Modal -->
+    <div class="fixed inset-0 bg-black/50 z-[10000] hidden overflow-hidden" id="founderProfileModal">
+        <div class="flex justify-center items-start min-h-screen p-4 overflow-y-auto">
+            <div class="bg-white rounded-xl p-0 w-full max-w-[800px] shadow-2xl border border-border my-4 max-h-[calc(100vh-2rem)] flex flex-col">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between p-6 border-b border-border flex-shrink-0">
+                    <h2 class="text-xl font-semibold text-text-primary">Founder Profile</h2>
+                    <button class="w-8 h-8 rounded-full bg-transparent text-text-muted flex items-center justify-center text-lg transition-all hover:bg-section-bg hover:text-text-primary" onclick="closeFounderProfile()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- Profile Content -->
+                <div class="p-6 overflow-y-auto flex-1" id="founderProfileContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Founder profile data
+        const founderProfiles = {
+            'alex-rivera': {
+                name: 'Alex Rivera',
+                title: 'Co-founder & CTO',
+                company: 'FlexiTech',
+                avatar: 'AR',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Building B2B SaaS tools for remote team collaboration. Passionate about developer experience and scalable architectures.',
+                fullBio: 'Alex is a seasoned technical leader with 8+ years of experience building scalable SaaS platforms. Previously led engineering teams at Stripe and MongoDB, where he developed expertise in distributed systems and developer tools. At FlexiTech, Alex is focused on creating the next generation of remote collaboration tools that enable teams to work seamlessly across time zones.',
+                tags: ['B2B SaaS', 'Remote Work', 'Technical'],
+                location: 'San Francisco, CA',
+                stage: 'Build',
+                founded: '2023',
+                team: '12 people',
+                funding: 'Seed ($2.5M)',
+                connections: 47,
+                squads: ['Squad Alpha'],
+                contact: {
+                    twitter: '@alexrivera',
+                    linkedin: 'alex-rivera-tech',
+                    website: 'flexitech.com'
+                },
+                highlights: [
+                    'Former Staff Engineer at Stripe',
+                    'Built developer tools used by 10K+ engineers',
+                    'Open source contributor (15K+ GitHub stars)',
+                    'Speaker at DockerCon and KubeCon'
+                ]
+            },
+            'sarah-chen': {
+                name: 'Sarah Chen',
+                title: 'Founder & CEO',
+                company: 'Acme Corp',
+                avatar: 'SC',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Leading the next generation of sustainable e-commerce solutions. Former Google PM with 8+ years in product strategy.',
+                fullBio: 'Sarah brings deep product expertise from her time at Google, where she led product strategy for Google Shopping and worked on initiatives that served millions of users. She\'s passionate about building sustainable e-commerce solutions that benefit both businesses and the environment. At Acme Corp, she\'s developing a platform that helps e-commerce brands reduce their carbon footprint while improving customer experience.',
+                tags: ['E-commerce', 'Sustainability', 'Product'],
+                location: 'New York, NY',
+                stage: 'Launch',
+                founded: '2022',
+                team: '18 people',
+                funding: 'Series A ($8M)',
+                connections: 89,
+                squads: ['Squad Alpha'],
+                contact: {
+                    twitter: '@sarahchen',
+                    linkedin: 'sarah-chen-product',
+                    website: 'acmecorp.com'
+                },
+                highlights: [
+                    'Former Senior PM at Google Shopping',
+                    'Led products serving 50M+ monthly users',
+                    'Featured in Forbes 30 Under 30',
+                    'Sustainability advocate and speaker'
+                ]
+            },
+            'jordan-kim': {
+                name: 'Jordan Kim',
+                title: 'CTO',
+                company: 'DevTools Inc',
+                avatar: 'JK',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Building developer tools that make coding more efficient. Open source advocate and former Microsoft engineer.',
+                fullBio: 'Jordan is a passionate developer and open source advocate with a strong background in developer tooling. At Microsoft, Jordan contributed to VS Code and Azure DevOps, helping millions of developers worldwide. Now at DevTools Inc, Jordan is building the next generation of development tools focused on AI-assisted coding and workflow automation.',
+                tags: ['Developer Tools', 'Open Source', 'Enterprise'],
+                location: 'Seattle, WA',
+                stage: 'Grow',
+                founded: '2021',
+                team: '25 people',
+                funding: 'Series A ($12M)',
+                connections: 156,
+                squads: ['Squad Alpha'],
+                contact: {
+                    twitter: '@jordankim',
+                    linkedin: 'jordan-kim-dev',
+                    website: 'devtools.inc'
+                },
+                highlights: [
+                    'Former Principal Engineer at Microsoft',
+                    'Core contributor to VS Code',
+                    'Maintainer of 20+ open source projects',
+                    'Tech lead for Azure DevOps'
+                ]
+            },
+            'taylor-smith': {
+                name: 'Taylor Smith',
+                title: 'Founder',
+                company: 'BuildSaaS',
+                avatar: 'TS',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Creating no-code tools for rapid SaaS development. Helping non-technical founders build and scale their ideas.',
+                fullBio: 'Taylor is democratizing software development through intuitive no-code platforms. With a background in both design and engineering, Taylor understands the challenges non-technical founders face when trying to build their ideas. BuildSaaS provides a comprehensive platform that enables anyone to create, deploy, and scale SaaS applications without writing code.',
+                tags: ['No-Code', 'SaaS Tools', 'Education'],
+                location: 'Austin, TX',
+                stage: 'Launch',
+                founded: '2023',
+                team: '8 people',
+                funding: 'Pre-seed ($750K)',
+                connections: 34,
+                squads: ['Squad Alpha'],
+                contact: {
+                    twitter: '@taylorsmith',
+                    linkedin: 'taylor-smith-nocode',
+                    website: 'buildsaas.com'
+                },
+                highlights: [
+                    'Former Design Lead at Webflow',
+                    'Built 5+ SaaS products from scratch',
+                    'No-code education creator (50K+ students)',
+                    'Featured in Product Hunt top 5'
+                ]
+            },
+            'maya-patel': {
+                name: 'Maya Patel',
+                title: 'Co-founder',
+                company: 'HealthTech Solutions',
+                avatar: 'MP',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Revolutionizing healthcare through AI-powered diagnostics. Stanford MD/MBA focused on accessible medical technology.',
+                fullBio: 'Dr. Maya Patel combines her medical expertise with business acumen to revolutionize healthcare delivery. With an MD from Stanford and clinical experience in radiology, Maya understands the challenges healthcare providers face. At HealthTech Solutions, she\'s developing AI-powered diagnostic tools that make advanced medical imaging analysis accessible to healthcare providers worldwide.',
+                tags: ['HealthTech', 'AI/ML', 'Medical'],
+                location: 'Palo Alto, CA',
+                stage: 'Build',
+                founded: '2022',
+                team: '15 people',
+                funding: 'Seed ($5M)',
+                connections: 78,
+                squads: [],
+                contact: {
+                    twitter: '@drmayapatel',
+                    linkedin: 'maya-patel-md',
+                    website: 'healthtechsolutions.com'
+                },
+                highlights: [
+                    'Stanford MD/MBA dual degree',
+                    'Published researcher in medical AI',
+                    'Former radiologist at UCSF',
+                    'Healthcare innovation award winner'
+                ]
+            },
+            'carlos-rodriguez': {
+                name: 'Carlos Rodriguez',
+                title: 'Founder & CEO',
+                company: 'FinTech Innovations',
+                avatar: 'CR',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Building financial inclusion tools for underbanked communities. Former JP Morgan analyst with fintech expertise.',
+                fullBio: 'Carlos is passionate about democratizing access to financial services. With experience as an investment analyst at JP Morgan, he saw firsthand how traditional financial institutions often exclude underserved communities. At FinTech Innovations, Carlos is building mobile-first financial tools that provide banking, lending, and investment services to underbanked populations across Latin America.',
+                tags: ['FinTech', 'Financial Inclusion', 'Banking'],
+                location: 'Miami, FL',
+                stage: 'Launch',
+                founded: '2023',
+                team: '22 people',
+                funding: 'Series A ($15M)',
+                connections: 112,
+                squads: [],
+                contact: {
+                    twitter: '@carlosrodriguez',
+                    linkedin: 'carlos-rodriguez-fintech',
+                    website: 'fintechinnovations.com'
+                },
+                highlights: [
+                    'Former Investment Analyst at JP Morgan',
+                    'Bilingual financial services expert',
+                    'Microfinance advocate and speaker',
+                    'Serving 100K+ underbanked users'
+                ]
+            },
+            'brian-chesky': {
+                name: 'Brian Chesky',
+                title: 'Co-founder & CEO',
+                company: 'Airbnb',
+                avatar: 'BC',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Co-founder and CEO of Airbnb, transforming how people travel and belong anywhere.',
+                fullBio: 'Brian co-founded Airbnb in 2008 and has led the company to become one of the world\'s largest travel platforms, with over 4 million hosts welcoming more than 1 billion guests across 220+ countries and regions. Under his leadership, Airbnb has expanded beyond home-sharing to experiences, luxury travel, and business travel. Brian is passionate about creating a world where anyone can belong anywhere.',
+                tags: ['Travel', 'Hospitality', 'Platform'],
+                location: 'San Francisco, CA',
+                stage: 'Public',
+                founded: '2008',
+                team: '6,000+ people',
+                funding: 'Public (IPO 2020)',
+                connections: 892,
+                squads: [],
+                contact: {
+                    twitter: '@bchesky',
+                    linkedin: 'brian-chesky',
+                    website: 'airbnb.com'
+                },
+                highlights: [
+                    'Co-founded Airbnb from Y Combinator',
+                    'Led company to $75B+ valuation at IPO',
+                    'Hosted over 1 billion guests worldwide',
+                    'Time Magazine\'s 100 Most Influential People'
+                ]
+            },
+            'patrick-collison': {
+                name: 'Patrick Collison',
+                title: 'Co-founder & CEO',
+                company: 'Stripe',
+                avatar: 'PC',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Co-founder and CEO of Stripe, building economic infrastructure for the internet.',
+                fullBio: 'Patrick co-founded Stripe in 2010 with his brother John to make it easier for businesses to accept payments online. Under his leadership, Stripe has grown to process hundreds of billions of dollars annually for millions of businesses worldwide. Patrick is passionate about enabling internet commerce and economic infrastructure that supports global entrepreneurship.',
+                tags: ['FinTech', 'Payments', 'Infrastructure'],
+                location: 'San Francisco, CA',
+                stage: 'Private',
+                founded: '2010',
+                team: '4,000+ people',
+                funding: 'Series H ($95B valuation)',
+                connections: 743,
+                squads: [],
+                contact: {
+                    twitter: '@patrickc',
+                    linkedin: 'patrick-collison',
+                    website: 'stripe.com'
+                },
+                highlights: [
+                    'Youngest billionaire in Ireland',
+                    'Built Stripe to $95B+ valuation',
+                    'Processing $640B+ annually',
+                    'MIT Technology Review Innovator'
+                ]
+            },
+            'melanie-perkins': {
+                name: 'Melanie Perkins',
+                title: 'Co-founder & CEO',
+                company: 'Canva',
+                avatar: 'MP',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Co-founder and CEO of Canva, democratizing design for everyone.',
+                fullBio: 'Melanie co-founded Canva in 2013 with a mission to democratize design and empower the world to create. Starting from her university days with the idea for an online design platform, she has led Canva to become one of the world\'s most valuable startups, with over 100 million monthly active users across 190 countries.',
+                tags: ['Design', 'Creative Tools', 'SaaS'],
+                location: 'Sydney, Australia',
+                stage: 'Private',
+                founded: '2013',
+                team: '4,000+ people',
+                funding: 'Series A ($40B valuation)',
+                connections: 567,
+                squads: [],
+                contact: {
+                    twitter: '@melanieperkins',
+                    linkedin: 'melanie-perkins',
+                    website: 'canva.com'
+                },
+                highlights: [
+                    'One of the youngest female CEOs of a $40B+ company',
+                    'Serving 100M+ monthly active users',
+                    'Available in 100+ languages',
+                    'Forbes Most Powerful Women in Business'
+                ]
+            },
+            'daniel-ek': {
+                name: 'Daniel Ek',
+                title: 'Co-founder & CEO',
+                company: 'Spotify',
+                avatar: 'DE',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Co-founder and CEO of Spotify, revolutionizing how the world listens to music.',
+                fullBio: 'Daniel co-founded Spotify in 2006 with the vision to give people access to all the music they want all the time, in a completely legal and accessible way. Under his leadership, Spotify has become the world\'s most popular audio streaming subscription service with over 400 million users, revolutionizing the music industry and creating new opportunities for artists worldwide.',
+                tags: ['Music', 'Streaming', 'Audio'],
+                location: 'Stockholm, Sweden',
+                stage: 'Public',
+                founded: '2006',
+                team: '9,000+ people',
+                funding: 'Public (IPO 2018)',
+                connections: 1234,
+                squads: [],
+                contact: {
+                    twitter: '@eldsjal',
+                    linkedin: 'daniel-ek',
+                    website: 'spotify.com'
+                },
+                highlights: [
+                    'Transformed the music industry with streaming',
+                    'Over 400M users worldwide',
+                    '11M artists on the platform',
+                    'Time Magazine\'s 100 Most Influential People'
+                ]
+            },
+            'whitney-wolfe-herd': {
+                name: 'Whitney Wolfe Herd',
+                title: 'Founder & CEO',
+                company: 'Bumble',
+                avatar: 'WH',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Founder and CEO of Bumble, empowering women to make the first move.',
+                fullBio: 'Whitney founded Bumble in 2014 with the mission to create a dating app where women make the first move, challenging traditional gender norms in dating. She has expanded Bumble beyond dating to include friendship (Bumble BFF) and professional networking (Bumble Bizz), creating a platform focused on empowerment, equality, and kindness.',
+                tags: ['Dating', 'Social', 'Women Empowerment'],
+                location: 'Austin, TX',
+                stage: 'Public',
+                founded: '2014',
+                team: '700+ people',
+                funding: 'Public (IPO 2021)',
+                connections: 445,
+                squads: [],
+                contact: {
+                    twitter: '@whitneywolfeherd',
+                    linkedin: 'whitney-wolfe-herd',
+                    website: 'bumble.com'
+                },
+                highlights: [
+                    'Youngest woman to take a company public',
+                    'Over 100M registered users',
+                    'Advocate for women\'s rights and safety',
+                    'Forbes America\'s Richest Self-Made Women'
+                ]
+            },
+            'evan-spiegel': {
+                name: 'Evan Spiegel',
+                title: 'Co-founder & CEO',
+                company: 'Snap Inc.',
+                avatar: 'ES',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Co-founder and CEO of Snap Inc., reinventing the camera and communication.',
+                fullBio: 'Evan co-founded Snapchat in 2011 while at Stanford University, pioneering the concept of disappearing messages and Stories. Under his leadership, Snap has evolved into a camera company that empowers people to express themselves, live in the moment, learn about the world, and have fun together, serving over 400 million daily active users.',
+                tags: ['Social Media', 'AR', 'Camera'],
+                location: 'Los Angeles, CA',
+                stage: 'Public',
+                founded: '2011',
+                team: '5,000+ people',
+                funding: 'Public (IPO 2017)',
+                connections: 678,
+                squads: [],
+                contact: {
+                    twitter: '@evanspiegel',
+                    linkedin: 'evan-spiegel',
+                    website: 'snap.com'
+                },
+                highlights: [
+                    'Pioneered disappearing messages and Stories',
+                    'Over 400M daily active users',
+                    'Leading innovation in AR technology',
+                    'Youngest CEO of a major tech company at IPO'
+                ]
+            },
+            'dylan-field': {
+                name: 'Dylan Field',
+                title: 'Co-founder & CEO',
+                company: 'Figma',
+                avatar: 'DF',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Co-founder and CEO of Figma, making design accessible to everyone.',
+                fullBio: 'Dylan co-founded Figma in 2012 with the vision to make design accessible to everyone through web-based collaborative tools. Under his leadership, Figma has become the leading design platform used by millions of designers and developers worldwide, democratizing design and enabling real-time collaboration across teams.',
+                tags: ['Design Tools', 'Collaboration', 'SaaS'],
+                location: 'San Francisco, CA',
+                stage: 'Acquired',
+                founded: '2012',
+                team: '800+ people',
+                funding: 'Acquired by Adobe ($20B)',
+                connections: 789,
+                squads: [],
+                contact: {
+                    twitter: '@zoink',
+                    linkedin: 'dylan-field',
+                    website: 'figma.com'
+                },
+                highlights: [
+                    'Sold Figma to Adobe for $20B',
+                    'Used by 4M+ designers worldwide',
+                    'Revolutionized browser-based design',
+                    'Youngest founder in $20B+ exit'
+                ]
+            },
+            'tony-xu': {
+                name: 'Tony Xu',
+                title: 'Co-founder & CEO',
+                company: 'DoorDash',
+                avatar: 'TX',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Co-founder and CEO of DoorDash, transforming local commerce and delivery.',
+                fullBio: 'Tony co-founded DoorDash in 2013 with the mission to empower local economies by connecting consumers with their favorite local businesses. Under his leadership, DoorDash has become the leading last-mile logistics platform in the US, serving millions of consumers, merchants, and Dashers while expanding into new categories beyond restaurant delivery.',
+                tags: ['Logistics', 'Delivery', 'Local Commerce'],
+                location: 'San Francisco, CA',
+                stage: 'Public',
+                founded: '2013',
+                team: '8,000+ people',
+                funding: 'Public (IPO 2020)',
+                connections: 543,
+                squads: [],
+                contact: {
+                    twitter: '@t_xu',
+                    linkedin: 'tonyxu',
+                    website: 'doordash.com'
+                },
+                highlights: [
+                    'Largest food delivery platform in the US',
+                    'Serving 25M+ customers monthly',
+                    'Supporting 500K+ merchant partners',
+                    'Expanded beyond food to retail and alcohol'
+                ]
+            },
+            'tobi-lutke': {
+                name: 'Tobi Lütke',
+                title: 'Founder & CEO',
+                company: 'Shopify',
+                avatar: 'TL',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Founder and CEO of Shopify, making commerce better for everyone.',
+                fullBio: 'Tobi founded Shopify in 2006 after being frustrated with existing e-commerce solutions for his snowboard business. Under his leadership, Shopify has become the leading commerce platform, powering over 4 million businesses worldwide and enabling entrepreneurs to start, grow, and manage their businesses from anywhere.',
+                tags: ['E-commerce', 'Platform', 'SMB'],
+                location: 'Ottawa, Canada',
+                stage: 'Public',
+                founded: '2006',
+                team: '12,000+ people',
+                funding: 'Public (IPO 2015)',
+                connections: 892,
+                squads: [],
+                contact: {
+                    twitter: '@tobi',
+                    linkedin: 'tobi-lutke',
+                    website: 'shopify.com'
+                },
+                highlights: [
+                    'Powers 4M+ businesses worldwide',
+                    'Processed $175B+ in sales in 2022',
+                    'Supporting entrepreneurs in 175+ countries',
+                    'One of Canada\'s most valuable companies'
+                ]
+            },
+            'drew-houston': {
+                name: 'Drew Houston',
+                title: 'Co-founder & CEO',
+                company: 'Dropbox',
+                avatar: 'DH',
+                gradient: 'bg-primary',
+                verified: true,
+                bio: 'Co-founder and CEO of Dropbox, simplifying the way people work together.',
+                fullBio: 'Drew co-founded Dropbox in 2007 with the vision to simplify the way people access and share their files. Under his leadership, Dropbox has grown to serve over 700 million users worldwide, evolving from a simple file storage service to a comprehensive collaboration platform that helps teams work together more effectively.',
+                tags: ['Cloud Storage', 'Collaboration', 'Enterprise'],
+                location: 'San Francisco, CA',
+                stage: 'Public',
+                founded: '2007',
+                team: '3,000+ people',
+                funding: 'Public (IPO 2018)',
+                connections: 623,
+                squads: [],
+                contact: {
+                    twitter: '@drewhouston',
+                    linkedin: 'drew-houston',
+                    website: 'dropbox.com'
+                },
+                highlights: [
+                    'Serving 700M+ registered users',
+                    'Processing 1B+ files daily',
+                    'Pioneer in cloud storage and sync',
+                    'MIT Technology Review TR35 winner'
+                ]
+            }
+        };
+
+        // Switch community tabs
+        function switchCommunityTab(tab) {
+            // Update active tab styling
+            const tabs = document.querySelectorAll('[data-tab]');
+            tabs.forEach(t => {
+                t.classList.remove('text-primary', 'border-primary');
+                t.classList.add('text-text-secondary', 'border-transparent');
+            });
+            
+            const activeTab = document.querySelector(`[data-tab="${tab}"]`);
+            activeTab.classList.remove('text-text-secondary', 'border-transparent');
+            activeTab.classList.add('text-primary', 'border-primary');
+            
+            // Show/hide content
+            const contents = ['founding-fifty-content', 'all-founders-content', 'my-connections-content'];
+            contents.forEach(contentId => {
+                document.getElementById(contentId).classList.add('hidden');
+            });
+            
+            if (tab === 'founding-fifty') {
+                document.getElementById('founding-fifty-content').classList.remove('hidden');
+            } else if (tab === 'all') {
+                document.getElementById('all-founders-content').classList.remove('hidden');
+            } else if (tab === 'connections') {
+                document.getElementById('my-connections-content').classList.remove('hidden');
+            }
+        }
+
+        // Show founder profile modal
+        function showFounderProfile(founderId) {
+            const profile = founderProfiles[founderId];
+            if (!profile) return;
+            
+            const content = document.getElementById('founderProfileContent');
+            content.innerHTML = `
+                <!-- Profile Header -->
+                <div class="flex items-start gap-6 mb-8">
+                    <div class="w-20 h-20 rounded-full ${profile.gradient} flex items-center justify-center text-white font-bold text-2xl">
+                        ${profile.avatar}
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <h1 class="text-2xl font-bold text-text-primary">${profile.name}</h1>
+                            ${profile.verified ? '<i class="fa-solid fa-signature text-primary text-lg" title="Verified Founder"></i>' : ''}
+                        </div>
+                        <p class="text-lg text-text-secondary mb-1">${profile.title}</p>
+                        <p class="text-text-muted mb-3">${profile.company}</p>
+                        <div class="flex items-center gap-4 text-sm text-text-muted mb-4">
+                            <span><i class="fas fa-map-marker-alt mr-1"></i>${profile.location}</span>
+                            <span><i class="fas fa-calendar mr-1"></i>Founded ${profile.founded}</span>
+                            <span><i class="fas fa-users mr-1"></i>${profile.team}</span>
+                            <span><i class="fas fa-money-bill mr-1"></i>${profile.funding}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2">
+                            ${profile.tags.map(tag => `<span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-sm">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="px-4 py-2 bg-primary text-white border border-primary rounded text-sm font-medium transition-all hover:bg-primary-hover" onclick="connectWithFounder('${founderId}')">
+                            <i class="fas fa-plus mr-1"></i>Connect
+                        </button>
+                        <button class="px-4 py-2 bg-transparent text-text-primary border border-border rounded text-sm font-medium transition-all hover:bg-section-bg" onclick="messageFounder('${founderId}')">
+                            <i class="fas fa-message mr-1"></i>Message
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Profile Tabs -->
+                <div class="border-b border-border mb-6">
+                    <div class="flex gap-6">
+                        <button class="text-base font-medium text-primary py-3 border-b-2 border-primary transition-all" data-profile-tab="about" onclick="switchProfileTab('about')">About</button>
+                        <button class="text-base font-medium text-text-secondary py-3 border-b-2 border-transparent hover:text-primary transition-all" data-profile-tab="company" onclick="switchProfileTab('company')">Company</button>
+                        <button class="text-base font-medium text-text-secondary py-3 border-b-2 border-transparent hover:text-primary transition-all" data-profile-tab="network" onclick="switchProfileTab('network')">Network</button>
+                    </div>
+                </div>
+
+                <!-- About Tab -->
+                <div id="about-tab" class="block">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">About</h3>
+                            <p class="text-text-secondary leading-relaxed mb-6">${profile.fullBio}</p>
+                            
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Career Highlights</h3>
+                            <ul class="space-y-2">
+                                ${profile.highlights.map(highlight => `<li class="flex items-start gap-2 text-text-secondary"><i class="fas fa-check text-success mt-1 flex-shrink-0"></i>${highlight}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Contact</h3>
+                            <div class="space-y-3 mb-6">
+                                <a href="https://twitter.com/${profile.contact.twitter.replace('@', '')}" class="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors">
+                                    <i class="fab fa-twitter"></i>${profile.contact.twitter}
+                                </a>
+                                <a href="https://linkedin.com/in/${profile.contact.linkedin}" class="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors">
+                                    <i class="fab fa-linkedin"></i>LinkedIn
+                                </a>
+                                <a href="https://${profile.contact.website}" class="flex items-center gap-2 text-text-secondary hover:text-primary transition-colors">
+                                    <i class="fas fa-globe"></i>${profile.contact.website}
+                                </a>
+                            </div>
+                            
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Activity</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-text-secondary">Connections</span>
+                                    <span class="font-medium">${profile.connections}</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-text-secondary">Current Stage</span>
+                                    <span class="bg-section-bg text-text-primary px-2 py-1 rounded text-sm">${profile.stage}</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-text-secondary">Squads</span>
+                                    <span class="font-medium">${profile.squads.length}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Tab -->
+                <div id="company-tab" class="hidden">
+                    <div class="text-center py-8 text-text-muted">
+                        <i class="fas fa-building text-4xl mb-4"></i>
+                        <p>Company details coming soon...</p>
+                    </div>
+                </div>
+
+                <!-- Network Tab -->
+                <div id="network-tab" class="hidden">
+                    <div class="text-center py-8 text-text-muted">
+                        <i class="fas fa-network-wired text-4xl mb-4"></i>
+                        <p>Network information coming soon...</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('founderProfileModal').classList.remove('hidden');
+        }
+
+        // Close founder profile modal
+        function closeFounderProfile() {
+            document.getElementById('founderProfileModal').classList.add('hidden');
+        }
+
+        // Switch profile tabs
+        function switchProfileTab(tab) {
+            // Update active tab styling
+            const tabs = document.querySelectorAll('[data-profile-tab]');
+            tabs.forEach(t => {
+                t.classList.remove('text-primary', 'border-primary');
+                t.classList.add('text-text-secondary', 'border-transparent');
+            });
+            
+            const activeTab = document.querySelector(`[data-profile-tab="${tab}"]`);
+            activeTab.classList.remove('text-text-secondary', 'border-transparent');
+            activeTab.classList.add('text-primary', 'border-primary');
+            
+            // Show/hide content
+            const contents = ['about-tab', 'company-tab', 'network-tab'];
+            contents.forEach(contentId => {
+                document.getElementById(contentId).classList.add('hidden');
+            });
+            
+            document.getElementById(`${tab}-tab`).classList.remove('hidden');
+        }
+
+        // Connect with founder
+        function connectWithFounder(founderId) {
+            console.log('Connecting with founder:', founderId);
+            // In a real app, this would send a connection request
+        }
+
+        // Message founder
+        function messageFounder(founderId) {
+            console.log('Messaging founder:', founderId);
+            // In a real app, this would open a messaging interface
+        }
+
+        // Initialize with All tab active
+        document.addEventListener('DOMContentLoaded', function() {
+            switchCommunityTab('all');
+        });
+    </script>
+    
+    <!-- AutoPilot Bottom Bar -->
+    <div id="autopilot-bar" class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-red-600 to-red-800 text-white transition-transform duration-300 z-[60] shadow-2xl">
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between max-w-7xl mx-auto">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center">
+                        <i class="fas fa-paper-plane text-lg"></i>
+                    </div>
+                    <h3 class="font-semibold text-base">AutoPilot</h3>
+                </div>
+                <div class="flex items-center gap-4 flex-1 max-w-2xl">
+                    <div class="relative flex-1">
+                        <input type="text" id="autopilot-bar-input" placeholder="Search or ask me anything about your founder journey" class="w-full py-2 px-4 bg-white/20 backdrop-blur border border-white/30 rounded-full text-white placeholder:text-white/70 text-sm focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50" onkeypress="handleAutoPilotBarInput(event)" onfocus="openAutoPilotTray()">
+                    </div>
+                    <button onclick="minimizeAutoPilot()" class="w-8 h-8 bg-white/20 backdrop-blur border border-white/30 rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
+                        <i class="fas fa-minus text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Minimized AutoPilot Button -->
+    <div id="autopilot-minimized" class="fixed bottom-6 right-6 z-[65] hidden">
+        <button onclick="restoreAutoPilot()" class="w-14 h-14 bg-gradient-to-r from-red-600 to-red-800 text-white rounded-full shadow-xl hover:shadow-2xl transition-all hover:scale-105">
+            <i class="fas fa-paper-plane text-lg"></i>
+        </button>
+    </div>
+    
+    <!-- Full-Screen AutoPilot Tray -->
+    <div id="autopilot-tray" class="fixed inset-0 bg-gradient-to-br from-red-600 to-red-800 transform translate-y-full transition-transform duration-500 z-[70] hidden">
+        <div class="h-full overflow-auto">
+            <!-- Tray Header -->
+            <div class="px-6 py-4">
+                <div class="flex items-center justify-between max-w-7xl mx-auto mb-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center">
+                            <i class="fas fa-paper-plane text-xl text-white"></i>
+                        </div>
+                        <h1 class="text-xl font-semibold text-white">AutoPilot</h1>
+                    </div>
+                    <button onclick="closeAutoPilotTray()" class="w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
+                        <i class="fas fa-times text-lg text-white"></i>
+                    </button>
+                </div>
+                
+                <!-- Input Area -->
+                <div class="max-w-7xl mx-auto">
+                    <div class="relative">
+                        <textarea id="autopilot-input" placeholder="Search or ask me anything about your founder journey" class="w-full h-32 p-4 bg-white/20 backdrop-blur border border-white/30 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 text-white placeholder:text-white/70 text-base" rows="4"></textarea>
+                        <div class="absolute bottom-4 right-4 flex gap-3">
+                            <button class="px-4 py-2 bg-white/20 backdrop-blur border border-white/30 text-white rounded-md text-sm hover:bg-white/30 transition-all">
+                                <i class="fas fa-microphone mr-2"></i>Voice
+                            </button>
+                            <button onclick="processAutoPilotCommand()" class="px-6 py-2 bg-white text-red-600 rounded-md text-sm font-medium hover:bg-white/90 transition-all">
+                                <i class="fas fa-paper-plane mr-2"></i>Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // AutoPilot functionality
+        let autopilotBarVisible = true;
+        
+        function toggleAutoPilotBar() {
+            autopilotBarVisible = !autopilotBarVisible;
+            const bar = document.getElementById('autopilot-bar');
+            
+            if (autopilotBarVisible) {
+                bar.classList.remove('translate-y-full');
+                bar.classList.add('translate-y-0');
+            } else {
+                bar.classList.add('translate-y-full');
+                bar.classList.remove('translate-y-0');
+            }
+        }
+        
+        function minimizeAutoPilot() {
+            const bar = document.getElementById('autopilot-bar');
+            const minimized = document.getElementById('autopilot-minimized');
+            
+            bar.classList.add('translate-y-full');
+            minimized.classList.remove('hidden');
+            
+            autopilotBarVisible = false;
+            localStorage.setItem('autopilot-minimized', 'true');
+        }
+        
+        function restoreAutoPilot() {
+            const bar = document.getElementById('autopilot-bar');
+            const minimized = document.getElementById('autopilot-minimized');
+            
+            bar.classList.remove('translate-y-full');
+            minimized.classList.add('hidden');
+            
+            autopilotBarVisible = true;
+            localStorage.setItem('autopilot-minimized', 'false');
+        }
+        
+        function openAutoPilotTray() {
+            const tray = document.getElementById('autopilot-tray');
+            tray.classList.remove('hidden');
+            setTimeout(() => {
+                tray.classList.remove('translate-y-full');
+                tray.classList.add('translate-y-0');
+            }, 10);
+        }
+        
+        function closeAutoPilotTray() {
+            const tray = document.getElementById('autopilot-tray');
+            tray.classList.add('translate-y-full');
+            tray.classList.remove('translate-y-0');
+            setTimeout(() => {
+                tray.classList.add('hidden');
+            }, 500);
+        }
+        
+        function processAutoPilotCommand() {
+            const input = document.getElementById('autopilot-input');
+            const command = input.value.trim();
+            if (command) {
+                console.log('Processing command:', command);
+                // TODO: Implement AI command processing
+                input.value = '';
+            }
+        }
+        
+        function handleAutoPilotBarInput(event) {
+            if (event.key === 'Enter') {
+                const input = event.target;
+                const command = input.value.trim();
+                if (command) {
+                    openAutoPilotTray();
+                    // Transfer the command to the main input in the tray
+                    setTimeout(() => {
+                        const trayInput = document.getElementById('autopilot-input');
+                        if (trayInput) {
+                            trayInput.value = command;
+                            trayInput.focus();
+                        }
+                    }, 100);
+                    input.value = '';
+                }
+            }
+        }
+        
+        // Initialize AutoPilot state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const isMinimized = localStorage.getItem('autopilot-minimized') === 'true';
+            const bar = document.getElementById('autopilot-bar');
+            const minimized = document.getElementById('autopilot-minimized');
+            
+            if (isMinimized) {
+                bar.classList.add('translate-y-full');
+                minimized.classList.remove('hidden');
+                autopilotBarVisible = false;
+            } else {
+                bar.classList.remove('translate-y-full');
+                minimized.classList.add('hidden');
+                autopilotBarVisible = true;
+            }
+        });
+    </script>
+</body>
+</html>

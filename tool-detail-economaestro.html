@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EconoMaestro - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#22c55e',
+                        'warning': '#f59e0b',
+                        'info': '#3b82f6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <!-- Sticky Header Bar -->
+        <div class="sticky top-0 z-50 bg-white border-b border-border">
+            <div class="flex items-center justify-between px-8 py-4">
+                <!-- Back Button -->
+                <button onclick="goBack()" class="flex items-center gap-2 px-4 py-2 bg-section-bg text-text-primary rounded-lg hover:bg-gray-200 transition-all">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </button>
+                
+                <!-- Tool Identity -->
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-purple-600 text-xl"></i>
+                    </div>
+                    <h1 class="text-xl font-semibold text-text-primary">EconoMaestro</h1>
+                </div>
+                
+                <!-- Launch Button -->
+                <button onclick="launchTool()" class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                    <span>Launch App</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <main class="h-full overflow-auto">
+            <!-- Content Container -->
+            <div class="max-w-4xl mx-auto px-8 py-8">
+                <!-- Overview Section -->
+                <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-text-primary mb-4">Read the Economic Room—Without an Econ Degree</h2>
+                    <p class="text-text-secondary text-lg leading-relaxed mb-6">
+                        EconoMaestro is your macro signal filter that aggregates economist forecasts from across the web to help you time critical startup decisions. Stop drowning in contradictory hot takes—get signal from the noise.
+                    </p>
+                    
+                    <!-- Benefits List -->
+                    <ul class="space-y-4 mb-6">
+                        <li class="flex items-start gap-3">
+                            <span class="text-success text-xl">✓</span>
+                            <span class="text-text-secondary">Time strategic decisions with data-driven macro awareness</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-success text-xl">✓</span>
+                            <span class="text-text-secondary">Know if now's a good time to fundraise, hire, or launch</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-success text-xl">✓</span>
+                            <span class="text-text-secondary">Understand what the smart money is thinking (without reading 100 reports)</span>
+                        </li>
+                    </ul>
+                    
+                    <!-- Tagline -->
+                    <p class="text-text-secondary italic">
+                        Think of it like Rotten Tomatoes for economist predictions—so you can see at a glance whether the pros think we're heading for sunshine or storms.
+                    </p>
+                </div>
+
+                <!-- Key Features Section -->
+                <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
+                    <h3 class="text-xl font-semibold text-text-primary mb-6">Key Features</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="text-success text-lg">✅</span>
+                                <strong class="text-text-primary">Smart Take Index</strong>
+                            </div>
+                            <p class="text-text-secondary ml-8">
+                                The top trending insights: what economists are saying about inflation, interest rates, unemployment, GDP.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="text-success text-lg">✅</span>
+                                <strong class="text-text-primary">Simple Scorecard</strong>
+                            </div>
+                            <p class="text-text-secondary ml-8">
+                                Economy in growth, neutral, or contraction mode? Fundraising market hot or cold? Clear, actionable signals.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="text-success text-lg">✅</span>
+                                <strong class="text-text-primary">Forecast Confidence</strong>
+                            </div>
+                            <p class="text-text-secondary ml-8">
+                                See where experts agree vs. where predictions diverge. Know when to trust the consensus.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="text-success text-lg">✅</span>
+                                <strong class="text-text-primary">Startup Context</strong>
+                            </div>
+                            <p class="text-text-secondary ml-8">
+                                Macro trends translated into founder decisions: hiring freezes, funding windows, customer spend.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How It Works Section -->
+                <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
+                    <h3 class="text-xl font-semibold text-text-primary mb-6">How It Works</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                                🧹
+                            </div>
+                            <h4 class="font-semibold text-text-primary mb-2">Ingests Forecasts</h4>
+                            <p class="text-text-secondary text-sm">
+                                We scan public commentary from top economists and think tanks.
+                            </p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                                📊
+                            </div>
+                            <h4 class="font-semibold text-text-primary mb-2">Synthesizes Sentiment</h4>
+                            <p class="text-text-secondary text-sm">
+                                Our model aggregates predictions into a directional consensus view.
+                            </p>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                                🚀
+                            </div>
+                            <h4 class="font-semibold text-text-primary mb-2">Delivers Clarity</h4>
+                            <p class="text-text-secondary text-sm">
+                                You get a simple dashboard with startup-relevant macro signals.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Use Cases Section -->
+                <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
+                    <h3 class="text-xl font-semibold text-text-primary mb-6">Use Cases</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[600px]">
+                            <thead>
+                                <tr class="bg-section-bg">
+                                    <th class="p-4 text-left font-semibold text-text-primary border-b border-border">Problem</th>
+                                    <th class="p-4 text-left font-semibold text-text-primary border-b border-border">EconoMaestro Solution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="p-4 border-b border-border align-top">
+                                        <strong class="text-text-primary">"Should I raise now?"</strong>
+                                    </td>
+                                    <td class="p-4 border-b border-border align-top text-text-secondary">
+                                        Check fundraising signal strength based on rate expectations and VC sentiment.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 border-b border-border align-top">
+                                        <strong class="text-text-primary">"When should I hire?"</strong>
+                                    </td>
+                                    <td class="p-4 border-b border-border align-top text-text-secondary">
+                                        See if economists predict a tight or loose labor market in the coming quarters.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 border-b border-border align-top">
+                                        <strong class="text-text-primary">"Should I extend runway?"</strong>
+                                    </td>
+                                    <td class="p-4 border-b border-border align-top text-text-secondary">
+                                        Get early warning if recession risk is rising or macro headwinds are building.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 align-top">
+                                        <strong class="text-text-primary">"Are my customers spending?"</strong>
+                                    </td>
+                                    <td class="p-4 align-top text-text-secondary">
+                                        Track consumer and business confidence to anticipate demand shifts.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Premium Tiers Section -->
+                <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
+                    <h3 class="text-xl font-semibold text-text-primary mb-6">Premium Tiers (Coming Soon)</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fas fa-chart-line text-primary"></i>
+                                <strong class="text-text-primary">Historical Forecast Explorer</strong>
+                            </div>
+                            <p class="text-text-secondary ml-8">
+                                Compare past predictions to real outcomes—see which economists to trust.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fas fa-dollar-sign text-primary"></i>
+                                <strong class="text-text-primary">Sector-Specific Signals</strong>
+                            </div>
+                            <p class="text-text-secondary ml-8">
+                                Drill down into your vertical: SaaS, e-commerce, fintech, healthcare trends.
+                            </p>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fas fa-sync text-primary"></i>
+                                <strong class="text-text-primary">Real-Time Alerts</strong>
+                            </div>
+                            <p class="text-text-secondary ml-8">
+                                Get notified when macro consensus shifts on key indicators you're tracking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Section -->
+                <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
+                    <h3 class="text-xl font-semibold text-text-primary mb-4">Ready to Read the Room?</h3>
+                    <p class="text-text-secondary leading-relaxed mb-6">
+                        Cut through the economic noise. Get the macro awareness you need to time your startup moves like a pro—without becoming an armchair economist.
+                    </p>
+                    <button onclick="launchTool()" class="w-full bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary-hover transition-all font-medium">
+                        Launch EconoMaestro Now
+                    </button>
+                </div>
+
+                <!-- Footer Note -->
+                <div class="text-center py-8">
+                    <p class="text-text-muted text-sm">
+                        Built by founders, for founders. Part of the FoundersFleet toolkit.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Navigation functions
+        function goBack() {
+            // Check if we came from a use case page
+            const referrer = document.referrer;
+            if (referrer.includes('usecase-detail.html')) {
+                window.history.back();
+            } else {
+                window.location.href = 'tools.html';
+            }
+        }
+
+        // Launch tool (placeholder)
+        function launchTool() {
+            alert('EconoMaestro is launching soon! This powerful economic analysis tool will help you make data-driven decisions for your startup.');
+        }
+
+        // Initialize navigation
+        initializeNavigation('tools');
+    </script>
+</body>
+</html>

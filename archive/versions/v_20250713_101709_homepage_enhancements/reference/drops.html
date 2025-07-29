@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Founders Fleet – Drops</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+      --background: #0a0a0a;
+      --text: #ffffff;
+      --text-secondary: #a1a1aa;
+      --card-bg: #111111;
+      --card-hover: #161616;
+      --border: #27272a;
+      --accent: #18181b;
+      --accent-hover: #1f1f23;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --cyan: #06b6d4;
+      --radius: 16px;
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --padding: 1.5rem;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--background) 0%, #0f0f0f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar - Same as other pages */
+    .sidebar {
+      width: 280px;
+      background: var(--accent);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: var(--padding);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: sticky;
+      top: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .workspace-header:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .workspace-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), #8b5cf6);
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .workspace-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .workspace-select {
+      background: transparent;
+      color: var(--text);
+      border: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0;
+      outline: none;
+    }
+
+    .workspace-select option {
+      color: black;
+      background: white;
+    }
+
+    .workspace-email {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .nav-link-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--accent);
+      padding: 0.125rem 0.375rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--accent-hover);
+      transform: translateX(4px);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      background: var(--primary);
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .main-content {
+      flex: 1;
+      padding: var(--padding);
+      max-width: calc(100vw - 280px);
+    }
+
+    .drops-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .drops-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem 0;
+      background: linear-gradient(135deg, var(--text), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .drops-subtitle {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .create-drop-button {
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+    }
+
+    .create-drop-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .drop-composer {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      margin-bottom: 2rem;
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+
+    .drop-composer.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .composer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .composer-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .close-composer {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .close-composer:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+
+    .drop-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .form-input {
+      background: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem;
+      color: var(--text);
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .milestone-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .milestone-option {
+      background: var(--accent);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .milestone-option:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+    }
+
+    .milestone-option.selected {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: var(--primary);
+    }
+
+    .milestone-icon {
+      font-size: 1.25rem;
+    }
+
+    .milestone-text {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .composer-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+      margin-top: 1rem;
+    }
+
+    .composer-button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .composer-button.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .composer-button.primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .composer-button.secondary {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .composer-button.secondary:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+
+    .drops-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .drop-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--padding);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .drop-card:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .drop-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .drop-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .drop-info {
+      flex: 1;
+    }
+
+    .drop-author {
+      font-weight: 600;
+      margin: 0 0 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .drop-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+    }
+
+    .drop-badge {
+      background: rgba(59, 130, 246, 0.2);
+      color: var(--primary);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .drop-badge.milestone {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+
+    .drop-badge.achievement {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--warning);
+    }
+
+    .drop-content {
+      margin-bottom: 1rem;
+    }
+
+    .drop-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .drop-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .drop-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .drop-stats {
+      display: flex;
+      gap: 1rem;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .stat-item:hover {
+      color: var(--primary);
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .share-button {
+      background: var(--accent);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 0.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.875rem;
+    }
+
+    .share-button:hover {
+      background: var(--card-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text-secondary);
+    }
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      color: var(--text);
+    }
+
+    .empty-description {
+      margin: 0 0 2rem 0;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .drops-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .milestone-selector {
+        grid-template-columns: 1fr;
+      }
+
+      .composer-actions {
+        flex-direction: column;
+      }
+
+      .drop-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .drop-actions {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+<aside class="sidebar" id="sidebar">
+<div class="workspace-header">
+<div class="workspace-logo">F</div>
+<div class="workspace-info">
+<select class="workspace-select" onchange="handleWorkspaceChange(this)">
+<option>Eight Bit Studios</option>
+<option>Another Workspace</option>
+<option value="signout">Sign Out</option>
+</select>
+<span class="workspace-email">name@email.com</span>
+</div>
+</div>
+<nav class="nav-links">
+<a class="nav-link active" href="control.html">
+<div class="nav-link-content">
+<span>🏠</span> Control
+        </div>
+</a>
+<a class="nav-link" href="flightplan.html">
+<div class="nav-link-content">
+<span>🗺️</span> Flightplan
+        </div>
+<span class="nav-status">Idea</span>
+</a>
+<a class="nav-link" href="missions.html">
+<div class="nav-link-content">
+<span>🎯</span> Missions
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="dispatch.html">
+<div class="nav-link-content">
+<span>🪪</span> Dispatch
+        </div>
+<span class="nav-status">Draft</span>
+</a>
+<a class="nav-link" href="drops.html">
+<div class="nav-link-content">
+<span>📦</span> Drops
+        </div>
+<span class="nav-status">2</span>
+</a>
+<a class="nav-link" href="signals.html">
+<div class="nav-link-content">
+<span>📡</span> Signals
+        </div>
+<span class="nav-status">3</span>
+</a>
+<a class="nav-link" href="hangar.html">
+<div class="nav-link-content">
+<span>🏗️</span> Hangar
+        </div>
+<span class="nav-status">Friday</span>
+</a>
+<a class="nav-link" href="terminal.html">
+<div class="nav-link-content">
+<span>🏢</span> Terminal
+        </div>
+<span class="nav-status">Ready</span>
+</a>
+<a class="nav-link" href="vault.html">
+<div class="nav-link-content">
+<span>🗃️</span> Vault
+        </div>
+<span class="nav-status">47</span>
+</a>
+</nav>
+</aside>
+<main class="main-content">
+<div class="drops-header">
+<div>
+<h1 class="drops-title">Drops</h1>
+<p class="drops-subtitle">Launch Announcements</p>
+</div>
+<button class="create-drop-button" onclick="toggleComposer()">
+<span>📦</span>
+        Create New Drop
+      </button>
+</div>
+<div class="drop-composer" id="dropComposer">
+<div class="composer-header">
+<h3 class="composer-title">Create Your Drop</h3>
+<button class="close-composer" onclick="toggleComposer()">×</button>
+</div>
+<div class="drop-form">
+<div class="form-group">
+<label class="form-label">Drop Type</label>
+<div class="milestone-selector">
+<div class="milestone-option" onclick="selectMilestone(this)">
+<span class="milestone-icon">🎯</span>
+<span class="milestone-text">Mission Complete</span>
+</div>
+<div class="milestone-option" onclick="selectMilestone(this)">
+<span class="milestone-icon">💡</span>
+<span class="milestone-text">Insight Discovery</span>
+</div>
+<div class="milestone-option" onclick="selectMilestone(this)">
+<span class="milestone-icon">🚀</span>
+<span class="milestone-text">Product Launch</span>
+</div>
+<div class="milestone-option" onclick="selectMilestone(this)">
+<span class="milestone-icon">💰</span>
+<span class="milestone-text">Funding Round</span>
+</div>
+<div class="milestone-option" onclick="selectMilestone(this)">
+<span class="milestone-icon">👥</span>
+<span class="milestone-text">Team Growth</span>
+</div>
+<div class="milestone-option" onclick="selectMilestone(this)">
+<span class="milestone-icon">📈</span>
+<span class="milestone-text">Traction Update</span>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label class="form-label">Title</label>
+<input class="form-input" placeholder="What's your big announcement?" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Description</label>
+<textarea class="form-input form-textarea" placeholder="Share the details of your milestone..."></textarea>
+</div>
+<div class="composer-actions">
+<button class="composer-button secondary" onclick="toggleComposer()">Cancel</button>
+<button class="composer-button primary" onclick="publishDrop()">Publish Drop</button>
+</div>
+</div>
+</div>
+<div class="drops-feed">
+<div class="drop-card">
+<div class="drop-header">
+<div class="drop-avatar">👤</div>
+<div class="drop-info">
+<h4 class="drop-author">Your Name</h4>
+<div class="drop-meta">
+<span>2 days ago</span>
+<span class="drop-badge milestone">Mission Complete</span>
+</div>
+</div>
+</div>
+<div class="drop-content">
+<h3 class="drop-title">🎯 Completed Signal Scan Mission!</h3>
+<p class="drop-description">
+            Just finished my first customer discovery mission! Conducted 8 interviews and uncovered some fascinating insights about our target market. The Jobs-to-be-Done framework revealed pain points we hadn't considered before.
+          </p>
+</div>
+<div class="drop-actions">
+<div class="drop-stats">
+<div class="stat-item">
+<span>👏</span>
+<span>12</span>
+</div>
+<div class="stat-item">
+<span>💬</span>
+<span>3</span>
+</div>
+<div class="stat-item">
+<span>🔄</span>
+<span>2</span>
+</div>
+</div>
+<div class="share-buttons">
+<button class="share-button">🐦</button>
+<button class="share-button">💼</button>
+<button class="share-button">🔗</button>
+</div>
+</div>
+</div>
+<div class="drop-card">
+<div class="drop-header">
+<div class="drop-avatar">👤</div>
+<div class="drop-info">
+<h4 class="drop-author">Your Name</h4>
+<div class="drop-meta">
+<span>1 week ago</span>
+<span class="drop-badge">Insight Discovery</span>
+</div>
+</div>
+</div>
+<div class="drop-content">
+<h3 class="drop-title">💡 Major Problem Statement Breakthrough</h3>
+<p class="drop-description">
+            After weeks of customer interviews, we've crystallized our core problem statement. It turns out our initial hypothesis was only scratching the surface. The real pain point is much deeper and more valuable to solve.
+          </p>
+</div>
+<div class="drop-actions">
+<div class="drop-stats">
+<div class="stat-item">
+<span>👏</span>
+<span>8</span>
+</div>
+<div class="stat-item">
+<span>💬</span>
+<span>5</span>
+</div>
+<div class="stat-item">
+<span>🔄</span>
+<span>1</span>
+</div>
+</div>
+<div class="share-buttons">
+<button class="share-button">🐦</button>
+<button class="share-button">💼</button>
+<button class="share-button">🔗</button>
+</div>
+</div>
+</div>
+<div class="drop-card">
+<div class="drop-header">
+<div class="drop-avatar">👤</div>
+<div class="drop-info">
+<h4 class="drop-author">Your Name</h4>
+<div class="drop-meta">
+<span>2 weeks ago</span>
+<span class="drop-badge achievement">Welcome</span>
+</div>
+</div>
+</div>
+<div class="drop-content">
+<h3 class="drop-title">🚀 Joined Founders Fleet!</h3>
+<p class="drop-description">
+            Excited to start my structured founder journey with Founders Fleet. Looking forward to the mission-based approach to building my startup and connecting with fellow founders along the way.
+          </p>
+</div>
+<div class="drop-actions">
+<div class="drop-stats">
+<div class="stat-item">
+<span>👏</span>
+<span>15</span>
+</div>
+<div class="stat-item">
+<span>💬</span>
+<span>7</span>
+</div>
+<div class="stat-item">
+<span>🔄</span>
+<span>3</span>
+</div>
+</div>
+<div class="share-buttons">
+<button class="share-button">🐦</button>
+<button class="share-button">💼</button>
+<button class="share-button">🔗</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script></script></body></html>

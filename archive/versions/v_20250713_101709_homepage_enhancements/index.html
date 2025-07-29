@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundersFleet - Discover & Follow Your Favorite Founders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/de44244fb2.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --background: #ffffff;
+            --text: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --card-bg: #ffffff;
+            --card-hover: #f9fafb;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --secondary: #f3f4f6;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --radius: 12px;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Callout Bar */
+        .callout-bar {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-size: 0.875rem;
+            z-index: 200;
+        }
+        
+        .callout-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .callout-cta {
+            background: white;
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .callout-cta:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+        }
+        
+        .callout-close {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        
+        .callout-close:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .callout-bar {
+                padding: 1rem;
+                text-align: center;
+            }
+            
+            .callout-content {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+
+        /* Header */
+        .header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        /* Override header content for three-column view */
+        .three-column-header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+        
+        .three-column-header .header-content {
+            max-width: none;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background: var(--secondary);
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background: white;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.25rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--text);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #374151;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 65ch;
+            margin: 0 auto;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 3rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.35rem 0.8rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.813rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            background: var(--secondary);
+            color: var(--text);
+            border-color: var(--text-secondary);
+        }
+        
+        .filter-btn.active {
+            background: var(--text);
+            color: white;
+            border-color: var(--text);
+        }
+
+        .filters-toggle {
+            margin-left: auto;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        /* Results Header */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .results-subtitle {
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Founder Grid */
+        .founder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .founder-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            min-height: 400px;
+        }
+
+        .founder-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            background: var(--card-hover);
+        }
+
+        .founder-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .founder-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .founder-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .founder-info {
+            flex: 1;
+        }
+        
+        .founder-company {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .founder-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.375rem;
+            line-height: 1.2;
+        }
+
+        .founder-title {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .company-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .company-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+        }
+        
+        .company-item.past {
+            opacity: 0.8;
+        }
+        
+        .company-label {
+            color: var(--text-secondary);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            min-width: 55px;
+        }
+
+        .company-name {
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+        
+        .company-name.secondary {
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .company-stage {
+            background: var(--secondary);
+            color: var(--text-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .founder-bio {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .founder-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.875rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .founder-philosophy {
+            position: relative;
+            font-style: italic;
+            color: var(--text-secondary);
+            padding: 0.75rem;
+            background: var(--secondary);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        .quote-mark {
+            position: absolute;
+            top: -0.5rem;
+            left: 0.5rem;
+            font-size: 2rem;
+            color: var(--primary);
+            opacity: 0.3;
+        }
+        
+        .founder-name-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .founder-name-row h3 {
+            margin: 0;
+        }
+        
+        .verified-badge {
+            color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.5rem;
+            flex-shrink: 0;
+        }
+        
+        .verified-badge i {
+            font-size: 0.875rem;
+        }
+        
+        .founder-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .founder-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn:hover {
+            background: var(--card-hover);
+            border-color: var(--primary);
+        }
+        
+        .action-btn.claim {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .action-btn.claim:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .action-btn.secondary {
+            background: var(--secondary);
+            color: var(--text);
+            border-color: transparent;
+        }
+        
+        .action-btn.secondary:hover {
+            background: var(--accent);
+            border-color: var(--border);
+        }
+
+        .tag {
+            background: var(--secondary);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+        
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .follow-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .follow-btn:hover {
+            background: var(--secondary);
+            border-color: var(--text-secondary);
+        }
+
+        .follow-btn.following {
+            background: white;
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .follow-btn.following:hover {
+            background: #f0fdf4;
+            border-color: #059669;
+        }
+
+        /* Heart Icon */
+        .heart-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-muted);
+        }
+
+        .heart-icon:hover {
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .heart-icon.liked {
+            color: #ef4444;
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+
+        /* Three Column View Styles */
+        .three-column-view {
+            display: none;
+            grid-template-columns: 240px 320px 1fr;
+            gap: 0;
+            height: 100vh;
+            margin-top: 0;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 80px;
+        }
+        
+        /* Column 1: Filters */
+        .column-filters {
+            background: var(--secondary);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+        }
+        
+        .column-filters h3 {
+            margin: 0 0 1.5rem 0;
+            font-size: 1.25rem;
+        }
+        
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+        
+        .filter-section h4 {
+            margin: 0 0 0.75rem 0;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+        
+        .filter-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        
+        .filter-item input[type="checkbox"] {
+            cursor: pointer;
+        }
+        
+        /* Column 2: Cards List */
+        .column-cards {
+            background: var(--background);
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+        }
+        
+        .cards-list {
+            padding: 1rem;
+        }
+        
+        .compact-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .compact-card:hover {
+            background: var(--card-hover);
+            transform: translateX(4px);
+        }
+        
+        .compact-card.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .compact-card.selected .compact-title,
+        .compact-card.selected .compact-company {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .compact-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .compact-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .compact-title {
+            font-size: 0.813rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.125rem;
+        }
+        
+        .compact-company {
+            font-size: 0.813rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Column 3: Profile Detail */
+        .column-profile {
+            background: var(--background);
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .profile-detail {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .profile-detail-header {
+            margin-bottom: 2rem;
+        }
+        
+        .profile-detail-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-detail-title {
+            margin: 0 0 1.5rem 0;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+        }
+        
+        .claim-account-box {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+        
+        .claim-account-box i {
+            font-size: 1.25rem;
+        }
+        
+        .claim-btn {
+            margin-left: auto;
+            padding: 0.5rem 1rem;
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .claim-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .profile-detail-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .profile-detail-actions .follow-btn,
+        .profile-detail-actions .connect-btn {
+            padding: 0.75rem 1.5rem;
+        }
+        
+        .profile-detail-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .profile-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+        
+        .profile-section h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        
+        .profile-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        @media (min-width: 1400px) {
+            .three-column-view {
+                grid-template-columns: 280px 380px 1fr;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .three-column-view {
+                grid-template-columns: 200px 280px 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .three-column-view {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto 1fr;
+            }
+            
+            .column-filters {
+                display: none;
+            }
+        }
+        
+        /* Profile View Styles */
+        .profile-view {
+            display: none;
+            margin-bottom: 3rem;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+        
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .back-btn:hover {
+            background: var(--accent);
+        }
+        
+        .profile-info h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-title {
+            margin: 0.5rem 0 0;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .profile-main {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .profile-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+        
+        .profile-card h2 {
+            margin: 0 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        
+        .philosophy-box {
+            background: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            position: relative;
+        }
+        
+        .philosophy-box i {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+        }
+        
+        .philosophy-box p {
+            margin: 0 0 0 2rem;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        .venture-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .venture-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .venture-current {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .venture-current h3 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+        
+        .venture-stage {
+            background: var(--secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .venture-details {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .venture-details span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .venture-details i {
+            font-size: 0.75rem;
+        }
+        
+        .venture-item.past h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .expertise-tag {
+            background: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--text);
+        }
+        
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .connect-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .connect-btn:hover {
+            background: var(--primary-hover);
+        }
+        
+        .profile-stats {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .similar-founders {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+        
+        .similar-founders h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1.125rem;
+        }
+        
+        .similar-founder-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .similar-founder-item:hover {
+            background: var(--secondary);
+            margin: 0 -0.75rem;
+            padding: 0.75rem;
+        }
+        
+        .similar-founder-item:last-child {
+            border-bottom: none;
+        }
+        
+        .similar-founder-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .similar-founder-company {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .mini-follow-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .mini-follow-btn:hover {
+            background: var(--secondary);
+        }
+        
+        .mini-follow-btn.following {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+        
+        @media (max-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .profile-info h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Sign Up Full Screen Styles */
+        .signup-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .signup-fullscreen .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .signup-container {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .signup-content {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .signup-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .signup-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+            overflow-y: auto;
+            padding: 2rem 0;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 5% auto;
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text);
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 0;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: var(--secondary);
+            color: var(--text);
+        }
+
+        .email-form {
+            margin-bottom: 1.5rem;
+        }
+
+        .email-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .email-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--text);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .email-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        .continue-btn:hover {
+            background: #374151;
+            transform: translateY(-1px);
+        }
+
+        .social-options {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            width: 60px;
+            height: 60px;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .social-btn:hover {
+            background: var(--card-hover);
+            border-color: var(--text-secondary);
+            transform: translateY(-1px);
+        }
+
+        .social-icon {
+            font-family: 'Font Awesome 6 Brands';
+        }
+
+        .terms-text {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .terms-text p {
+            margin-bottom: 1rem;
+        }
+
+        .terms-text a {
+            color: var(--text);
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Large screens */
+        @media (min-width: 1024px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.375rem;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-container {
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .hero {
+                padding: 0 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.125rem;
+            }
+            
+            .filters {
+                padding: 0 0.5rem;
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.35rem 0.75rem;
+                font-size: 0.75rem;
+            }
+
+            .founder-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer CTA Section - Using Promo Card Style */
+        .footer-cta {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 4rem 1rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .footer-cta-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        
+        .footer-cta-content p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .footer-benefits {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+        
+        .footer-benefit {
+            background: var(--card-bg);
+            padding: 0.75rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            border: 1px solid var(--border);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-benefit-icon {
+            font-size: 1rem;
+        }
+        
+        .footer-benefit span {
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .footer-cta-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .footer-cta-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 768px) {
+            .footer-cta {
+                margin: 4rem 0.5rem 0;
+                padding: 1.5rem;
+            }
+            
+            .footer-benefits {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .footer-benefit {
+                justify-content: center;
+                min-width: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sticky Callout Bar -->
+    <div class="callout-bar" id="calloutBar">
+        <div class="callout-content">
+            <span>Want access to private founder tools, live sessions, and real startup challenges?</span>
+            <button class="callout-cta" onclick="showSignUpModal()">Join Founders Fleet — It's Free →</button>
+        </div>
+        <button class="callout-close" onclick="closeCalloutBar()">&times;</button>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">F</div>
+                FoundersFleet
+            </a>
+            
+            <div class="search-container">
+                <div class="search-icon">🔍</div>
+                <input type="text" class="search-input" placeholder="Search founders" id="searchInput">
+            </div>
+            
+            <div class="header-actions">
+                <button id="backToGridBtn" class="btn btn-secondary" style="display: none;" onclick="backToGrid()">
+                    <i class="fas fa-arrow-left"></i> Back to Grid
+                </button>
+                <button class="btn btn-primary" onclick="showSignUpModal()">Enter</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Where Founders Find Each Other.</h1>
+            <p class="hero-subtitle">Discover fellow builders. Share the playbook. Follow the journey.<br>
+            Founders Fleet is where solo starts become shared momentum — and momentum becomes traction.</p>
+        </section>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="saas">SaaS</button>
+            <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+            <button class="filter-btn" data-filter="fintech">FinTech</button>
+            <button class="filter-btn" data-filter="ai">AI/ML</button>
+            <button class="filter-btn" data-filter="social">Social</button>
+            <button class="filter-btn" data-filter="marketplace">Marketplace</button>
+            <button class="filter-btn" data-filter="startup">Startup</button>
+            <button class="filter-btn" data-filter="scale">Scale-up</button>
+            <button class="filter-btn" data-filter="unicorn">Unicorn</button>
+            <button class="filter-btn" data-filter="public">Public</button>
+        </div>
+
+
+        <!-- Founder Grid -->
+        <div class="founder-grid" id="founderGrid">
+            <!-- Founders will be populated by JavaScript -->
+        </div>
+
+        <!-- Footer CTA Section -->
+        <section class="footer-cta">
+            <div class="footer-cta-content">
+                <h2>We're building the most connected platform for Founders.</h2>
+                <p>Go beyond browsing. Inside Founders Fleet, founders get access to a full-stack startup cockpit:</p>
+                
+                <ul class="footer-benefits">
+                    <li class="footer-benefit">
+                        <span class="footer-benefit-icon">🎯</span>
+                        <span>Live startup missions</span>
+                    </li>
+                    <li class="footer-benefit">
+                        <span class="footer-benefit-icon">📡</span>
+                        <span>Real-time market signals</span>
+                    </li>
+                    <li class="footer-benefit">
+                        <span class="footer-benefit-icon">📢</span>
+                        <span>Weekly briefings from founders you follow</span>
+                    </li>
+                    <li class="footer-benefit">
+                        <span class="footer-benefit-icon">🚀</span>
+                        <span>Instant launch tools and custom public profiles</span>
+                    </li>
+                </ul>
+                
+                <button class="footer-cta-button" onclick="showSignUpModal()">
+                    👉 Get Started
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sign Up Full Screen -->
+    <div class="signup-fullscreen" id="signUpModal" style="display: none;">
+        <!-- Keep the same header -->
+        <header class="header">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon">F</div>
+                    FoundersFleet
+                </a>
+                
+                <div class="search-container" style="visibility: hidden;">
+                    <div class="search-icon">🔍</div>
+                    <input type="text" class="search-input" placeholder="Search founders">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="closeSignUpModal()">Cancel</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="signup-container">
+            <div class="signup-content">
+                <div class="signup-header">
+                    <h1 class="signup-title">Sign up or log in</h1>
+                </div>
+            
+            <form class="email-form" onsubmit="handleEmailSubmit(event)">
+                <div class="email-field">
+                    <label class="email-label">Email</label>
+                    <input type="email" class="email-input" placeholder="Enter your email address" id="emailInput">
+                </div>
+                
+                <button type="submit" class="continue-btn">Continue</button>
+            </form>
+            
+            <div class="divider">
+                <span>Or continue with</span>
+            </div>
+            
+            <div class="social-options">
+                <button class="social-btn" onclick="authWithProvider('apple')">
+                    <span class="social-icon"></span>
+                </button>
+                <button class="social-btn" onclick="authWithProvider('google')">
+                    <span class="social-icon"></span>
+                </button>
+                <button class="social-btn" onclick="authWithProvider('facebook')">
+                    <span class="social-icon"></span>
+                </button>
+            </div>
+            
+            <div class="terms-text">
+                <p>By clicking Continue with Email, Apple, Google, or Facebook, you agree to FoundersFleet's <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> and to receiving emails from FoundersFleet.</p>
+                <p>This site is protected by reCAPTCHA and the <a href="#">Google Privacy Policy</a> and <a href="#">Terms of Service</a> apply.</p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Founder data
+        const founders = [
+            {
+                id: 1,
+                name: "Brian Chesky",
+                title: "Co-founder & CEO",
+                company: "Airbnb",
+                pastVentures: null,
+                stage: "public",
+                category: "marketplace",
+                philosophy: "Create a world where anyone can belong anywhere. Design matters as much as engineering.",
+                bio: "Created a platform where anyone can belong anywhere. Transforming how people travel and experience the world.",
+                avatar: "BC",
+                followers: "1.2M",
+                funding: "$6.4B",
+                valuation: "$75B",
+                tags: ["design-thinking", "marketplace", "community"],
+                verified: true,
+                following: false,
+                liked: false
+            },
+            {
+                id: 2,
+                name: "Patrick Collison",
+                title: "Co-founder & CEO",
+                company: "Stripe",
+                stage: "unicorn",
+                category: "fintech",
+                bio: "Building the economic infrastructure for the internet. Making online payments simple for businesses worldwide.",
+                avatar: "PC",
+                followers: "850K",
+                funding: "$2.2B",
+                valuation: "$95B",
+                tags: ["Payments", "Developer Tools", "Infrastructure"],
+                verified: false,
+                following: false,
+                liked: false
+            },
+            {
+                id: 3,
+                name: "Melanie Perkins",
+                title: "Co-founder & CEO",
+                company: "Canva",
+                stage: "unicorn",
+                category: "saas",
+                bio: "Democratizing design for everyone. Making it simple for anyone to create beautiful designs.",
+                avatar: "MP",
+                followers: "650K",
+                funding: "$560M",
+                valuation: "$40B",
+                tags: ["Design", "SaaS", "Creative Tools"],
+                verified: false,
+                following: false,
+                liked: false
+            },
+            {
+                id: 4,
+                name: "Daniel Ek",
+                title: "Co-founder & CEO",
+                company: "Spotify",
+                stage: "public",
+                category: "entertainment",
+                bio: "Revolutionizing how the world listens to music. Connecting millions of artists with billions of fans.",
+                avatar: "DE",
+                followers: "920K",
+                funding: "$2.7B",
+                valuation: "$25B",
+                tags: ["Music", "Streaming", "Entertainment"],
+                verified: false,
+                following: false,
+                liked: false
+            },
+            {
+                id: 5,
+                name: "Whitney Wolfe Herd",
+                title: "Founder & CEO",
+                company: "Bumble",
+                pastVentures: "Tinder (Co-founder)",
+                stage: "public",
+                category: "social",
+                philosophy: "Create a world where relationships are healthy and equitable, starting with women making the first move.",
+                bio: "Empowering women to make the first move. Creating healthy and equitable relationships.",
+                avatar: "WH",
+                followers: "580K",
+                funding: "$417M",
+                valuation: "$3.2B",
+                tags: ["dating", "social", "women-led"],
+                verified: true,
+                following: false,
+                liked: false
+            },
+            {
+                id: 6,
+                name: "Jensen Huang",
+                title: "Co-founder & CEO",
+                company: "NVIDIA",
+                stage: "public",
+                category: "ai",
+                bio: "Pioneering AI computing and accelerated computing. Powering the AI revolution.",
+                avatar: "JH",
+                followers: "1.1M",
+                funding: "IPO 1999",
+                valuation: "$1.8T",
+                tags: ["AI", "Hardware", "Computing"],
+                verified: false,
+                following: false,
+                liked: false
+            },
+            {
+                id: 7,
+                name: "Tobias Lütke",
+                title: "Co-founder & CEO",
+                company: "Shopify",
+                stage: "public",
+                category: "ecommerce",
+                bio: "Making commerce better for everyone. Empowering millions of entrepreneurs worldwide.",
+                avatar: "TL",
+                followers: "420K",
+                funding: "$122M",
+                valuation: "$65B",
+                tags: ["E-commerce", "SaaS", "Small Business"],
+                verified: false,
+                following: false,
+                liked: false
+            },
+            {
+                id: 8,
+                name: "Sam Altman",
+                title: "CEO",
+                company: "OpenAI",
+                stage: "startup",
+                category: "ai",
+                bio: "Building safe artificial general intelligence that benefits all of humanity.",
+                avatar: "SA",
+                followers: "2.1M",
+                funding: "$11.3B",
+                valuation: "$80B",
+                tags: ["AI", "Research", "AGI"],
+                verified: false,
+                following: false,
+                liked: false
+            },
+            {
+                id: 9,
+                name: "Katrina Lake",
+                title: "Founder & Former CEO",
+                company: "Stitch Fix",
+                stage: "public",
+                category: "ecommerce",
+                bio: "Pioneered personalized shopping using data science and AI to transform retail.",
+                avatar: "KL",
+                followers: "280K",
+                funding: "$42M",
+                valuation: "$320M",
+                tags: ["Fashion", "AI", "Personalization"],
+                verified: false,
+                following: false,
+                liked: false
+            },
+            {
+                id: 10,
+                name: "Drew Houston",
+                title: "Co-founder & CEO",
+                company: "Dropbox",
+                pastVentures: null,
+                stage: "public",
+                category: "saas",
+                philosophy: "Focus on building something people want. The rest will follow.",
+                bio: "Simplifying how people work together. Making it easy to access your files anywhere.",
+                avatar: "DH",
+                followers: "380K",
+                funding: "$607M",
+                valuation: "$8B",
+                tags: ["cloud-storage", "productivity", "collaboration"],
+                verified: false,
+                following: false,
+                liked: false
+            },
+            {
+                id: 11,
+                name: "Anthony Casalena",
+                title: "Founder & CEO",
+                company: "Squarespace",
+                stage: "public",
+                category: "saas",
+                bio: "Empowering people with creative ideas to succeed. Making beautiful websites accessible to everyone.",
+                avatar: "AC",
+                followers: "190K",
+                funding: "$78.5M",
+                valuation: "$6.6B",
+                tags: ["Website Builder", "Design", "Small Business"],
+                verified: false,
+                following: false,
+                liked: false
+            }
+        ];
+
+        let filteredFounders = [...founders];
+        let activeFilter = 'all';
+
+        function renderFounders(foundersToRender = filteredFounders) {
+            const grid = document.getElementById('founderGrid');
+            grid.innerHTML = '';
+
+            foundersToRender.forEach((founder, index) => {
+                const card = document.createElement('div');
+                card.className = 'founder-card';
+                card.onclick = () => showProfileView(founder.id);
+                card.innerHTML = `
+                    
+                    <div class="founder-header">
+                        <div class="founder-info">
+                            <div class="founder-name-row">
+                                <h3>${founder.name}</h3>
+                                ${founder.verified ? '<span class="verified-badge" title="Verified"><i class="fa-solid fa-signature"></i></span>' : ''}
+                            </div>
+                            <div class="founder-title">${founder.title}</div>
+                            <div class="founder-company">${founder.company}</div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="founder-bio">${founder.bio}</div>
+                    
+                    <div class="founder-tags">
+                        ${founder.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                    </div>
+                    
+                    <div class="founder-actions">
+                        <button class="follow-btn ${founder.following ? 'following' : ''}" onclick="event.stopPropagation(); toggleFollow(${founder.id})">
+                            ${founder.following ? '✓ Following' : '+ Follow'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleFollow(founderId) {
+            event.stopPropagation();
+            
+            // Check if user is logged in
+            const urlParams = new URLSearchParams(window.location.search);
+            const isLoggedIn = urlParams.get('logged_in') === 'true';
+            
+            if (!isLoggedIn) {
+                // Show signup modal for non-logged users
+                showFollowSignupModal();
+                return;
+            }
+            
+            const founder = founders.find(f => f.id === founderId);
+            founder.following = !founder.following;
+            renderFounders();
+        }
+
+        function toggleLike(founderId) {
+            const founder = founders.find(f => f.id === founderId);
+            founder.liked = !founder.liked;
+            renderFounders();
+        }
+        
+        function claimProfile(founderId) {
+            // Show modal for claiming profile
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="close-btn" onclick="this.closest('.modal').remove()">&times;</button>
+                    <div class="modal-header">
+                        <h2 class="modal-title">🔐 Claim Your Profile</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p style="margin-bottom: 1.5rem;">Verify your identity to claim and enhance your founder profile on Founders Fleet.</p>
+                        
+                        <div style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email Address</label>
+                            <input type="email" placeholder="your@company.com" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                        </div>
+                        
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">LinkedIn Profile</label>
+                            <input type="url" placeholder="https://linkedin.com/in/yourprofile" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                        </div>
+                        
+                        <button class="btn btn-primary" style="width: 100%;" onclick="alert('Verification request sent! We\'ll review and get back to you within 24 hours.'); this.closest('.modal').remove()">
+                            Submit Verification Request
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        function viewProfile(founderId) {
+            // For now, show the profile modal
+            showFounderProfile(founderId);
+        }
+
+        function filterFounders() {
+            if (activeFilter === 'all') {
+                filteredFounders = [...founders];
+            } else {
+                filteredFounders = founders.filter(founder => {
+                    return founder.category === activeFilter || founder.stage === activeFilter;
+                });
+            }
+            renderFounders();
+        }
+
+        function searchFounders(query) {
+            const searchResults = filteredFounders.filter(founder => 
+                founder.name.toLowerCase().includes(query.toLowerCase()) ||
+                founder.company.toLowerCase().includes(query.toLowerCase()) ||
+                founder.bio.toLowerCase().includes(query.toLowerCase()) ||
+                founder.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()))
+            );
+            renderFounders(searchResults);
+        }
+        
+        function searchByTag(tag) {
+            // Clear search input
+            document.getElementById('searchInput').value = '';
+            
+            // Filter founders by tag
+            const tagResults = founders.filter(founder => 
+                founder.tags.some(t => t.toLowerCase() === tag.toLowerCase())
+            );
+            
+            // Update results header
+            const resultsTitle = document.querySelector('.results-title');
+            resultsTitle.textContent = `Founders tagged #${tag}`;
+            
+            // Render filtered results
+            renderFounders(tagResults);
+            
+            // Scroll to results
+            document.querySelector('.results-header').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Check if user is logged in
+        function checkLoggedInUser() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isLoggedIn = urlParams.get('logged_in') === 'true';
+            const viewType = urlParams.get('view');
+            const profileId = urlParams.get('id');
+            
+            if (isLoggedIn) {
+                // Update header for logged-in user
+                const headerActions = document.getElementById('headerActions');
+                headerActions.innerHTML = `
+                    <button class="btn btn-secondary" onclick="goToApp()">🏠 Dashboard</button>
+                    <button class="btn btn-primary" onclick="viewMyProfile()">👤 My Profile</button>
+                `;
+            }
+            
+            // If viewing a specific profile
+            if (viewType === 'profile' && profileId) {
+                renderThreeColumnView(parseInt(profileId));
+            }
+        }
+        
+        function goToApp() {
+            window.location.href = 'app.html';
+        }
+        
+        function viewMyProfile() {
+            // For demo, show Brian Chesky's profile
+            showProfileView(1);
+        }
+        
+        function showProfileView(founderId) {
+            // Navigate to profile view with founder ID in URL
+            window.history.pushState({}, '', `?view=profile&id=${founderId}`);
+            renderThreeColumnView(founderId);
+        }
+        
+        function renderThreeColumnView(founderId) {
+            const founder = founders.find(f => f.id === founderId);
+            if (!founder) return;
+            
+            // Hide hero section and original grid
+            document.querySelector('.hero').style.display = 'none';
+            document.querySelector('.filters').style.display = 'none';
+            document.getElementById('founderGrid').style.display = 'none';
+            
+            // Update header styling for three-column view
+            const header = document.querySelector('.header');
+            header.classList.add('three-column-header');
+            
+            // Create or update three-column container
+            let threeColContainer = document.getElementById('threeColumnView');
+            if (!threeColContainer) {
+                threeColContainer = document.createElement('div');
+                threeColContainer.id = 'threeColumnView';
+                threeColContainer.className = 'three-column-view';
+                document.querySelector('main').appendChild(threeColContainer);
+            }
+            
+            threeColContainer.innerHTML = `
+                <div class="column-filters">
+                    <h3>Filters</h3>
+                    <div class="filter-section">
+                        <h4>Industry</h4>
+                        <div class="filter-list">
+                            <label class="filter-item"><input type="checkbox" value="saas"> SaaS</label>
+                            <label class="filter-item"><input type="checkbox" value="ecommerce"> E-Commerce</label>
+                            <label class="filter-item"><input type="checkbox" value="fintech"> FinTech</label>
+                            <label class="filter-item"><input type="checkbox" value="ai"> AI/ML</label>
+                            <label class="filter-item"><input type="checkbox" value="social"> Social</label>
+                            <label class="filter-item"><input type="checkbox" value="marketplace"> Marketplace</label>
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h4>Stage</h4>
+                        <div class="filter-list">
+                            <label class="filter-item"><input type="checkbox" value="startup"> Startup</label>
+                            <label class="filter-item"><input type="checkbox" value="scale"> Scale-up</label>
+                            <label class="filter-item"><input type="checkbox" value="unicorn"> Unicorn</label>
+                            <label class="filter-item"><input type="checkbox" value="public"> Public</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column-cards">
+                    <div class="cards-list" id="cardsListView">
+                        ${renderCardsList(founderId)}
+                    </div>
+                </div>
+                
+                <div class="column-profile">
+                    ${renderProfileDetail(founder)}
+                </div>
+            `;
+            
+            threeColContainer.style.display = 'grid';
+            
+            // Show back button
+            document.getElementById('backToGridBtn').style.display = 'block';
+        }
+        
+        function renderCardsList(selectedFounderId) {
+            const selectedFounder = founders.find(f => f.id === selectedFounderId);
+            const otherFounders = founders.filter(f => f.id !== selectedFounderId);
+            
+            return `
+                ${renderCompactCard(selectedFounder, true)}
+                ${otherFounders.map(f => renderCompactCard(f, false)).join('')}
+            `;
+        }
+        
+        function renderCompactCard(founder, isSelected) {
+            return `
+                <div class="compact-card ${isSelected ? 'selected' : ''}" onclick="showProfileView(${founder.id})">
+                    <div class="compact-card-header">
+                        <div>
+                            <div class="compact-name">${founder.name} ${founder.verified ? '<i class="fa-solid fa-signature" style="font-size: 0.75rem; color: var(--primary);"></i>' : ''}</div>
+                            <div class="compact-title">${founder.title}</div>
+                            <div class="compact-company">${founder.company}</div>
+                        </div>
+                        <button class="mini-follow-btn ${founder.following ? 'following' : ''}" onclick="event.stopPropagation(); toggleFollow(${founder.id})">
+                            ${founder.following ? '✓' : '+'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderProfileDetail(founder) {
+            return `
+                <div class="profile-detail">
+                    <div class="profile-detail-header">
+                        <h1>${founder.name} ${founder.verified ? '<i class="fa-solid fa-signature" style="font-size: 2rem; color: var(--primary); margin-left: 0.75rem;"></i>' : ''}</h1>
+                        <p class="profile-detail-title">${founder.title} at ${founder.company}</p>
+                        ${!founder.verified ? `
+                        <div class="claim-account-box">
+                            <i class="fa-solid fa-signature" style="color: var(--text-secondary);"></i>
+                            <span>Is this you?</span>
+                            <button class="claim-btn" onclick="claimProfile(${founder.id})">Claim this account</button>
+                        </div>
+                        ` : ''}
+                        <div class="profile-detail-actions">
+                            <button class="follow-btn ${founder.following ? 'following' : ''}" onclick="event.stopPropagation(); toggleFollow(${founder.id})">
+                                ${founder.following ? '✓ Following' : '+ Follow'}
+                            </button>
+                            <button class="connect-btn">
+                                <i class="fas fa-paper-plane"></i> Message
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-detail-content">
+                        <div class="profile-section">
+                            <h2>About</h2>
+                            <p>${founder.bio}</p>
+                            ${founder.philosophy ? `
+                            <div class="philosophy-box">
+                                <i class="fas fa-quote-left"></i>
+                                <p>${founder.philosophy}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="profile-section">
+                            <h2>Ventures</h2>
+                            <div class="venture-item">
+                                <div class="venture-current">
+                                    <h3>${founder.company}</h3>
+                                    <span class="venture-stage">${founder.stage}</span>
+                                </div>
+                                <div class="venture-details">
+                                    <span><i class="fas fa-users"></i> ${founder.followers}</span>
+                                    <span><i class="fas fa-dollar-sign"></i> ${founder.funding}</span>
+                                    <span><i class="fas fa-chart-line"></i> ${founder.valuation}</span>
+                                </div>
+                            </div>
+                            ${founder.pastVentures ? `
+                            <div class="venture-item past">
+                                <h4>Previously</h4>
+                                <p>${founder.pastVentures}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="profile-section">
+                            <h2>Expertise</h2>
+                            <div class="tags-list">
+                                ${founder.tags.map(tag => `<span class="expertise-tag">#${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        
+                        <div class="profile-stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-value">${founder.followers}</span>
+                                <span class="stat-label">Followers</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value">${Math.floor(Math.random() * 50) + 10}</span>
+                                <span class="stat-label">Posts</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-value">${Math.floor(Math.random() * 100) + 50}</span>
+                                <span class="stat-label">Connections</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderSimilarFounders(currentFounder) {
+            const similar = founders
+                .filter(f => f.id !== currentFounder.id && (f.category === currentFounder.category || f.stage === currentFounder.stage))
+                .slice(0, 3);
+            
+            return similar.map(f => `
+                <div class="similar-founder-item" onclick="showProfileView(${f.id})">
+                    <div>
+                        <div class="similar-founder-name">${f.name} ${f.verified ? '<i class="fa-solid fa-signature" style="font-size: 0.75rem; color: var(--primary);"></i>' : ''}</div>
+                        <div class="similar-founder-company">${f.company}</div>
+                    </div>
+                    <button class="mini-follow-btn ${f.following ? 'following' : ''}" onclick="event.stopPropagation(); toggleFollow(${f.id})">
+                        ${f.following ? '✓' : '+'}
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function backToGrid() {
+            // Hide three-column view and show grid
+            const threeColView = document.getElementById('threeColumnView');
+            if (threeColView) {
+                threeColView.style.display = 'none';
+            }
+            
+            // Reset header styling
+            const header = document.querySelector('.header');
+            header.classList.remove('three-column-header');
+            
+            // Show original elements
+            document.querySelector('.hero').style.display = 'block';
+            document.querySelector('.filters').style.display = 'flex';
+            document.getElementById('founderGrid').style.display = 'grid';
+            
+            // Update URL
+            window.history.pushState({}, '', window.location.pathname);
+            
+            // Hide back button
+            document.getElementById('backToGridBtn').style.display = 'none';
+        }
+        
+        function showFounderProfile(founderId) {
+            const founder = founders.find(f => f.id === founderId);
+            if (!founder) return;
+            
+            // Create profile modal
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.style.display = 'block';
+            modal.innerHTML = `
+                <div class="modal-content" style="max-width: 800px; padding: 0;">
+                    <button class="close-btn" onclick="this.closest('.modal').remove()">&times;</button>
+                    
+                    <!-- Profile Header -->
+                    <div style="display: flex; gap: 2rem; align-items: start; padding: 2rem; border-bottom: 1px solid var(--border);">
+                        <div style="width: 120px; height: 120px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: white; flex-shrink: 0;">
+                            ${founder.avatar}
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                <h2 style="margin: 0; font-size: 2rem;">${founder.name} ${founder.verified ? '<i class="fa-solid fa-signature" style="font-size: 1.5rem; color: var(--primary); margin-left: 0.5rem;"></i>' : ''}</h2>
+                                ${founder.verified ? '<span style="background: var(--success); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">✓ Verified</span>' : ''}
+                            </div>
+                            <p style="color: var(--text-secondary); margin: 0 0 1rem 0;">${founder.title} at ${founder.company}</p>
+                            
+                            <!-- Philosophy -->
+                            ${founder.philosophy ? `
+                            <div style="background: var(--secondary); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <p style="margin: 0; font-style: italic; color: var(--text-secondary);">"${founder.philosophy}"</p>
+                            </div>
+                            ` : ''}
+                            
+                            <!-- Action Buttons -->
+                            <div style="display: flex; gap: 1rem;">
+                                <button class="follow-btn ${founder.following ? 'following' : ''}" onclick="toggleFollow(${founder.id}); this.classList.toggle('following'); this.textContent = this.classList.contains('following') ? '✓ Following' : '+ Follow';">
+                                    ${founder.following ? '✓ Following' : '+ Follow'}
+                                </button>
+                                <button class="btn btn-secondary" onclick="alert('Connect feature coming soon!')">
+                                    🤝 Connect
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Ventures Section -->
+                    <div style="padding: 2rem; border-bottom: 1px solid var(--border);">
+                        <h3 style="margin: 0 0 1rem 0; font-size: 1.25rem;">Ventures</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div>
+                                <span style="font-weight: 600;">${founder.company}</span>
+                                <span style="color: var(--text-secondary); margin-left: 0.5rem;">(${founder.stage})</span>
+                            </div>
+                            ${founder.pastVentures ? `
+                            <div>
+                                <span style="color: var(--text-secondary); font-size: 0.875rem;">Previously:</span>
+                                <span style="margin-left: 0.5rem;">${founder.pastVentures}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <!-- Featured Content Section -->
+                    <div style="padding: 2rem; border-bottom: 1px solid var(--border);">
+                        <h3 style="margin: 0 0 1rem 0; font-size: 1.25rem;">Featured Content</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                            <div style="background: var(--secondary); padding: 1rem; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 1.25rem;">🎧</span>
+                                    <h4 style="margin: 0; font-size: 0.875rem;">Top Podcast</h4>
+                                </div>
+                                <p style="margin: 0; font-weight: 600; font-size: 0.875rem;">How I Built This</p>
+                                <p style="margin: 0.25rem 0 0; color: var(--text-secondary); font-size: 0.75rem;">"Building Airbnb from Zero"</p>
+                                <a href="#" style="color: var(--primary); font-size: 0.75rem; text-decoration: none;">Listen →</a>
+                            </div>
+                            
+                            <div style="background: var(--secondary); padding: 1rem; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 1.25rem;">📝</span>
+                                    <h4 style="margin: 0; font-size: 0.875rem;">Featured Essay</h4>
+                                </div>
+                                <p style="margin: 0; font-weight: 600; font-size: 0.875rem;">The Power of Community</p>
+                                <p style="margin: 0.25rem 0 0; color: var(--text-secondary); font-size: 0.75rem;">On building trust at scale</p>
+                                <a href="#" style="color: var(--primary); font-size: 0.75rem; text-decoration: none;">Read →</a>
+                            </div>
+                            
+                            <div style="background: var(--secondary); padding: 1rem; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 1.25rem;">💬</span>
+                                    <h4 style="margin: 0; font-size: 0.875rem;">Recent Tweet</h4>
+                                </div>
+                                <p style="margin: 0; font-size: 0.875rem; line-height: 1.4;">"Design is not just what it looks like. Design is how it works."</p>
+                                <a href="#" style="color: var(--primary); font-size: 0.75rem; text-decoration: none;">View on X →</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tags & Interests -->
+                    <div style="padding: 2rem;">
+                        <h3 style="margin: 0 0 1rem 0; font-size: 1.25rem;">Focus Areas</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            ${founder.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoggedInUser();
+            renderFounders();
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filterValue = this.dataset.filter;
+                    
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Update active filter
+                    activeFilter = filterValue;
+                    filterFounders();
+                });
+            });
+
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                const query = e.target.value.trim();
+                if (query) {
+                    searchFounders(query);
+                } else {
+                    renderFounders();
+                }
+            });
+        });
+
+        // Modal functions
+        function showSignUpModal() {
+            document.getElementById('signUpModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showFollowSignupModal() {
+            // Show the signup modal with custom content for follow action
+            const modal = document.getElementById('signUpModal');
+            const content = modal.querySelector('.signup-content');
+            
+            // Store original content
+            if (!modal.originalContent) {
+                modal.originalContent = content.innerHTML;
+            }
+            
+            content.innerHTML = `
+                <div class="signup-header">
+                    <h1 class="signup-title">Get the Full Experience</h1>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">Follow founders, join standups, and connect with fellow builders.</p>
+                </div>
+            
+                <form class="email-form" onsubmit="handleFollowEmailSubmit(event)">
+                    <div class="form-group">
+                        <label for="followEmail">Email Address</label>
+                        <input type="email" id="followEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Your Free Account</button>
+                </form>
+                
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <div class="social-options">
+                    <button class="social-btn" onclick="authWithProvider('apple')">
+                        <span class="social-icon"></span>
+                    </button>
+                    <button class="social-btn" onclick="authWithProvider('google')">
+                        <span class="social-icon"></span>
+                    </button>
+                    <button class="social-btn" onclick="authWithProvider('facebook')">
+                        <span class="social-icon"></span>
+                    </button>
+                </div>
+                
+                <div class="terms">
+                    <p>By continuing, you agree to our <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a>.</p>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSignUpModal() {
+            document.getElementById('signUpModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleEmailSubmit(event) {
+            event.preventDefault();
+            const emailInput = document.getElementById('emailInput');
+            const email = emailInput.value || 'demo@foundersfleet.com';
+            
+            // If no email entered, just go directly to app
+            if (!emailInput.value) {
+                window.location.href = 'app.html?action=quickstart';
+                return;
+            }
+            
+            // Simulate checking if user exists (in real app, this would be an API call)
+            const userExists = Math.random() > 0.5; // Random for demo
+            
+            if (userExists) {
+                // User exists, redirect to sign in
+                window.location.href = `app.html?email=${encodeURIComponent(email)}&action=signin`;
+            } else {
+                // New user, show user type selection
+                showUserTypeSelection(email);
+            }
+        }
+
+        function handleFollowEmailSubmit(event) {
+            event.preventDefault();
+            const email = event.target.email.value;
+            showFollowUserTypeSelection(email);
+        }
+
+        function showFollowUserTypeSelection(email) {
+            const modal = document.getElementById('signUpModal');
+            const content = modal.querySelector('.signup-content');
+            
+            content.innerHTML = `
+                <div class="signup-header">
+                    <h1 class="signup-title">Choose your role</h1>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">How would you like to participate in FoundersFleet?</p>
+                </div>
+                
+                <div class="signup-options" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="signup-option" onclick="completeFollowSignup('${email}', 'founder')" style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all 0.2s ease;">
+                        <span style="font-size: 2rem; margin-bottom: 0.75rem; display: block;">🚀</span>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">Founder</h3>
+                        <p style="color: #6b7280; font-size: 0.875rem; margin: 0; line-height: 1.5;">Share your journey and build your following</p>
+                    </div>
+                    
+                    <div class="signup-option" onclick="completeFollowSignup('${email}', 'investor')" style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all 0.2s ease;">
+                        <span style="font-size: 2rem; margin-bottom: 0.75rem; display: block;">💰</span>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">Investor</h3>
+                        <p style="color: #6b7280; font-size: 0.875rem; margin: 0; line-height: 1.5;">Discover promising founders and opportunities</p>
+                    </div>
+                    
+                    <div class="signup-option" onclick="completeFollowSignup('${email}', 'community')" style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all 0.2s ease;">
+                        <span style="font-size: 2rem; margin-bottom: 0.75rem; display: block;">🌟</span>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">Community</h3>
+                        <p style="color: #6b7280; font-size: 0.875rem; margin: 0; line-height: 1.5;">Follow founders and be inspired</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function completeFollowSignup(email, type) {
+            closeSignUpModal();
+            window.location.href = `app.html?email=${encodeURIComponent(email)}&type=${type}&action=signup&source=follow`;
+        }
+
+        function showUserTypeSelection(email) {
+            const modal = document.getElementById('signUpModal');
+            const content = modal.querySelector('.signup-content');
+            
+            content.innerHTML = `
+                <div class="signup-header">
+                    <h1 class="signup-title">Choose your role</h1>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;">How would you like to participate?</p>
+                </div>
+                
+                <div class="signup-options" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="signup-option" onclick="completeSignup('${email}', 'founder')" style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all 0.2s ease;">
+                        <span style="font-size: 2rem; margin-bottom: 0.75rem; display: block;">🚀</span>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">Founder</h3>
+                        <p style="color: #6b7280; font-size: 0.875rem; margin: 0; line-height: 1.5;">Share your journey and build your following</p>
+                    </div>
+                    
+                    <div class="signup-option" onclick="completeSignup('${email}', 'investor')" style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all 0.2s ease;">
+                        <span style="font-size: 2rem; margin-bottom: 0.75rem; display: block;">💰</span>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">Investor</h3>
+                        <p style="color: #6b7280; font-size: 0.875rem; margin: 0; line-height: 1.5;">Discover promising founders and opportunities</p>
+                    </div>
+                    
+                    <div class="signup-option" onclick="completeSignup('${email}', 'community')" style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; cursor: pointer; transition: all 0.2s ease;">
+                        <span style="font-size: 2rem; margin-bottom: 0.75rem; display: block;">🌟</span>
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">Community</h3>
+                        <p style="color: #6b7280; font-size: 0.875rem; margin: 0; line-height: 1.5;">Follow founders and be inspired</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function completeSignup(email, type) {
+            closeSignUpModal();
+            window.location.href = `app.html?email=${encodeURIComponent(email)}&type=${type}&action=signup`;
+        }
+
+        function authWithProvider(provider) {
+            // Close modal
+            closeSignUpModal();
+            
+            // Simulate social auth
+            window.location.href = `app.html?provider=${provider}&action=social`;
+        }
+        
+        function closeCalloutBar() {
+            document.getElementById('calloutBar').style.display = 'none';
+        }
+
+    </script>
+</body>
+</html>

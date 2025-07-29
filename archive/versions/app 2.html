@@ -1,0 +1,2655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #1f2937;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --secondary: #f3f4f6;
+            --accent: #f8fafc;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #8b5cf6;
+            --radius: 12px;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+
+        /* Main Navigation */
+        .main-nav {
+            display: flex;
+            gap: 2rem;
+            margin-right: auto;
+        }
+
+        .nav-item {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover {
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Header Actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Icon Buttons */
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.125rem;
+        }
+
+        .icon-btn:hover {
+            background: var(--secondary);
+        }
+
+        .icon-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Sub Navigation */
+        .sub-nav {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: sticky;
+            top: 73px; /* Height of header */
+            z-index: 999;
+        }
+
+        .venture-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-right: 1rem;
+            white-space: nowrap;
+        }
+
+        .sub-nav-pill {
+            padding: 0.75rem 1.5rem;
+            background: var(--secondary);
+            border: none;
+            border-radius: 24px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sub-nav-pill:hover {
+            background: #e5e7eb;
+        }
+
+        .sub-nav-pill.active {
+            background: var(--text);
+            color: white;
+        }
+
+        .add-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: auto;
+            transition: all 0.2s ease;
+        }
+
+        .add-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Metric Card */
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .metric-card.primary::before {
+            background: var(--primary);
+        }
+
+        .metric-card.warning::before {
+            background: var(--warning);
+        }
+
+        .metric-card.purple::before {
+            background: var(--purple);
+        }
+
+        .metric-card.info::before {
+            background: #06b6d4;
+        }
+
+        .metric-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .metric-status.danger {
+            color: var(--danger);
+        }
+
+        .metric-status.success {
+            color: var(--success);
+        }
+
+        /* Action Cards */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        .action-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .action-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .action-badge {
+            padding: 0.25rem 0.75rem;
+            background: #d1fae5;
+            color: var(--success);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .action-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+        }
+
+        /* Settings Page */
+        .settings-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .settings-list {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .settings-item {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-item:hover {
+            background: var(--secondary);
+        }
+
+        /* Community Page */
+        .community-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .community-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .community-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .community-card.active {
+            background: var(--text);
+            color: white;
+        }
+
+        .community-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* Founder Grid */
+        .founder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .founder-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .founder-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        .founder-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .founder-info h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .verified-badge {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .founder-title {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .founder-company {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .founder-bio {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .founder-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: var(--secondary);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            background: var(--accent);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Message Bar */
+        .message-bar {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .message-bar-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+        
+        .message-bar-cta {
+            background: white;
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .message-bar-cta:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+        }
+        
+        .message-bar-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+            padding: 0.25rem;
+        }
+        
+        .message-bar-close:hover {
+            opacity: 1;
+        }
+
+        /* Profile Detail View */
+        .profile-detail-view {
+            background: var(--background);
+            padding: 2rem 0;
+        }
+        
+        /* Two Column Layout */
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .cards-column {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            height: fit-content;
+        }
+        
+        .profile-column {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+
+        /* Callout Bar */
+        .callout-bar {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-size: 0.875rem;
+            z-index: 200;
+        }
+        
+        .callout-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .callout-cta {
+            background: white;
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .callout-cta:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+        }
+        
+        .callout-close {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+        
+        .callout-close:hover {
+            opacity: 1;
+        }
+
+        /* Signup Modal */
+        .signup-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background);
+            z-index: 10000;
+            display: none;
+        }
+
+        .signup-fullscreen .header-content {
+            justify-content: space-between;
+        }
+
+        .signup-fullscreen .search-container {
+            display: none !important;
+        }
+
+        .signup-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 2rem;
+        }
+
+        .signup-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 3rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .signup-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .email-form {
+            margin-bottom: 1.5rem;
+        }
+
+        .email-field {
+            margin-bottom: 1rem;
+        }
+
+        .email-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--card-bg);
+            color: var(--text);
+            transition: border-color 0.2s ease;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .continue-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider span {
+            background: var(--card-bg);
+            padding: 0 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .social-options {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.875rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: var(--secondary);
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+        }
+
+        .terms-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .terms-text a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .callout-bar {
+                padding: 1rem;
+                text-align: center;
+            }
+            
+            .callout-content {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .signup-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Hide/Show Sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+        
+        .tools-section {
+            display: none;
+        }
+        
+        .tools-section.active {
+            display: block;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid,
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .search-container {
+                order: 3;
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .main-nav {
+                order: 2;
+            }
+
+            .sub-nav {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .community-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo" onclick="showSection('home'); return false;">
+                <div class="logo-icon">FF</div>
+                <span class="logo-text">FoundersFleet</span>
+            </a>
+            
+            <nav class="main-nav">
+                <a href="#community" class="nav-item" onclick="showSection('community')">Community</a>
+                <a href="#tools" class="nav-item" onclick="showSection('tools')">Tools</a>
+            </nav>
+            
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search founders" id="searchInput">
+            </div>
+            
+            <div class="header-actions">
+                <button class="icon-btn" onclick="showSection('launch')" id="launchBtn">
+                    <i class="fas fa-rocket"></i>
+                </button>
+                <button class="icon-btn" onclick="showSection('settings')" id="settingsBtn">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Callout Bar -->
+    <div class="callout-bar" id="calloutBar">
+        <div class="callout-content">
+            <span>Want access to private founder tools, live sessions, and real startup challenges?</span>
+            <button class="callout-cta" onclick="showSignUpModal()">Join Founders Fleet for Free</button>
+        </div>
+        <button class="callout-close" onclick="hideCalloutBar()">×</button>
+    </div>
+
+    <!-- Sub Navigation (Launch) -->
+    <div class="sub-nav" id="launchSubNav">
+        <div class="venture-selector">
+            <span>Venture Name</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        
+        <button class="sub-nav-pill active" onclick="event.stopPropagation(); showToolsSection('briefing')">Briefing</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('control')">Control</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('flightplan')">Flightplan</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('idea')">Idea</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('missions')">Missions</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('drops')">Drops</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('signals')">Signals</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('terminal')">Terminal</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('vault')">Vault</button>
+        <button class="sub-nav-pill" onclick="event.stopPropagation(); showToolsSection('hangar')">Hangar</button>
+        
+        <button class="add-btn">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <div id="home" class="section">
+            <!-- Hero -->
+            <div style="text-align: center; padding: 3rem 1rem; background: var(--card-bg); border-radius: var(--radius); margin-bottom: 3rem; border: 1px solid var(--border);">
+                <h1 style="font-size: 2.5rem; font-weight: 700; margin: 0 0 1rem 0; background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Where Founders Find Each Other.</h1>
+                <p style="font-size: 1.125rem; color: var(--text-secondary); line-height: 1.6; max-width: 600px; margin: 0 auto;">Discover fellow builders. Share the playbook. Follow the journey.<br>
+                Founders Fleet is where solo starts become shared momentum — and momentum becomes traction.</p>
+            </div>
+            
+            <!-- Platform Overview -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                <!-- Community Preview -->
+                <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; border-top: 3px solid var(--primary); cursor: pointer; transition: all 0.2s ease;" onclick="showSection('community')" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; background: rgba(59, 130, 246, 0.1);">👥</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 1rem 0; font-size: 1.5rem;">Community</h3>
+                    <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Connect with fellow founders, follow their journeys, and discover new perspectives from builders across industries.</p>
+                    <div style="display: flex; align-items: center; color: var(--primary); font-weight: 600; font-size: 0.875rem;">
+                        <span>Explore Community</span>
+                        <span style="margin-left: 0.5rem;">→</span>
+                    </div>
+                </div>
+                
+                <!-- Tools Preview -->
+                <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; border-top: 3px solid var(--warning); cursor: pointer; transition: all 0.2s ease;" onclick="showSection('tools')" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; background: rgba(245, 158, 11, 0.1);">🛠️</div>
+                        <span style="background: rgba(59, 130, 246, 0.2); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free + Premium</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 1rem 0; font-size: 1.5rem;">Startup Tools</h3>
+                    <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Access powerful tools for ideation, planning, tracking progress, and connecting with the startup ecosystem.</p>
+                    <div style="display: flex; align-items: center; color: var(--primary); font-weight: 600; font-size: 0.875rem;">
+                        <span>View All Tools</span>
+                        <span style="margin-left: 0.5rem;">→</span>
+                    </div>
+                </div>
+                
+                <!-- Getting Started / Launch -->
+                <div id="homeThirdCard" style="background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; border-top: 3px solid var(--success); cursor: pointer; transition: all 0.2s ease;" onclick="handleThirdCardClick()" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow)'">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 60px; height: 60px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; background: rgba(16, 185, 129, 0.1);">🚀</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 id="thirdCardTitle" style="font-weight: 600; margin: 0 0 1rem 0; font-size: 1.5rem;">Launch</h3>
+                    <p id="thirdCardDescription" style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5; margin: 0 0 1.5rem 0;">Access your startup cockpit with tools, briefings, and mission control for building your venture.</p>
+                    <div style="display: flex; align-items: center; color: var(--primary); font-weight: 600; font-size: 0.875rem;">
+                        <span id="thirdCardAction">Enter Launch</span>
+                        <span style="margin-left: 0.5rem;">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Launch Section -->
+        <div id="launch" class="section">
+            <!-- Briefing Room -->
+            <div id="briefing" class="tools-section active">
+                <h1 class="page-title">Briefing Room</h1>
+                <p class="section-subtitle">Important updates from founders you follow</p>
+                
+                <div class="briefing-feed" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Brian Chesky</h2>
+                            <span class="action-badge">2 hours ago</span>
+                        </div>
+                        <p class="action-description">
+                            <strong>Milestone Achieved: 1 Million Hosts</strong><br>
+                            Thrilled to announce we've reached 1 million hosts on Airbnb! This community continues to inspire us every day.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary">👍 Like</button>
+                            <button class="btn btn-secondary">💬 Comment</button>
+                            <button class="btn btn-secondary">🔁 Share</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Melanie Perkins</h2>
+                            <span class="action-badge">5 hours ago</span>
+                        </div>
+                        <p class="action-description">
+                            <strong>New Feature Launch</strong><br>
+                            Excited to announce our new AI-powered design assistant. Making design even more accessible for everyone!
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary">👍 Like</button>
+                            <button class="btn btn-secondary">💬 Comment</button>
+                            <button class="btn btn-secondary">🔁 Share</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Patrick Collison</h2>
+                            <span class="action-badge">1 day ago</span>
+                        </div>
+                        <p class="action-description">
+                            <strong>Platform Update</strong><br>
+                            We've just rolled out enhanced fraud detection across our payment infrastructure. Keeping commerce secure for everyone.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary">👍 Like</button>
+                            <button class="btn btn-secondary">💬 Comment</button>
+                            <button class="btn btn-secondary">🔁 Share</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Control Dashboard -->
+            <div id="control" class="tools-section">
+                <h1 class="page-title">Control</h1>
+                <p class="section-subtitle">Command Center</p>
+                
+                <!-- Metrics Grid -->
+                <div class="dashboard-grid">
+                    <div class="metric-card primary">
+                        <div class="metric-icon">💰</div>
+                        <div class="metric-value">$0</div>
+                        <div class="metric-label">Monthly Recurring Revenue</div>
+                        <div class="metric-status danger">
+                            <i class="fas fa-circle"></i>
+                            Starting from zero
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card warning">
+                        <div class="metric-icon">👥</div>
+                        <div class="metric-value">0</div>
+                        <div class="metric-label">Active Users</div>
+                        <div class="metric-status danger">
+                            <i class="fas fa-circle"></i>
+                            No users yet
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card purple">
+                        <div class="metric-icon">📈</div>
+                        <div class="metric-value">0%</div>
+                        <div class="metric-label">Conversion Rate</div>
+                        <div class="metric-status danger">
+                            <i class="fas fa-circle"></i>
+                            Not tracking yet
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card info">
+                        <div class="metric-icon">🎯</div>
+                        <div class="metric-value">15%</div>
+                        <div class="metric-label">Progress Through Seed Stage</div>
+                        <div class="metric-status success">
+                            <i class="fas fa-circle"></i>
+                            On track for customer discovery
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Cards -->
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Flightplan Progress</h2>
+                            <span class="action-badge">Active</span>
+                        </div>
+                        <p class="action-description">
+                            Track your journey through the founder stages with structured milestones and progress tracking.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="showToolsSection('flightplan')">View Progress</button>
+                            <button class="btn btn-secondary">Update Status</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Mission Queue</h2>
+                            <span class="action-badge">2 Active</span>
+                        </div>
+                        <p class="action-description">
+                            Complete structured founder missions to build your startup systematically and track your learning.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="showToolsSection('missions')">Continue Missions</button>
+                            <button class="btn btn-secondary">Browse All</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Drops Feed</h2>
+                            <span class="action-badge">2 Recent</span>
+                        </div>
+                        <p class="action-description">
+                            Share your founder journey milestones and connect with other entrepreneurs in the community.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="showToolsSection('drops')">View Drops</button>
+                            <button class="btn btn-secondary">Create Drop</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Market Signals</h2>
+                            <span class="action-badge" style="background: #fef3c7; color: #d97706;">Live Data</span>
+                        </div>
+                        <p class="action-description">
+                            Monitor market trends, funding patterns, and opportunity signals relevant to your startup space.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="showToolsSection('signals')">View Signals</button>
+                            <button class="btn btn-secondary">Get Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Other Tools Sections (placeholder) -->
+            <div id="flightplan" class="tools-section">
+                <h1 class="page-title">Flightplan</h1>
+                <p class="section-subtitle">Roadmap & Milestones</p>
+                <div style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 2rem;">
+                    15% Complete • Idea Stage
+                </div>
+                
+                <div class="action-card" style="background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf0 100%); border: 2px solid var(--primary); margin-bottom: 2rem;">
+                    <div class="action-header">
+                        <h2 class="action-title">💡 Seed Stage</h2>
+                    </div>
+                    <p class="action-description">
+                        Focus on customer discovery, market validation, and building your MVP foundation. This stage is about proving your concept and finding product-market fit signals.
+                    </p>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <span>🎯</span>
+                            Start Customer Discovery
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>📋</span>
+                            View Stage Guide
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Problem Definition</h2>
+                            <span class="action-badge" style="background: rgba(16, 185, 129, 0.2); color: var(--success);">Completed</span>
+                        </div>
+                        <p class="action-description">
+                            Clearly define the problem you're solving and identify your target customer segment.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary">View Details</button>
+                            <button class="btn btn-secondary">Edit</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Customer Discovery</h2>
+                            <span class="action-badge" style="background: rgba(59, 130, 246, 0.2); color: var(--primary);">In Progress</span>
+                        </div>
+                        <p class="action-description">
+                            Conduct interviews and surveys to validate your understanding of customer needs and pain points.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">Continue</button>
+                            <button class="btn btn-secondary">View Guide</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">Market Validation</h2>
+                            <span class="action-badge" style="background: rgba(156, 163, 175, 0.2); color: var(--text-secondary);">Pending</span>
+                        </div>
+                        <p class="action-description">
+                            Test your value proposition with potential customers and gather feedback on your solution concept.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" disabled>Start Soon</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">MVP Planning</h2>
+                            <span class="action-badge" style="background: rgba(156, 163, 175, 0.2); color: var(--text-secondary);">Pending</span>
+                        </div>
+                        <p class="action-description">
+                            Define your minimum viable product features based on validated customer needs and feedback.
+                        </p>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" disabled>Start Soon</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="idea" class="tools-section">
+                <h1 class="page-title">Idea</h1>
+                <p class="section-subtitle">Idea Validation & Development</p>
+                
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0;">💡 Idea Canvas</h3>
+                            <button class="btn btn-primary">New Idea</button>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Structure and validate your startup ideas with our guided framework.</p>
+                        <div style="display: flex; gap: 1rem;">
+                            <div style="flex: 1; padding: 1rem; background: var(--accent); border-radius: 8px;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--primary);">3</div>
+                                <div style="color: var(--text-secondary); font-size: 0.875rem;">Active Ideas</div>
+                            </div>
+                            <div style="flex: 1; padding: 1rem; background: var(--accent); border-radius: 8px;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--success);">1</div>
+                                <div style="color: var(--text-secondary); font-size: 0.875rem;">Validated</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 1rem 0;">🔍 Problem Discovery</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="padding: 0.75rem; background: var(--accent); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span>Customer Interview Templates</span>
+                                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
+                            </div>
+                            <div style="padding: 0.75rem; background: var(--accent); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span>Jobs-to-be-Done Framework</span>
+                                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
+                            </div>
+                            <div style="padding: 0.75rem; background: var(--accent); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span>Pain Point Analyzer</span>
+                                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 1rem 0;">📊 Market Research</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="padding: 0.75rem; background: var(--accent); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span>TAM Calculator</span>
+                                <span style="background: var(--primary); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">New</span>
+                            </div>
+                            <div style="padding: 0.75rem; background: var(--accent); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span>Competitor Analysis</span>
+                                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
+                            </div>
+                            <div style="padding: 0.75rem; background: var(--accent); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                                <span>Market Trends</span>
+                                <i class="fas fa-chevron-right" style="color: var(--text-secondary);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="missions" class="tools-section">
+                <h1 class="page-title">Missions</h1>
+                <p class="section-subtitle">Discover Your Next Challenge</p>
+                
+                <div class="action-card" style="background: linear-gradient(135deg, #f8f9fa 0%, #e8eaf0 100%); border: 2px solid var(--primary); margin-bottom: 2rem;">
+                    <div style="background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span>🎯</span>
+                        <span>Featured Mission</span>
+                    </div>
+                    <div class="action-header">
+                        <h2 class="action-title">Signal Scan: Customer Discovery</h2>
+                    </div>
+                    <p class="action-description">
+                        Master the art of customer interviews with this structured mission. Learn to identify pain points, validate assumptions, and uncover hidden insights that will shape your product direction.
+                    </p>
+                    <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; font-size: 0.875rem; color: var(--text-secondary);">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span>⏱️</span>
+                            <span>2-3 weeks</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span>👥</span>
+                            <span>127 founders completed</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span>🎯</span>
+                            <span>All stages welcome</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <span>🚀</span>
+                            Start Mission
+                        </button>
+                        <button class="btn btn-secondary">
+                            <span>📋</span>
+                            View Details
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="action-grid">
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">🕵️ Customer Recon</h2>
+                        </div>
+                        <p class="action-description">
+                            Deep dive into your target customer's world. Conduct ethnographic research to understand their daily routines, pain points, and unmet needs.
+                        </p>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--text-secondary);">
+                            <span>⏱️ 1-2 weeks</span>
+                            <span>🎯 Pre-seed</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">Start Mission</button>
+                            <button class="btn btn-secondary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">💡 Problem Validation</h2>
+                        </div>
+                        <p class="action-description">
+                            Validate whether the problem you're solving is actually worth solving. Test problem-solution fit with structured experiments.
+                        </p>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--text-secondary);">
+                            <span>⏱️ 2-3 weeks</span>
+                            <span>🎯 Seed</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">Start Mission</button>
+                            <button class="btn btn-secondary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">🎯 MVP Design Sprint</h2>
+                        </div>
+                        <p class="action-description">
+                            Design and prototype your minimum viable product in a focused 5-day sprint. Test core assumptions with real users.
+                        </p>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--text-secondary);">
+                            <span>⏱️ 1 week</span>
+                            <span>🎯 Pre-seed</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">Start Mission</button>
+                            <button class="btn btn-secondary">Learn More</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-card">
+                        <div class="action-header">
+                            <h2 class="action-title">📈 Growth Experiment</h2>
+                        </div>
+                        <p class="action-description">
+                            Run structured growth experiments to find scalable acquisition channels. Learn the fundamentals of startup growth.
+                        </p>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: var(--text-secondary);">
+                            <span>⏱️ 3-4 weeks</span>
+                            <span>🎯 Series A</span>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary">Start Mission</button>
+                            <button class="btn btn-secondary">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="drops" class="tools-section">
+                <h1 class="page-title">Drops</h1>
+                <p class="section-subtitle">Launch Announcements</p>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div></div>
+                    <button class="btn btn-primary" style="background: linear-gradient(135deg, var(--primary), var(--purple)); box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);">
+                        <span>📦</span>
+                        Create New Drop
+                    </button>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: #6366f1; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: white;">👤</div>
+                            <div style="flex: 1;">
+                                <h4 style="font-weight: 600; margin: 0 0 0.25rem 0; font-size: 0.875rem;">Your Name</h4>
+                                <div style="display: flex; align-items: center; gap: 1rem; color: var(--text-secondary); font-size: 0.75rem;">
+                                    <span>2 days ago</span>
+                                    <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 600;">Mission Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.75rem 0;">🎯 Completed Signal Scan Mission!</h3>
+                            <p style="color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                                Just finished my first customer discovery mission! Conducted 8 interviews and uncovered some fascinating insights about our target market. The Jobs-to-be-Done framework revealed pain points we hadn't considered before.
+                            </p>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border);">
+                            <div style="display: flex; gap: 1rem; color: var(--text-secondary); font-size: 0.875rem;">
+                                <div style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                    <span>👏</span>
+                                    <span>12</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                    <span>💬</span>
+                                    <span>3</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                    <span>🔄</span>
+                                    <span>2</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn btn-secondary" style="padding: 0.5rem; font-size: 0.875rem;">🐦</button>
+                                <button class="btn btn-secondary" style="padding: 0.5rem; font-size: 0.875rem;">💼</button>
+                                <button class="btn btn-secondary" style="padding: 0.5rem; font-size: 0.875rem;">🔗</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="width: 50px; height: 50px; border-radius: 50%; background: #6366f1; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: white;">👤</div>
+                            <div style="flex: 1;">
+                                <h4 style="font-weight: 600; margin: 0 0 0.25rem 0; font-size: 0.875rem;">Your Name</h4>
+                                <div style="display: flex; align-items: center; gap: 1rem; color: var(--text-secondary); font-size: 0.75rem;">
+                                    <span>1 week ago</span>
+                                    <span style="background: rgba(59, 130, 246, 0.2); color: var(--primary); padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 600;">Insight Discovery</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.75rem 0;">💡 Major Problem Statement Breakthrough</h3>
+                            <p style="color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                                After weeks of customer interviews, we've crystallized our core problem statement. It turns out our initial hypothesis was only scratching the surface. The real pain point is much deeper and more valuable to solve.
+                            </p>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border);">
+                            <div style="display: flex; gap: 1rem; color: var(--text-secondary); font-size: 0.875rem;">
+                                <div style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                    <span>👏</span>
+                                    <span>8</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                    <span>💬</span>
+                                    <span>5</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer;">
+                                    <span>🔄</span>
+                                    <span>1</span>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn btn-secondary" style="padding: 0.5rem; font-size: 0.875rem;">🐦</button>
+                                <button class="btn btn-secondary" style="padding: 0.5rem; font-size: 0.875rem;">💼</button>
+                                <button class="btn btn-secondary" style="padding: 0.5rem; font-size: 0.875rem;">🔗</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="signals" class="tools-section">
+                <h1 class="page-title">Signals</h1>
+                <p class="section-subtitle">Trend Monitoring Hub</p>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div></div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div style="background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem; display: flex; gap: 0.25rem;">
+                            <button onclick="changeTimeframe('1H')" style="background: transparent; border: none; color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer;">1H</button>
+                            <button onclick="changeTimeframe('24H')" style="background: transparent; border: none; color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer;">24H</button>
+                            <button onclick="changeTimeframe('7D')" style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer;">7D</button>
+                            <button onclick="changeTimeframe('30D')" style="background: transparent; border: none; color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.875rem; cursor: pointer;">30D</button>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 8px;">
+                            <div style="width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s infinite;"></div>
+                            <span>Live Data</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, var(--primary), var(--purple)); color: white; margin-bottom: 2rem; position: relative; overflow: hidden;">
+                    <div style="position: relative; z-index: 2; padding: 2rem;">
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0;">Get Your Startup Signals Report</h2>
+                        <p style="font-size: 1rem; margin: 0 0 2rem 0; opacity: 0.95;">Imagine asking the top 100 economists to review your startup idea and timing</p>
+                        <button class="btn" style="background: white; color: var(--primary); border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);">
+                            <span>📊</span>
+                            Get My Report
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="card" style="padding: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0;">Market Sentiment Index</h3>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.5rem; font-weight: 700;">84.2</span>
+                                <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">+12.3%</span>
+                            </div>
+                        </div>
+                        <div style="height: 200px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
+                            📈 Chart Visualization Area
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                                <h4 style="font-weight: 600; font-size: 0.875rem; margin: 0;">VC Funding Volume</h4>
+                                <span style="font-size: 0.75rem; background: rgba(239, 68, 68, 0.2); color: var(--danger); padding: 0.25rem 0.5rem; border-radius: 12px; font-weight: 600;">Critical</span>
+                            </div>
+                            <div style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0;">$2.1B</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary);">-23.4% vs last week</div>
+                        </div>
+
+                        <div class="card">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                                <h4 style="font-weight: 600; font-size: 0.875rem; margin: 0;">AI Interest Score</h4>
+                                <span style="font-size: 0.75rem; background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.5rem; border-radius: 12px; font-weight: 600;">Normal</span>
+                            </div>
+                            <div style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0;">92.4</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary);">+5.1% vs last week</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Terminal View -->
+            <div id="terminal" class="tools-section">
+                <h1 class="page-title">Terminal</h1>
+                <p class="section-subtitle">Sandbox & Branding Hub</p>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div></div>
+                    <div style="display: flex; align-items: center; gap: 1rem; background: var(--card-bg); border: 1px solid var(--border); padding: 1rem 1.5rem; border-radius: var(--radius);">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--success); animation: pulse 2s infinite;"></div>
+                        <span>Demo Environment Active</span>
+                        <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 500;">productname.foundersfleet.com</a>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, var(--primary), var(--purple)); color: white; margin-bottom: 2rem; position: relative; overflow: hidden;">
+                    <div style="position: relative; z-index: 2; padding: 2rem;">
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0;">🚀 Launch Your Demo in Minutes</h2>
+                        <p style="font-size: 1rem; margin: 0 0 2rem 0; opacity: 0.95;">Get your MVP online instantly with our containerized demo environment. Built-in auth, database, and custom domain support included.</p>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn" style="background: white; color: var(--primary); border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);">
+                                <span>⚡</span>
+                                Quick Deploy
+                            </button>
+                            <button class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 1rem 2rem; border-radius: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.75rem;">
+                                <span>📋</span>
+                                Browse Templates
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div class="card" style="border-top: 3px solid var(--success);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(16, 185, 129, 0.2);">🎨</div>
+                            <span style="font-size: 0.75rem; background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.5rem; border-radius: 12px; font-weight: 600;">Ready</span>
+                        </div>
+                        <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Branding Hub</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0 0 1rem 0;">Centralized brand asset management with export-ready templates for consistent branding.</p>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-primary">Open Hub</button>
+                            <button class="btn btn-secondary">Upload Assets</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-top: 3px solid var(--warning);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(245, 158, 11, 0.2);">🌐</div>
+                            <span style="font-size: 0.75rem; background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.5rem; border-radius: 12px; font-weight: 600;">Active</span>
+                        </div>
+                        <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Demo Hosting</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0 0 1rem 0;">Multi-modal hosting with Rails + React + PostgreSQL stack for showcasing your MVP.</p>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-primary">View Demo</button>
+                            <button class="btn btn-secondary">Configure</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="border-top: 3px solid var(--purple);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(139, 92, 246, 0.2);">🛠️</div>
+                            <span style="font-size: 0.75rem; background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.5rem; border-radius: 12px; font-weight: 600;">Available</span>
+                        </div>
+                        <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Developer Tools</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0 0 1rem 0;">Containerized environments with feature flags, monitoring, and deployment automation.</p>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-primary">Access Tools</button>
+                            <button class="btn btn-secondary">Documentation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Vault View -->
+            <div id="vault" class="tools-section">
+                <h1 class="page-title">Vault</h1>
+                <p class="section-subtitle">File & Document Hub</p>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div></div>
+                    <div style="display: flex; align-items: center; gap: 2rem; background: var(--card-bg); border: 1px solid var(--border); padding: 1rem 1.5rem; border-radius: var(--radius); flex-wrap: wrap;">
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                            <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary);">47</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Documents</div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                            <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary);">12</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Folders</div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                            <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary);">3</div>
+                            <div style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">Connected</div>
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                                <span style="color: var(--primary); font-weight: 600;">100 MB used</span>
+                                <span>5 GB total</span>
+                            </div>
+                            <div style="height: 8px; background: var(--accent); border-radius: 4px; overflow: hidden;">
+                                <div style="height: 100%; background: linear-gradient(90deg, var(--primary), var(--purple)); border-radius: 4px; width: 2%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem; border-top: 3px solid var(--primary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0;">📤 Upload & Connect</h3>
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button class="btn btn-secondary" onclick="connectCloudService('Google Drive')" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                <span>🗂️</span>
+                                Google Drive
+                            </button>
+                            <button class="btn btn-secondary" onclick="connectCloudService('Slack')" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                <span>💬</span>
+                                Slack
+                            </button>
+                            <button class="btn btn-secondary" onclick="connectCloudService('Dropbox')" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                                <span>📁</span>
+                                Dropbox
+                            </button>
+                        </div>
+                    </div>
+                    <div style="border: 2px dashed var(--border); border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+                        <div style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;">📁</div>
+                        <div style="font-size: 1.125rem; font-weight: 600; margin: 0 0 0.5rem 0;">Drop files here or click to upload</div>
+                        <div style="color: var(--text-secondary); font-size: 0.875rem; margin: 0;">Supports: PDF, DOC, XLS, PPT, Images, Videos (Max 25MB)</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem;">
+                    <div class="card">
+                        <h4 style="font-size: 1rem; font-weight: 600; margin: 0 0 1rem 0;">📁 Locations</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 6px; cursor: pointer; background: rgba(59, 130, 246, 0.2); color: var(--primary); font-size: 0.875rem;">
+                                <span>🗂️</span>
+                                <span>All Files</span>
+                                <span style="margin-left: auto; color: var(--text-secondary); font-size: 0.75rem;">47</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 6px; cursor: pointer; font-size: 0.875rem;">
+                                <span>🔍</span>
+                                <span>Customer Research</span>
+                                <span style="margin-left: auto; color: var(--text-secondary); font-size: 0.75rem;">12</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 6px; cursor: pointer; font-size: 0.875rem;">
+                                <span>📋</span>
+                                <span>Business Plan</span>
+                                <span style="margin-left: auto; color: var(--text-secondary); font-size: 0.75rem;">8</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div style="text-align: center; padding: 4rem 2rem; color: var(--text-secondary);">
+                            <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;">📂</div>
+                            <h3 style="font-size: 1.25rem; font-weight: 600; margin: 0 0 0.5rem 0; color: var(--text);">No files in this folder</h3>
+                            <p style="margin: 0 0 2rem 0; line-height: 1.6;">Upload your first document or connect a cloud storage service to get started.</p>
+                            <button class="btn btn-primary">Upload Files</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hangar View -->
+            <div id="hangar" class="tools-section">
+                <h1 class="page-title">Hangar</h1>
+                <p class="section-subtitle">Community Hub</p>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div></div>
+                    <div style="background: linear-gradient(135deg, var(--success), #34d399); color: white; padding: 1rem 1.5rem; border-radius: var(--radius); display: flex; align-items: center; gap: 0.75rem; font-weight: 600;">
+                        <span style="font-size: 1.5rem;">📊</span>
+                        <span>Next: Forecast Friday</span>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, var(--primary), var(--purple)); color: white; margin-bottom: 2rem; position: relative; overflow: hidden;">
+                    <div style="position: relative; z-index: 2; padding: 2rem;">
+                        <div style="background: rgba(255, 255, 255, 0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            <span>📊</span>
+                            <span>This Friday</span>
+                        </div>
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 1rem 0;">Forecast Accuracy Friday</h2>
+                        <p style="font-size: 1rem; margin: 0 0 2rem 0; opacity: 0.95;">Join fellow founders for our weekly progress sharing session. Present your weekly forecasts, share wins and challenges, and get feedback from experienced founders.</p>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn" style="background: white; color: var(--primary); border: none; padding: 1rem 2rem; border-radius: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);">
+                                <span>✋</span>
+                                Join This Friday
+                            </button>
+                            <button class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 1rem 2rem; border-radius: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.75rem;">
+                                <span>📋</span>
+                                View Agenda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div class="card">
+                        <h3 style="margin: 0 0 1rem 0; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="display: flex; align-items: center; gap: 0.5rem;"><span>🗓️</span>Upcoming Events</span>
+                            <span style="background: var(--accent); color: var(--text-secondary); padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">4 this week</span>
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--accent); border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
+                                <div style="width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; background: var(--card-bg);">📊</div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-weight: 600; margin: 0 0 0.25rem 0; font-size: 0.875rem;">Forecast Accuracy Friday</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin: 0;">Friday, 2:00 PM • Weekly progress sharing</p>
+                                </div>
+                                <span style="color: var(--text-secondary); font-size: 0.875rem;">→</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="margin: 0 0 1rem 0; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="display: flex; align-items: center; gap: 0.5rem;"><span>👨‍🏫</span>Expert Advisors</span>
+                            <span style="background: var(--accent); color: var(--text-secondary); padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">8 available</span>
+                        </h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--accent); border-radius: 8px; cursor: pointer; transition: all 0.2s ease;">
+                                <div style="width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; background: var(--card-bg);">👩‍💼</div>
+                                <div style="flex: 1;">
+                                    <h4 style="font-weight: 600; margin: 0 0 0.25rem 0; font-size: 0.875rem;">Sarah Chen</h4>
+                                    <p style="color: var(--text-secondary); font-size: 0.75rem; margin: 0;">Former VP Product at Stripe • FinTech expert</p>
+                                </div>
+                                <span style="color: var(--text-secondary); font-size: 0.875rem;">💬</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tools Section -->
+        <div id="tools" class="section">
+            <h1 class="page-title">Tools</h1>
+            <p class="section-subtitle">All the resources you need to build and grow your startup</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                <!-- Briefing -->
+                <div class="card" style="border-top: 3px solid var(--success); cursor: pointer;" onclick="showSection('launch'); showToolsSection('briefing')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(16, 185, 129, 0.1);">📋</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Briefing</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Important updates from founders you follow in your personalized feed.</p>
+                </div>
+                
+                <!-- Control -->
+                <div class="card" style="border-top: 3px solid var(--primary); cursor: pointer;" onclick="showSection('launch'); showToolsSection('control')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(59, 130, 246, 0.1);">🎮</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Control</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Command center dashboard with key metrics, analytics, and performance indicators.</p>
+                </div>
+                
+                <!-- Flightplan -->
+                <div class="card" style="border-top: 3px solid var(--purple); cursor: pointer;" onclick="showSection('launch'); showToolsSection('flightplan')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(139, 92, 246, 0.1);">🗺️</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Flightplan</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Strategic roadmap planner with milestones, deadlines, and progress tracking.</p>
+                </div>
+                
+                <!-- Idea -->
+                <div class="card" style="border-top: 3px solid var(--warning); cursor: pointer;" onclick="showSection('launch'); showToolsSection('idea')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(245, 158, 11, 0.1);">💡</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Idea</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Brainstorming and ideation workspace for capturing and developing concepts.</p>
+                </div>
+                
+                <!-- Missions -->
+                <div class="card" style="border-top: 3px solid var(--success); cursor: pointer;" onclick="showSection('launch'); showToolsSection('missions')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(16, 185, 129, 0.1);">🎯</div>
+                        <span style="background: rgba(59, 130, 246, 0.2); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Premium</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Missions</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Guided startup challenges and milestones with expert frameworks.</p>
+                </div>
+                
+                <!-- Drops -->
+                <div class="card" style="border-top: 3px solid var(--danger); cursor: pointer;" onclick="showSection('launch'); showToolsSection('drops')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(239, 68, 68, 0.1);">📦</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Drops</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Launch announcements and updates feed for sharing progress.</p>
+                </div>
+                
+                <!-- Signals -->
+                <div class="card" style="border-top: 3px solid var(--primary); cursor: pointer;" onclick="showSection('launch'); showToolsSection('signals')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(59, 130, 246, 0.1);">📡</div>
+                        <span style="background: rgba(59, 130, 246, 0.2); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Premium</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Signals</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Market intelligence and trend monitoring with real-time insights.</p>
+                </div>
+                
+                <!-- Terminal -->
+                <div class="card" style="border-top: 3px solid var(--purple); cursor: pointer;" onclick="showSection('launch'); showToolsSection('terminal')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(139, 92, 246, 0.1);">💻</div>
+                        <span style="background: rgba(59, 130, 246, 0.2); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Premium</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Terminal</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Development sandbox and demo hosting environment.</p>
+                </div>
+                
+                <!-- Vault -->
+                <div class="card" style="border-top: 3px solid var(--warning); cursor: pointer;" onclick="showSection('launch'); showToolsSection('vault')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(245, 158, 11, 0.1);">🔐</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Vault</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Secure document storage and file management system.</p>
+                </div>
+                
+                <!-- Hangar -->
+                <div class="card" style="border-top: 3px solid var(--success); cursor: pointer;" onclick="showSection('launch'); showToolsSection('hangar')">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(16, 185, 129, 0.1);">✈️</div>
+                        <span style="background: rgba(16, 185, 129, 0.2); color: var(--success); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h3 style="font-weight: 600; margin: 0 0 0.5rem 0; font-size: 1.125rem;">Hangar</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5; margin: 0;">Community hub for events, networking, and expert advisors.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Community Section -->
+        <div id="community" class="section">
+            <h1 class="page-title">Community</h1>
+            <p class="section-subtitle">Connect with fellow founders and manage your profile</p>
+            
+            <!-- Message Bar -->
+            <div class="message-bar" id="messageBar">
+                <div class="message-bar-content">
+                    <span>Want access to private founder tools, live sessions, and real startup challenges?</span>
+                    <button class="message-bar-cta" onclick="showSignUpModal()">Join Founders Fleet for Free</button>
+                </div>
+                <button class="message-bar-close" onclick="closeMessageBar()">&times;</button>
+            </div>
+            
+            <!-- Filters -->
+            <div class="filters" style="margin-bottom: 2rem;">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="saas">SaaS</button>
+                <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+                <button class="filter-btn" data-filter="fintech">FinTech</button>
+                <button class="filter-btn" data-filter="ai">AI/ML</button>
+                <button class="filter-btn" data-filter="social">Social</button>
+                <button class="filter-btn" data-filter="marketplace">Marketplace</button>
+            </div>
+            
+            <!-- Founder Grid -->
+            <div class="founder-grid" id="founderGrid">
+                <!-- Founders will be populated here -->
+            </div>
+            
+            <!-- Profile Detail View (hidden by default) -->
+            <div id="profile-detail-view" class="profile-detail-view" style="display: none;"></div>
+        </div>
+        
+        <!-- Settings Section -->
+        <div id="settings" class="section">
+            <h1 class="page-title">Settings</h1>
+            
+            <div class="settings-container">
+                <div class="settings-list">
+                    <a href="#" class="settings-item">Your Account</a>
+                    <a href="#" class="settings-item">Organization</a>
+                    <a href="#" class="settings-item">Plan & Billing</a>
+                    <a href="#" class="settings-item">Security</a>
+                    <a href="#" class="settings-item">Privacy</a>
+                    <a href="#" class="settings-item">Notifications</a>
+                    <a href="#" class="settings-item">Workspace</a>
+                    <a href="#" class="settings-item">Integrations</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sign Up Full Screen -->
+    <div class="signup-fullscreen" id="signUpModal" style="display: none;">
+        <!-- Signup Modal Header -->
+        <header class="header">
+            <div class="header-content">
+                <a href="#" class="logo" onclick="showSection('home'); return false;">
+                    <div class="logo-icon">FF</div>
+                    <span class="logo-text">FoundersFleet</span>
+                </a>
+                
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="closeSignUpModal()">Cancel</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="signup-container">
+            <div class="signup-content">
+                <div class="signup-header">
+                    <h1 class="signup-title">Sign up or log in</h1>
+                </div>
+            
+                <form class="email-form" onsubmit="handleEmailSubmit(event)">
+                    <div class="email-field">
+                        <label class="email-label">Email</label>
+                        <input type="email" class="email-input" placeholder="Enter your email address" id="emailInput">
+                    </div>
+                    
+                    <button type="submit" class="continue-btn">Continue</button>
+                </form>
+                
+                <div class="divider">
+                    <span>Or continue with</span>
+                </div>
+                
+                <div class="social-options">
+                    <button class="social-btn" onclick="authWithProvider('apple')">
+                        <span class="social-icon"></span>
+                    </button>
+                    <button class="social-btn" onclick="authWithProvider('google')">
+                        <span class="social-icon"></span>
+                    </button>
+                    <button class="social-btn" onclick="authWithProvider('facebook')">
+                        <span class="social-icon"></span>
+                    </button>
+                </div>
+                
+                <div class="terms-text">
+                    <p>By clicking Continue with Email, Apple, Google, or Facebook, you agree to FoundersFleet's <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a> and to receiving emails from FoundersFleet.</p>
+                    <p>This site is protected by reCAPTCHA and the <a href="#">Google Privacy Policy</a> and <a href="#">Terms of Service</a> apply.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample founder data
+        const founders = [
+            {
+                id: 1,
+                name: "Brian Chesky",
+                title: "Co-founder & CEO",
+                company: "Airbnb",
+                category: "marketplace",
+                bio: "Created a platform where anyone can belong anywhere. Transforming how people travel and experience the world.",
+                tags: ["design-thinking", "marketplace", "community"],
+                verified: true
+            },
+            {
+                id: 2,
+                name: "Patrick Collison",
+                title: "Co-founder & CEO",
+                company: "Stripe",
+                category: "fintech",
+                bio: "Building the economic infrastructure for the internet. Making online payments simple for businesses worldwide.",
+                tags: ["Payments", "Developer Tools", "Infrastructure"],
+                verified: false
+            },
+            {
+                id: 3,
+                name: "Melanie Perkins",
+                title: "Co-founder & CEO",
+                company: "Canva",
+                category: "saas",
+                bio: "Democratizing design for everyone. Making it simple for anyone to create beautiful designs.",
+                tags: ["Design", "SaaS", "Creative Tools"],
+                verified: false
+            },
+            {
+                id: 4,
+                name: "Daniel Ek",
+                title: "Co-founder & CEO",
+                company: "Spotify",
+                category: "social",
+                bio: "Revolutionizing how the world listens to music. Connecting millions of artists with billions of fans.",
+                tags: ["Music", "Streaming", "Entertainment"],
+                verified: false
+            },
+            {
+                id: 5,
+                name: "Whitney Wolfe Herd",
+                title: "Founder & CEO",
+                company: "Bumble",
+                category: "social",
+                bio: "Creating kind connections and empowering women to make the first move in dating, friendship, and business.",
+                tags: ["Dating", "Social", "Women-First"],
+                verified: true
+            },
+            {
+                id: 6,
+                name: "Evan Spiegel",
+                title: "Co-founder & CEO",
+                company: "Snap Inc.",
+                category: "social",
+                bio: "Reimagining the camera to improve how people live and communicate. Making visual communication fun and expressive.",
+                tags: ["AR", "Social Media", "Camera"],
+                verified: false
+            },
+            {
+                id: 7,
+                name: "Dylan Field",
+                title: "Co-founder & CEO",
+                company: "Figma",
+                category: "saas",
+                bio: "Building the future of design collaboration. Making design accessible to everyone on the web.",
+                tags: ["Design Tools", "Collaboration", "Web-Based"],
+                verified: true
+            },
+            {
+                id: 8,
+                name: "Tony Xu",
+                title: "Co-founder & CEO",
+                company: "DoorDash",
+                category: "marketplace",
+                bio: "Empowering local economies by connecting communities with their favorite restaurants and stores.",
+                tags: ["Delivery", "Logistics", "Local Commerce"],
+                verified: false
+            },
+            {
+                id: 9,
+                name: "Tobi Lütke",
+                title: "Founder & CEO",
+                company: "Shopify",
+                category: "ecommerce",
+                bio: "Making commerce better for everyone. Helping entrepreneurs start, grow, and scale their businesses.",
+                tags: ["E-commerce", "Platform", "SMB"],
+                verified: true
+            },
+            {
+                id: 10,
+                name: "Drew Houston",
+                title: "Co-founder & CEO",
+                company: "Dropbox",
+                category: "saas",
+                bio: "Simplifying how people work together. Making it easy to access your files anywhere.",
+                tags: ["cloud-storage", "productivity", "collaboration"],
+                verified: false
+            }
+        ];
+        
+        let filteredFounders = [...founders];
+        let activeFilter = 'all';
+
+        // Navigation functions
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(section).classList.add('active');
+            
+            // Update active nav
+            event.target.classList.add('active');
+            
+            // Show/hide sub nav
+            if (section === 'launch') {
+                document.getElementById('launchSubNav').style.display = 'flex';
+                // Don't auto-select a tool section, let the caller decide
+            } else {
+                document.getElementById('launchSubNav').style.display = 'none';
+            }
+            
+            // Update icon buttons
+            document.querySelectorAll('.icon-btn').forEach(btn => btn.classList.remove('active'));
+            if (section === 'launch') {
+                document.getElementById('launchBtn').classList.add('active');
+            } else if (section === 'settings') {
+                document.getElementById('settingsBtn').classList.add('active');
+            }
+            
+            // Render founders if community section
+            if (section === 'community') {
+                renderFounders();
+            }
+        }
+
+        function showToolsSection(tool) {
+            // Make sure launch section is active
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('launch').classList.add('active');
+            
+            // Hide all tools sections
+            document.querySelectorAll('.tools-section').forEach(s => s.classList.remove('active'));
+            
+            // Update pills
+            document.querySelectorAll('.sub-nav-pill').forEach(p => p.classList.remove('active'));
+            
+            // Show selected section
+            const toolSection = document.getElementById(tool);
+            if (toolSection) {
+                toolSection.classList.add('active');
+            }
+            
+            // Update active pill based on tool name
+            document.querySelectorAll('.sub-nav-pill').forEach(pill => {
+                if (pill.textContent.toLowerCase() === tool.toLowerCase() || 
+                    (tool === 'briefing' && pill.textContent === 'Briefing')) {
+                    pill.classList.add('active');
+                }
+            });
+        }
+
+        function showCommunitySection(section) {
+            // Update community cards
+            document.querySelectorAll('.community-card').forEach(c => c.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // Hide all community sections
+            document.querySelectorAll('.community-section').forEach(s => s.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(section).classList.add('active');
+        }
+
+        function renderFounders() {
+            const grid = document.getElementById('founderGrid');
+            grid.innerHTML = '';
+            
+            // Add founders
+            filteredFounders.forEach(founder => {
+                const card = document.createElement('div');
+                card.className = 'founder-card';
+                card.onclick = () => showFounderDetail(founder.id);
+                card.style.cursor = 'pointer';
+                card.innerHTML = `
+                    <div class="founder-header">
+                        <div class="founder-info">
+                            <h3>
+                                ${founder.name}
+                                ${founder.verified ? '<i class="fas fa-check-circle verified-badge"></i>' : ''}
+                            </h3>
+                            <div class="founder-title">${founder.title}</div>
+                            <div class="founder-company">${founder.company}</div>
+                        </div>
+                    </div>
+                    <p class="founder-bio">${founder.bio}</p>
+                    <div class="founder-tags">
+                        ${founder.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        
+        function showProfileDetail() {
+            document.getElementById('founderGrid').style.display = 'none';
+            document.querySelector('.filters').style.display = 'none';
+            document.getElementById('messageBar').style.display = 'none';
+            
+            const detailView = document.getElementById('profile-detail-view');
+            detailView.innerHTML = `
+                <button class="btn btn-secondary" onclick="backToCommunity()" style="margin-bottom: 2rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Community
+                </button>
+                
+                <div class="two-column-layout">
+                    <div class="cards-column">
+                        <h3 style="margin-bottom: 1.5rem;">Recent Activity</h3>
+                        <div style="color: var(--text-secondary); font-size: 0.875rem;">
+                            <p>No recent activity yet.</p>
+                            <p style="margin-top: 1rem;">Complete your profile to start connecting with other founders.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-column">
+                        <h1 style="margin: 0 0 2rem 0;">My Profile</h1>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="margin-bottom: 1rem;">Profile Information</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                                Manage your public founder profile and connect with other entrepreneurs.
+                            </p>
+                            
+                            <form style="margin-top: 1.5rem;">
+                                <div style="margin-bottom: 1rem;">
+                                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Name</label>
+                                    <input type="text" placeholder="Your name" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                                </div>
+                                <div style="margin-bottom: 1rem;">
+                                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Title</label>
+                                    <input type="text" placeholder="e.g., Co-founder & CEO" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                                </div>
+                                <div style="margin-bottom: 1rem;">
+                                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Company</label>
+                                    <input type="text" placeholder="Your company" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px;">
+                                </div>
+                                <div style="margin-bottom: 1.5rem;">
+                                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Bio</label>
+                                    <textarea placeholder="Tell us about yourself..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; min-height: 100px; resize: vertical;"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Save Profile</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            `;
+            detailView.style.display = 'block';
+        }
+        
+        function showFounderDetail(founderId) {
+            const founder = founders.find(f => f.id === founderId);
+            if (!founder) return;
+            
+            // Hide grid and show detail
+            document.getElementById('founderGrid').style.display = 'none';
+            document.querySelector('.filters').style.display = 'none';
+            document.getElementById('messageBar').style.display = 'none';
+            
+            // Create detail view with two-column layout
+            const detailView = document.getElementById('profile-detail-view');
+            detailView.innerHTML = `
+                <button class="btn btn-secondary" onclick="backToCommunity()" style="margin-bottom: 2rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Community
+                </button>
+                
+                <div class="two-column-layout">
+                    <div class="profile-column">
+                        <div class="founder-header" style="margin-bottom: 2rem;">
+                            <h1 style="margin: 0;">
+                                ${founder.name}
+                                ${founder.verified ? '<i class="fas fa-check-circle verified-badge"></i>' : ''}
+                            </h1>
+                            <div class="founder-title" style="font-size: 1.125rem; color: var(--text-secondary); margin-top: 0.5rem;">${founder.title}</div>
+                            <div class="founder-company" style="font-size: 1rem; margin-top: 0.25rem;">${founder.company}</div>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <button class="btn btn-primary" style="margin-right: 1rem;">
+                                <i class="fas fa-user-plus"></i> Follow
+                            </button>
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-envelope"></i> Message
+                            </button>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="margin-bottom: 1rem;">About</h3>
+                            <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem;">${founder.bio}</p>
+                            <div class="founder-tags">
+                                ${founder.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cards-column">
+                        <h3 style="margin-bottom: 1.5rem;">More Founders</h3>
+                        ${renderSimilarFounders(founder.category, founderId)}
+                    </div>
+                </div>
+            `;
+            detailView.style.display = 'block';
+        }
+        
+        function backToCommunity() {
+            document.getElementById('founderGrid').style.display = 'grid';
+            document.querySelector('.filters').style.display = 'flex';
+            document.getElementById('messageBar').style.display = 'flex';
+            document.getElementById('profile-detail-view').style.display = 'none';
+        }
+        
+        function renderSimilarFounders(category, excludeId) {
+            const similarFounders = founders.filter(f => f.id !== excludeId).slice(0, 12);
+            
+            if (similarFounders.length === 0) {
+                return '<p style="color: var(--text-secondary); font-size: 0.875rem;">No other founders to show yet.</p>';
+            }
+            
+            return similarFounders.map(founder => `
+                <div class="founder-card" style="margin-bottom: 1rem; cursor: pointer;" onclick="showFounderDetail(${founder.id})">
+                    <div class="founder-header">
+                        <div class="founder-info">
+                            <h4 style="margin: 0 0 0.25rem 0; font-size: 1rem;">
+                                ${founder.name}
+                                ${founder.verified ? '<i class="fas fa-check-circle verified-badge"></i>' : ''}
+                            </h4>
+                            <div class="founder-title" style="font-size: 0.875rem;">${founder.title}</div>
+                            <div class="founder-company" style="font-size: 0.875rem;">${founder.company}</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" style="margin-top: 0.75rem; width: 100%; font-size: 0.875rem;" onclick="event.stopPropagation();">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+        
+        function closeMessageBar() {
+            document.getElementById('messageBar').style.display = 'none';
+        }
+        
+        function showSignUpModal() {
+            // This would typically open a signup modal
+            alert('Sign up functionality would be implemented here');
+        }
+
+        // Filter functionality
+        function filterFounders(filter) {
+            activeFilter = filter;
+            
+            if (filter === 'all') {
+                filteredFounders = [...founders];
+            } else {
+                filteredFounders = founders.filter(founder => 
+                    founder.category === filter
+                );
+            }
+            
+            renderFounders();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication state
+            checkAuthenticationState();
+            
+            // Show home section by default
+            document.getElementById('home').classList.add('active');
+            document.getElementById('launchSubNav').style.display = 'none';
+            
+            // Add event listeners for filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Filter founders
+                    const filterValue = this.dataset.filter;
+                    filterFounders(filterValue);
+                });
+            });
+        });
+        
+        // Authentication and Modal Functions
+        function showSignUpModal() {
+            const modal = document.getElementById('signUpModal');
+            if (modal) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeSignUpModal() {
+            document.getElementById('signUpModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function hideCalloutBar() {
+            document.getElementById('calloutBar').style.display = 'none';
+        }
+
+        function handleEmailSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('emailInput').value;
+            
+            // Simulate authentication (in real app, this would be an API call)
+            localStorage.setItem('isAuthenticated', 'true');
+            localStorage.setItem('userEmail', email);
+            
+            // Close modal and show authenticated state
+            closeSignUpModal();
+            hideCalloutBar();
+            checkAuthenticationState();
+        }
+
+        function authWithProvider(provider) {
+            // Simulate social auth (in real app, this would use OAuth)
+            localStorage.setItem('isAuthenticated', 'true');
+            localStorage.setItem('authProvider', provider);
+            
+            closeSignUpModal();
+            hideCalloutBar();
+            checkAuthenticationState();
+        }
+
+        function checkAuthenticationState() {
+            const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+            const calloutBar = document.getElementById('calloutBar');
+            
+            if (isAuthenticated) {
+                calloutBar.style.display = 'none';
+                updateThirdCardForAuthenticated();
+            } else {
+                calloutBar.style.display = 'flex';
+                updateThirdCardForGuest();
+            }
+        }
+
+        function updateThirdCardForAuthenticated() {
+            const title = document.getElementById('thirdCardTitle');
+            const description = document.getElementById('thirdCardDescription');
+            const action = document.getElementById('thirdCardAction');
+            
+            if (title) title.textContent = 'Launch';
+            if (description) description.textContent = 'Access your startup cockpit with tools, briefings, and mission control for building your venture.';
+            if (action) action.textContent = 'Enter Launch';
+        }
+
+        function updateThirdCardForGuest() {
+            const title = document.getElementById('thirdCardTitle');
+            const description = document.getElementById('thirdCardDescription');
+            const action = document.getElementById('thirdCardAction');
+            
+            if (title) title.textContent = 'Get Started';
+            if (description) description.textContent = 'Join Founders Fleet to unlock your startup cockpit with tools, community access, and expert guidance.';
+            if (action) action.textContent = 'Join Now';
+        }
+
+        function handleThirdCardClick() {
+            const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+            
+            if (isAuthenticated) {
+                showSection('launch');
+            } else {
+                showSignUpModal();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('isAuthenticated');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('authProvider');
+            
+            // Show callout bar and go to home
+            document.getElementById('calloutBar').style.display = 'flex';
+            showSection('home');
+        }
+    </script>
+</body>
+</html>

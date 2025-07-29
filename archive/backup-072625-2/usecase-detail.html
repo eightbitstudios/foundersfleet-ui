@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use Case Detail - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Center navigation items when nav is collapsed */
+        #main-nav.w-20 nav {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        #main-nav.w-20 nav > div > a {
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        #main-nav.w-20 nav > div > a > div:first-child {
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+        #main-nav.w-20 nav > div > a {
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+        }
+        
+        #main-nav.w-20 nav > div {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        #main-nav.w-20 .h-\[76px\] {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        
+        #main-nav.w-20 .h-\[76px\] > a {
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        /* Hide full text when collapsed */
+        #main-nav.w-20 #nav-text {
+            display: none;
+        }
+        
+        /* Show abbreviated text when collapsed */
+        #main-nav.w-20 #nav-text-collapsed {
+            display: block;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }        
+        
+        /* Responsive Navigation - Force collapse at 1000px */
+        @media (max-width: 999px) {
+            /* Force nav to collapsed state */
+            #main-nav {
+                width: 5rem !important; /* w-20 equivalent */
+            }
+            
+            /* Hide nav text and labels */
+            #nav-text,
+            .nav-label {
+                display: none !important;
+            }
+            
+            /* Center nav items when collapsed */
+            #main-nav nav > div > a {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+                justify-content: center !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                width: 100% !important;
+            }
+            
+            /* Ensure toggle icon changes */
+            #main-nav.w-56 #nav-toggle-icon::before {
+                content: "\f054" !important; /* fa-chevron-right */
+            }
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen font-inter flex">
+    <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-56 bg-black flex flex-col h-screen sticky top-0 transition-all duration-300">
+        <!-- Logo -->
+        <div class="h-[76px] px-4 flex items-center border-b border-white/10">
+            <a href="index.html" class="flex items-center px-4 py-2 rounded-lg hover:bg-white/10 transition-all no-underline">
+                <span id="nav-text" class="text-white text-xl font-semibold">FoundersFleet</span>
+                <span id="nav-text-collapsed" class="text-white text-xl font-semibold hidden">FF</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 px-4 py-6">
+            <div class="space-y-2">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-home"></i>
+                    </div>
+                    <span class="nav-label font-medium">Dashboard</span>
+                </a>
+                <a href="profile.html" class="flex items-center gap-3 px-4 py-3 text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-gear"></i>
+                    </div>
+                    <span class="nav-label font-medium">Account</span>
+                </a>
+                <a href="founders.html" class="flex items-center gap-3 px-4 py-3 text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-address-book"></i>
+                    </div>
+                    <span class="nav-label font-medium">Founders</span>
+                </a>
+                <a href="squads.html" class="flex items-center gap-3 px-4 py-3 text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-people-group"></i>
+                    </div>
+                    <span class="nav-label font-medium">Squads</span>
+                </a>
+                <a href="flightplan.html" class="flex items-center gap-3 px-4 py-3 text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <span class="nav-label font-medium">Flightplan</span>
+                </a>
+                <a href="tools.html" class="flex items-center gap-3 px-4 py-3 text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <span class="nav-label font-medium">Tools</span>
+                </a>
+                <a href="autopilot.html" class="flex items-center gap-3 px-4 py-3 text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </div>
+                    <span class="nav-label font-medium">AutoPilot</span>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Logout -->
+        <div class="px-4 py-2">
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 text-white/50 rounded-lg hover:bg-white/10 hover:text-white/70 transition-all group">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-sign-out-alt"></i>
+                </div>
+                <span class="nav-label font-medium">Logout</span>
+            </a>
+        </div>
+        
+        <!-- Nav Toggle -->
+        <div class="px-4 py-4">
+            <button onclick="toggleMainNav()" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-all">
+                <i id="nav-toggle-icon" class="fas fa-chevron-left text-white text-sm"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-white overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <div class="">
+                    <h1 class="text-3xl font-bold text-black mb-4">Use Case Detail</h1>
+                    <p class="text-black/70">This page is being rebuilt. Content will be restored soon.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Navigation toggle function
+        function toggleMainNav() {
+            const nav = document.getElementById('main-nav');
+            const icon = document.getElementById('nav-toggle-icon');
+            
+            if (nav.classList.contains('w-56')) {
+                nav.classList.remove('w-56');
+                nav.classList.add('w-20');
+                icon.classList.remove('fa-chevron-left');
+                icon.classList.add('fa-chevron-right');
+            } else {
+                nav.classList.remove('w-20');
+                nav.classList.add('w-56');
+                icon.classList.remove('fa-chevron-right');
+                icon.classList.add('fa-chevron-left');
+            }
+        }
+    </script>
+</body>
+</html>

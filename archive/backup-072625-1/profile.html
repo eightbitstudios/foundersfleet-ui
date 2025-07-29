@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /* Ensure frosted container has some margin on mobile */
+            .frosted-container {
+                margin-left: 0.5rem;
+                margin-right: 0.5rem;
+            }
+        }        
+        
+        </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+        <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a>
+                <a href="profile.html" class="w-10 h-10 flex items-center justify-center text-white bg-white/10 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-gear"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="squads.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="flightplan.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-route"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- Logout -->
+        <div class="pb-6 flex justify-center">
+            <a href="index.html" class="w-10 h-10 flex items-center justify-center text-white/50 rounded-lg hover:bg-white/10 hover:text-white/70 transition-all">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- Page Header -->
+            <div class="bg-white border-b border-border sticky top-0 z-40">
+                <div class="max-w-[1200px] mx-auto px-8 py-6">
+                    <h1 class="text-2xl font-semibold text-text-primary">Account Settings</h1>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Main Content -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Profile Information -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-6">Profile Information</h2>
+                            
+                            <!-- Profile Photo -->
+                            <div class="flex items-center gap-6 mb-6">
+                                <div class="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold">
+                                    DB
+                                </div>
+                                <div>
+                                    <button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all text-sm">
+                                        Change Photo
+                                    </button>
+                                    <p class="text-xs text-text-muted mt-2">JPG, GIF or PNG. Max size of 2MB</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Form Fields -->
+                            <div class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-primary mb-2">First Name</label>
+                                        <input type="text" value="Don" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-text-primary mb-2">Last Name</label>
+                                        <input type="text" value="Bora" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Email</label>
+                                    <input type="email" value="don@foundersfleet.com" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Company</label>
+                                    <input type="text" value="FoundersFleet" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Role</label>
+                                    <input type="text" value="Founder & CEO" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Bio</label>
+                                    <textarea rows="4" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">Building the future of founder collaboration. Serial entrepreneur with 3 exits. Passionate about helping founders succeed through peer accountability.</textarea>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Location</label>
+                                    <input type="text" value="San Francisco, CA" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 flex gap-3">
+                                <button class="px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                                    Save Changes
+                                </button>
+                                <button class="px-6 py-2 border border-border rounded hover:border-primary transition-all">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Startup Information -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-6">Startup Information</h2>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Industry</label>
+                                    <select class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option selected>B2B SaaS</option>
+                                        <option>E-commerce</option>
+                                        <option>Fintech</option>
+                                        <option>Health Tech</option>
+                                        <option>AI/ML</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Stage</label>
+                                    <select class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                        <option>Pre-Seed</option>
+                                        <option selected>Seed</option>
+                                        <option>Series A</option>
+                                        <option>Series B+</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Team Size</label>
+                                    <input type="text" value="12" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-text-primary mb-2">Website</label>
+                                    <input type="url" value="https://foundersfleet.com" class="w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <button class="px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                                    Update Information
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Preferences -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-6">Preferences</h2>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="font-medium text-text-primary">Email Notifications</h3>
+                                        <p class="text-sm text-text-secondary">Receive email updates about squad activities</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="font-medium text-text-primary">Push Notifications</h3>
+                                        <p class="text-sm text-text-secondary">Get push notifications for important updates</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="font-medium text-text-primary">Public Profile</h3>
+                                        <p class="text-sm text-text-secondary">Make your profile visible to other founders</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Sidebar -->
+                    <div class="space-y-6">
+                        <!-- Profile Completion -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Profile Completion</h3>
+                            <div class="mb-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm text-text-secondary">82% Complete</span>
+                                    <span class="text-sm font-medium text-primary">+18%</span>
+                                </div>
+                                <div class="w-full bg-section-bg rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Basic information</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Company details</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-circle text-text-muted"></i>
+                                    <span class="text-text-secondary">Social links</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-circle text-text-muted"></i>
+                                    <span class="text-text-secondary">Skills & expertise</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Your Stats</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Connections</p>
+                                    <p class="text-2xl font-bold text-text-primary">24</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Active Squads</p>
+                                    <p class="text-2xl font-bold text-text-primary">3</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Missions Completed</p>
+                                    <p class="text-2xl font-bold text-text-primary">7</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-text-muted uppercase mb-1">Member Since</p>
+                                    <p class="text-sm font-medium text-text-primary">January 2024</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Actions -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Account</h3>
+                            <div class="space-y-3">
+                                <button class="w-full text-left px-4 py-3 border border-border rounded hover:border-primary transition-all text-sm">
+                                    <i class="fas fa-key mr-2 text-text-muted"></i>
+                                    Change Password
+                                </button>
+                                <button class="w-full text-left px-4 py-3 border border-border rounded hover:border-primary transition-all text-sm">
+                                    <i class="fas fa-shield-alt mr-2 text-text-muted"></i>
+                                    Privacy Settings
+                                </button>
+                                <button class="w-full text-left px-4 py-3 border border-border rounded hover:border-primary transition-all text-sm">
+                                    <i class="fas fa-download mr-2 text-text-muted"></i>
+                                    Download Data
+                                </button>
+                                <button class="w-full text-left px-4 py-3 border border-red-200 text-red-600 rounded hover:border-red-400 transition-all text-sm">
+                                    <i class="fas fa-trash mr-2"></i>
+                                    Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

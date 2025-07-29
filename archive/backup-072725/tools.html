@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Autopilot color variable */
+        :root {
+            --autopilot-primary: #85d3c3;
+        }
+        
+        /* Keep minimal custom styles for Tailwind config */
+        .hidden { display: none !important; }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .px-8 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .px-8 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+            <!-- Left Sidebar Navigation -->
+    <div id="main-nav" class="w-20 bg-black flex flex-col h-screen sticky top-0">
+        <!-- Logo -->
+        <div class="h-[76px] flex items-center justify-center border-b border-white/10">
+            <a href="index.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <span class="text-black text-xl font-bold">F</span>
+            </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="flex-1 py-6">
+            <div class="flex flex-col items-center space-y-4">
+                <a href="dashboard.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-home"></i>
+                </a><a href="squads.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-people-group"></i>
+                </a>
+                <a href="founders.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-address-book"></i>
+                </a>
+                <a href="messages.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-comment"></i>
+                </a>
+                <a href="tools.html" class="w-10 h-10 flex items-center justify-center text-black bg-[#C8F902] rounded-lg hover:bg-[#C8F902]/90 transition-all">
+                    <i class="fas fa-wrench"></i>
+                </a>
+                <a href="autopilot.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </a>
+            </div>
+        </nav>
+        
+                <!-- Settings -->
+        <div class="pb-6 flex justify-center">
+            <a href="account.html" class="w-10 h-10 flex items-center justify-center text-white/70 rounded-lg hover:bg-white/10 hover:text-white transition-all">
+                    <i class="fa-solid fa-user"></i>
+                </a>
+        </div>
+    </div>
+<!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+                <main class="h-full overflow-auto">
+                <!-- Main Content Area -->
+        <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Page Header -->
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">Startup Tools & Resources</h1>
+                        <p class="text-text-secondary">Discover tools and guidance to push your startup to the next level</p>
+                    </div>
+                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="contributeResource()">
+                        <i class="fas fa-plus"></i>Contribute
+                    </button>
+                </div>
+                
+                <!-- Tabs Section -->
+                <div class="bg-section-bg -mx-8 px-8 py-4 mb-6">
+                    <div class="max-w-[1200px] mx-auto">
+                        <div class="flex gap-2">
+                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-filter="usecase" onclick="filterTools('usecase')">Use Cases</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-filter="apps" onclick="filterTools('apps')">Apps</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-filter="missions" onclick="filterTools('missions')">Missions</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-filter="resources" onclick="filterTools('resources')">Resources</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Section -->
+                <div>
+                    <!-- Grid Layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Left Column - Main Content -->
+                        <div class="lg:col-span-2">
+                            <!-- Use Case View -->
+                            <div id="tools-usecase-view" class="block">
+                        <div class="grid grid-cols-1 gap-6">
+                            <!-- Starting Out -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md" data-usecase="starting-out" onclick="showUseCaseDetail('starting-out')">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fas fa-rocket text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-xl font-semibold mb-2 text-text-primary">I'm just starting out</h3>
+                                        <p class="text-sm text-text-secondary">Validate your idea and find product-market fit</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Idea Validation</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Customer Discovery</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">MVP</span>
+                                </div>
+                            </div>
+
+                            <!-- Building Product -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md" data-usecase="building-product" onclick="showUseCaseDetail('building-product')">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fas fa-tools text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-xl font-semibold mb-2 text-text-primary">I'm building my product</h3>
+                                        <p class="text-sm text-text-secondary">Track progress and manage your development</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Roadmap Planning</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Progress Tracking</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Team Alignment</span>
+                                </div>
+                            </div>
+
+                            <!-- Getting Customers -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md" data-usecase="getting-customers" onclick="showUseCaseDetail('getting-customers')">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fas fa-users text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-xl font-semibold mb-2 text-text-primary">I'm getting customers</h3>
+                                        <p class="text-sm text-text-secondary">Acquire users and grow your customer base</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Growth Tactics</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Sales Playbooks</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Marketing</span>
+                                </div>
+                            </div>
+
+                            <!-- Raising Capital -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md" data-usecase="raising-capital" onclick="showUseCaseDetail('raising-capital')">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fas fa-chart-line text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-xl font-semibold mb-2 text-text-primary">I'm raising capital</h3>
+                                        <p class="text-sm text-text-secondary">Prepare for and execute your fundraise</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Pitch Deck</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Investor CRM</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Due Diligence</span>
+                                </div>
+                            </div>
+
+                            <!-- Scaling Up -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md" data-usecase="scaling-up" onclick="showUseCaseDetail('scaling-up')">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fas fa-rocket text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-xl font-semibold mb-2 text-text-primary">I'm scaling up</h3>
+                                        <p class="text-sm text-text-secondary">Grow your team and operations efficiently</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Hiring</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Operations</span>
+                                    <span class="bg-section-bg text-text-primary px-3 py-1 rounded-full text-xs">Culture</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Apps View -->
+                    <div id="tools-apps-view" class="hidden">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-xl font-semibold mb-2 text-text-primary">Apps Coming Soon</h3>
+                                <p class="text-sm text-text-secondary">Integrated tools and applications for your startup journey</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Missions View -->
+                    <div id="tools-missions-view" class="hidden">
+                        <div class="grid grid-cols-1 gap-6">
+                            <div class="bg-card-bg border border-border rounded-lg p-6">
+                                <h3 class="text-xl font-semibold mb-2 text-text-primary">Missions Coming Soon</h3>
+                                <p class="text-sm text-text-secondary">Guided challenges to push your startup forward</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                            <!-- Resources View -->
+                            <div id="tools-resources-view" class="hidden">
+                                <div class="grid grid-cols-1 gap-6">
+                                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                                        <h3 class="text-xl font-semibold mb-2 text-text-primary">Resources Coming Soon</h3>
+                                        <p class="text-sm text-text-secondary">Curated content and guides for founders</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Column - Stats and Actions -->
+                        <div class="lg:col-span-1 space-y-6">
+                            <!-- Quick Stats -->
+                            <div class="bg-section-bg rounded-xl p-6 border border-border">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Stats</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="text-2xl font-bold text-text-primary">24</div>
+                                        <div class="text-sm text-text-secondary">Total Tools</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-2xl font-bold text-text-primary">5</div>
+                                        <div class="text-sm text-text-secondary">Recently Added</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Actions -->
+                            <div class="bg-section-bg rounded-xl p-6 border border-border">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full text-left flex items-center gap-3 p-3 bg-white rounded-lg border border-border hover:border-primary transition-all group">
+                                        <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-all">
+                                            <i class="fas fa-plus text-primary text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-text-primary">Contribute Tool</div>
+                                            <div class="text-xs text-text-secondary">Share your favorite startup tool</div>
+                                        </div>
+                                    </button>
+                                    <button class="w-full text-left flex items-center gap-3 p-3 bg-white rounded-lg border border-border hover:border-primary transition-all group">
+                                        <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-all">
+                                            <i class="fas fa-lightbulb text-primary text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-text-primary">Suggest Tool</div>
+                                            <div class="text-xs text-text-secondary">Request a tool to be added</div>
+                                        </div>
+                                    </button>
+                                    <button class="w-full text-left flex items-center gap-3 p-3 bg-white rounded-lg border border-border hover:border-primary transition-all group">
+                                        <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-all">
+                                            <i class="fas fa-comment text-primary text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-text-primary">Tool Feedback</div>
+                                            <div class="text-xs text-text-secondary">Share your experience</div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Popular Tools -->
+                            <div class="bg-section-bg rounded-xl p-6 border border-border">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Popular Tools</h3>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-rocket text-white text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="text-sm font-medium text-text-primary">Lean Canvas</div>
+                                            <div class="text-xs text-text-secondary">Idea Validation</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-chart-line text-white text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="text-sm font-medium text-text-primary">Growth Tracker</div>
+                                            <div class="text-xs text-text-secondary">Analytics</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-users text-white text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="text-sm font-medium text-text-primary">Customer Interview</div>
+                                            <div class="text-xs text-text-secondary">Research</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Tool Categories -->
+                            <div class="bg-section-bg rounded-xl p-6 border border-border">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Tool Categories</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-white text-text-secondary border border-border rounded-full text-xs font-medium">Product</span>
+                                    <span class="px-3 py-1 bg-white text-text-secondary border border-border rounded-full text-xs font-medium">Marketing</span>
+                                    <span class="px-3 py-1 bg-white text-text-secondary border border-border rounded-full text-xs font-medium">Sales</span>
+                                    <span class="px-3 py-1 bg-white text-text-secondary border border-border rounded-full text-xs font-medium">Analytics</span>
+                                    <span class="px-3 py-1 bg-white text-text-secondary border border-border rounded-full text-xs font-medium">Finance</span>
+                                    <span class="px-3 py-1 bg-white text-text-secondary border border-border rounded-full text-xs font-medium">Operations</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </main>
+    </div>
+
+        <!-- AutoPilot Message Injector -->
+    <div id="autopilot-injector" class="fixed bottom-6 right-6 hidden z-50">
+        <div class="bg-[var(--autopilot-primary)] rounded-lg shadow-2xl p-4 max-w-sm border border-black/20">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-paper-plane text-[var(--autopilot-primary)]"></i>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-semibold mb-1 text-black">AutoPilot Tip</h4>
+                    <p id="autopilot-message" class="text-sm text-black"></p>
+                    <div class="flex gap-2 mt-3">
+                        <button onclick="dismissAutoPilotMessage()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded hover:bg-black/80">Dismiss</button>
+                        <button onclick="openAutoPilot()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded font-semibold hover:bg-black/80">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+
+        // Filter tools by category
+        function filterTools(category) {
+            // Update button states
+            const buttons = document.querySelectorAll('[data-filter]');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border');
+                }
+            });
+            
+            // Show/hide views
+            const views = ['usecase', 'apps', 'missions', 'resources'];
+            views.forEach(view => {
+                const element = document.getElementById(`tools-${view}-view`);
+                if (view === category) {
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+
+        // Show use case detail
+        function showUseCaseDetail(useCase) {
+            window.location.href = `usecase-detail.html?use-case=${useCase}`;
+        }
+
+        // Contribute resource
+        function contributeResource() {
+            alert('Thank you for your interest in contributing! This feature is coming soon.');
+        }
+
+        // AutoPilot functions
+        function dismissAutoPilotMessage() {
+            document.getElementById('autopilot-injector').classList.add('hidden');
+        }
+
+        function openAutoPilot() {
+            window.location.href = 'autopilot.html';
+        }
+
+        // Initialize
+        filterTools('usecase');
+    </script>
+</body>
+</html>
