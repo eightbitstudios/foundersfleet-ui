@@ -25,7 +25,7 @@
         font-weight: 900;
     `;
     
-    fab.innerHTML = '<i class="fas fa-cog text-white text-xl"></i>';
+    fab.innerHTML = '<i class="fa-solid fa-database text-white text-xl"></i>';
     
     // Hover effects
     fab.addEventListener('mouseenter', () => {
@@ -38,9 +38,9 @@
         fab.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
     });
     
-    // Click handler
+    // Click handler - go directly to admin
     fab.addEventListener('click', () => {
-        showDevToolsModal();
+        window.location.href = 'admin.html';
     });
     
     // Add to page
@@ -92,7 +92,7 @@
             </div>
             
             <div style="display: flex; flex-direction: column; gap: 12px;">
-                <a href="admin-new.html" style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #E5E5E5; border-radius: 8px; text-decoration: none; color: #000; transition: all 0.2s;">
+                <a href="admin.html" style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #E5E5E5; border-radius: 8px; text-decoration: none; color: #000; transition: all 0.2s;">
                     <div style="width: 32px; height: 32px; background: #2563EB; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-shield-alt" style="color: white; font-size: 14px;"></i>
                     </div>
