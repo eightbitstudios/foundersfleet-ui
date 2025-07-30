@@ -438,6 +438,42 @@ const missionData = {
                     description: 'Meta tags, structured data, sitemap'
                 }
             ]
+        },
+        
+        'go-to-market-strategy': {
+            id: 'go-to-market-strategy',
+            title: 'Create Go-To-Market Strategy',
+            description: 'Build a comprehensive plan to launch and scale your product',
+            epic: 'launch-product',
+            category: 'business',
+            difficulty: 'hard',
+            timeEstimate: '1-2 weeks',
+            cost: 0,
+            icon: 'fa-strategy',
+            prerequisites: ['validate-idea', 'customer-interviews'],
+            unlocks: ['launch-product-hunt', 'content-marketing', 'paid-advertising'],
+            steps: [
+                {
+                    title: 'Define target segments',
+                    description: 'Identify and prioritize your ideal customer profiles'
+                },
+                {
+                    title: 'Analyze competitive landscape',
+                    description: 'Map competitors and identify differentiation'
+                },
+                {
+                    title: 'Choose distribution channels',
+                    description: 'Select primary and secondary channels to reach customers'
+                },
+                {
+                    title: 'Set pricing strategy',
+                    description: 'Define pricing model and tiers based on value'
+                },
+                {
+                    title: 'Create launch timeline',
+                    description: 'Plan phased rollout with clear milestones'
+                }
+            ]
         }
     },
     

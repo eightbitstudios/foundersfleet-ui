@@ -12,13 +12,13 @@
         right: 20px;
         width: 56px;
         height: 56px;
-        background: #DC2626;
+        background: #2563EB;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         z-index: 9999;
         transition: all 0.3s ease;
         font-family: 'Font Awesome 6 Free';
@@ -30,12 +30,12 @@
     // Hover effects
     fab.addEventListener('mouseenter', () => {
         fab.style.transform = 'scale(1.1)';
-        fab.style.boxShadow = '0 6px 16px rgba(220, 38, 38, 0.4)';
+        fab.style.boxShadow = '0 6px 16px rgba(37, 99, 235, 0.4)';
     });
     
     fab.addEventListener('mouseleave', () => {
         fab.style.transform = 'scale(1)';
-        fab.style.boxShadow = '0 4px 12px rgba(220, 38, 38, 0.3)';
+        fab.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
     });
     
     // Click handler
@@ -92,8 +92,8 @@
             </div>
             
             <div style="display: flex; flex-direction: column; gap: 12px;">
-                <a href="admin.html" style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #E5E5E5; border-radius: 8px; text-decoration: none; color: #000; transition: all 0.2s;">
-                    <div style="width: 32px; height: 32px; background: #DC2626; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                <a href="admin-new.html" style="display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid #E5E5E5; border-radius: 8px; text-decoration: none; color: #000; transition: all 0.2s;">
+                    <div style="width: 32px; height: 32px; background: #2563EB; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
                         <i class="fas fa-shield-alt" style="color: white; font-size: 14px;"></i>
                     </div>
                     <div style="flex: 1;">

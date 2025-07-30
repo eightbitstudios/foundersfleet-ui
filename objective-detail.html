@@ -88,25 +88,23 @@
                 <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div class="lg:col-span-2">
-                            <div class="flex items-start justify-between mb-3">
-                                <div id="objective-icon" class="w-12 h-12 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-lightbulb text-xl text-white"></i>
+                            <!-- Icon and Title on same line -->
+                            <div class="flex items-center gap-3 mb-3">
+                                <div id="objective-icon" class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-lightbulb text-sm text-white"></i>
                                 </div>
+                                <h2 id="objective-title" class="text-2xl font-bold text-text-primary">Idea Validation</h2>
                             </div>
-                            <h2 id="objective-title" class="text-2xl font-bold text-text-primary mb-2">Idea Validation</h2>
-                            <p id="objective-description" class="text-text-secondary mb-4">Research, validate, and refine your concept to ensure you're solving a real problem that people will pay for.</p>
-                            <div class="flex items-center gap-3 text-sm text-text-muted">
-                                <span><i class="fas fa-tasks mr-1"></i>4 missions</span>
-                                <span>|</span>
-                                <span><i class="fas fa-clock mr-1"></i>2-4 weeks</span>
-                            </div>
+                            <p id="objective-description" class="text-text-secondary mb-6">Research, validate, and refine your concept to ensure you're solving a real problem that people will pay for.</p>
+                            <!-- Mission status in lower left -->
+                            <p class="text-lg text-text-primary font-medium">2/4 Missions Complete</p>
                         </div>
                         
+                        <!-- Estimated time in gray box on right -->
                         <div class="flex items-center">
                             <div class="bg-section-bg rounded-lg px-8 py-6 text-center w-full">
-                                <p class="text-4xl font-bold text-text-primary">2/4</p>
-                                <p class="text-sm text-text-secondary uppercase tracking-wide mt-2">Missions Complete</p>
-                                <p class="text-sm text-success mt-3">Active</p>
+                                <p class="text-2xl font-bold text-text-primary mb-2">2-4 weeks</p>
+                                <p class="text-sm text-text-secondary uppercase tracking-wide">Estimated Time</p>
                             </div>
                         </div>
                     </div>
@@ -134,13 +132,70 @@
 
                     <!-- Right Column - Support & Stats -->
                     <div class="space-y-6">
-                        <!-- Squad Members on Same Objective -->
+                        <!-- Completed by -->
                         <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Squad Members Here</h3>
+                            <h3 class="text-lg font-semibold text-text-primary mb-2">Completed by</h3>
+                            <p class="text-sm text-text-secondary mb-4">5 founders completed this Objective</p>
                             <div class="space-y-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                                        <span class="text-white text-xs font-medium">JK</span>
+                                    <div class="relative">
+                                        <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xs font-medium">SC</span>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center" title="Squad member">
+                                            <i class="fas fa-users text-white" style="font-size: 8px;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Sarah Chen</p>
+                                        <p class="text-xs text-success">Completed 2 weeks ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xs font-medium">AR</span>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center" title="Connection">
+                                            <i class="fas fa-link text-white" style="font-size: 8px;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Alex Rivera</p>
+                                        <p class="text-xs text-success">Completed 1 month ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center">
+                                        <span class="text-white text-xs font-medium">TM</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Tyler Morris</p>
+                                        <p class="text-xs text-success">Completed 3 months ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full mt-4 text-xs text-primary hover:text-primary-hover">
+                                View all 5 founders →
+                            </button>
+                        </div>
+                        
+                        <!-- Members Here -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-2">Members Here</h3>
+                            <p class="text-sm text-text-secondary mb-4">15 founders have this as a top objective</p>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xs font-medium">JK</span>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center" title="Squad member">
+                                            <i class="fas fa-users text-white" style="font-size: 8px;"></i>
+                                        </div>
                                     </div>
                                     <div class="flex-1">
                                         <p class="text-sm font-medium text-text-primary">James Kim</p>
@@ -149,12 +204,42 @@
                                 </div>
                                 
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                                        <span class="text-white text-xs font-medium">MP</span>
+                                    <div class="relative">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xs font-medium">MP</span>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center" title="Squad member">
+                                            <i class="fas fa-users text-white" style="font-size: 8px;"></i>
+                                        </div>
                                     </div>
                                     <div class="flex-1">
                                         <p class="text-sm font-medium text-text-primary">Maya Patel</p>
                                         <p class="text-xs text-text-secondary">Market Research - Completed</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xs font-medium">LT</span>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center" title="Connection">
+                                            <i class="fas fa-link text-white" style="font-size: 8px;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Lisa Thompson</p>
+                                        <p class="text-xs text-text-secondary">Mom Test - Starting</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white text-xs font-medium">NK</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-text-primary">Nina Kaur</p>
+                                        <p class="text-xs text-text-secondary">Landing Page - In Progress</p>
                                     </div>
                                 </div>
                             </div>
@@ -209,26 +294,6 @@
                             <a href="apps.html" class="text-xs text-primary hover:text-primary-hover mt-3 inline-block">View all apps →</a>
                         </div>
 
-                        <!-- AutoPilot Assistant -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Ask AutoPilot</h3>
-                            <p class="text-sm text-text-secondary mb-4">Get AI guidance for this objective</p>
-                            <div class="space-y-3">
-                                <button onclick="askAutoPilotAbout('How do I validate my idea effectively?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
-                                    <p class="text-sm text-text-primary">How do I validate my idea?</p>
-                                </button>
-                                <button onclick="askAutoPilotAbout('What are common validation mistakes?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
-                                    <p class="text-sm text-text-primary">Common validation mistakes?</p>
-                                </button>
-                                <button onclick="askAutoPilotAbout('How many customers should I interview?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
-                                    <p class="text-sm text-text-primary">How many interviews needed?</p>
-                                </button>
-                            </div>
-                            <button onclick="window.location.href='autopilot.html'" class="w-full mt-4 bg-primary text-white py-2 px-4 rounded text-sm font-medium hover:bg-primary-hover transition-all">
-                                <i class="fas fa-paper-plane mr-2"></i>Open AutoPilot
-                            </button>
-                        </div>
-
                         <!-- Recommended Tools -->
                         <div class="bg-card-bg border border-border rounded-lg p-6">
                             <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended Tools</h3>
@@ -266,7 +331,8 @@
                 description: 'Research, validate, and refine your concept to ensure you\'re solving a real problem that people will pay for.',
                 missions: ['mom-test', 'customer-discovery-workshop', 'validate-idea', 'customer-interviews', 'landing-page', 'analytics-setup'],
                 progress: 2,
-                total: 6
+                total: 6,
+                estimatedTime: '2-4 weeks'
             },
             'mvp-development': {
                 title: 'MVP Development',
@@ -274,7 +340,8 @@
                 description: 'Build and launch your first version to test with real users and gather feedback.',
                 missions: ['github-setup', 'landing-page', 'stripe-setup', 'analytics-setup'],
                 progress: 1,
-                total: 4
+                total: 4,
+                estimatedTime: '1-2 months'
             },
             'operations-legal': {
                 title: 'Operations & Legal',
@@ -282,7 +349,8 @@
                 description: 'Set up your business foundation with proper legal structure and operational systems.',
                 missions: ['business-entity', 'stripe-setup', 'security-audit', 'analytics-setup'],
                 progress: 0,
-                total: 4
+                total: 4,
+                estimatedTime: '2-3 weeks'
             },
             'growth-traction': {
                 title: 'Growth & Traction',
@@ -290,7 +358,8 @@
                 description: 'Scale your user base and revenue through systematic growth experiments.',
                 missions: ['analytics-setup', 'landing-page', 'customer-interviews', 'launch-product-hunt'],
                 progress: 0,
-                total: 4
+                total: 4,
+                estimatedTime: '4-6 weeks'
             },
             'fundraising': {
                 title: 'Fundraising',
@@ -298,7 +367,8 @@
                 description: 'Prepare for and successfully raise investment to fuel your growth.',
                 missions: ['business-entity', 'analytics-setup', 'validate-idea', 'customer-interviews'],
                 progress: 0,
-                total: 4
+                total: 4,
+                estimatedTime: '6-8 weeks'
             },
             'team-building': {
                 title: 'Team Building',
@@ -306,15 +376,17 @@
                 description: 'Hire and manage your team to build a strong company culture.',
                 missions: ['github-setup', 'security-audit', 'analytics-setup', 'business-entity'],
                 progress: 0,
-                total: 5
+                total: 5,
+                estimatedTime: '3-4 weeks'
             },
             'launch-product': {
                 title: 'Launch Your Product',
                 icon: 'fa-rocket',
                 description: 'Ship your product to the world with all the necessary infrastructure and distribution channels.',
-                missions: ['apple-dev-account', 'launch-product-hunt', 'landing-page', 'stripe-setup'],
+                missions: ['go-to-market-strategy', 'apple-dev-account', 'launch-product-hunt', 'landing-page', 'stripe-setup'],
                 progress: 0,
-                total: 4
+                total: 5,
+                estimatedTime: '3-4 weeks'
             },
             'product-launch': {
                 title: 'Product Launch',
@@ -322,15 +394,62 @@
                 description: 'Launch your product with maximum impact through strategic planning and execution.',
                 missions: ['launch-product-hunt', 'landing-page', 'analytics-setup', 'stripe-setup'],
                 progress: 0,
-                total: 4
+                total: 4,
+                estimatedTime: '2-3 weeks'
             },
             'scale-optimize': {
                 title: 'Scale & Optimize',
                 icon: 'fa-expand-arrows-alt',
                 description: 'Optimize your operations for sustainable growth and expansion.',
-                missions: ['stripe-setup', 'analytics-setup', 'customer-interviews', 'security-audit'],
+                missions: ['process-automation', 'performance-optimization', 'cost-optimization', 'analytics-setup', 'security-audit', 'infrastructure-scaling', 'monitoring-setup'],
                 progress: 0,
-                total: 4
+                total: 7,
+                estimatedTime: '4-6 weeks'
+            },
+            'customer-success': {
+                title: 'Customer Success',
+                icon: 'fa-heart',
+                description: 'Build systems to delight and retain customers throughout their journey.',
+                missions: ['customer-onboarding', 'support-system', 'feedback-loops', 'customer-health-tracking', 'retention-strategies', 'community-building'],
+                progress: 0,
+                total: 6,
+                estimatedTime: '3-5 weeks'
+            },
+            'marketing-branding': {
+                title: 'Marketing & Branding',
+                icon: 'fa-bullhorn',
+                description: 'Build your brand identity and reach your target audience effectively.',
+                missions: ['brand-identity', 'content-strategy', 'social-media-setup', 'email-marketing', 'seo-optimization', 'paid-advertising', 'influencer-outreach', 'pr-strategy'],
+                progress: 0,
+                total: 8,
+                estimatedTime: '4-6 weeks'
+            },
+            'sales-process': {
+                title: 'Sales Process',
+                icon: 'fa-handshake',
+                description: 'Create repeatable sales systems to drive consistent revenue growth.',
+                missions: ['sales-playbook', 'crm-setup', 'lead-qualification', 'demo-process', 'pricing-strategy', 'sales-collateral', 'pipeline-management'],
+                progress: 0,
+                total: 7,
+                estimatedTime: '3-5 weeks'
+            },
+            'data-analytics': {
+                title: 'Data & Analytics',
+                icon: 'fa-chart-bar',
+                description: 'Make data-driven decisions with comprehensive analytics and insights.',
+                missions: ['analytics-setup', 'kpi-dashboard', 'data-warehouse', 'reporting-automation', 'ab-testing-framework'],
+                progress: 0,
+                total: 5,
+                estimatedTime: '3-4 weeks'
+            },
+            'international-expansion': {
+                title: 'International Expansion',
+                icon: 'fa-globe',
+                description: 'Take your product global with strategic international growth.',
+                missions: ['market-research-international', 'localization-strategy', 'international-legal', 'currency-payment-setup', 'international-shipping', 'local-partnerships', 'cultural-adaptation', 'international-marketing', 'global-support'],
+                progress: 0,
+                total: 9,
+                estimatedTime: '6-8 weeks'
             }
         };
 
@@ -344,29 +463,20 @@
             // Update page content
             if (objective) {
                 // Breadcrumb removed - no longer needed
-                document.getElementById('objective-icon').innerHTML = `<i class="fas ${objective.icon} text-2xl text-white"></i>`;
+                document.getElementById('objective-icon').innerHTML = `<i class="fas ${objective.icon} text-sm text-white"></i>`;
                 document.getElementById('objective-title').textContent = objective.title;
                 document.getElementById('objective-description').textContent = objective.description;
                 
-                // Update progress display
-                const progressDisplay = document.querySelector('.bg-section-bg p.text-4xl');
-                if (progressDisplay) {
-                    progressDisplay.textContent = `${objective.progress}/${objective.total}`;
+                // Update mission status in lower left
+                const missionStatusDisplay = document.querySelector('.lg\\:col-span-2 p.text-lg');
+                if (missionStatusDisplay) {
+                    missionStatusDisplay.textContent = `${objective.progress}/${objective.total} Missions Complete`;
                 }
                 
-                // Update status - Active if any missions are in progress
-                const statusDisplay = document.querySelector('.bg-section-bg p.text-success');
-                if (statusDisplay) {
-                    if (objective.progress === 0) {
-                        statusDisplay.textContent = 'Not Started';
-                        statusDisplay.className = 'text-sm text-text-muted mt-3';
-                    } else if (objective.progress === objective.total) {
-                        statusDisplay.textContent = 'Completed';
-                        statusDisplay.className = 'text-sm text-success mt-3';
-                    } else {
-                        statusDisplay.textContent = 'Active';
-                        statusDisplay.className = 'text-sm text-success mt-3';
-                    }
+                // Update estimated time in gray box
+                const timeDisplay = document.querySelector('.bg-section-bg p.text-2xl');
+                if (timeDisplay) {
+                    timeDisplay.textContent = objective.estimatedTime || '2-4 weeks';
                 }
                 
                 // Load missions
@@ -419,36 +529,49 @@
                     }
                     
                     missionCard.innerHTML = `
-                        <div class="flex items-start justify-between mb-4">
-                            ${isCompleted ? '<i class="fas fa-check text-2xl text-black"></i>' : mission.icon ? `<i class="fas ${mission.icon} text-2xl text-black"></i>` : '<i class="fas fa-rocket text-2xl text-black"></i>'}
-                            ${checkpointText || statusBadge}
-                        </div>
-                        
-                        <h3 class="text-lg font-semibold text-text-primary mb-1">${mission.title}</h3>
-                        <p class="text-sm text-text-secondary mb-3">Objective: ${objective.title}</p>
-                        
-                        ${isActive ? `
-                            <div class="space-y-3">
-                                <div>
-                                    <div class="flex items-center justify-between text-sm mb-1">
-                                        <span class="text-text-secondary">Progress</span>
-                                        <span class="font-medium text-text-primary">60%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
-                                        <div class="bg-warning h-2 rounded-full" style="width: 60%"></div>
+                        <div class="relative">
+                            <!-- Icon and Title on same row -->
+                            <div class="flex items-start gap-3 mb-3">
+                                <div class="flex-shrink-0">
+                                    ${isCompleted ? '<i class="fas fa-check text-2xl text-black"></i>' : mission.icon ? `<i class="fas ${mission.icon} text-2xl text-black"></i>` : '<i class="fas fa-rocket text-2xl text-black"></i>'}
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold text-text-primary">${mission.title}</h3>
+                                    <p class="text-sm text-text-secondary">Objective: ${objective.title}</p>
+                                </div>
+                                <!-- Arrow button in top right -->
+                                <button class="p-2 hover:bg-gray-100 rounded transition-all" onclick="event.stopPropagation(); window.location.href='mission-detail.html?mission=${missionId}'">
+                                    <i class="fas fa-arrow-right text-gray-400"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Status badge in top right corner -->
+                            <div class="absolute top-0 right-12">
+                                ${statusBadge}
+                            </div>
+                            
+                            <!-- Content based on status -->
+                            ${isActive ? `
+                                <div class="mt-4">
+                                    <p class="text-sm text-text-secondary mb-3">Next: ${mission.nextStep || 'Continue to next checkpoint'}</p>
+                                    <!-- Checkpoint status in bottom left -->
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-warning">3/5 Checkpoints complete</span>
                                     </div>
                                 </div>
-                                <p class="text-sm text-text-secondary">Next: ${mission.nextStep || 'Continue to next checkpoint'}</p>
-                            </div>
-                        ` : isCompleted ? `
-                            <p class="text-sm text-text-secondary">Completed successfully</p>
-                        ` : `
-                            <div class="space-y-1">
-                                <p class="text-sm text-text-secondary">Est. time: ${mission.estimatedTime}</p>
-                                <p class="text-sm text-text-secondary">Difficulty: ${mission.difficulty}</p>
-                            </div>
-                            <button class="text-sm text-primary font-medium mt-4">${!isLocked ? 'Start mission →' : 'View mission →'}</button>
-                        `}
+                            ` : isCompleted ? `
+                                <div class="mt-4">
+                                    <p class="text-sm text-text-secondary">Completed successfully</p>
+                                </div>
+                            ` : `
+                                <div class="mt-4">
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-text-secondary">Est. time: ${mission.estimatedTime}</p>
+                                        <p class="text-sm text-text-secondary">Difficulty: ${mission.difficulty}</p>
+                                    </div>
+                                </div>
+                            `}
+                        </div>
                     `;
                     
                     container.appendChild(missionCard);
@@ -518,12 +641,6 @@
             }
         }
 
-        // AutoPilot integration
-        function askAutoPilotAbout(question) {
-            // Store the question in sessionStorage and redirect to AutoPilot
-            sessionStorage.setItem('autopilot_question', question);
-            window.location.href = 'autopilot.html';
-        }
 
         // Initialize navigation
         initializeNavigation('dashboard');

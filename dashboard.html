@@ -71,9 +71,22 @@
             <!-- Page Content -->
             <div class="max-w-[1200px] mx-auto px-8 py-8">
                 <!-- Page Header -->
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-text-primary mb-2">Your Flight Plan</h1>
-                    <p class="text-text-secondary">Welcome back, Don. You're making great progress on your founder journey</p>
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">Your Flight Plan</h1>
+                        <p class="text-text-secondary">Welcome back, Don. You're making great progress on your founder journey</p>
+                    </div>
+                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="addObjective()">
+                        <i class="fas fa-plus"></i>Objective
+                    </button>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" placeholder="Search objectives by name or description..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
                 </div>
 
                 <!-- Flight Plan Container -->
@@ -88,105 +101,84 @@
                             
                             <!-- Slot 1: Idea Validation Objective -->
                             <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer mb-6 relative" data-objective="idea-validation" onclick="window.location.href='objective-detail.html?objective=idea-validation'">
+                                <!-- Remove button in upper right -->
                                 <div class="absolute top-4 right-4">
+                                    <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('idea-validation')">
+                                        Remove
+                                    </button>
+                                </div>
+                                <!-- Grabber icon in bottom right -->
+                                <div class="absolute bottom-4 right-4">
                                     <i class="fas fa-grip-vertical text-gray-300"></i>
                                 </div>
                                 <div class="flex">
                                         <!-- Left Section - Main Content -->
                                         <div class="flex-1">
-                                            <div class="flex items-start justify-between mb-3">
-                                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                                    <i class="fas fa-lightbulb text-xl text-white"></i>
+                                            <!-- Icon and Title on same line -->
+                                            <div class="flex items-center gap-3 mb-3">
+                                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                                    <i class="fas fa-lightbulb text-sm text-white"></i>
                                                 </div>
-                                                <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('idea-validation')">
-                                                    Remove
-                                                </button>
+                                                <h3 class="font-semibold text-text-primary">Idea Validation</h3>
                                             </div>
-                                            <h3 class="font-semibold text-text-primary mb-2">Idea Validation</h3>
                                             <p class="text-sm text-text-secondary mb-3">Research, validate, and refine your concept to ensure you're solving a real problem that people will pay for.</p>
-                                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                                <span><i class="fas fa-tasks mr-1"></i>4 missions</span>
-                                                <span><i class="fas fa-clock mr-1"></i>2-4 weeks</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Right Section - Mission Status -->
-                                        <div class="flex items-center justify-center ml-6">
-                                            <div class="bg-section-bg rounded-lg px-6 py-4 text-center">
-                                                <p class="text-2xl font-bold text-text-primary">2/4</p>
-                                                <p class="text-xs text-text-secondary uppercase tracking-wide mt-1">Missions Complete</p>
-                                                <p class="text-xs text-success mt-2">Active</p>
-                                            </div>
+                                            <p class="text-sm text-text-primary font-medium">2/6 Missions Complete</p>
                                         </div>
                                     </div>
                                 </div>
                             
                             <!-- Slot 2: MVP Development Objective -->
                             <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer mb-6 relative" data-objective="mvp-development" onclick="window.location.href='objective-detail.html?objective=mvp-development'">
+                                <!-- Remove button in upper right -->
                                 <div class="absolute top-4 right-4">
+                                    <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('mvp-development')">
+                                        Remove
+                                    </button>
+                                </div>
+                                <!-- Grabber icon in bottom right -->
+                                <div class="absolute bottom-4 right-4">
                                     <i class="fas fa-grip-vertical text-gray-300"></i>
                                 </div>
                                 <div class="flex">
                                         <!-- Left Section - Main Content -->
                                         <div class="flex-1">
-                                            <div class="flex items-start justify-between mb-3">
-                                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                                    <i class="fas fa-code text-xl text-white"></i>
+                                            <!-- Icon and Title on same line -->
+                                            <div class="flex items-center gap-3 mb-3">
+                                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                                    <i class="fas fa-code text-sm text-white"></i>
                                                 </div>
-                                                <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('mvp-development')">
-                                                    Remove
-                                                </button>
+                                                <h3 class="font-semibold text-text-primary">MVP Development</h3>
                                             </div>
-                                            <h3 class="font-semibold text-text-primary mb-2">MVP Development</h3>
                                             <p class="text-sm text-text-secondary mb-3">Build and launch your first version to test with real users and gather feedback.</p>
-                                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                                <span><i class="fas fa-tasks mr-1"></i>4 missions</span>
-                                                <span><i class="fas fa-clock mr-1"></i>1-2 months</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Right Section - Mission Status -->
-                                        <div class="flex items-center justify-center ml-6 px-6 border-l border-border">
-                                            <div class="text-center">
-                                                <p class="text-2xl font-bold text-text-primary">1/4</p>
-                                                <p class="text-xs text-text-secondary uppercase tracking-wide mt-1">Missions Complete</p>
-                                                <p class="text-xs text-success mt-2">Active</p>
-                                            </div>
+                                            <p class="text-sm text-text-primary font-medium">1/4 Missions Complete</p>
                                         </div>
                                     </div>
                                 </div>
                             
                             <!-- Slot 3: Launch Your Product Objective -->
                             <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" data-objective="launch-product" onclick="window.location.href='objective-detail.html?objective=launch-product'">
+                                <!-- Remove button in upper right -->
                                 <div class="absolute top-4 right-4">
+                                    <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('launch-product')">
+                                        Remove
+                                    </button>
+                                </div>
+                                <!-- Grabber icon in bottom right -->
+                                <div class="absolute bottom-4 right-4">
                                     <i class="fas fa-grip-vertical text-gray-300"></i>
                                 </div>
                                 <div class="flex">
                                         <!-- Left Section - Main Content -->
                                         <div class="flex-1">
-                                            <div class="flex items-start justify-between mb-3">
-                                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                                    <i class="fas fa-rocket text-xl text-white"></i>
+                                            <!-- Icon and Title on same line -->
+                                            <div class="flex items-center gap-3 mb-3">
+                                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                                    <i class="fas fa-rocket text-sm text-white"></i>
                                                 </div>
-                                                <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('launch-product')">
-                                                    Remove
-                                                </button>
+                                                <h3 class="font-semibold text-text-primary">Launch Your Product</h3>
                                             </div>
-                                            <h3 class="font-semibold text-text-primary mb-2">Launch Your Product</h3>
                                             <p class="text-sm text-text-secondary mb-3">Ship your product to the world with all the necessary infrastructure and distribution channels.</p>
-                                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                                <span><i class="fas fa-tasks mr-1"></i>4 missions</span>
-                                                <span><i class="fas fa-clock mr-1"></i>2-3 weeks</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Right Section - Mission Status -->
-                                        <div class="flex items-center justify-center ml-6 px-6 border-l border-border">
-                                            <div class="text-center">
-                                                <p class="text-2xl font-bold text-text-primary">0/4</p>
-                                                <p class="text-xs text-text-secondary uppercase tracking-wide mt-1">Missions Complete</p>
-                                                <p class="text-xs text-text-muted mt-2">Not Started</p>
-                                            </div>
+                                            <p class="text-sm text-text-primary font-medium">0/4 Missions Complete</p>
                                         </div>
                                     </div>
                                 </div>
@@ -200,113 +192,203 @@
                         <p class="text-text-secondary">Add more areas to your flight plan</p>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- Operations & Legal -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='objective-detail.html?objective=operations-legal'">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-shield-alt text-xl text-white"></i>
-                                </div>
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=operations-legal'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
                                 <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
                                     Add
                                 </button>
                             </div>
-                            <h3 class="font-semibold text-text-primary mb-2">Operations & Legal</h3>
-                            <p class="text-sm text-text-secondary mb-3">Set up your business foundation with proper legal structure</p>
-                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                <span><i class="fas fa-tasks mr-1"></i>5 missions</span>
-                                <span><i class="fas fa-clock mr-1"></i>2-3 weeks</span>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-shield-alt text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Operations & Legal</h3>
                             </div>
+                            <p class="text-sm text-text-secondary mb-3">Set up your business foundation with proper legal structure</p>
+                            <p class="text-sm text-text-primary font-medium">5 missions</p>
                         </div>
                         
                         <!-- Growth & Traction -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='objective-detail.html?objective=growth-traction'">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-chart-line text-xl text-white"></i>
-                                </div>
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=growth-traction'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
                                 <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
                                     Add
                                 </button>
                             </div>
-                            <h3 class="font-semibold text-text-primary mb-2">Growth & Traction</h3>
-                            <p class="text-sm text-text-secondary mb-3">Scale your user base and revenue through systematic growth</p>
-                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                <span><i class="fas fa-tasks mr-1"></i>6 missions</span>
-                                <span><i class="fas fa-clock mr-1"></i>4-6 weeks</span>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-chart-line text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Growth & Traction</h3>
                             </div>
+                            <p class="text-sm text-text-secondary mb-3">Scale your user base and revenue through systematic growth</p>
+                            <p class="text-sm text-text-primary font-medium">6 missions</p>
                         </div>
                         
                         <!-- Fundraising -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='objective-detail.html?objective=fundraising'">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-hand-holding-usd text-xl text-white"></i>
-                                </div>
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=fundraising'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
                                 <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
                                     Add
                                 </button>
                             </div>
-                            <h3 class="font-semibold text-text-primary mb-2">Fundraising</h3>
-                            <p class="text-sm text-text-secondary mb-3">Prepare for and successfully raise investment</p>
-                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                <span><i class="fas fa-tasks mr-1"></i>8 missions</span>
-                                <span><i class="fas fa-clock mr-1"></i>6-8 weeks</span>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-hand-holding-usd text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Fundraising</h3>
                             </div>
+                            <p class="text-sm text-text-secondary mb-3">Prepare for and successfully raise investment</p>
+                            <p class="text-sm text-text-primary font-medium">8 missions</p>
                         </div>
                         
                         <!-- Team Building -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='objective-detail.html?objective=team-building'">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-users text-xl text-white"></i>
-                                </div>
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=team-building'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
                                 <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
                                     Add
                                 </button>
                             </div>
-                            <h3 class="font-semibold text-text-primary mb-2">Team Building</h3>
-                            <p class="text-sm text-text-secondary mb-3">Hire and manage your team to build a strong culture</p>
-                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                <span><i class="fas fa-tasks mr-1"></i>5 missions</span>
-                                <span><i class="fas fa-clock mr-1"></i>3-4 weeks</span>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-users text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Team Building</h3>
                             </div>
+                            <p class="text-sm text-text-secondary mb-3">Hire and manage your team to build a strong culture</p>
+                            <p class="text-sm text-text-primary font-medium">5 missions</p>
                         </div>
                         
                         <!-- Product-Market Fit -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='objective-detail.html?objective=product-market-fit'">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-bullseye text-xl text-white"></i>
-                                </div>
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=product-market-fit'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
                                 <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
                                     Add
                                 </button>
                             </div>
-                            <h3 class="font-semibold text-text-primary mb-2">Product-Market Fit</h3>
-                            <p class="text-sm text-text-secondary mb-3">Find and measure true product-market fit</p>
-                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                <span><i class="fas fa-tasks mr-1"></i>4 missions</span>
-                                <span><i class="fas fa-clock mr-1"></i>2-3 weeks</span>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-bullseye text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Product-Market Fit</h3>
                             </div>
+                            <p class="text-sm text-text-secondary mb-3">Find and measure true product-market fit</p>
+                            <p class="text-sm text-text-primary font-medium">4 missions</p>
                         </div>
                         
                         <!-- Scale & Optimize -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='objective-detail.html?objective=scale-optimize'">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-expand-arrows-alt text-xl text-white"></i>
-                                </div>
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=scale-optimize'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
                                 <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
                                     Add
                                 </button>
                             </div>
-                            <h3 class="font-semibold text-text-primary mb-2">Scale & Optimize</h3>
-                            <p class="text-sm text-text-secondary mb-3">Optimize operations for sustainable growth</p>
-                            <div class="flex items-center gap-3 text-xs text-text-muted">
-                                <span><i class="fas fa-tasks mr-1"></i>7 missions</span>
-                                <span><i class="fas fa-clock mr-1"></i>4-5 weeks</span>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-expand-arrows-alt text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Scale & Optimize</h3>
                             </div>
+                            <p class="text-sm text-text-secondary mb-3">Optimize operations for sustainable growth</p>
+                            <p class="text-sm text-text-primary font-medium">7 missions</p>
+                        </div>
+                        
+                        <!-- Customer Success -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=customer-success'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
+                                <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
+                                    Add
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-heart text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Customer Success</h3>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-3">Build systems to delight and retain customers</p>
+                            <p class="text-sm text-text-primary font-medium">6 missions</p>
+                        </div>
+                        
+                        <!-- Marketing & Branding -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=marketing-branding'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
+                                <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
+                                    Add
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-bullhorn text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Marketing & Branding</h3>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-3">Build your brand and reach your audience</p>
+                            <p class="text-sm text-text-primary font-medium">8 missions</p>
+                        </div>
+                        
+                        <!-- Sales Process -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=sales-process'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
+                                <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
+                                    Add
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-handshake text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Sales Process</h3>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-3">Create repeatable sales systems</p>
+                            <p class="text-sm text-text-primary font-medium">7 missions</p>
+                        </div>
+                        
+                        <!-- Data & Analytics -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=data-analytics'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
+                                <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
+                                    Add
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-chart-bar text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">Data & Analytics</h3>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-3">Make data-driven decisions</p>
+                            <p class="text-sm text-text-primary font-medium">5 missions</p>
+                        </div>
+                        
+                        <!-- International Expansion -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=international-expansion'">
+                            <!-- Add button in upper right -->
+                            <div class="absolute top-4 right-4">
+                                <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation()">
+                                    Add
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-globe text-sm text-white"></i>
+                                </div>
+                                <h3 class="font-semibold text-text-primary">International Expansion</h3>
+                            </div>
+                            <p class="text-sm text-text-secondary mb-3">Take your product global</p>
+                            <p class="text-sm text-text-primary font-medium">9 missions</p>
                         </div>
                     </div>
                 </div>
@@ -346,6 +428,11 @@
         // Remove objective (placeholder)
         function removeObjective(objectiveId) {
             alert('Remove functionality would be implemented here');
+        }
+        
+        // Add objective (placeholder)
+        function addObjective() {
+            alert('Add objective functionality would be implemented here');
         }
         
         // Move objective up in priority

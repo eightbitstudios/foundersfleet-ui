@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission: Set up Apple Developer Account - FoundersFleet</title>
+    <title>Mission Detail - FoundersFleet</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="boarding-pass-styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="missions-data.js"></script>
     <script src="nav-component.js"></script>
     
     <script>
@@ -102,12 +103,12 @@
                 <!-- Mission Header -->
                 <div class="mb-8">
                     <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                            <i class="fas fa-mobile-alt text-white text-xl"></i>
+                        <div id="mission-icon" class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                            <i class="fas fa-rocket text-white text-xl"></i>
                         </div>
                         <div>
-                            <h1 class="text-2xl font-bold text-text-primary">Set up Apple Developer Account</h1>
-                            <p class="text-text-secondary mt-1">Essential for iOS app distribution</p>
+                            <h1 id="mission-title" class="text-2xl font-bold text-text-primary">Loading...</h1>
+                            <p id="mission-description" class="text-text-secondary mt-1">Loading mission details...</p>
                         </div>
                     </div>
                 </div>
@@ -123,22 +124,22 @@
                                 <div class="text-center p-3 bg-section-bg rounded-lg">
                                     <i class="fas fa-clock text-warning mb-2"></i>
                                     <p class="text-xs text-text-secondary">Time Required</p>
-                                    <p class="text-sm font-semibold text-text-primary">2-3 weeks</p>
+                                    <p id="mission-time" class="text-sm font-semibold text-text-primary">-</p>
                                 </div>
                                 <div class="text-center p-3 bg-section-bg rounded-lg">
                                     <i class="fas fa-signal text-danger mb-2"></i>
                                     <p class="text-xs text-text-secondary">Difficulty</p>
-                                    <p class="text-sm font-semibold text-text-primary">High</p>
+                                    <p id="mission-difficulty" class="text-sm font-semibold text-text-primary">-</p>
                                 </div>
                                 <div class="text-center p-3 bg-section-bg rounded-lg">
                                     <i class="fas fa-dollar-sign text-success mb-2"></i>
                                     <p class="text-xs text-text-secondary">Cost</p>
-                                    <p class="text-sm font-semibold text-text-primary">$99/year</p>
+                                    <p id="mission-cost" class="text-sm font-semibold text-text-primary">-</p>
                                 </div>
                             </div>
                             
-                            <div class="prose prose-sm text-text-secondary">
-                                <p>Setting up an Apple Developer Account is more complex than most founders expect. Apple's verification process is thorough and can take weeks. This mission guides you through each step to avoid common pitfalls that can delay your app launch.</p>
+                            <div id="mission-overview" class="prose prose-sm text-text-secondary">
+                                <p>Loading mission overview...</p>
                             </div>
                         </div>
 
@@ -147,106 +148,12 @@
                             <div class="flex items-center justify-between mb-6">
                                 <h2 class="text-lg font-semibold text-text-primary">Mission Checkpoints</h2>
                                 <div class="text-right">
-                                    <p class="text-sm font-medium text-text-primary">3 of 5 complete</p>
+                                    <p id="checkpoint-status" class="text-sm font-medium text-text-primary">Loading...</p>
                                 </div>
                             </div>
                             
-                            <div class="space-y-0">
-                                <!-- Step 1 - Completed -->
-                                <div class="relative">
-                                    <div class="flex gap-4">
-                                        <div class="relative z-10">
-                                            <div class="w-10 h-10 bg-success rounded-full flex items-center justify-center">
-                                                <i class="fas fa-check text-white text-sm"></i>
-                                            </div>
-                                        </div>
-                                        <div class="flex-1 pb-8">
-                                            <h3 class="font-semibold text-text-primary">Get a DUNS Number</h3>
-                                            <p class="text-sm text-text-secondary mt-1">Register with Dun & Bradstreet for business verification</p>
-                                            <div class="mt-3 p-3 bg-success/10 rounded-lg">
-                                                <p class="text-xs text-success font-medium">Completed 5 days ago</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="step-connector completed"></div>
-                                </div>
-
-                                <!-- Step 2 - Completed -->
-                                <div class="relative">
-                                    <div class="flex gap-4">
-                                        <div class="relative z-10">
-                                            <div class="w-10 h-10 bg-success rounded-full flex items-center justify-center">
-                                                <i class="fas fa-check text-white text-sm"></i>
-                                            </div>
-                                        </div>
-                                        <div class="flex-1 pb-8">
-                                            <h3 class="font-semibold text-text-primary">Create Apple ID for Business</h3>
-                                            <p class="text-sm text-text-secondary mt-1">Set up a dedicated Apple ID using your business email</p>
-                                            <div class="mt-3 p-3 bg-success/10 rounded-lg">
-                                                <p class="text-xs text-success font-medium">Completed 3 days ago</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="step-connector completed"></div>
-                                </div>
-
-                                <!-- Step 3 - Current -->
-                                <div class="relative">
-                                    <div class="flex gap-4">
-                                        <div class="relative z-10">
-                                            <div class="w-10 h-10 bg-warning rounded-full flex items-center justify-center ring-4 ring-warning/20">
-                                                <span class="text-white font-bold">3</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex-1 pb-8">
-                                            <h3 class="font-semibold text-text-primary">Submit Verification Documents</h3>
-                                            <p class="text-sm text-text-secondary mt-1">Upload business registration and identification</p>
-                                            
-                                            <div class="mt-4 flex gap-2">
-                                                <button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all text-sm font-medium">
-                                                    <i class="fas fa-check mr-2"></i>Mark as Done
-                                                </button>
-                                                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-all text-sm font-medium">
-                                                    <i class="fas fa-forward mr-2"></i>Skip
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="step-connector"></div>
-                                </div>
-
-                                <!-- Step 4 - Upcoming -->
-                                <div class="relative">
-                                    <div class="flex gap-4">
-                                        <div class="relative z-10">
-                                            <div class="w-10 h-10 bg-section-bg rounded-full flex items-center justify-center">
-                                                <span class="text-text-muted font-bold">4</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex-1 pb-8">
-                                            <h3 class="font-semibold text-text-secondary">Wait for Verification</h3>
-                                            <p class="text-sm text-text-muted mt-1">Apple reviews your application (5-7 business days)</p>
-                                            <p class="text-xs text-text-muted mt-2 italic">Complete previous checkpoint to unlock</p>
-                                        </div>
-                                    </div>
-                                    <div class="step-connector"></div>
-                                </div>
-
-                                <!-- Step 5 - Upcoming -->
-                                <div class="relative">
-                                    <div class="flex gap-4">
-                                        <div class="relative z-10">
-                                            <div class="w-10 h-10 bg-section-bg rounded-full flex items-center justify-center">
-                                                <span class="text-text-muted font-bold">5</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-semibold text-text-secondary">Complete Payment & Setup</h3>
-                                            <p class="text-sm text-text-muted mt-1">Pay annual fee and configure account settings</p>
-                                            <p class="text-xs text-text-muted mt-2 italic">Complete previous checkpoint to unlock</p>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div id="mission-steps" class="space-y-0">
+                                <!-- Steps will be dynamically loaded here -->
                             </div>
                         </div>
 
@@ -347,6 +254,71 @@
                             <button class="w-full mt-4 text-xs text-primary hover:text-primary-hover">View all →</button>
                         </div>
 
+                        <!-- Members Here -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-semibold text-text-primary mb-4">Members Here</h3>
+                            <p class="text-xs text-text-secondary mb-4">12 founders working on this mission</p>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xs font-medium">JK</span>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center" title="Squad member">
+                                            <i class="fas fa-users text-white" style="font-size: 8px;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-text-primary truncate">James Kim</p>
+                                        <p class="text-xs text-text-secondary">3/5 checkpoints</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xs font-medium">MP</span>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-primary rounded-full flex items-center justify-center" title="Squad member">
+                                            <i class="fas fa-users text-white" style="font-size: 8px;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-text-primary truncate">Maya Patel</p>
+                                        <p class="text-xs text-text-secondary">2/5 checkpoints</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                                            <span class="text-white text-xs font-medium">AR</span>
+                                        </div>
+                                        <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center" title="Connection">
+                                            <i class="fas fa-link text-white" style="font-size: 8px;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-text-primary truncate">Alex Rivera</p>
+                                        <p class="text-xs text-text-secondary">1/5 checkpoints</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white text-xs font-medium">LT</span>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-text-primary truncate">Lisa Thompson</p>
+                                        <p class="text-xs text-text-secondary">Just started</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button class="text-xs text-primary hover:text-primary-hover mt-3 inline-block">View all 12 members →</button>
+                        </div>
+
                         <!-- Recommended Apps -->
                         <div class="bg-card-bg border border-border rounded-lg p-6">
                             <h3 class="font-semibold text-text-primary mb-4">Helpful Apps</h3>
@@ -360,26 +332,6 @@
                                 </a>
                             </div>
                             <a href="apps.html" class="text-xs text-primary hover:text-primary-hover mt-3 inline-block">Browse all apps →</a>
-                        </div>
-
-                        <!-- AutoPilot Assistant -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="font-semibold text-text-primary mb-4">Ask AutoPilot</h3>
-                            <p class="text-sm text-text-secondary mb-4">Get AI help for this mission</p>
-                            <div class="space-y-3">
-                                <button onclick="askAutoPilotAbout('How long does Apple verification take?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
-                                    <p class="text-sm text-text-primary">Verification timeline?</p>
-                                </button>
-                                <button onclick="askAutoPilotAbout('What documents do I need for Apple Developer?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
-                                    <p class="text-sm text-text-primary">Required documents?</p>
-                                </button>
-                                <button onclick="askAutoPilotAbout('Common Apple Developer account issues?')" class="w-full text-left p-3 bg-section-bg rounded hover:bg-gray-100 transition-all">
-                                    <p class="text-sm text-text-primary">Common issues?</p>
-                                </button>
-                            </div>
-                            <button onclick="window.location.href='autopilot.html'" class="w-full mt-4 bg-primary text-white py-2 px-4 rounded text-sm font-medium hover:bg-primary-hover transition-all">
-                                <i class="fas fa-paper-plane mr-2"></i>Open AutoPilot
-                            </button>
                         </div>
 
                         <!-- Resources -->
@@ -428,6 +380,141 @@
         // Initialize navigation
         initializeNavigation('dashboard');
         
+        // Load mission data based on URL parameter
+        function loadMissionData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const missionId = urlParams.get('mission');
+            
+            if (!missionId || !missionData || !missionData.missions || !missionData.missions[missionId]) {
+                // Default to a mission if none specified or not found
+                document.getElementById('mission-title').textContent = 'Mission Not Found';
+                document.getElementById('mission-description').textContent = 'The requested mission could not be found.';
+                return;
+            }
+            
+            const mission = missionData.missions[missionId];
+            
+            // Update page title
+            document.title = `Mission: ${mission.title} - FoundersFleet`;
+            
+            // Update mission header
+            document.getElementById('mission-icon').innerHTML = `<i class="fas ${mission.icon || 'fa-rocket'} text-white text-xl"></i>`;
+            document.getElementById('mission-title').textContent = mission.title;
+            document.getElementById('mission-description').textContent = mission.description;
+            
+            // Update mission stats
+            document.getElementById('mission-time').textContent = mission.timeEstimate || 'Variable';
+            document.getElementById('mission-difficulty').textContent = mission.difficulty ? mission.difficulty.charAt(0).toUpperCase() + mission.difficulty.slice(1) : 'Medium';
+            document.getElementById('mission-cost').textContent = mission.cost === 0 ? 'Free' : `$${mission.cost}${mission.cost === 99 ? '/year' : ''}`;
+            
+            // Update mission overview
+            const overviewText = getOverviewText(missionId, mission);
+            document.getElementById('mission-overview').innerHTML = `<p>${overviewText}</p>`;
+            
+            // Update checkpoint status
+            const totalSteps = mission.steps ? mission.steps.length : 0;
+            const completedSteps = Math.floor(Math.random() * totalSteps); // Simulated progress
+            document.getElementById('checkpoint-status').textContent = `${completedSteps} of ${totalSteps} complete`;
+            
+            // Load mission steps
+            loadMissionSteps(mission.steps || [], completedSteps);
+            
+            // Update breadcrumb
+            updateBreadcrumb(mission);
+        }
+        
+        function getOverviewText(missionId, mission) {
+            const overviews = {
+                'apple-dev-account': 'Setting up an Apple Developer Account is more complex than most founders expect. Apple\'s verification process is thorough and can take weeks. This mission guides you through each step to avoid common pitfalls that can delay your app launch.',
+                'validate-idea': 'Validating your idea is the most crucial step in your founder journey. This mission will help you talk to real potential customers and validate that you\'re solving a real problem worth solving.',
+                'customer-interviews': 'Deep customer interviews help you understand not just what customers say they want, but what they actually need. This mission guides you through conducting effective interviews that reveal true insights.',
+                'go-to-market-strategy': 'A well-crafted go-to-market strategy is essential for a successful product launch. This mission helps you define your target segments, choose distribution channels, set pricing, and create a launch timeline.'
+            };
+            
+            return overviews[missionId] || `Complete this mission to ${mission.description.toLowerCase()}. Follow each checkpoint carefully to ensure success.`;
+        }
+        
+        function loadMissionSteps(steps, completedCount) {
+            const container = document.getElementById('mission-steps');
+            container.innerHTML = '';
+            
+            steps.forEach((step, index) => {
+                const isCompleted = index < completedCount;
+                const isCurrent = index === completedCount;
+                const isLocked = index > completedCount;
+                
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'relative';
+                
+                let statusIcon = '';
+                let statusClass = '';
+                
+                if (isCompleted) {
+                    statusIcon = '<i class="fas fa-check text-white text-sm"></i>';
+                    statusClass = 'bg-success';
+                } else if (isCurrent) {
+                    statusIcon = `<span class="text-white font-bold">${index + 1}</span>`;
+                    statusClass = 'bg-warning ring-4 ring-warning/20';
+                } else {
+                    statusIcon = `<span class="text-text-muted font-bold">${index + 1}</span>`;
+                    statusClass = 'bg-section-bg';
+                }
+                
+                stepDiv.innerHTML = `
+                    <div class="flex gap-4">
+                        <div class="relative z-10">
+                            <div class="w-10 h-10 ${statusClass} rounded-full flex items-center justify-center">
+                                ${statusIcon}
+                            </div>
+                        </div>
+                        <div class="flex-1 ${index < steps.length - 1 ? 'pb-8' : ''}">
+                            <h3 class="font-semibold ${isLocked ? 'text-text-secondary' : 'text-text-primary'}">${step.title}</h3>
+                            <p class="text-sm ${isLocked ? 'text-text-muted' : 'text-text-secondary'} mt-1">${step.description}</p>
+                            ${isCompleted ? `
+                                <div class="mt-3 p-3 bg-success/10 rounded-lg">
+                                    <p class="text-xs text-success font-medium">Completed</p>
+                                </div>
+                            ` : isCurrent ? `
+                                <div class="mt-4 flex gap-2">
+                                    <button class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all text-sm font-medium">
+                                        <i class="fas fa-check mr-2"></i>Mark as Done
+                                    </button>
+                                    <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-all text-sm font-medium">
+                                        <i class="fas fa-forward mr-2"></i>Skip
+                                    </button>
+                                </div>
+                            ` : isLocked ? `
+                                <p class="text-xs text-text-muted mt-2 italic">Complete previous checkpoint to unlock</p>
+                            ` : ''}
+                        </div>
+                    </div>
+                    ${index < steps.length - 1 ? `<div class="step-connector ${isCompleted ? 'completed' : ''}"></div>` : ''}
+                `;
+                
+                container.appendChild(stepDiv);
+            });
+        }
+        
+        function updateBreadcrumb(mission) {
+            // Update the breadcrumb to show the correct objective
+            const objectiveLink = document.querySelector('a[href*="objective-detail.html"]');
+            if (objectiveLink) {
+                // Map mission epic to objective
+                const epicToObjective = {
+                    'starting-out': { id: 'idea-validation', name: 'Idea Validation' },
+                    'first-customers': { id: 'growth-traction', name: 'Growth & Traction' },
+                    'launch-product': { id: 'launch-product', name: 'Launch Your Product' },
+                    'fundraise': { id: 'fundraising', name: 'Fundraising' }
+                };
+                
+                const objective = epicToObjective[mission.epic];
+                if (objective) {
+                    objectiveLink.href = `objective-detail.html?objective=${objective.id}`;
+                    objectiveLink.textContent = objective.name;
+                }
+            }
+        }
+        
         // Toggle action dropdown
         function toggleDropdown() {
             const dropdown = document.getElementById('action-dropdown');
@@ -443,13 +530,12 @@
                 dropdown.classList.add('hidden');
             }
         });
+        
+        // Load mission data when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            loadMissionData();
+        });
 
-        // AutoPilot integration
-        function askAutoPilotAbout(question) {
-            // Store the question in sessionStorage and redirect to AutoPilot
-            sessionStorage.setItem('autopilot_question', question);
-            window.location.href = 'autopilot.html';
-        }
     </script>
 </body>
 </html>

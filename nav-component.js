@@ -6,9 +6,8 @@ function renderNavigation(currentPage) {
     { href: 'squads.html', icon: 'fa-solid fa-people-group', page: 'squads' },
     { href: 'founders.html', icon: 'fa-solid fa-address-book', page: 'founders' },
     { href: 'messages.html', icon: 'fa-solid fa-comment', page: 'messages' },
-    { href: 'apps.html', icon: 'fa-solid fa-shapes', page: 'apps' },
     { href: 'tools.html', icon: 'fas fa-wrench', page: 'tools' },
-    { href: 'autopilot.html', icon: 'fa-solid fa-paper-plane', page: 'autopilot' }
+    { href: 'apps.html', icon: 'fa-solid fa-shapes', page: 'apps' }
   ];
 
   // Build navigation items HTML

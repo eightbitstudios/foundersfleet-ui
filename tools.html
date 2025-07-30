@@ -35,10 +35,6 @@
         }
     </script>
     <style>
-        /* Autopilot color variable */
-        :root {
-            --autopilot-primary: #85d3c3;
-        }
         
         /* Keep minimal custom styles for Tailwind config */
         .hidden { display: none !important; }
@@ -74,34 +70,40 @@
                         <p class="text-text-secondary">Third-party tools curated by fellow founders</p>
                     </div>
                     <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="contributeResource()">
-                        <i class="fas fa-plus"></i>Contribute
+                        <i class="fas fa-plus"></i>Suggest
                     </button>
                 </div>
                 
-                <!-- Category Filter Section -->
-                <div class="bg-section-bg -mx-8 px-8 py-4 mb-6">
-                    <div class="max-w-[1200px] mx-auto">
-                        <div class="flex gap-2 overflow-x-auto">
-                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all whitespace-nowrap" data-category="all" onclick="filterToolsByCategory('all')">All Tools</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="product" onclick="filterToolsByCategory('product')">Product</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="marketing" onclick="filterToolsByCategory('marketing')">Marketing</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="sales" onclick="filterToolsByCategory('sales')">Sales</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="analytics" onclick="filterToolsByCategory('analytics')">Analytics</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="finance" onclick="filterToolsByCategory('finance')">Finance</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="operations" onclick="filterToolsByCategory('operations')">Operations</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all whitespace-nowrap" data-category="legal" onclick="filterToolsByCategory('legal')">Legal</button>
-                        </div>
+                <!-- Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" placeholder="Search tools by name or category..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
                 
-                <!-- Content Section -->
+                <!-- Tabs and Filter Section -->
+                <div class="bg-section-bg -mx-8 px-8 py-4 mb-6">
+                    <div class="max-w-[1200px] mx-auto flex items-center justify-between">
+                        <!-- Tabs -->
+                        <div class="flex gap-2">
+                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-tab="all" onclick="switchToolTab('all')">All Tools</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="recommended" onclick="switchToolTab('recommended')">Recommended</button>
+                        </div>
+                        
+                        <!-- Filter -->
+                        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-lg hover:border-primary transition-all" onclick="showFilterModal()">
+                            <i class="fas fa-filter text-sm"></i>
+                            <span class="text-sm font-medium">Filter</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
                 <div>
-                    <!-- Grid Layout -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <!-- Left Column - Tools Grid -->
-                        <div class="lg:col-span-2">
-                            <!-- Tools Grid -->
-                            <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- All Tools Tab -->
+                    <div id="all-tools-content" class="block">
+                        <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <!-- Notion -->
                                 <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="product,operations">
                                     <div class="flex items-start gap-4 mb-4">
@@ -319,46 +321,76 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
                         </div>
-                        
-                        <!-- Right Column - Stats and Actions -->
-                        <div class="lg:col-span-1 space-y-6">
-                            <!-- Quick Stats -->
-                            <div class="bg-section-bg rounded-xl p-6 border border-border">
-                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Stats</h3>
-                                <div class="space-y-3">
-                                    <div>
-                                        <div class="text-2xl font-bold text-text-primary">50+</div>
-                                        <div class="text-sm text-text-secondary">Total Tools</div>
+                    </div>
+                    
+                    <!-- Recommended Tab (Hidden by default) -->
+                    <div id="recommended-content" class="hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Recommended tools will be shown here -->
+                            <!-- For now, showing a subset of tools -->
+                            
+                            <!-- Stripe -->
+                            <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-indigo-600 flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fas fa-credit-card text-xl"></i>
                                     </div>
-                                    <div>
-                                        <div class="text-2xl font-bold text-text-primary">8</div>
-                                        <div class="text-sm text-text-secondary">Categories</div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-semibold text-text-primary mb-1">Stripe</h3>
+                                        <p class="text-sm text-text-secondary">Payment processing and subscription management</p>
                                     </div>
-                                    <div>
-                                        <div class="text-2xl font-bold text-text-primary">10</div>
-                                        <div class="text-sm text-text-secondary">New This Month</div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Finance</span>
+                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
                                     </div>
+                                    <a href="https://stripe.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
                                 </div>
                             </div>
                             
-                            <!-- Recommended for You -->
-                            <div class="bg-section-bg rounded-xl p-6 border border-border">
-                                <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended for You</h3>
-                                <p class="text-sm text-text-secondary mb-4">Based on your current stage</p>
-                                <div class="space-y-3">
-                                    <a href="#" class="flex items-center gap-3 p-3 bg-white rounded hover:bg-primary hover:text-white transition-all group">
-                                        <i class="fas fa-comments text-primary group-hover:text-white"></i>
-                                        <span class="text-sm">Customer Interview Tools</span>
+                            <!-- Notion -->
+                            <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fas fa-file-alt text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-semibold text-text-primary mb-1">Notion</h3>
+                                        <p class="text-sm text-text-secondary">All-in-one workspace for notes and documentation</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
+                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
+                                    </div>
+                                    <a href="https://notion.so" target="_blank" class="text-primary hover:text-primary-hover">
+                                        <i class="fas fa-external-link-alt"></i>
                                     </a>
-                                    <a href="#" class="flex items-center gap-3 p-3 bg-white rounded hover:bg-primary hover:text-white transition-all group">
-                                        <i class="fas fa-chart-line text-primary group-hover:text-white"></i>
-                                        <span class="text-sm">Analytics Setup Guide</span>
-                                    </a>
-                                    <a href="#" class="flex items-center gap-3 p-3 bg-white rounded hover:bg-primary hover:text-white transition-all group">
-                                        <i class="fas fa-credit-card text-primary group-hover:text-white"></i>
-                                        <span class="text-sm">Payment Integration</span>
+                                </div>
+                            </div>
+                            
+                            <!-- GitHub -->
+                            <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
+                                <div class="flex items-start gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-lg bg-gray-900 flex items-center justify-center text-white flex-shrink-0">
+                                        <i class="fab fa-github text-xl"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-semibold text-text-primary mb-1">GitHub</h3>
+                                        <p class="text-sm text-text-secondary">Version control and collaboration for code</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
+                                    </div>
+                                    <a href="https://github.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                        <i class="fas fa-external-link-alt"></i>
                                     </a>
                                 </div>
                             </div>
@@ -369,52 +401,36 @@
         </main>
     </div>
 
-        <!-- AutoPilot Message Injector -->
-    <div id="autopilot-injector" class="fixed bottom-6 right-6 hidden z-50">
-        <div class="bg-[var(--autopilot-primary)] rounded-lg shadow-2xl p-4 max-w-sm border border-black/20">
-            <div class="flex items-start gap-3">
-                <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-paper-plane text-[var(--autopilot-primary)]"></i>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-semibold mb-1 text-black">AutoPilot Tip</h4>
-                    <p id="autopilot-message" class="text-sm text-black"></p>
-                    <div class="flex gap-2 mt-3">
-                        <button onclick="dismissAutoPilotMessage()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded hover:bg-black/80">Dismiss</button>
-                        <button onclick="openAutoPilot()" class="text-xs bg-black text-[var(--autopilot-primary)] px-2 py-1 rounded font-semibold hover:bg-black/80">Learn More</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="app.js"></script>
     <script>
 
-        // Filter tools by category
-        function filterToolsByCategory(category) {
-            // Update button states
-            const buttons = document.querySelectorAll('[data-category]');
-            buttons.forEach(btn => {
-                if (btn.getAttribute('data-category') === category) {
-                    btn.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border');
-                    btn.classList.add('bg-primary', 'text-white');
-                } else {
-                    btn.classList.remove('bg-primary', 'text-white');
-                    btn.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border');
-                }
+        // Switch tabs functionality
+        function switchToolTab(tab) {
+            // Update tab styling
+            const tabs = document.querySelectorAll('[data-tab]');
+            tabs.forEach(t => {
+                t.classList.remove('bg-primary', 'text-white');
+                t.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border', 'hover:border-primary', 'hover:text-primary');
             });
             
-            // Filter tool cards
-            const toolCards = document.querySelectorAll('.tool-card');
-            toolCards.forEach(card => {
-                const categories = card.getAttribute('data-categories').split(',');
-                if (category === 'all' || categories.includes(category)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+            const activeTab = document.querySelector(`[data-tab="${tab}"]`);
+            activeTab.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border', 'hover:border-primary', 'hover:text-primary');
+            activeTab.classList.add('bg-primary', 'text-white');
+            
+            // Show/hide content
+            document.getElementById('all-tools-content').classList.add('hidden');
+            document.getElementById('recommended-content').classList.add('hidden');
+            
+            if (tab === 'all') {
+                document.getElementById('all-tools-content').classList.remove('hidden');
+            } else if (tab === 'recommended') {
+                document.getElementById('recommended-content').classList.remove('hidden');
+            }
+        }
+        
+        // Show filter modal
+        function showFilterModal() {
+            alert('Filter modal would open here with categories: Product, Marketing, Sales, Analytics, Finance, Operations, Legal');
         }
 
         // Contribute resource
@@ -422,17 +438,6 @@
             alert('Thank you for your interest in contributing! This feature is coming soon.');
         }
 
-        // AutoPilot functions
-        function dismissAutoPilotMessage() {
-            document.getElementById('autopilot-injector').classList.add('hidden');
-        }
-
-        function openAutoPilot() {
-            window.location.href = 'autopilot.html';
-        }
-
-        // Initialize
-        filterToolsByCategory('all');
 
         // Initialize navigation
         initializeNavigation('tools');
