@@ -56,7 +56,7 @@
                 <!-- Breadcrumb and Action Button -->
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center gap-2 text-sm text-text-secondary">
-                        <a href="dashboard.html" class="underline hover:text-primary transition-all">Flight Plan</a>
+                        <a href="flightplan.html" class="underline hover:text-primary transition-all">Flight Plan</a>
                         <i class="fas fa-chevron-right text-xs"></i>
                         <span class="text-text-primary">Objective</span>
                     </div>
@@ -147,7 +147,7 @@
                                         </div>
                                     </div>
                                     <div class="flex-1">
-                                        <p class="text-sm font-medium text-text-primary">Sarah Chen</p>
+                                        <a href="founder-profile.html?founder=sarah-chen" class="text-sm font-medium text-text-primary hover:text-primary transition-all">Sarah Chen</a>
                                         <p class="text-xs text-success">Completed 2 weeks ago</p>
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@
                                         </div>
                                     </div>
                                     <div class="flex-1">
-                                        <p class="text-sm font-medium text-text-primary">Alex Rivera</p>
+                                        <a href="founder-profile.html?founder=alex-rivera" class="text-sm font-medium text-text-primary hover:text-primary transition-all">Alex Rivera</a>
                                         <p class="text-xs text-success">Completed 1 month ago</p>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
                                         <span class="text-white text-xs font-medium">TM</span>
                                     </div>
                                     <div class="flex-1">
-                                        <p class="text-sm font-medium text-text-primary">Tyler Morris</p>
+                                        <a href="founder-profile.html?founder=tyler-morris" class="text-sm font-medium text-text-primary hover:text-primary transition-all">Tyler Morris</a>
                                         <p class="text-xs text-success">Completed 3 months ago</p>
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@
                                         </div>
                                     </div>
                                     <div class="flex-1">
-                                        <p class="text-sm font-medium text-text-primary">James Kim</p>
+                                        <a href="founder-profile.html?founder=james-kim" class="text-sm font-medium text-text-primary hover:text-primary transition-all">James Kim</a>
                                         <p class="text-xs text-text-secondary">Customer Interviews - 3/10</p>
                                     </div>
                                 </div>
@@ -213,7 +213,7 @@
                                         </div>
                                     </div>
                                     <div class="flex-1">
-                                        <p class="text-sm font-medium text-text-primary">Maya Patel</p>
+                                        <a href="founder-profile.html?founder=maya-patel" class="text-sm font-medium text-text-primary hover:text-primary transition-all">Maya Patel</a>
                                         <p class="text-xs text-text-secondary">Market Research - Completed</p>
                                     </div>
                                 </div>
@@ -228,7 +228,7 @@
                                         </div>
                                     </div>
                                     <div class="flex-1">
-                                        <p class="text-sm font-medium text-text-primary">Lisa Thompson</p>
+                                        <a href="founder-profile.html?founder=lisa-thompson" class="text-sm font-medium text-text-primary hover:text-primary transition-all">Lisa Thompson</a>
                                         <p class="text-xs text-text-secondary">Mom Test - Starting</p>
                                     </div>
                                 </div>
@@ -238,7 +238,7 @@
                                         <span class="text-white text-xs font-medium">NK</span>
                                     </div>
                                     <div class="flex-1">
-                                        <p class="text-sm font-medium text-text-primary">Nina Kaur</p>
+                                        <a href="founder-profile.html?founder=nina-kaur" class="text-sm font-medium text-text-primary hover:text-primary transition-all">Nina Kaur</a>
                                         <p class="text-xs text-text-secondary">Landing Page - In Progress</p>
                                     </div>
                                 </div>
@@ -590,7 +590,7 @@
         }
 
         function goBack() {
-            window.location.href = 'dashboard.html';
+            window.location.href = 'flightplan.html';
         }
         
         // Toggle action dropdown
@@ -643,7 +643,7 @@
 
 
         // Initialize navigation
-        initializeNavigation('dashboard');
+        initializeNavigation('flightplan');
         
         // Ensure missions data is loaded
         window.addEventListener('DOMContentLoaded', function() {

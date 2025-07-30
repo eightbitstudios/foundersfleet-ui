@@ -81,6 +81,44 @@
                     </button>
                 </div>
 
+                <!-- Onboarding Welcome Module -->
+                <div class="mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 opacity-10">
+                        <i class="fas fa-rocket text-[200px] transform rotate-45 translate-x-16 -translate-y-16"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="max-w-2xl">
+                            <h2 class="text-2xl font-bold mb-3">Welcome to FoundersFleet! 🎉</h2>
+                            <p class="text-lg mb-4 text-white/90">
+                                Let's set up your personalized Flight Plan and get you matched with other founders at your stage.
+                            </p>
+                            <div class="flex items-center gap-6 mb-6">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-route text-white/80"></i>
+                                    <span class="text-sm text-white/80">Pick Objectives</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-check-circle text-white/80"></i>
+                                    <span class="text-sm text-white/80">Get matched with a squad</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-clock text-white/80"></i>
+                                    <span class="text-sm text-white/80">Takes less than 5 minutes</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button onclick="window.location.href='onboarding-profile.html'" class="px-6 py-3 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all font-medium">
+                                    Start Setup
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                                <button onclick="dismissOnboarding()" class="text-white/80 hover:text-white transition-all text-sm">
+                                    I'll do this later
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Search Bar -->
                 <div class="mb-6">
                     <div class="relative">
@@ -119,7 +157,7 @@
                                                 <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
                                                     <i class="fas fa-lightbulb text-sm text-white"></i>
                                                 </div>
-                                                <h3 class="font-semibold text-text-primary">Idea Validation</h3>
+                                                <h3 class="text-2xl font-bold text-text-primary">Idea Validation</h3>
                                             </div>
                                             <p class="text-sm text-text-secondary mb-3">Research, validate, and refine your concept to ensure you're solving a real problem that people will pay for.</p>
                                             <p class="text-sm text-text-primary font-medium">2/6 Missions Complete</p>
@@ -147,7 +185,7 @@
                                                 <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
                                                     <i class="fas fa-code text-sm text-white"></i>
                                                 </div>
-                                                <h3 class="font-semibold text-text-primary">MVP Development</h3>
+                                                <h3 class="text-2xl font-bold text-text-primary">MVP Development</h3>
                                             </div>
                                             <p class="text-sm text-text-secondary mb-3">Build and launch your first version to test with real users and gather feedback.</p>
                                             <p class="text-sm text-text-primary font-medium">1/4 Missions Complete</p>
@@ -175,7 +213,7 @@
                                                 <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
                                                     <i class="fas fa-rocket text-sm text-white"></i>
                                                 </div>
-                                                <h3 class="font-semibold text-text-primary">Launch Your Product</h3>
+                                                <h3 class="text-2xl font-bold text-text-primary">Launch Your Product</h3>
                                             </div>
                                             <p class="text-sm text-text-secondary mb-3">Ship your product to the world with all the necessary infrastructure and distribution channels.</p>
                                             <p class="text-sm text-text-primary font-medium">0/4 Missions Complete</p>
@@ -413,7 +451,7 @@
     <script src="dev-tools.js"></script>
     <script>
         // Initialize navigation
-        initializeNavigation('dashboard');
+        initializeNavigation('flightplan');
 
         // Mission navigation
         function goToMission(missionId) {
@@ -456,6 +494,33 @@
             // 3. Save the new order
             alert('Move down functionality would be implemented here');
         }
+        
+        // Dismiss onboarding module
+        function dismissOnboarding() {
+            const onboardingModule = document.querySelector('.bg-gradient-to-r');
+            if (onboardingModule) {
+                onboardingModule.style.transition = 'all 0.3s ease-out';
+                onboardingModule.style.opacity = '0';
+                onboardingModule.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    onboardingModule.remove();
+                }, 300);
+                
+                // In a real app, this would save the dismissal to prevent showing again
+                localStorage.setItem('onboardingDismissed', 'true');
+            }
+        }
+        
+        // Check if onboarding should be shown
+        window.addEventListener('DOMContentLoaded', function() {
+            const onboardingDismissed = localStorage.getItem('onboardingDismissed');
+            if (onboardingDismissed === 'true') {
+                const onboardingModule = document.querySelector('.bg-gradient-to-r');
+                if (onboardingModule) {
+                    onboardingModule.remove();
+                }
+            }
+        });
     </script>
 </body>
 </html>

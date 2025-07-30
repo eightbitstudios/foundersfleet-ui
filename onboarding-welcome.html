@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to FoundersFleet - Start Your Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <!-- Progress Bar -->
+    <div class="bg-white border-b border-border sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-8 py-4">
+            <div class="flex items-center justify-between mb-3">
+                <a href="index.html" class="flex items-center gap-2 text-text-secondary hover:text-primary transition-all">
+                    <i class="fas fa-plane text-2xl"></i>
+                </a>
+                <h1 class="text-lg font-semibold text-text-primary">Board the Fleet</h1>
+                <button onclick="window.location.href='flightplan.html'" class="text-sm text-text-secondary hover:text-primary transition-all">
+                    Skip for now
+                </button>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div class="bg-primary h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-8 py-12">
+        <!-- Welcome Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-text-primary mb-4">Welcome to FoundersFleet! 🚀</h1>
+            <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+                Join a community of founders building the future. Let's get you set up in just a few minutes.
+            </p>
+        </div>
+
+        <!-- What You'll Get Section -->
+        <div class="bg-card-bg border border-border rounded-lg p-8 mb-8">
+            <h2 class="text-2xl font-semibold text-text-primary mb-6 text-center">What You'll Get</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="feature-card text-center">
+                    <div class="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-text-primary mb-2">Join a Squad</h3>
+                    <p class="text-sm text-text-secondary">
+                        Connect with 4-6 founders at your stage for weekly accountability and support
+                    </p>
+                </div>
+                
+                <div class="feature-card text-center">
+                    <div class="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-route text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-text-primary mb-2">Custom Flight Plan</h3>
+                    <p class="text-sm text-text-secondary">
+                        Get a personalized roadmap with objectives and missions for your startup journey
+                    </p>
+                </div>
+                
+                <div class="feature-card text-center">
+                    <div class="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-rocket text-white text-2xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-text-primary mb-2">Launch Faster</h3>
+                    <p class="text-sm text-text-secondary">
+                        Access curated tools, apps, and resources to accelerate your progress
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Setup Steps -->
+        <div class="bg-section-bg rounded-lg p-8 mb-8">
+            <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Setup (5 minutes)</h3>
+            <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white border border-border rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-sm font-medium">1</span>
+                    </div>
+                    <p class="text-text-secondary">Tell us about yourself and your founder journey</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white border border-border rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-sm font-medium">2</span>
+                    </div>
+                    <p class="text-text-secondary">Share details about your startup</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white border border-border rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-sm font-medium">3</span>
+                    </div>
+                    <p class="text-text-secondary">Choose your top objectives</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-white border border-border rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-sm font-medium">4</span>
+                    </div>
+                    <p class="text-text-secondary">Get matched with your squad</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="text-center">
+            <button onclick="window.location.href='onboarding-profile.html'" class="px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all text-lg font-medium">
+                Let's Get Started
+                <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+            <p class="text-sm text-text-muted mt-4">
+                Already have an account? 
+                <a href="index.html" class="text-primary hover:text-primary-hover underline">Sign in</a>
+            </p>
+        </div>
+    </main>
+</body>
+</html>

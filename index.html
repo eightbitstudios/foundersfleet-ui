@@ -319,7 +319,7 @@
         <div class="h-full flex items-center justify-between">
             <!-- Logo -->
             <div class="w-20 h-full flex items-center justify-center">
-                <a href="dashboard.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
+                <a href="flightplan.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
                     <span class="text-black text-xl font-bold">F</span>
                 </a>
             </div>
@@ -332,11 +332,11 @@
             <!-- Right side buttons -->
             <div class="flex items-center gap-4 pr-5">
                 <span class="text-white/60 text-sm">Invite Only. Verification Required.</span>
-                <button onclick="window.location.href='dashboard.html'" class="px-6 py-2 bg-transparent text-white border border-white/50 rounded-lg text-sm font-semibold hover:bg-white/10 hover:border-white transition-all">
-                    Enter
-                </button>
                 <button onclick="openBoardingPass()" class="px-6 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-white/90 transition-all">
                     Board the Fleet
+                </button>
+                <button onclick="window.location.href='flightplan.html'" class="px-6 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-white/90 transition-all">
+                    Enter
                 </button>
             </div>
         </div>
@@ -797,7 +797,7 @@
             const phoneInput = document.getElementById('phoneInputModal') || document.getElementById('phoneInputModalMobile');
             if (phoneInput.value.trim()) {
                 console.log('Phone submitted:', phoneInput.value);
-                window.location.href = 'dashboard.html';
+                window.location.href = 'flightplan.html';
             }
         }
         

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Aboard! - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="boarding-pass-styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .confetti {
+            animation: confetti-fall 3s ease-out;
+            position: absolute;
+        }
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        .checklist-item {
+            transition: all 0.3s ease;
+        }
+        .checklist-item:hover {
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter">
+    <!-- Confetti Animation -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="confetti w-2 h-2 bg-primary rounded-full" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="confetti w-2 h-2 bg-success rounded-full" style="left: 30%; animation-delay: 0.2s;"></div>
+        <div class="confetti w-2 h-2 bg-warning rounded-full" style="left: 50%; animation-delay: 0.4s;"></div>
+        <div class="confetti w-2 h-2 bg-danger rounded-full" style="left: 70%; animation-delay: 0.6s;"></div>
+        <div class="confetti w-2 h-2 bg-info rounded-full" style="left: 90%; animation-delay: 0.8s;"></div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="bg-primary border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 md:px-8 py-3">
+            <!-- Desktop Header -->
+            <div class="hidden md:flex items-center justify-between">
+                <button onclick="window.location.href='flightplan.html'" class="px-4 py-1.5 text-sm text-white/60 hover:text-white border border-white/20 hover:border-white/40 rounded transition-all">
+                    Cancel
+                </button>
+                
+                <!-- Progress Steps -->
+                <div class="flex items-center gap-6">
+                    <button onclick="window.location.href='onboarding-profile.html'" class="flex items-center text-success hover:text-white transition-all">
+                        <i class="fas fa-check-circle text-success text-lg mr-2"></i>
+                        <span class="text-sm">You</span>
+                    </button>
+                    <div class="w-12 h-0.5 bg-success"></div>
+                    <button onclick="window.location.href='onboarding-startup.html'" class="flex items-center text-success hover:text-white transition-all">
+                        <i class="fas fa-check-circle text-success text-lg mr-2"></i>
+                        <span class="text-sm">Startup</span>
+                    </button>
+                    <div class="w-12 h-0.5 bg-success"></div>
+                    <button onclick="window.location.href='onboarding-objectives.html'" class="flex items-center text-success hover:text-white transition-all">
+                        <i class="fas fa-check-circle text-success text-lg mr-2"></i>
+                        <span class="text-sm">Objectives</span>
+                    </button>
+                    <div class="w-12 h-0.5 bg-success"></div>
+                    <button onclick="window.location.href='onboarding-squad.html'" class="flex items-center text-success hover:text-white transition-all">
+                        <i class="fas fa-check-circle text-success text-lg mr-2"></i>
+                        <span class="text-sm">Squad</span>
+                    </button>
+                </div>
+                
+                <div class="w-16"></div>
+            </div>
+            
+            <!-- Mobile Header -->
+            <div class="md:hidden">
+                <div class="flex items-center justify-between mb-3">
+                    <button onclick="window.location.href='flightplan.html'" class="text-sm text-white/60 hover:text-white transition-all">
+                        Cancel
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle text-success text-sm"></i>
+                        <span class="text-sm font-medium text-white">Complete!</span>
+                    </div>
+                    <div class="w-12"></div>
+                </div>
+                <!-- Mobile Progress Bar -->
+                <div class="flex items-center gap-2">
+                    <div class="flex-1 h-1 bg-white rounded-full"></div>
+                    <div class="flex-1 h-1 bg-white rounded-full"></div>
+                    <div class="flex-1 h-1 bg-white rounded-full"></div>
+                    <div class="flex-1 h-1 bg-white rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-8 py-12">
+        <!-- Success Message -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-success rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-text-primary mb-4">Welcome aboard, Don! 🎉</h1>
+            <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+                You're all set up and ready to start your founder journey with FoundersFleet.
+            </p>
+        </div>
+
+        <!-- What's Next -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <!-- Squad Info -->
+            <div class="bg-card-bg border border-border rounded-lg p-6">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-users text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Squad Alpha welcomes you!</h3>
+                        <p class="text-sm text-text-secondary">Your first meeting is this Thursday at 3pm PT</p>
+                    </div>
+                </div>
+                <div class="bg-section-bg rounded-lg p-4">
+                    <p class="text-sm text-text-secondary mb-2">You'll receive:</p>
+                    <ul class="space-y-1 text-sm text-text-primary">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-success text-xs"></i>
+                            Calendar invite for weekly meetings
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-success text-xs"></i>
+                            Welcome message from squad members
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-success text-xs"></i>
+                            Squad resources and guidelines
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Flight Plan Info -->
+            <div class="bg-card-bg border border-border rounded-lg p-6">
+                <div class="flex items-start gap-4 mb-4">
+                    <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-route text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-text-primary mb-1">Your Flight Plan is ready</h3>
+                        <p class="text-sm text-text-secondary">Customized objectives based on your goals</p>
+                    </div>
+                </div>
+                <div class="bg-section-bg rounded-lg p-4">
+                    <p class="text-sm text-text-secondary mb-2">Your top objectives:</p>
+                    <ul class="space-y-1 text-sm text-text-primary">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-lightbulb text-text-secondary"></i>
+                            Idea Validation
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-code text-text-secondary"></i>
+                            MVP Development
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-rocket text-text-secondary"></i>
+                            Launch Your Product
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Start Checklist -->
+        <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-8 mb-8">
+            <h2 class="text-2xl font-semibold text-text-primary mb-6">Quick Start Checklist</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="messages.html" class="checklist-item bg-white border border-border rounded-lg p-4 hover:border-primary cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-comment text-primary"></i>
+                        <div>
+                            <h4 class="font-medium text-text-primary">Introduce yourself to your squad</h4>
+                            <p class="text-sm text-text-secondary">Say hello in the squad chat</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="flightplan.html" class="checklist-item bg-white border border-border rounded-lg p-4 hover:border-primary cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-tasks text-primary"></i>
+                        <div>
+                            <h4 class="font-medium text-text-primary">Start your first mission</h4>
+                            <p class="text-sm text-text-secondary">Pick a mission from your objectives</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="account.html" class="checklist-item bg-white border border-border rounded-lg p-4 hover:border-primary cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-user-circle text-primary"></i>
+                        <div>
+                            <h4 class="font-medium text-text-primary">Complete your profile</h4>
+                            <p class="text-sm text-text-secondary">Add photo and more details</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="founders.html" class="checklist-item bg-white border border-border rounded-lg p-4 hover:border-primary cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-handshake text-primary"></i>
+                        <div>
+                            <h4 class="font-medium text-text-primary">Connect with founders</h4>
+                            <p class="text-sm text-text-secondary">Browse and connect with others</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button onclick="window.location.href='flightplan.html'" class="px-8 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all font-medium">
+                Go to Flight Plan
+                <i class="fas fa-arrow-right ml-2"></i>
+            </button>
+            <button onclick="window.location.href='squad-detail.html?squad=alpha'" class="px-8 py-3 border border-border rounded-lg hover:border-primary transition-all font-medium">
+                View Squad Alpha
+                <i class="fas fa-users ml-2"></i>
+            </button>
+        </div>
+
+        <!-- Help Section -->
+        <div class="text-center mt-12 pt-8 border-t border-border">
+            <p class="text-sm text-text-secondary mb-4">
+                Need help getting started? Check out our 
+                <a href="#" class="text-primary hover:text-primary-hover underline">Getting Started Guide</a>
+                or 
+                <a href="#" class="text-primary hover:text-primary-hover underline">contact support</a>.
+            </p>
+            <p class="text-xs text-text-muted">
+                You can always update your profile and preferences in your account settings.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Clear the onboarding dismissed flag so the module won't show on flight plan
+        localStorage.removeItem('onboardingDismissed');
+        
+        // Optional: Add more confetti on click
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') return;
+            
+            const colors = ['primary', 'success', 'warning', 'danger', 'info'];
+            const confetti = document.createElement('div');
+            confetti.className = `confetti w-2 h-2 bg-${colors[Math.floor(Math.random() * colors.length)]} rounded-full`;
+            confetti.style.left = e.clientX + 'px';
+            confetti.style.top = '0';
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 3000);
+        });
+    </script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 function renderNavigation(currentPage) {
   // Define navigation items in order
   const navItems = [
-    { href: 'dashboard.html', icon: 'fa-solid fa-route', page: 'dashboard' },
+    { href: 'flightplan.html', icon: 'fa-solid fa-route', page: 'flightplan' },
     { href: 'squads.html', icon: 'fa-solid fa-people-group', page: 'squads' },
     { href: 'founders.html', icon: 'fa-solid fa-address-book', page: 'founders' },
     { href: 'messages.html', icon: 'fa-solid fa-comment', page: 'messages' },

@@ -61,16 +61,16 @@
         
         </style>
 </head>
-<body class="bg-white min-h-screen font-inter flex">
+<body class="bg-background min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
     <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
 <!-- Main Content Area -->
-    <div class="flex-1 bg-white overflow-hidden">
+    <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
             <!-- Profile Header -->
-            <div class="bg-white border-b border-border sticky top-0 z-40">
+            <div class="sticky top-0 z-40">
                 <div class="max-w-[1200px] mx-auto px-8 py-6">
-                    <a href="founders.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all mb-4">
+                    <a href="founders.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all mb-6">
                         <i class="fas fa-arrow-left"></i>
                         <span class="text-sm">Back to Founders</span>
                     </a>
@@ -95,9 +95,9 @@
                             <button onclick="sendMessage()" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
                                 <i class="fas fa-paper-plane mr-2"></i>Send Message
                             </button>
-                            <button onclick="connectWithFounder()" class="px-4 py-2 border border-border rounded hover:border-primary transition-all">
-                                Connect
-                            </button>
+                            <div id="connection-button-container">
+                                <!-- Connection button will be dynamically rendered here -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -296,7 +296,8 @@
                 ],
                 squads: [
                     { id: 'alpha', name: 'Squad Alpha', description: 'B2B SaaS • Build Stage', icon: 'fa-rocket' }
-                ]
+                ],
+                connectionStatus: 'not-connected' // Options: 'squad-member', 'connected', 'not-connected'
             },
             'sarah-chen': {
                 avatar: 'SC',
@@ -357,7 +358,150 @@
                 ],
                 squads: [
                     { id: 'beta', name: 'Squad Beta', description: 'E-commerce • Growth Stage', icon: 'fa-chart-line' }
-                ]
+                ],
+                connectionStatus: 'squad-member' // Options: 'squad-member', 'connected', 'not-connected'
+            },
+            'james-kim': {
+                avatar: 'JK',
+                name: 'James Kim',
+                verified: true,
+                title: 'Founder & CEO at DevTools Pro',
+                location: 'Seattle, WA',
+                joined: 'February 2024',
+                bio: 'Building developer tools that make engineering teams 10x more productive. Previously led engineering at Stripe.',
+                industry: 'Developer Tools',
+                stage: 'Seed',
+                lookingFor: 'Technical advisors, Early customers',
+                skills: ['React', 'TypeScript', 'DevOps', 'API Design', 'Team Building'],
+                experience: [
+                    {
+                        role: 'Engineering Lead',
+                        company: 'Stripe',
+                        period: '2019 - 2023',
+                        description: 'Led payments infrastructure team'
+                    }
+                ],
+                squads: [
+                    { id: 'alpha', name: 'Squad Alpha', description: 'B2B SaaS • Build Stage', icon: 'fa-rocket' }
+                ],
+                connectionStatus: 'squad-member'
+            },
+            'maya-patel': {
+                avatar: 'MP',
+                name: 'Maya Patel',
+                verified: false,
+                title: 'Founder at HR Tech Solutions',
+                location: 'New York, NY',
+                joined: 'January 2024',
+                bio: 'Revolutionizing HR with AI-powered talent matching. Passionate about creating inclusive workplaces.',
+                industry: 'HR Tech',
+                stage: 'Pre-seed',
+                lookingFor: 'Co-founder (CTO), Seed funding',
+                skills: ['Product Management', 'HR', 'AI/ML', 'Business Development'],
+                experience: [
+                    {
+                        role: 'VP of Product',
+                        company: 'Workday',
+                        period: '2020 - 2023',
+                        description: 'Led talent acquisition product suite'
+                    }
+                ],
+                squads: [
+                    { id: 'alpha', name: 'Squad Alpha', description: 'B2B SaaS • Build Stage', icon: 'fa-rocket' }
+                ],
+                connectionStatus: 'squad-member'
+            },
+            'alex-rivera': {
+                avatar: 'AR',
+                name: 'Alex Rivera',
+                verified: true,
+                title: 'Founder at CloudSync',
+                location: 'Austin, TX',
+                joined: 'December 2023',
+                bio: 'Making cloud infrastructure simple for startups. DevOps engineer turned founder.',
+                industry: 'Cloud Infrastructure',
+                stage: 'MVP',
+                lookingFor: 'Beta testers, Technical co-founder',
+                skills: ['AWS', 'Kubernetes', 'Python', 'Infrastructure as Code'],
+                experience: [
+                    {
+                        role: 'Senior DevOps Engineer',
+                        company: 'Netflix',
+                        period: '2018 - 2023',
+                        description: 'Scaled infrastructure for 200M+ users'
+                    }
+                ],
+                squads: [],
+                connectionStatus: 'connected'
+            },
+            'lisa-thompson': {
+                avatar: 'LT',
+                name: 'Lisa Thompson',
+                verified: false,
+                title: 'Founder at EduTech Innovations',
+                location: 'Boston, MA',
+                joined: 'March 2024',
+                bio: 'Building the future of online education with personalized learning paths.',
+                industry: 'EdTech',
+                stage: 'Idea',
+                lookingFor: 'Advisors, Early team members',
+                skills: ['Education', 'Product Design', 'User Research'],
+                experience: [
+                    {
+                        role: 'Head of Product',
+                        company: 'Coursera',
+                        period: '2019 - 2024',
+                        description: 'Led consumer learning products'
+                    }
+                ],
+                squads: [],
+                connectionStatus: 'connected'
+            },
+            'tyler-morris': {
+                avatar: 'TM',
+                name: 'Tyler Morris',
+                verified: false,
+                title: 'Founder at GreenTech Solutions',
+                location: 'Denver, CO',
+                joined: 'February 2024',
+                bio: 'Using AI to optimize renewable energy distribution.',
+                industry: 'CleanTech',
+                stage: 'Pre-seed',
+                lookingFor: 'Climate tech investors, Engineers',
+                skills: ['Energy Systems', 'Machine Learning', 'Hardware'],
+                experience: [
+                    {
+                        role: 'Research Scientist',
+                        company: 'Tesla',
+                        period: '2020 - 2023',
+                        description: 'Energy storage optimization'
+                    }
+                ],
+                squads: [],
+                connectionStatus: 'not-connected'
+            },
+            'nina-kaur': {
+                avatar: 'NK',
+                name: 'Nina Kaur',
+                verified: true,
+                title: 'Founder at HealthFlow',
+                location: 'Los Angeles, CA',
+                joined: 'January 2024',
+                bio: 'Streamlining patient care coordination with smart automation.',
+                industry: 'HealthTech',
+                stage: 'Seed',
+                lookingFor: 'Healthcare advisors, Pilot hospitals',
+                skills: ['Healthcare', 'HIPAA Compliance', 'Product Strategy'],
+                experience: [
+                    {
+                        role: 'Product Director',
+                        company: 'Oscar Health',
+                        period: '2018 - 2023',
+                        description: 'Led patient experience products'
+                    }
+                ],
+                squads: [],
+                connectionStatus: 'not-connected'
             }
         };
 
@@ -421,6 +565,28 @@
             skillsContainer.innerHTML = founder.skills.map(skill => `
                 <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded">${skill}</span>
             `).join('');
+            
+            // Update connection button based on status
+            const connectionContainer = document.getElementById('connection-button-container');
+            if (founder.connectionStatus === 'squad-member') {
+                connectionContainer.innerHTML = `
+                    <button class="px-4 py-2 bg-section-bg text-text-primary rounded cursor-default flex items-center gap-2">
+                        <i class="fas fa-users"></i>Squad Member
+                    </button>
+                `;
+            } else if (founder.connectionStatus === 'connected') {
+                connectionContainer.innerHTML = `
+                    <button class="px-4 py-2 bg-green-100 text-green-700 rounded cursor-default flex items-center gap-2">
+                        <i class="fas fa-check"></i>Connected
+                    </button>
+                `;
+            } else {
+                connectionContainer.innerHTML = `
+                    <button onclick="connectWithFounder()" class="px-4 py-2 border border-border rounded hover:border-primary transition-all">
+                        Connect
+                    </button>
+                `;
+            }
         }
 
         // Founder actions

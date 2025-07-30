@@ -134,12 +134,12 @@
     <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 bg-white overflow-hidden">
+    <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
             <!-- Profile Header -->
-            <div class="bg-white border-b border-border sticky top-0 z-40">
+            <div class="sticky top-0 z-40">
                 <div class="max-w-[1200px] mx-auto px-8 py-6">
-                    <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center justify-between mb-6">
                         <a href="founder-profile.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all">
                             <i class="fas fa-eye"></i>
                             <span class="text-sm">View Public Profile</span>
@@ -151,28 +151,21 @@
                     
                     <div class="flex items-start justify-between">
                         <div class="flex items-start gap-6">
-                            <div class="relative group">
-                                <div class="w-24 h-24 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold">
-                                    DB
-                                </div>
-                                <button class="absolute inset-0 w-24 h-24 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <i class="fas fa-camera"></i>
-                                </button>
-                            </div>
+                            <!-- Profile photo placeholder removed -->
                             <div>
                                 <h1 class="text-3xl font-bold text-text-primary editable-field inline-flex items-center gap-2" contenteditable="false" id="profile-name">
-                                    Don Bora
+                                    Don Bora <i class="fa-solid fa-signature text-primary text-lg ml-2" title="Verified"></i>
                                     <i class="fas fa-pencil text-sm text-text-muted edit-icon"></i>
                                 </h1>
                                 <p class="text-xl text-text-secondary mt-1 editable-field inline-flex items-center gap-2" contenteditable="false" id="profile-title">
-                                    Founder & CEO at FoundersFleet
+                                    Co-founder at Eight Bit Studios • Founder at FoundersFleet
                                     <i class="fas fa-pencil text-sm text-text-muted edit-icon"></i>
                                 </p>
                                 <div class="flex items-center gap-6 mt-3">
                                     <span class="flex items-center gap-2 text-sm text-text-muted">
                                         <i class="fas fa-map-marker-alt"></i>
                                         <span class="editable-field inline-flex items-center gap-1" contenteditable="false" id="profile-location">
-                                            San Francisco, CA
+                                            Chicago, IL
                                             <i class="fas fa-pencil text-xs edit-icon"></i>
                                         </span>
                                     </span>
@@ -208,7 +201,7 @@
                                 <i class="fas fa-pencil text-text-muted edit-icon"></i>
                             </div>
                             <p class="text-text-secondary leading-relaxed editable-field" contenteditable="false" id="profile-bio">
-                                Building the future of founder collaboration. Serial entrepreneur with 3 exits. Passionate about helping founders succeed through peer accountability.
+                                Co-founder at Eight Bit Studios creating engaging web and mobile apps that delight users. 4x Inc. 5000 company. Passionate advocate for women and people of color in technology. 9x Co-Founder with experience in fractional CTO roles. Previously Chief Digital Officer at Belly, scaling merchant network from 8,000 to 12,000 locations.
                             </p>
                         </div>
 
@@ -224,11 +217,11 @@
                                 <div class="pb-4 border-b border-border experience-item">
                                     <div class="flex items-start justify-between">
                                         <div class="flex-1">
-                                            <h3 class="font-semibold text-text-primary editable-field inline-block" contenteditable="false">Founder & CEO</h3>
-                                            <p class="text-text-secondary editable-field" contenteditable="false">FoundersFleet</p>
+                                            <h3 class="font-semibold text-text-primary editable-field inline-block" contenteditable="false">Co-founder | Partner | Technology</h3>
+                                            <p class="text-text-secondary editable-field" contenteditable="false">Eight Bit Studios</p>
                                         </div>
                                         <div class="flex items-center gap-4">
-                                            <span class="text-sm text-text-muted editable-field" contenteditable="false">2023 - Present</span>
+                                            <span class="text-sm text-text-muted editable-field" contenteditable="false">2008 - Present</span>
                                             <div class="experience-actions flex gap-2">
                                                 <button class="text-text-muted hover:text-primary transition-all">
                                                     <i class="fas fa-edit text-sm"></i>
@@ -239,17 +232,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="text-sm text-text-secondary mt-2 editable-field" contenteditable="false">Building a platform for founder peer accountability and collaboration</p>
+                                    <p class="text-sm text-text-secondary mt-2 editable-field" contenteditable="false">4x Inc. 5000 company. Creating engaging web and mobile apps that delight users. Leading technology initiatives and partnerships.</p>
                                 </div>
                                 
                                 <div class="pb-4 border-b border-border experience-item">
                                     <div class="flex items-start justify-between">
                                         <div class="flex-1">
-                                            <h3 class="font-semibold text-text-primary editable-field inline-block" contenteditable="false">VP Product</h3>
-                                            <p class="text-text-secondary editable-field" contenteditable="false">TechStartup Inc</p>
+                                            <h3 class="font-semibold text-text-primary editable-field inline-block" contenteditable="false">Co-founder</h3>
+                                            <p class="text-text-secondary editable-field" contenteditable="false">MobileMakers</p>
                                         </div>
                                         <div class="flex items-center gap-4">
-                                            <span class="text-sm text-text-muted editable-field" contenteditable="false">2020 - 2023</span>
+                                            <span class="text-sm text-text-muted editable-field" contenteditable="false">2013</span>
                                             <div class="experience-actions flex gap-2">
                                                 <button class="text-text-muted hover:text-primary transition-all">
                                                     <i class="fas fa-edit text-sm"></i>
@@ -260,7 +253,28 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="text-sm text-text-secondary mt-2 editable-field" contenteditable="false">Led product team for B2B SaaS platform, grew ARR from $2M to $10M</p>
+                                    <p class="text-sm text-text-secondary mt-2 editable-field" contenteditable="false">Co-founded non-profit with the goal of placing high-school students in tech internships in Chicago. Mentoring students and young entrepreneurs.</p>
+                                </div>
+                                
+                                <div class="pb-4 border-b border-border experience-item">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-text-primary editable-field inline-block" contenteditable="false">Chief Digital Officer</h3>
+                                            <p class="text-text-secondary editable-field" contenteditable="false">Belly</p>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-sm text-text-muted editable-field" contenteditable="false">2013 - 2014</span>
+                                            <div class="experience-actions flex gap-2">
+                                                <button class="text-text-muted hover:text-primary transition-all">
+                                                    <i class="fas fa-edit text-sm"></i>
+                                                </button>
+                                                <button class="text-text-muted hover:text-red-600 transition-all">
+                                                    <i class="fas fa-trash text-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-text-secondary mt-2 editable-field" contenteditable="false">Scaled merchant network from 8,000 to 12,000 locations. Led digital transformation initiatives for customer loyalty platform.</p>
                                 </div>
                             </div>
                         </div>
@@ -275,23 +289,35 @@
                             </div>
                             <div class="flex flex-wrap gap-2" id="skills-container">
                                 <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
+                                    Mobile Development
+                                    <span class="remove-skill">×</span>
+                                </span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
+                                    Web Development
+                                    <span class="remove-skill">×</span>
+                                </span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
                                     Product Strategy
                                     <span class="remove-skill">×</span>
                                 </span>
                                 <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
-                                    Fundraising
+                                    Technology Leadership
                                     <span class="remove-skill">×</span>
                                 </span>
                                 <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
-                                    Team Building
+                                    Fractional CTO
                                     <span class="remove-skill">×</span>
                                 </span>
                                 <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
-                                    B2B SaaS
+                                    Mentorship
                                     <span class="remove-skill">×</span>
                                 </span>
                                 <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
-                                    Growth Marketing
+                                    Diversity in Tech
+                                    <span class="remove-skill">×</span>
+                                </span>
+                                <span class="px-3 py-1 bg-section-bg text-text-primary text-sm rounded skill-tag">
+                                    Entrepreneurship
                                     <span class="remove-skill">×</span>
                                 </span>
                             </div>
@@ -309,13 +335,13 @@
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <i class="fab fa-twitter text-text-muted w-5"></i>
-                                    <input type="url" placeholder="Twitter URL" value="https://twitter.com/donbora" 
+                                    <input type="url" placeholder="Twitter URL" value="https://twitter.com/dbbora" 
                                            class="flex-1 px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" 
                                            disabled id="twitter-url">
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <i class="fas fa-globe text-text-muted w-5"></i>
-                                    <input type="url" placeholder="Website URL" value="https://foundersfleet.com" 
+                                    <input type="url" placeholder="Website URL" value="https://eightbitstudios.com" 
                                            class="flex-1 px-3 py-2 border border-border rounded focus:outline-none focus:ring-2 focus:ring-primary text-sm" 
                                            disabled id="website-url">
                                 </div>
@@ -325,6 +351,38 @@
 
                     <!-- Right Column - Sidebar -->
                     <div class="space-y-6">
+                        <!-- Profile Completion -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Profile Completion</h3>
+                            <div class="mb-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-sm text-text-secondary">82% Complete</span>
+                                    <span class="text-sm font-medium text-primary">+18%</span>
+                                </div>
+                                <div class="w-full bg-section-bg rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Basic information</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Experience added</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Skills listed</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-circle text-text-muted"></i>
+                                    <span class="text-text-secondary">Profile photo</span>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <!-- Quick Info -->
                         <div class="bg-card-bg border border-border rounded-lg p-6">
                             <h3 class="text-lg font-semibold text-text-primary mb-4">Startup Information</h3>
@@ -399,38 +457,6 @@
                                     <i class="fas fa-download mr-2 text-text-muted"></i>
                                     Download Data
                                 </button>
-                            </div>
-                        </div>
-
-                        <!-- Profile Completion -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Profile Completion</h3>
-                            <div class="mb-4">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm text-text-secondary">82% Complete</span>
-                                    <span class="text-sm font-medium text-primary">+18%</span>
-                                </div>
-                                <div class="w-full bg-section-bg rounded-full h-2">
-                                    <div class="bg-primary h-2 rounded-full" style="width: 82%"></div>
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center gap-2 text-sm">
-                                    <i class="fas fa-check-circle text-green-600"></i>
-                                    <span class="text-text-secondary">Basic information</span>
-                                </div>
-                                <div class="flex items-center gap-2 text-sm">
-                                    <i class="fas fa-check-circle text-green-600"></i>
-                                    <span class="text-text-secondary">Experience added</span>
-                                </div>
-                                <div class="flex items-center gap-2 text-sm">
-                                    <i class="fas fa-check-circle text-green-600"></i>
-                                    <span class="text-text-secondary">Skills listed</span>
-                                </div>
-                                <div class="flex items-center gap-2 text-sm">
-                                    <i class="fas fa-circle text-text-muted"></i>
-                                    <span class="text-text-secondary">Profile photo</span>
-                                </div>
                             </div>
                         </div>
                     </div>
