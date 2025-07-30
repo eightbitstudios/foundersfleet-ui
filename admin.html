@@ -3,259 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FoundersFleet Admin - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>FoundersFleet Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'admin-blue': '#1976D2',
-                        'admin-blue-hover': '#1565C0'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
-        .admin-nav-item {
+        .nav-item {
             text-decoration: none;
-            color: #4A5568;
+            color: #374151;
+            display: block;
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+            border-left: 3px solid transparent;
         }
-        .admin-nav-item:hover {
-            background: #F7FAFC;
+        .nav-item:hover {
+            background: #F3F4F6;
+            color: #111827;
         }
-        .admin-nav-item.active {
-            background: #F7FAFC;
-            color: #1976D2;
-            border-left: 3px solid #1976D2;
+        .nav-item.active {
+            color: #1F2937;
+            font-weight: 600;
+            background: #F3F4F6;
+            border-left-color: #3B82F6;
+        }
+        .attribute-row {
+            display: flex;
+            padding: 1rem 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .attribute-label {
+            width: 33.333%;
+            font-weight: 500;
+            color: #374151;
+        }
+        .attribute-value {
+            flex: 1;
+            color: #6B7280;
+        }
+        /* Table styles matching Administrate */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
         }
         .admin-table th {
-            font-weight: 500;
-            text-transform: uppercase;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: #F9FAFB;
+            border-bottom: 1px solid #E5E7EB;
+            font-weight: 600;
             font-size: 0.75rem;
+            text-transform: uppercase;
             letter-spacing: 0.05em;
+            color: #6B7280;
+        }
+        .admin-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #E5E7EB;
+            font-size: 0.875rem;
+        }
+        .admin-table tr:hover {
+            background: #F9FAFB;
+        }
+        .btn-primary {
+            background: #2563EB;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: #1D4ED8;
+        }
+        .search-input {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            width: 300px;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #2563EB;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        .main-header {
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+            padding: 1rem 2rem;
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- Admin Header -->
-    <div class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-gray-200 z-50 flex items-center justify-between px-6">
-        <div class="flex items-center gap-6">
-            <button onclick="window.location.href='index.html'" class="text-admin-blue font-medium hover:text-admin-blue-hover">
-                ← Back to app
-            </button>
-        </div>
-        
-        <div class="flex items-center gap-6">
-            <span class="text-gray-600 text-sm">admin@foundersfleet.com</span>
-            <button class="text-gray-600 hover:text-gray-800">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
-        </div>
-    </div>
-
-    <div class="pt-14 flex min-h-screen">
-        <!-- Admin Sidebar -->
-        <div class="w-64 bg-white border-r border-gray-200 flex-shrink-0">
-            <div class="p-6">
-                <h1 class="text-2xl font-semibold text-gray-900">Customers</h1>
+<body class="bg-gray-50">
+    <!-- Main Container -->
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-60 bg-white border-r border-gray-200">
+            <!-- App Header -->
+            <div class="p-4 border-b border-gray-200">
+                <a href="dashboard.html" class="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-2">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to app
+                </a>
             </div>
-            <nav>
-                <a href="#customers" onclick="showSection('customers')" class="admin-nav-item active flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Customers</span>
-                </a>
-                <a href="#line-items" onclick="showSection('line-items')" class="admin-nav-item flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Line Items</span>
-                </a>
-                <a href="#log-entries" onclick="showSection('log-entries')" class="admin-nav-item flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Log Entries</span>
-                </a>
-                <a href="#orders" onclick="showSection('orders')" class="admin-nav-item flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Orders</span>
-                </a>
-                <a href="#products" onclick="showSection('products')" class="admin-nav-item flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Products</span>
-                </a>
-                <a href="#product-meta-tags" onclick="showSection('product-meta-tags')" class="admin-nav-item flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Product Meta Tags</span>
-                </a>
-                <a href="#payments" onclick="showSection('payments')" class="admin-nav-item flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Payments</span>
-                </a>
-                <a href="#series" onclick="showSection('series')" class="admin-nav-item flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Series</span>
-                </a>
-                <a href="#blog-posts" onclick="showSection('blog-posts')" class="admin-nav-item flex items-center gap-3 px-6 py-3 transition-all cursor-pointer">
-                    <span>Blog/Posts</span>
-                </a>
+            
+            <!-- Sidebar Title -->
+            <div class="px-4 py-3 border-b border-gray-200">
+                <h2 class="font-semibold text-gray-900">FoundersFleet</h2>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="py-2">
+                <a href="#dashboard" onclick="showSection('dashboard')" class="nav-item active">Dashboard</a>
+                <a href="#invitations" onclick="showSection('invitations')" class="nav-item">Invitations</a>
+                <a href="#users" onclick="showSection('users')" class="nav-item">Users</a>
+                <a href="#squads" onclick="showSection('squads')" class="nav-item">Squads</a>
+                <a href="#objectives" onclick="showSection('objectives')" class="nav-item">Objectives</a>
+                <a href="#missions" onclick="showSection('missions')" class="nav-item">Missions</a>
+                <a href="#messages" onclick="showSection('messages')" class="nav-item">Messages</a>
+                <a href="#activity-logs" onclick="showSection('activity-logs')" class="nav-item">Activity Logs</a>
+                <a href="#privacy-requests" onclick="showSection('privacy-requests')" class="nav-item">Privacy Requests</a>
             </nav>
-        </div>
+        </aside>
 
         <!-- Main Content -->
-        <div class="flex-1 overflow-auto bg-white">
-            <!-- Customers Section -->
-            <div id="customers-section" class="admin-section">
-                <div class="border-b border-gray-200 px-8 py-4 flex items-center justify-between">
-                    <h1 class="text-2xl font-semibold text-gray-900">Customers</h1>
-                    <button class="px-4 py-2 bg-admin-blue text-white rounded hover:bg-admin-blue-hover transition-all">
-                        New customer
-                    </button>
+        <main class="flex-1 overflow-y-auto">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="admin-section">
+                <div class="main-header">
+                    <h1 class="text-2xl font-semibold text-gray-900 mb-1">Dashboard</h1>
+                    <p class="text-sm text-gray-500">Last updated: April 10, 2024 at 3:45 PM PST</p>
                 </div>
                 
-                <div class="px-8 py-4">
-                    <input type="text" placeholder="Search Customers" class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-admin-blue focus:border-admin-blue">
-                </div>
-
-                <!-- Customers Table -->
-                <div class="px-8">
-                    <table class="w-full admin-table">
-                        <thead>
-                            <tr class="border-b border-gray-200">
-                                <th class="text-left py-3 pr-4 text-gray-600">Email</th>
-                                <th class="text-left py-3 px-4 text-gray-600">Email Subscriber</th>
-                                <th class="text-left py-3 px-4 text-gray-600">Lifetime Value</th>
-                                <th class="text-left py-3 px-4 text-gray-600">Name</th>
-                                <th class="text-left py-3 px-4 text-gray-600">Orders</th>
-                                <th class="text-left py-3 px-4 text-gray-600">Log Entries</th>
-                                <th class="text-left py-3 px-4 text-gray-600">Kind</th>
-                                <th class="text-left py-3 px-4 text-gray-600">Country</th>
-                                <th class="text-left py-3 px-4 text-gray-600">Password</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr>
-                                <td class="py-4 pr-4">
-                                    <a href="#" class="text-admin-blue hover:underline">kemmer_clarisa@example.org</a>
-                                </td>
-                                <td class="py-4 px-4">-</td>
-                                <td class="py-4 px-4">$114.00</td>
-                                <td class="py-4 px-4">Clarisa Kemmer</td>
-                                <td class="py-4 px-4">1 order</td>
-                                <td class="py-4 px-4">1 log entry</td>
-                                <td class="py-4 px-4">standard</td>
-                                <td class="py-4 px-4">USA</td>
-                                <td class="py-4 px-4">••••••••••••••••</td>
-                                <td class="py-4 px-4">
-                                    <a href="#" class="text-gray-600 hover:text-gray-800">Edit</a>
-                                </td>
-                                <td class="py-4 px-4">
-                                    <a href="#" class="text-red-600 hover:text-red-800">Destroy</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-4 pr-4">
-                                    <a href="#" class="text-admin-blue hover:underline">kerluke.yoshiko@example.net</a>
-                                </td>
-                                <td class="py-4 px-4">-</td>
-                                <td class="py-4 px-4">$502.00</td>
-                                <td class="py-4 px-4">Yoshiko Kerluke</td>
-                                <td class="py-4 px-4">2 orders</td>
-                                <td class="py-4 px-4">1 log entry</td>
-                                <td class="py-4 px-4">standard</td>
-                                <td class="py-4 px-4">USA</td>
-                                <td class="py-4 px-4">••••••••</td>
-                                <td class="py-4 px-4">
-                                    <a href="#" class="text-gray-600 hover:text-gray-800">Edit</a>
-                                </td>
-                                <td class="py-4 px-4">
-                                    <a href="#" class="text-red-600 hover:text-red-800">Destroy</a>
+                <div class="p-6">
+                    <!-- Grouped Statistics -->
+                    <div class="grid grid-cols-1 gap-6 mb-8">
+                        <!-- USERS Group -->
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <div class="p-4 border-b border-gray-200">
+                                <h3 class="font-semibold text-gray-900 uppercase text-sm tracking-wider">Users</h3>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Total Users</p>
+                                        <p class="text-2xl font-semibold text-gray-900">1,247</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-500">Active Users</p>
+                                        <p class="text-2xl font-semibold text-gray-900">843</p>
+                                        <p class="text-xs text-gray-500">67.5% active</p>
+                                    </div>
                                 </div>
-                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-users-cog text-green-600"></i>
+                                <div class="pt-4 border-t border-gray-100">
+                                    <p class="text-sm text-gray-500">Invitations Sent</p>
+                                    <p class="text-2xl font-semibold text-gray-900">582</p>
+                                    <p class="text-sm text-green-600 mt-1">42% acceptance rate</p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm text-text-secondary">Pending Invitations</p>
-                                    <p class="text-2xl font-bold text-text-primary">234</p>
-                                    <p class="text-xs text-warning">Requires attention</p>
+                        
+                        <!-- SQUADS Group -->
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <div class="p-4 border-b border-gray-200">
+                                <h3 class="font-semibold text-gray-900 uppercase text-sm tracking-wider">Squads</h3>
+                            </div>
+                            <div class="p-6 space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Total Squads</p>
+                                        <p class="text-2xl font-semibold text-gray-900">156</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-500">Active Squads</p>
+                                        <p class="text-2xl font-semibold text-gray-900">142</p>
+                                        <p class="text-xs text-gray-500">91% active</p>
+                                    </div>
                                 </div>
-                                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-paper-plane text-yellow-600"></i>
+                                <div class="pt-4 border-t border-gray-100">
+                                    <p class="text-sm text-gray-500">Avg Squad Size</p>
+                                    <p class="text-2xl font-semibold text-gray-900">4.2</p>
+                                    <p class="text-sm text-gray-600 mt-1">members per squad</p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm text-text-secondary">Squad Requests</p>
-                                    <p class="text-2xl font-bold text-text-primary">67</p>
-                                    <p class="text-xs text-danger">Needs review</p>
+                        
+                        <!-- OBJECTIVES Group -->
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <div class="p-4 border-b border-gray-200">
+                                <h3 class="font-semibold text-gray-900 uppercase text-sm tracking-wider">Objectives</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Active</p>
+                                        <p class="text-2xl font-semibold text-gray-900">12</p>
+                                        <p class="text-xs text-gray-500">In progress</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-500">Completed</p>
+                                        <p class="text-2xl font-semibold text-gray-900">847</p>
+                                        <p class="text-xs text-green-600">+52 this month</p>
+                                    </div>
                                 </div>
-                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-clipboard-list text-red-600"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- MISSIONS Group -->
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <div class="p-4 border-b border-gray-200">
+                                <h3 class="font-semibold text-gray-900 uppercase text-sm tracking-wider">Missions</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Active</p>
+                                        <p class="text-2xl font-semibold text-gray-900">28</p>
+                                        <p class="text-xs text-gray-500">In progress</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-500">Completed</p>
+                                        <p class="text-2xl font-semibold text-gray-900">3,892</p>
+                                        <p class="text-xs text-green-600">+423 this month</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- MESSAGES Group -->
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <div class="p-4 border-b border-gray-200">
+                                <h3 class="font-semibold text-gray-900 uppercase text-sm tracking-wider">Messages</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Total Messages</p>
+                                        <p class="text-2xl font-semibold text-gray-900">15,834</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-500">This Month</p>
+                                        <p class="text-2xl font-semibold text-gray-900">2,341</p>
+                                        <p class="text-xs text-green-600">+18% from last month</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    
                     <!-- Recent Activity -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-text-primary mb-4">Recent Activity</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between py-3 border-b border-border">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-user-plus text-green-600 text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-text-primary">New user registered: sarah.chen@techstartup.io</p>
-                                        <p class="text-xs text-text-secondary">2 minutes ago</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Verified</span>
-                            </div>
-                            <div class="flex items-center justify-between py-3 border-b border-border">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-users text-blue-600 text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-text-primary">Squad "AI Founders" created by marcus.park@aitech.com</p>
-                                        <p class="text-xs text-text-secondary">15 minutes ago</p>
+                    <div class="bg-white rounded-lg border border-gray-200">
+                        <div class="p-4 border-b border-gray-200">
+                            <h3 class="font-semibold text-gray-900">Recent Activity</h3>
+                        </div>
+                        <div class="p-4">
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full mt-1.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">New user <span class="font-medium">alex@example.com</span> joined</p>
+                                        <p class="text-xs text-gray-500">5 minutes ago</p>
                                     </div>
                                 </div>
-                                <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Active</span>
-                            </div>
-                            <div class="flex items-center justify-between py-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-clipboard-list text-yellow-600 text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-text-primary">Squad request submitted by alex.wong@fintech.startup</p>
-                                        <p class="text-xs text-text-secondary">1 hour ago</p>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full mt-1.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Squad <span class="font-medium">AI Innovators</span> completed objective</p>
+                                        <p class="text-xs text-gray-500">23 minutes ago</p>
                                     </div>
                                 </div>
-                                <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Pending</span>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-purple-500 rounded-full mt-1.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">New squad <span class="font-medium">Climate Tech</span> formed</p>
+                                        <p class="text-xs text-gray-500">1 hour ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-yellow-500 rounded-full mt-1.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Mission <span class="font-medium">Customer Discovery</span> completed by 12 users</p>
+                                        <p class="text-xs text-gray-500">2 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-red-500 rounded-full mt-1.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Privacy request from <span class="font-medium">user@example.com</span></p>
+                                        <p class="text-xs text-gray-500">3 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full mt-1.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">User <span class="font-medium">don@example.com</span> completed mission</p>
+                                        <p class="text-xs text-gray-500">4 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full mt-1.5"></div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Squad <span class="font-medium">HealthTech Pioneers</span> scheduled meeting</p>
+                                        <p class="text-xs text-gray-500">5 hours ago</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -264,616 +322,564 @@
 
             <!-- Users Section -->
             <div id="users-section" class="admin-section hidden">
-                <div class="p-8">
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">User Management</h2>
-                            <p class="text-text-secondary">Manage user accounts and permissions</p>
-                        </div>
-                        <div class="flex gap-3">
-                            <input type="text" placeholder="Search users..." class="px-4 py-2 border border-border rounded-lg">
-                            <button class="px-4 py-2 bg-admin-red text-white rounded-lg hover:bg-red-700 transition-all">
-                                <i class="fas fa-user-plus mr-2"></i>Invite User
-                            </button>
-                        </div>
+                <div class="main-header">
+                    <div class="flex items-center justify-between mb-4">
+                        <h1 class="text-2xl font-semibold text-gray-900">Users</h1>
+                        <a href="#" class="btn-primary">New user</a>
                     </div>
-
-                    <!-- Users Table -->
-                    <div class="bg-card-bg border border-border rounded-lg overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-section-bg border-b border-border">
-                                <tr>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">User</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Status</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Company</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Joined</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">GDPR Consent</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-border">
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                                                <span class="text-white text-xs font-medium">SC</span>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-text-primary">Sarah Chen</p>
-                                                <p class="text-sm text-text-secondary">sarah.chen@techstartup.io</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Verified</span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div>
-                                            <p class="text-sm font-medium text-text-primary">TechStartup Inc</p>
-                                            <p class="text-xs text-text-secondary">B2B SaaS • Series A</p>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-text-secondary">Jul 15, 2025</td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
-                                            <i class="fas fa-check mr-1"></i>Consented
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex gap-2">
-                                            <button class="text-blue-600 hover:text-blue-700">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-700">
-                                                <i class="fas fa-ban"></i>
-                                            </button>
-                                            <button class="text-text-muted hover:text-text-primary">
-                                                <i class="fas fa-download" title="Export Data"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                                                <span class="text-white text-xs font-medium">MP</span>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-text-primary">Marcus Park</p>
-                                                <p class="text-sm text-text-secondary">marcus.park@aitech.com</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Pending</span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div>
-                                            <p class="text-sm font-medium text-text-primary">AI Tech Solutions</p>
-                                            <p class="text-xs text-text-secondary">AI/ML • Seed</p>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-text-secondary">Jul 29, 2025</td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">
-                                            <i class="fas fa-clock mr-1"></i>Pending
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex gap-2">
-                                            <button class="text-green-600 hover:text-green-700">
-                                                <i class="fas fa-check"></i>
-                                            </button>
-                                            <button class="text-red-600 hover:text-red-700">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div>
+                        <input type="text" placeholder="Search Users" class="search-input">
                     </div>
                 </div>
-            </div>
-
-            <!-- Privacy & GDPR Section -->
-            <div id="privacy-section" class="admin-section hidden">
-                <div class="p-8">
-                    <div class="mb-8">
-                        <h2 class="text-2xl font-bold text-text-primary mb-2">Privacy & GDPR Compliance</h2>
-                        <p class="text-text-secondary">Manage data privacy, consent, and compliance</p>
-                    </div>
-
-                    <!-- GDPR Stats -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm text-text-secondary">Consent Rate</p>
-                                    <p class="text-2xl font-bold text-text-primary">98.7%</p>
-                                    <p class="text-xs text-success">2,809 of 2,847 users</p>
-                                </div>
-                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-shield-check text-green-600"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm text-text-secondary">Data Requests</p>
-                                    <p class="text-2xl font-bold text-text-primary">12</p>
-                                    <p class="text-xs text-warning">7 pending, 5 completed</p>
-                                </div>
-                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-download text-blue-600"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-sm text-text-secondary">Deletion Requests</p>
-                                    <p class="text-2xl font-bold text-text-primary">3</p>
-                                    <p class="text-xs text-danger">All completed within 30 days</p>
-                                </div>
-                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-trash text-red-600"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Data Processing Log -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6 mb-6">
-                        <h3 class="text-lg font-semibold text-text-primary mb-4">Recent Privacy Requests</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between py-3 border-b border-border">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-download text-blue-600 text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-text-primary">Data export request - alex.wong@fintech.startup</p>
-                                        <p class="text-xs text-text-secondary">Requested: Jul 28, 2025 • Due: Aug 27, 2025</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">Processing</span>
-                                    <button class="text-admin-red hover:text-red-700">
-                                        <i class="fas fa-arrow-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between py-3 border-b border-border">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-trash text-red-600 text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm font-medium text-text-primary">Account deletion request - former.user@deletedcompany.com</p>
-                                        <p class="text-xs text-text-secondary">Completed: Jul 25, 2025 • Data purged after 30-day grace period</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Completed</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Data Retention Policies -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-text-primary mb-4">Data Retention Policies</h3>
-                        <div class="space-y-4">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="p-4 bg-section-bg rounded-lg">
-                                    <h4 class="font-medium text-text-primary mb-2">User Data</h4>
-                                    <p class="text-sm text-text-secondary mb-2">Personal information, profiles, and activity data</p>
-                                    <p class="text-xs text-success"><i class="fas fa-clock mr-1"></i>Retained while account active + 90 days after deletion request</p>
-                                </div>
-                                <div class="p-4 bg-section-bg rounded-lg">
-                                    <h4 class="font-medium text-text-primary mb-2">Communication Data</h4>
-                                    <p class="text-sm text-text-secondary mb-2">Messages, squad conversations, and notifications</p>
-                                    <p class="text-xs text-success"><i class="fas fa-clock mr-1"></i>Retained for 2 years or until user deletion</p>
-                                </div>
-                                <div class="p-4 bg-section-bg rounded-lg">
-                                    <h4 class="font-medium text-text-primary mb-2">Analytics Data</h4>
-                                    <p class="text-sm text-text-secondary mb-2">Aggregated usage statistics and metrics</p>
-                                    <p class="text-xs text-success"><i class="fas fa-clock mr-1"></i>Anonymized and retained for 5 years</p>
-                                </div>
-                                <div class="p-4 bg-section-bg rounded-lg">
-                                    <h4 class="font-medium text-text-primary mb-2">Security Logs</h4>
-                                    <p class="text-sm text-text-secondary mb-2">Login attempts, security events, and audit trails</p>
-                                    <p class="text-xs text-success"><i class="fas fa-clock mr-1"></i>Retained for 1 year for security purposes</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Other sections would be implemented similarly -->
-            <div id="invitations-section" class="admin-section hidden">
-                <div class="p-8">
-                    <h2 class="text-2xl font-bold text-text-primary mb-2">Invitation Management</h2>
-                    <p class="text-text-secondary mb-6">Track and manage user invitations</p>
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <p class="text-text-secondary">Invitation management interface would be implemented here...</p>
-                    </div>
+                
+                <div class="p-6">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-blue-600">don@example.com</td>
+                                <td>Don Taylor</td>
+                                <td>Founder</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td class="text-gray-500">2024-03-15</td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">sarah@example.com</td>
+                                <td>Sarah Chen</td>
+                                <td>Founder</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td class="text-gray-500">2024-03-20</td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">mike@example.com</td>
+                                <td>Mike Johnson</td>
+                                <td>Founder</td>
+                                <td><span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Pending</span></td>
+                                <td class="text-gray-500">2024-04-01</td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">lisa@example.com</td>
+                                <td>Lisa Park</td>
+                                <td>Founder</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td class="text-gray-500">2024-04-05</td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">admin@foundersfleet.com</td>
+                                <td>System Admin</td>
+                                <td>Admin</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td class="text-gray-500">2024-01-01</td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- Objectives Section -->
             <div id="objectives-section" class="admin-section hidden">
-                <div class="p-8">
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Objectives Management</h2>
-                            <p class="text-text-secondary">Create and manage founder objectives</p>
-                        </div>
-                        <button class="px-4 py-2 bg-admin-red text-white rounded-lg hover:bg-red-700 transition-all">
-                            <i class="fas fa-plus mr-2"></i>Add Objective
-                        </button>
+                <div class="main-header">
+                    <div class="flex items-center justify-between mb-4">
+                        <h1 class="text-2xl font-semibold text-gray-900">Objectives</h1>
+                        <a href="#" class="btn-primary">New objective</a>
                     </div>
-
-                    <!-- Objectives Table -->
-                    <div class="bg-card-bg border border-border rounded-lg overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-section-bg border-b border-border">
-                                <tr>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Objective</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Category</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Missions</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Active Users</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Completion Rate</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-border">
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-lightbulb text-white"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-text-primary">Idea Validation</p>
-                                                <p class="text-sm text-text-secondary">Research and validate your concept</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Discovery</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">6 missions</td>
-                                    <td class="px-6 py-4 text-sm">1,234 users</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2">
-                                                <div class="bg-green-500 h-2 rounded-full" style="width: 68%"></div>
-                                            </div>
-                                            <span class="text-sm">68%</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex gap-2">
-                                            <button class="text-blue-600 hover:text-blue-700">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-gray-600 hover:text-gray-700">
-                                                <i class="fas fa-chart-bar"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-rocket text-white"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-text-primary">Launch Your Product</p>
-                                                <p class="text-sm text-text-secondary">Ship to the world with proper infrastructure</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Execution</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">4 missions</td>
-                                    <td class="px-6 py-4 text-sm">892 users</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-24 bg-gray-200 rounded-full h-2">
-                                                <div class="bg-green-500 h-2 rounded-full" style="width: 45%"></div>
-                                            </div>
-                                            <span class="text-sm">45%</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex gap-2">
-                                            <button class="text-blue-600 hover:text-blue-700">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-gray-600 hover:text-gray-700">
-                                                <i class="fas fa-chart-bar"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div>
+                        <input type="text" placeholder="Search Objectives" class="search-input">
                     </div>
+                </div>
+                
+                <div class="p-6">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Missions</th>
+                                <th>Duration</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-blue-600">Idea Validation</td>
+                                <td>Foundation</td>
+                                <td>4</td>
+                                <td>2-4 weeks</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">MVP Development</td>
+                                <td>Product</td>
+                                <td>4</td>
+                                <td>1-2 months</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">Launch Your Product</td>
+                                <td>Product</td>
+                                <td>4</td>
+                                <td>2-3 weeks</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">Operations & Legal</td>
+                                <td>Operations</td>
+                                <td>5</td>
+                                <td>2-3 weeks</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">Growth & Traction</td>
+                                <td>Growth</td>
+                                <td>6</td>
+                                <td>4-6 weeks</td>
+                                <td><span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Draft</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- Missions Section -->
             <div id="missions-section" class="admin-section hidden">
-                <div class="p-8">
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Missions Management</h2>
-                            <p class="text-text-secondary">Configure missions and checkpoints</p>
-                        </div>
-                        <div class="flex gap-3">
-                            <select class="px-4 py-2 border border-border rounded-lg">
-                                <option>All Objectives</option>
-                                <option>Idea Validation</option>
-                                <option>MVP Development</option>
-                                <option>Launch Your Product</option>
-                            </select>
-                            <button class="px-4 py-2 bg-admin-red text-white rounded-lg hover:bg-red-700 transition-all">
-                                <i class="fas fa-plus mr-2"></i>Add Mission
-                            </button>
-                        </div>
+                <div class="main-header">
+                    <div class="flex items-center justify-between mb-4">
+                        <h1 class="text-2xl font-semibold text-gray-900">Missions</h1>
+                        <a href="#" class="btn-primary">New mission</a>
                     </div>
-
-                    <!-- Missions Table -->
-                    <div class="bg-card-bg border border-border rounded-lg overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-section-bg border-b border-border">
-                                <tr>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Mission</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Objective</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Checkpoints</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Difficulty</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Active Users</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Avg Time</th>
-                                    <th class="text-left px-6 py-3 text-sm font-medium text-text-primary">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-border">
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-comments text-purple-600 text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-text-primary">Customer Interviews</p>
-                                                <p class="text-xs text-text-secondary">Interview 10+ potential customers</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="text-sm">Idea Validation</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">5 checkpoints</td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Medium</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">342 users</td>
-                                    <td class="px-6 py-4 text-sm">2 weeks</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex gap-2">
-                                            <button class="text-blue-600 hover:text-blue-700">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-purple-600 hover:text-purple-700">
-                                                <i class="fas fa-list-check"></i>
-                                            </button>
-                                            <button class="text-gray-600 hover:text-gray-700">
-                                                <i class="fas fa-chart-bar"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-mobile-alt text-blue-600 text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-text-primary">Set up Apple Developer Account</p>
-                                                <p class="text-xs text-text-secondary">Essential for iOS distribution</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="text-sm">Launch Your Product</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">5 checkpoints</td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">High</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">128 users</td>
-                                    <td class="px-6 py-4 text-sm">2-3 weeks</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex gap-2">
-                                            <button class="text-blue-600 hover:text-blue-700">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-purple-600 hover:text-purple-700">
-                                                <i class="fas fa-list-check"></i>
-                                            </button>
-                                            <button class="text-gray-600 hover:text-gray-700">
-                                                <i class="fas fa-chart-bar"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                                                <i class="fas fa-code text-green-600 text-sm"></i>
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-text-primary">Set up GitHub Repository</p>
-                                                <p class="text-xs text-text-secondary">Version control fundamentals</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="text-sm">MVP Development</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">3 checkpoints</td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Easy</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm">567 users</td>
-                                    <td class="px-6 py-4 text-sm">1 day</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex gap-2">
-                                            <button class="text-blue-600 hover:text-blue-700">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button class="text-purple-600 hover:text-purple-700">
-                                                <i class="fas fa-list-check"></i>
-                                            </button>
-                                            <button class="text-gray-600 hover:text-gray-700">
-                                                <i class="fas fa-chart-bar"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div>
+                        <input type="text" placeholder="Search Missions" class="search-input">
                     </div>
-
-                    <!-- Mission Stats -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h4 class="font-medium text-text-primary mb-4">Mission Completion Stats</h4>
-                            <div class="space-y-3">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-sm text-text-secondary">Average completion time</span>
-                                    <span class="text-sm font-medium">8.5 days</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-sm text-text-secondary">Completion rate</span>
-                                    <span class="text-sm font-medium">73%</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-sm text-text-secondary">Drop-off rate</span>
-                                    <span class="text-sm font-medium text-danger">27%</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h4 class="font-medium text-text-primary mb-4">Popular Missions</h4>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-text-secondary">1. Customer Interviews</span>
-                                    <span class="text-xs text-text-muted">342 active</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-text-secondary">2. Landing Page Creation</span>
-                                    <span class="text-xs text-text-muted">298 active</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-sm text-text-secondary">3. GitHub Setup</span>
-                                    <span class="text-xs text-text-muted">256 active</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h4 class="font-medium text-text-primary mb-4">Mission Health</h4>
-                            <div class="space-y-3">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                                    <span class="text-sm text-text-secondary">18 missions performing well</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                    <span class="text-sm text-text-secondary">4 missions need attention</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                                    <span class="text-sm text-text-secondary">2 missions underperforming</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Objective</th>
+                                <th>Type</th>
+                                <th>Points</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-blue-600">Research Your Market</td>
+                                <td>Idea Validation</td>
+                                <td>Research</td>
+                                <td>100</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">Customer Discovery</td>
+                                <td>Idea Validation</td>
+                                <td>Research</td>
+                                <td>150</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">Define Your MVP</td>
+                                <td>MVP Development</td>
+                                <td>Planning</td>
+                                <td>200</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">Build Core Features</td>
+                                <td>MVP Development</td>
+                                <td>Development</td>
+                                <td>300</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">Setup Analytics</td>
+                                <td>Launch Your Product</td>
+                                <td>Technical</td>
+                                <td>100</td>
+                                <td><span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">Draft</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
+            <!-- Squads Section -->
             <div id="squads-section" class="admin-section hidden">
-                <div class="p-8">
-                    <h2 class="text-2xl font-bold text-text-primary mb-2">Squad Management</h2>
-                    <p class="text-text-secondary mb-6">Monitor and moderate squad activities</p>
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <p class="text-text-secondary">Squad management interface would be implemented here...</p>
+                <div class="main-header">
+                    <div class="flex items-center justify-between mb-4">
+                        <h1 class="text-2xl font-semibold text-gray-900">Squads</h1>
+                        <a href="#" class="btn-primary">New squad</a>
                     </div>
+                    <div>
+                        <input type="text" placeholder="Search Squads" class="search-input">
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Focus Area</th>
+                                <th>Members</th>
+                                <th>Created</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-blue-600">AI Innovators</td>
+                                <td>AI/ML Startups</td>
+                                <td>4/5</td>
+                                <td class="text-gray-500">2024-03-15</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">HealthTech Pioneers</td>
+                                <td>Healthcare Innovation</td>
+                                <td>3/5</td>
+                                <td class="text-gray-500">2024-03-20</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">B2B SaaS Builders</td>
+                                <td>Enterprise Software</td>
+                                <td>5/5</td>
+                                <td class="text-gray-500">2024-02-10</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">Fintech Founders</td>
+                                <td>Financial Technology</td>
+                                <td>2/5</td>
+                                <td class="text-gray-500">2024-04-01</td>
+                                <td><span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Forming</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Destroy</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div id="squad-requests-section" class="admin-section hidden">
-                <div class="p-8">
-                    <h2 class="text-2xl font-bold text-text-primary mb-2">Squad Requests</h2>
-                    <p class="text-text-secondary mb-6">Review and approve squad formation requests</p>
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <p class="text-text-secondary">Squad request review interface would be implemented here...</p>
+            <!-- Invitations Section -->
+            <div id="invitations-section" class="admin-section hidden">
+                <div class="main-header">
+                    <div class="flex items-center justify-between mb-4">
+                        <h1 class="text-2xl font-semibold text-gray-900">Invitations</h1>
+                        <a href="#" class="btn-primary">New invitation</a>
                     </div>
+                    <div>
+                        <input type="text" placeholder="Search Invitations" class="search-input">
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Invited By</th>
+                                <th>Type</th>
+                                <th>Sent</th>
+                                <th>Status</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-blue-600">john@example.com</td>
+                                <td>Don Taylor</td>
+                                <td>Direct</td>
+                                <td class="text-gray-500">2024-04-10</td>
+                                <td><span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Pending</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Resend</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Revoke</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">maria@example.com</td>
+                                <td>Sarah Chen</td>
+                                <td>Squad Invite</td>
+                                <td class="text-gray-500">2024-04-08</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Accepted</span></td>
+                                <td><a href="#" class="text-gray-400 text-sm">-</a></td>
+                                <td><a href="#" class="text-gray-400 text-sm">-</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">alex@example.com</td>
+                                <td>Mike Johnson</td>
+                                <td>Direct</td>
+                                <td class="text-gray-500">2024-04-05</td>
+                                <td><span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Expired</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Resend</a></td>
+                                <td><a href="#" class="text-red-600 hover:text-red-700 text-sm">Delete</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div id="activities-section" class="admin-section hidden">
-                <div class="p-8">
-                    <h2 class="text-2xl font-bold text-text-primary mb-2">Activity Logs</h2>
-                    <p class="text-text-secondary mb-6">Monitor system activity and user actions</p>
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <p class="text-text-secondary">Activity logging interface would be implemented here...</p>
+            <!-- Messages Section -->
+            <div id="messages-section" class="admin-section hidden">
+                <div class="main-header">
+                    <div class="flex items-center justify-between mb-4">
+                        <h1 class="text-2xl font-semibold text-gray-900">Messages</h1>
+                        <span class="text-sm text-gray-500">System messages only</span>
                     </div>
+                    <div>
+                        <input type="text" placeholder="Search Messages" class="search-input">
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Content</th>
+                                <th>Recipients</th>
+                                <th>Sent</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Welcome</span></td>
+                                <td class="max-w-md truncate">Welcome to FoundersFleet! Your journey starts here...</td>
+                                <td>New Users</td>
+                                <td class="text-gray-500">Auto</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Milestone</span></td>
+                                <td class="max-w-md truncate">Congratulations on completing your first objective!</td>
+                                <td>Achievement</td>
+                                <td class="text-gray-500">Triggered</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Reminder</span></td>
+                                <td class="max-w-md truncate">Your squad meeting is tomorrow at 2 PM PST</td>
+                                <td>Squad Members</td>
+                                <td class="text-gray-500">Scheduled</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Active</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Edit</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div id="settings-section" class="admin-section hidden">
-                <div class="p-8">
-                    <h2 class="text-2xl font-bold text-text-primary mb-2">System Settings</h2>
-                    <p class="text-text-secondary mb-6">Configure system-wide settings and preferences</p>
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <p class="text-text-secondary">System settings interface would be implemented here...</p>
+            <!-- Activity Logs Section -->
+            <div id="activity-logs-section" class="admin-section hidden">
+                <div class="main-header">
+                    <div class="flex items-center justify-between mb-4">
+                        <h1 class="text-2xl font-semibold text-gray-900">Activity Logs</h1>
+                        <button class="text-sm text-blue-600 hover:text-blue-700">Export CSV</button>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Search Activity" class="search-input">
                     </div>
                 </div>
+                
+                <div class="p-6">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Resource</th>
+                                <th>IP Address</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-blue-600">don@example.com</td>
+                                <td>Completed Mission</td>
+                                <td>Customer Discovery</td>
+                                <td class="text-gray-500">192.168.1.1</td>
+                                <td class="text-gray-500">2024-04-10 14:23:15</td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">sarah@example.com</td>
+                                <td>Joined Squad</td>
+                                <td>AI Innovators</td>
+                                <td class="text-gray-500">10.0.0.1</td>
+                                <td class="text-gray-500">2024-04-10 13:45:22</td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">mike@example.com</td>
+                                <td>Updated Profile</td>
+                                <td>User Profile</td>
+                                <td class="text-gray-500">172.16.0.1</td>
+                                <td class="text-gray-500">2024-04-10 12:30:45</td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">lisa@example.com</td>
+                                <td>Sent Invitation</td>
+                                <td>john@example.com</td>
+                                <td class="text-gray-500">192.168.2.1</td>
+                                <td class="text-gray-500">2024-04-10 11:15:30</td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">admin@foundersfleet.com</td>
+                                <td>System Backup</td>
+                                <td>Database</td>
+                                <td class="text-gray-500">127.0.0.1</td>
+                                <td class="text-gray-500">2024-04-10 03:00:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+
+            <!-- Privacy Requests Section -->
+            <div id="privacy-requests-section" class="admin-section hidden">
+                <div class="main-header">
+                    <div class="flex items-center justify-between mb-4">
+                        <h1 class="text-2xl font-semibold text-gray-900">Privacy Requests</h1>
+                        <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm rounded-full">2 Pending</span>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Search Requests" class="search-input">
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Request Type</th>
+                                <th>Reason</th>
+                                <th>Submitted</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-blue-600">former@example.com</td>
+                                <td>Data Export</td>
+                                <td>Personal backup</td>
+                                <td class="text-gray-500">2024-04-08</td>
+                                <td><span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Pending</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Process</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">deleted@example.com</td>
+                                <td>Data Deletion</td>
+                                <td>Account closure</td>
+                                <td class="text-gray-500">2024-04-07</td>
+                                <td><span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Pending</span></td>
+                                <td><a href="#" class="text-blue-600 hover:text-blue-700 text-sm">Process</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">privacy@example.com</td>
+                                <td>Consent Update</td>
+                                <td>Marketing preferences</td>
+                                <td class="text-gray-500">2024-04-05</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Completed</span></td>
+                                <td><a href="#" class="text-gray-400 text-sm">View</a></td>
+                            </tr>
+                            <tr>
+                                <td class="text-blue-600">export@example.com</td>
+                                <td>Data Export</td>
+                                <td>Compliance audit</td>
+                                <td class="text-gray-500">2024-04-01</td>
+                                <td><span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Completed</span></td>
+                                <td><a href="#" class="text-gray-400 text-sm">View</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
     </div>
 
     <script>
+        // Show/hide sections
         function showSection(sectionName) {
             // Hide all sections
             document.querySelectorAll('.admin-section').forEach(section => {
                 section.classList.add('hidden');
             });
             
-            // Remove active class from all nav items
-            document.querySelectorAll('.admin-nav-item').forEach(item => {
+            // Show selected section
+            document.getElementById(`${sectionName}-section`).classList.remove('hidden');
+            
+            // Update nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
             
-            // Show selected section
-            document.getElementById(sectionName + '-section').classList.remove('hidden');
-            
-            // Add active class to clicked nav item
-            event.target.closest('.admin-nav-item').classList.add('active');
+            // Set active nav item
+            event.target.classList.add('active');
         }
+
+        // Show dashboard by default on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('dashboard');
+            document.querySelector('a[href="#dashboard"]').classList.add('active');
+        });
     </script>
 </body>
 </html>
