@@ -4,8 +4,8 @@ const missionData = {
     missions: {
         'validate-idea': {
             id: 'validate-idea',
-            title: 'Validate Your Idea',
-            description: 'Talk to 20 potential customers in 5 days',
+            title: '20 Customer Problem Interviews',
+            description: 'Talk to 20 potential customers about their problems in 5 days',
             epic: 'starting-out',
             category: 'business',
             difficulty: 'easy',
@@ -40,6 +40,211 @@ const missionData = {
                 { type: 'template', title: 'Customer Interview Template', url: '#' },
                 { type: 'guide', title: 'The Mom Test Book', url: '#' },
                 { type: 'video', title: 'How to Validate Ideas', url: '#' }
+            ]
+        },
+        
+        'competitor-analysis': {
+            id: 'competitor-analysis',
+            title: 'Competitive Landscape Analysis',
+            description: 'Research 10 competitors and identify your unique angle',
+            epic: 'idea-validation',
+            category: 'business',
+            difficulty: 'easy',
+            timeEstimate: '1 week',
+            cost: 0,
+            icon: 'fa-search',
+            prerequisites: [],
+            unlocks: ['positioning-strategy', 'pricing-strategy'],
+            steps: [
+                {
+                    title: 'List direct competitors',
+                    description: 'Find 5-7 companies solving the same problem'
+                },
+                {
+                    title: 'Analyze indirect competitors',
+                    description: 'Identify 3-5 alternative solutions customers use'
+                },
+                {
+                    title: 'Create comparison matrix',
+                    description: 'Compare features, pricing, and target markets'
+                },
+                {
+                    title: 'Identify gaps and opportunities',
+                    description: 'Find underserved segments or missing features'
+                },
+                {
+                    title: 'Define your differentiation',
+                    description: 'Articulate your unique value proposition'
+                }
+            ],
+            resources: [
+                { type: 'template', title: 'Competitive Analysis Template', url: '#' },
+                { type: 'tool', title: 'SimilarWeb for traffic analysis', url: '#' },
+                { type: 'guide', title: 'Blue Ocean Strategy', url: '#' }
+            ]
+        },
+        
+        'market-research': {
+            id: 'market-research',
+            title: 'TAM/SAM/SOM Market Analysis',
+            description: 'Calculate your total addressable market and growth potential',
+            epic: 'idea-validation',
+            category: 'business',
+            difficulty: 'medium',
+            timeEstimate: '3-4 days',
+            cost: 0,
+            icon: 'fa-chart-pie',
+            prerequisites: [],
+            unlocks: ['pitch-deck', 'financial-model'],
+            steps: [
+                {
+                    title: 'Calculate Total Addressable Market',
+                    description: 'Estimate the total market size for your solution'
+                },
+                {
+                    title: 'Define Serviceable Addressable Market',
+                    description: 'Narrow down to your reachable market segment'
+                },
+                {
+                    title: 'Project Serviceable Obtainable Market',
+                    description: 'Estimate realistic market share in 3-5 years'
+                },
+                {
+                    title: 'Research industry growth rates',
+                    description: 'Find data on market trends and projections'
+                },
+                {
+                    title: 'Create market opportunity slide',
+                    description: 'Visualize your market analysis for pitches'
+                }
+            ],
+            resources: [
+                { type: 'template', title: 'TAM SAM SOM Calculator', url: '#' },
+                { type: 'database', title: 'Statista Industry Reports', url: '#' },
+                { type: 'guide', title: 'Market Sizing Best Practices', url: '#' }
+            ]
+        },
+        
+        'problem-survey': {
+            id: 'problem-survey',
+            title: 'Problem Validation Survey',
+            description: 'Survey 50+ people about their problems using free tools',
+            epic: 'idea-validation',
+            category: 'business',
+            difficulty: 'easy',
+            timeEstimate: '3-4 days',
+            cost: 0,
+            icon: 'fa-poll',
+            prerequisites: [],
+            unlocks: ['customer-interviews', 'solution-design'],
+            steps: [
+                {
+                    title: 'Create survey in Google Forms',
+                    description: 'Free tool with unlimited responses and basic analytics'
+                },
+                {
+                    title: 'Focus on problem questions',
+                    description: 'How do they currently solve this? How painful is it? How often?'
+                },
+                {
+                    title: 'Add ranking questions',
+                    description: 'Have them rank problem severity and willingness to pay'
+                },
+                {
+                    title: 'Distribute to target audience',
+                    description: 'Share in relevant Slack groups, Reddit, LinkedIn, Facebook groups'
+                },
+                {
+                    title: 'Analyze 50+ responses',
+                    description: 'Look for patterns in pain points and current solutions'
+                }
+            ],
+            resources: [
+                { type: 'template', title: 'Problem Survey Template', url: '#' },
+                { type: 'tool', title: 'Google Forms', url: '#' },
+                { type: 'tool', title: 'Tally (alternative)', url: '#' }
+            ]
+        },
+        
+        'no-code-prototype': {
+            id: 'no-code-prototype',
+            title: 'Build No-Code MVP',
+            description: 'Create a functional prototype without writing code',
+            epic: 'idea-validation',
+            category: 'technical',
+            difficulty: 'medium',
+            timeEstimate: '1 week',
+            cost: 0,
+            icon: 'fa-puzzle-piece',
+            prerequisites: ['validate-idea'],
+            unlocks: ['user-testing', 'iterate-mvp'],
+            steps: [
+                {
+                    title: 'Choose no-code platform',
+                    description: 'Bubble for web apps, Adalo for mobile, Glide for data apps'
+                },
+                {
+                    title: 'Map core user flow',
+                    description: 'Focus on ONE main action users need to complete'
+                },
+                {
+                    title: 'Build minimal version',
+                    description: 'Just enough to test the core value proposition'
+                },
+                {
+                    title: 'Add basic analytics',
+                    description: 'Track user actions to understand behavior'
+                },
+                {
+                    title: 'Test with 10 users',
+                    description: 'Watch them use it and gather feedback'
+                }
+            ],
+            resources: [
+                { type: 'tool', title: 'Bubble.io', url: '#' },
+                { type: 'tool', title: 'Adalo', url: '#' },
+                { type: 'video', title: 'No-Code MVP Tutorial', url: '#' }
+            ]
+        },
+        
+        'social-media-test': {
+            id: 'social-media-test',
+            title: 'Social Media Interest Test',
+            description: 'Test your idea with low-cost social media experiments',
+            epic: 'idea-validation',
+            category: 'marketing',
+            difficulty: 'easy',
+            timeEstimate: '2-3 days',
+            cost: 50,
+            icon: 'fa-share-alt',
+            prerequisites: [],
+            unlocks: ['content-strategy', 'community-building'],
+            steps: [
+                {
+                    title: 'Create problem-focused posts',
+                    description: 'Write 3 posts about the problem (not your solution)'
+                },
+                {
+                    title: 'Post in relevant groups',
+                    description: 'Share in LinkedIn groups, Reddit, Facebook groups'
+                },
+                {
+                    title: 'Run $50 Facebook/Instagram test',
+                    description: 'Target your exact audience with interest-based ads'
+                },
+                {
+                    title: 'Track engagement metrics',
+                    description: 'Comments, shares, and click-through rates'
+                },
+                {
+                    title: 'DM engaged users',
+                    description: 'Reach out to commenters for deeper conversations'
+                }
+            ],
+            resources: [
+                { type: 'guide', title: 'Facebook Ads for Validation', url: '#' },
+                { type: 'template', title: 'Social Post Templates', url: '#' },
+                { type: 'tool', title: 'Canva for graphics', url: '#' }
             ]
         },
         
@@ -189,9 +394,9 @@ const missionData = {
         
         'business-entity': {
             id: 'business-entity',
-            title: 'Form Delaware C-Corp',
-            description: 'Set up proper legal structure for fundraising',
-            epic: 'fundraise',
+            title: 'Form a Corporate Entity',
+            description: 'Set up the right legal structure for your business',
+            epic: 'operations-legal',
             category: 'legal',
             difficulty: 'medium',
             timeEstimate: '1 week',
@@ -201,25 +406,230 @@ const missionData = {
             unlocks: ['apple-dev-account', 'stripe-setup', 'bank-account'],
             steps: [
                 {
-                    title: 'Choose business structure',
-                    description: 'C-Corp vs LLC - understand the implications'
+                    title: 'Research entity types',
+                    description: 'Compare LLC, C-Corp, S-Corp for your situation'
                 },
                 {
-                    title: 'File with Delaware',
-                    description: 'Submit incorporation documents'
+                    title: 'Choose jurisdiction',
+                    description: 'Delaware, home state, or other considerations'
+                },
+                {
+                    title: 'File formation documents',
+                    description: 'Submit articles of incorporation/organization'
                 },
                 {
                     title: 'Get EIN from IRS',
                     description: 'Apply for Employer Identification Number'
                 },
                 {
-                    title: 'Draft bylaws and agreements',
-                    description: 'Set up corporate governance documents'
+                    title: 'Create operating agreement',
+                    description: 'Define ownership, roles, and decision-making'
+                }
+            ]
+        },
+        
+        'product-requirements-doc': {
+            id: 'product-requirements-doc',
+            title: 'Create Product Requirements Doc',
+            description: 'Define what you\'re building with clear specifications',
+            epic: 'mvp-development',
+            category: 'business',
+            difficulty: 'medium',
+            timeEstimate: '2-3 days',
+            cost: 0,
+            icon: 'fa-file-alt',
+            prerequisites: ['validate-idea'],
+            unlocks: ['choose-tech-stack', 'design-mockups'],
+            steps: [
+                {
+                    title: 'Define user personas',
+                    description: 'Document your target users and their needs'
                 },
                 {
-                    title: 'Issue founder stock',
-                    description: 'Properly allocate equity with vesting'
+                    title: 'List core features',
+                    description: 'Prioritize must-have vs nice-to-have features'
+                },
+                {
+                    title: 'Create user stories',
+                    description: 'Write "As a user, I want to..." scenarios'
+                },
+                {
+                    title: 'Define success metrics',
+                    description: 'How will you measure if the MVP works?'
+                },
+                {
+                    title: 'Set scope and timeline',
+                    description: 'What\'s in v1.0 and what comes later'
                 }
+            ],
+            resources: [
+                { type: 'template', title: 'PRD Template', url: '#' },
+                { type: 'guide', title: 'Writing Effective User Stories', url: '#' },
+                { type: 'example', title: 'Sample PRD from Airbnb', url: '#' }
+            ]
+        },
+        
+        'choose-tech-stack': {
+            id: 'choose-tech-stack',
+            title: 'Choose Your Tech Stack',
+            description: 'Select the right technologies for your MVP',
+            epic: 'mvp-development',
+            category: 'technical',
+            difficulty: 'medium',
+            timeEstimate: '1-2 days',
+            cost: 0,
+            icon: 'fa-layer-group',
+            prerequisites: ['product-requirements-doc'],
+            unlocks: ['dev-environment-setup', 'github-setup'],
+            steps: [
+                {
+                    title: 'Assess technical requirements',
+                    description: 'Mobile vs web, real-time needs, scale expectations'
+                },
+                {
+                    title: 'Evaluate team skills',
+                    description: 'What does your team already know?'
+                },
+                {
+                    title: 'Research popular stacks',
+                    description: 'MEAN, MERN, JAMstack, Rails, Django, etc.'
+                },
+                {
+                    title: 'Consider time-to-market',
+                    description: 'Balance ideal tech with speed of development'
+                },
+                {
+                    title: 'Document decision',
+                    description: 'Record choices and reasoning for future team'
+                }
+            ],
+            resources: [
+                { type: 'guide', title: 'Tech Stack Decision Matrix', url: '#' },
+                { type: 'tool', title: 'StackShare - See what others use', url: '#' },
+                { type: 'article', title: 'MVP Tech Stack Guide', url: '#' }
+            ]
+        },
+        
+        'design-mockups': {
+            id: 'design-mockups',
+            title: 'Design UI/UX Mockups',
+            description: 'Create visual designs for your MVP',
+            epic: 'mvp-development',
+            category: 'design',
+            difficulty: 'medium',
+            timeEstimate: '1 week',
+            cost: 0,
+            icon: 'fa-paint-brush',
+            prerequisites: ['product-requirements-doc'],
+            unlocks: ['build-mvp', 'user-testing'],
+            steps: [
+                {
+                    title: 'Create wireframes',
+                    description: 'Sketch basic layouts for each screen'
+                },
+                {
+                    title: 'Design user flows',
+                    description: 'Map how users navigate through tasks'
+                },
+                {
+                    title: 'Build interactive prototype',
+                    description: 'Use Figma or similar to make clickable mockups'
+                },
+                {
+                    title: 'Test with 5 users',
+                    description: 'Get feedback before writing any code'
+                },
+                {
+                    title: 'Create design system',
+                    description: 'Document colors, fonts, and components'
+                }
+            ],
+            resources: [
+                { type: 'tool', title: 'Figma (free)', url: '#' },
+                { type: 'template', title: 'Mobile UI Kit', url: '#' },
+                { type: 'guide', title: 'Design Sprint Process', url: '#' }
+            ]
+        },
+        
+        'dev-environment-setup': {
+            id: 'dev-environment-setup',
+            title: 'Set Up Development Environment',
+            description: 'Configure your local dev setup and tools',
+            epic: 'mvp-development',
+            category: 'technical',
+            difficulty: 'easy',
+            timeEstimate: '4-6 hours',
+            cost: 0,
+            icon: 'fa-laptop-code',
+            prerequisites: ['choose-tech-stack'],
+            unlocks: ['github-setup', 'build-mvp'],
+            steps: [
+                {
+                    title: 'Install required software',
+                    description: 'IDE, runtime environments, package managers'
+                },
+                {
+                    title: 'Configure development tools',
+                    description: 'Set up linting, formatting, debugging'
+                },
+                {
+                    title: 'Set up local database',
+                    description: 'Install and configure your database system'
+                },
+                {
+                    title: 'Create project structure',
+                    description: 'Initialize project with proper folder organization'
+                },
+                {
+                    title: 'Test hello world',
+                    description: 'Ensure everything runs locally'
+                }
+            ],
+            resources: [
+                { type: 'guide', title: 'Dev Environment Best Practices', url: '#' },
+                { type: 'tool', title: 'VS Code', url: '#' },
+                { type: 'checklist', title: 'Setup Checklist', url: '#' }
+            ]
+        },
+        
+        'build-mvp': {
+            id: 'build-mvp',
+            title: 'Build Your MVP',
+            description: 'Code and launch your minimum viable product',
+            epic: 'mvp-development',
+            category: 'technical',
+            difficulty: 'high',
+            timeEstimate: '2-4 weeks',
+            cost: 0,
+            icon: 'fa-hammer',
+            prerequisites: ['dev-environment-setup', 'design-mockups'],
+            unlocks: ['user-testing', 'launch-product-hunt', 'analytics-setup'],
+            steps: [
+                {
+                    title: 'Build core feature only',
+                    description: 'Focus on the ONE thing that validates your idea'
+                },
+                {
+                    title: 'Implement basic auth',
+                    description: 'User signup and login functionality'
+                },
+                {
+                    title: 'Create data models',
+                    description: 'Database schema for core functionality'
+                },
+                {
+                    title: 'Build responsive UI',
+                    description: 'Works on mobile and desktop'
+                },
+                {
+                    title: 'Deploy to production',
+                    description: 'Get it live on real servers'
+                }
+            ],
+            resources: [
+                { type: 'guide', title: 'MVP Development Guide', url: '#' },
+                { type: 'tool', title: 'Deployment Platforms', url: '#' },
+                { type: 'checklist', title: 'Launch Checklist', url: '#' }
             ]
         },
         
@@ -334,8 +744,8 @@ const missionData = {
         
         'mom-test': {
             id: 'mom-test',
-            title: 'The Mom Test',
-            description: 'Learn how to talk to customers and get honest feedback',
+            title: 'Master Customer Interview Techniques',
+            description: 'Learn how to ask the right questions and avoid biased feedback',
             epic: 'idea-validation',
             category: 'business',
             difficulty: 'easy',
@@ -370,68 +780,72 @@ const missionData = {
         
         'customer-discovery-workshop': {
             id: 'customer-discovery-workshop',
-            title: 'Customer Discovery Workshop',
-            description: '90-minute workshop on effective customer interviews',
+            title: 'Customer Discovery Sprint',
+            description: 'Intensive 5-day process to validate your assumptions with real customers',
             epic: 'idea-validation',
             category: 'business',
-            difficulty: 'easy',
-            timeEstimate: '90 minutes',
+            difficulty: 'medium',
+            timeEstimate: '5 days',
             cost: 0,
             icon: 'fa-video',
             prerequisites: [],
             unlocks: ['customer-interviews'],
             steps: [
                 {
-                    title: 'Register for workshop',
-                    description: 'Sign up for the next available session'
+                    title: 'Day 1: Map your assumptions',
+                    description: 'List all assumptions about your customers and their problems'
                 },
                 {
-                    title: 'Prepare your hypothesis',
-                    description: 'Come with a clear problem statement'
+                    title: 'Day 2: Create interview guide',
+                    description: 'Design questions to test your riskiest assumptions'
                 },
                 {
-                    title: 'Attend live session',
-                    description: 'Participate in the interactive workshop'
+                    title: 'Day 3-4: Conduct 10 interviews',
+                    description: 'Talk to potential customers and take detailed notes'
                 },
                 {
-                    title: 'Complete exercises',
-                    description: 'Practice with other founders in breakout rooms'
+                    title: 'Day 5: Synthesize learnings',
+                    description: 'Identify patterns and decide to pivot or persevere'
                 },
                 {
-                    title: 'Get feedback',
-                    description: 'Receive personalized advice on your approach'
+                    title: 'Share insights',
+                    description: 'Post key learnings for other founders to learn from'
                 }
             ]
         },
         
         'landing-page': {
             id: 'landing-page',
-            title: 'Create Landing Page',
-            description: 'Build a high-converting landing page',
+            title: 'Landing Page Smoke Test',
+            description: 'Create a simple landing page to test market interest',
             epic: 'starting-out',
             category: 'marketing',
-            difficulty: 'medium',
-            timeEstimate: '1 day',
+            difficulty: 'easy',
+            timeEstimate: '4-6 hours',
             cost: 0,
             icon: 'fa-globe',
-            prerequisites: ['validate-idea'],
-            unlocks: ['analytics-setup', 'email-list', 'launch-product-hunt'],
+            prerequisites: [],
+            unlocks: ['email-list', 'paid-ads-test'],
             steps: [
                 {
-                    title: 'Write compelling copy',
-                    description: 'Hero, benefits, social proof, CTA'
+                    title: 'Choose no-code builder',
+                    description: 'Sign up for Carrd, Strikingly, or Tilda (free tier)'
                 },
                 {
-                    title: 'Design or use template',
-                    description: 'Mobile-first, fast-loading design'
+                    title: 'Write problem-focused copy',
+                    description: 'Headline addressing the problem, 3 key benefits, clear CTA'
                 },
                 {
-                    title: 'Set up hosting',
-                    description: 'Deploy on Vercel, Netlify, or similar'
+                    title: 'Add waitlist signup',
+                    description: 'Simple email capture with "Join Waitlist" button'
                 },
                 {
-                    title: 'Add email capture',
-                    description: 'Integrate with email service provider'
+                    title: 'Set success metrics',
+                    description: 'Define what conversion rate validates interest (e.g., 20%+)'
+                },
+                {
+                    title: 'Share with 100 people',
+                    description: 'Post in relevant communities, social media, and forums'
                 },
                 {
                     title: 'Optimize for SEO',

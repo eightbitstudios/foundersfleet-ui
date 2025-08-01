@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="boarding-pass-styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="nav-component.js"></script>
+    <script src="notifications-component.js"></script>
+    <script src="search-component.js"></script>
     
     <script>
         tailwind.config = {
@@ -58,6 +60,19 @@
             animation: progress 1s ease-out forwards;
         }
         
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
         
     </style>
 </head>
@@ -76,17 +91,29 @@
                         <h1 class="text-3xl font-bold text-text-primary mb-2">Your Flight Plan</h1>
                         <p class="text-text-secondary">Welcome back, Don. You're making great progress on your founder journey</p>
                     </div>
-                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="addObjective()">
-                        <i class="fas fa-plus"></i>Objective
-                    </button>
+                    <div class="relative">
+                        <button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="toggleActionMenu()">
+                            <span>Actions</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div id="action-menu" class="hidden absolute right-0 mt-2 w-56 bg-white border border-border rounded-lg shadow-lg z-10">
+                            <a href="#" class="block px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-all" onclick="event.preventDefault(); addObjective()">
+                                <i class="fas fa-plus mr-2"></i>Add Objective to Plan
+                            </a>
+                            <a href="#" class="block px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-all" onclick="event.preventDefault(); openObjectiveSuggestionModal()">
+                                <i class="fas fa-lightbulb mr-2"></i>Suggest New Objective
+                            </a>
+                            <div class="border-t border-border"></div>
+                            <a href="#" class="block px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-all" onclick="event.preventDefault(); shareFlightPlan()">
+                                <i class="fas fa-share mr-2"></i>Share Flight Plan
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Onboarding Welcome Module -->
-                <div class="mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-8 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 opacity-10">
-                        <i class="fas fa-rocket text-[200px] transform rotate-45 translate-x-16 -translate-y-16"></i>
-                    </div>
-                    <div class="relative z-10">
+                <div class="mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-8">
+                    <div>
                         <div class="max-w-2xl">
                             <h2 class="text-2xl font-bold mb-3">Welcome to FoundersFleet! 🎉</h2>
                             <p class="text-lg mb-4 text-white/90">
@@ -111,9 +138,6 @@
                                     Start Setup
                                     <i class="fas fa-arrow-right ml-2"></i>
                                 </button>
-                                <button onclick="dismissOnboarding()" class="text-white/80 hover:text-white transition-all text-sm">
-                                    I'll do this later
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -122,7 +146,7 @@
                 <!-- Search Bar -->
                 <div class="mb-6">
                     <div class="relative">
-                        <input type="text" placeholder="Search objectives by name or description..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all">
+                        <input type="text" id="objectives-search" placeholder="Search objectives by name or description..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all" onkeypress="handleSearch(event)">
                         <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
@@ -139,15 +163,12 @@
                             
                             <!-- Slot 1: Idea Validation Objective -->
                             <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer mb-6 relative" data-objective="idea-validation" onclick="window.location.href='objective-detail.html?objective=idea-validation'">
-                                <!-- Remove button in upper right -->
-                                <div class="absolute top-4 right-4">
+                                <!-- Remove button and grabber in upper right -->
+                                <div class="absolute top-4 right-4 flex items-center gap-2">
                                     <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('idea-validation')">
                                         Remove
                                     </button>
-                                </div>
-                                <!-- Grabber icon in bottom right -->
-                                <div class="absolute bottom-4 right-4">
-                                    <i class="fas fa-grip-vertical text-gray-300"></i>
+                                    <i class="fas fa-grip-vertical text-gray-300 cursor-move"></i>
                                 </div>
                                 <div class="flex">
                                         <!-- Left Section - Main Content -->
@@ -163,19 +184,26 @@
                                             <p class="text-sm text-text-primary font-medium">2/6 Missions Complete</p>
                                         </div>
                                     </div>
+                                    <!-- Current Mission Indicator -->
+                                    <div class="mt-4 pt-4 border-t border-border">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-2 h-2 bg-warning rounded-full animate-pulse"></div>
+                                                <span class="text-sm font-medium text-text-primary">Current: Customer Discovery Sprint</span>
+                                            </div>
+                                            <i class="fas fa-arrow-right text-gray-400 text-sm"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             
                             <!-- Slot 2: MVP Development Objective -->
                             <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer mb-6 relative" data-objective="mvp-development" onclick="window.location.href='objective-detail.html?objective=mvp-development'">
-                                <!-- Remove button in upper right -->
-                                <div class="absolute top-4 right-4">
+                                <!-- Remove button and grabber in upper right -->
+                                <div class="absolute top-4 right-4 flex items-center gap-2">
                                     <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('mvp-development')">
                                         Remove
                                     </button>
-                                </div>
-                                <!-- Grabber icon in bottom right -->
-                                <div class="absolute bottom-4 right-4">
-                                    <i class="fas fa-grip-vertical text-gray-300"></i>
+                                    <i class="fas fa-grip-vertical text-gray-300 cursor-move"></i>
                                 </div>
                                 <div class="flex">
                                         <!-- Left Section - Main Content -->
@@ -191,19 +219,26 @@
                                             <p class="text-sm text-text-primary font-medium">1/4 Missions Complete</p>
                                         </div>
                                     </div>
+                                    <!-- Current Mission Indicator -->
+                                    <div class="mt-4 pt-4 border-t border-border">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-2 h-2 bg-warning rounded-full animate-pulse"></div>
+                                                <span class="text-sm font-medium text-text-primary">Current: Create Product Requirements Doc</span>
+                                            </div>
+                                            <i class="fas fa-arrow-right text-gray-400 text-sm"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             
                             <!-- Slot 3: Launch Your Product Objective -->
                             <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" data-objective="launch-product" onclick="window.location.href='objective-detail.html?objective=launch-product'">
-                                <!-- Remove button in upper right -->
-                                <div class="absolute top-4 right-4">
+                                <!-- Remove button and grabber in upper right -->
+                                <div class="absolute top-4 right-4 flex items-center gap-2">
                                     <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('launch-product')">
                                         Remove
                                     </button>
-                                </div>
-                                <!-- Grabber icon in bottom right -->
-                                <div class="absolute bottom-4 right-4">
-                                    <i class="fas fa-grip-vertical text-gray-300"></i>
+                                    <i class="fas fa-grip-vertical text-gray-300 cursor-move"></i>
                                 </div>
                                 <div class="flex">
                                         <!-- Left Section - Main Content -->
@@ -217,6 +252,16 @@
                                             </div>
                                             <p class="text-sm text-text-secondary mb-3">Ship your product to the world with all the necessary infrastructure and distribution channels.</p>
                                             <p class="text-sm text-text-primary font-medium">0/4 Missions Complete</p>
+                                        </div>
+                                    </div>
+                                    <!-- Next Mission Indicator -->
+                                    <div class="mt-4 pt-4 border-t border-border">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
+                                                <span class="text-sm text-gray-600">Next: Create Landing Page</span>
+                                            </div>
+                                            <i class="fas fa-arrow-right text-gray-400 text-sm"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -452,6 +497,16 @@
     <script>
         // Initialize navigation
         initializeNavigation('flightplan');
+        
+        // Handle search
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                const query = event.target.value.trim();
+                if (query) {
+                    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+                }
+            }
+        }
 
         // Mission navigation
         function goToMission(missionId) {
@@ -468,9 +523,65 @@
             alert('Remove functionality would be implemented here');
         }
         
+        // Toggle action menu
+        function toggleActionMenu() {
+            const menu = document.getElementById('action-menu');
+            menu.classList.toggle('hidden');
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('action-menu');
+            const button = event.target.closest('button[onclick="toggleActionMenu()"]');
+            
+            if (!button && !menu.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
         // Add objective (placeholder)
         function addObjective() {
             alert('Add objective functionality would be implemented here');
+        }
+        
+        // Open objective suggestion modal
+        function openObjectiveSuggestionModal() {
+            document.getElementById('objective-suggestion-modal').classList.remove('hidden');
+            document.getElementById('objective-suggestion-modal').classList.add('flex');
+            document.getElementById('action-menu').classList.add('hidden');
+        }
+        
+        // Close objective suggestion modal
+        function closeObjectiveSuggestionModal() {
+            document.getElementById('objective-suggestion-modal').classList.add('hidden');
+            document.getElementById('objective-suggestion-modal').classList.remove('flex');
+            document.getElementById('objective-suggestion-title').value = '';
+            document.getElementById('objective-suggestion-description').value = '';
+        }
+        
+        // Submit objective suggestion
+        function submitObjectiveSuggestion() {
+            const title = document.getElementById('objective-suggestion-title').value.trim();
+            const description = document.getElementById('objective-suggestion-description').value.trim();
+            
+            if (!title) {
+                alert('Please enter an objective title');
+                return;
+            }
+            
+            // In a real app, this would send to backend
+            alert(`Thank you for your suggestion!\n\nObjective: ${title}\n\nWe'll review your suggestion and consider adding it to FoundersFleet.`);
+            closeObjectiveSuggestionModal();
+        }
+        
+        // Share flight plan
+        function shareFlightPlan() {
+            alert('Share flight plan functionality would be implemented here');
+        }
+        
+        // Export progress
+        function exportProgress() {
+            alert('Export progress functionality would be implemented here');
         }
         
         // Move objective up in priority
@@ -522,5 +633,54 @@
             }
         });
     </script>
+
+    <!-- Objective Suggestion Modal -->
+    <div id="objective-suggestion-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-text-primary">Suggest New Objective</h3>
+                <button onclick="closeObjectiveSuggestionModal()" class="text-gray-400 hover:text-gray-600 transition-all">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <p class="text-sm text-text-secondary mb-4">
+                Have an idea for a new objective that would help founders on their journey? 
+                Share it with us!
+            </p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-text-primary mb-1">Objective Title</label>
+                    <input type="text" id="objective-suggestion-title" 
+                           placeholder="e.g., 'Community Building'" 
+                           class="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-text-primary mb-1">Description (optional)</label>
+                    <textarea id="objective-suggestion-description" rows="3" 
+                              placeholder="What would this objective help founders achieve?"
+                              class="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
+                </div>
+                
+                <div class="text-xs text-text-secondary">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Your suggestion will be reviewed by the FoundersFleet team
+                </div>
+            </div>
+            
+            <div class="flex gap-3 mt-6">
+                <button onclick="closeObjectiveSuggestionModal()" 
+                        class="flex-1 px-4 py-2 border border-border rounded-lg hover:bg-gray-50 transition-all">
+                    Cancel
+                </button>
+                <button onclick="submitObjectiveSuggestion()" 
+                        class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                    Submit Suggestion
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

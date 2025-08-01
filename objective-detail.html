@@ -10,6 +10,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="missions-data.js"></script>
     <script src="nav-component.js"></script>
+    <script src="notifications-component.js"></script>
+    <script src="search-component.js"></script>
     
     <script>
         tailwind.config = {
@@ -75,6 +77,10 @@
                             </a>
                             <a href="#" class="block px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-all">
                                 <i class="fas fa-archive mr-2"></i>Archive
+                            </a>
+                            <div class="border-t border-border"></div>
+                            <a href="#" class="block px-4 py-2 text-sm text-text-primary hover:bg-gray-50 transition-all" onclick="event.preventDefault(); openSuggestionModal()">
+                                <i class="fas fa-lightbulb mr-2"></i>Suggest New Mission
                             </a>
                             <div class="border-t border-border"></div>
                             <a href="#" class="block px-4 py-2 text-sm text-danger hover:bg-gray-50 transition-all">
@@ -329,7 +335,7 @@
                 title: 'Idea Validation',
                 icon: 'fa-lightbulb',
                 description: 'Research, validate, and refine your concept to ensure you\'re solving a real problem that people will pay for.',
-                missions: ['mom-test', 'customer-discovery-workshop', 'validate-idea', 'customer-interviews', 'landing-page', 'analytics-setup'],
+                missions: ['validate-idea', 'problem-survey', 'landing-page', 'social-media-test', 'no-code-prototype', 'competitor-analysis'],
                 progress: 2,
                 total: 6,
                 estimatedTime: '2-4 weeks'
@@ -338,9 +344,9 @@
                 title: 'MVP Development',
                 icon: 'fa-code',
                 description: 'Build and launch your first version to test with real users and gather feedback.',
-                missions: ['github-setup', 'landing-page', 'stripe-setup', 'analytics-setup'],
+                missions: ['product-requirements-doc', 'choose-tech-stack', 'design-mockups', 'dev-environment-setup', 'github-setup', 'build-mvp'],
                 progress: 1,
-                total: 4,
+                total: 6,
                 estimatedTime: '1-2 months'
             },
             'operations-legal': {
@@ -641,6 +647,39 @@
             }
         }
 
+        // Open suggestion modal
+        function openSuggestionModal() {
+            document.getElementById('suggestion-modal').classList.remove('hidden');
+            document.getElementById('suggestion-modal').classList.add('flex');
+            document.getElementById('action-dropdown').classList.add('hidden');
+            
+            // Update objective name in modal
+            const objectiveTitle = document.getElementById('objective-title').textContent;
+            document.getElementById('modal-objective-name').textContent = objectiveTitle;
+        }
+
+        // Close suggestion modal
+        function closeSuggestionModal() {
+            document.getElementById('suggestion-modal').classList.add('hidden');
+            document.getElementById('suggestion-modal').classList.remove('flex');
+            document.getElementById('suggestion-title').value = '';
+            document.getElementById('suggestion-description').value = '';
+        }
+
+        // Submit suggestion
+        function submitSuggestion() {
+            const title = document.getElementById('suggestion-title').value.trim();
+            const description = document.getElementById('suggestion-description').value.trim();
+            
+            if (!title) {
+                alert('Please enter a mission title');
+                return;
+            }
+            
+            // In a real app, this would send to backend
+            alert(`Thank you for your suggestion!\n\nMission: ${title}\n\nWe'll review your suggestion and consider adding it to FoundersFleet.`);
+            closeSuggestionModal();
+        }
 
         // Initialize navigation
         initializeNavigation('flightplan');
@@ -653,5 +692,54 @@
             }, 100);
         });
     </script>
+
+    <!-- Suggestion Modal -->
+    <div id="suggestion-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-text-primary">Suggest New Mission</h3>
+                <button onclick="closeSuggestionModal()" class="text-gray-400 hover:text-gray-600 transition-all">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <p class="text-sm text-text-secondary mb-4">
+                Have an idea for a mission that would help founders with <span id="modal-objective-name" class="font-medium">this objective</span>? 
+                We'd love to hear it!
+            </p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-text-primary mb-1">Mission Title</label>
+                    <input type="text" id="suggestion-title" 
+                           placeholder="e.g., 'Run A/B Tests on Landing Page'" 
+                           class="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-text-primary mb-1">Description (optional)</label>
+                    <textarea id="suggestion-description" rows="3" 
+                              placeholder="Briefly describe what this mission would involve..."
+                              class="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"></textarea>
+                </div>
+                
+                <div class="text-xs text-text-secondary">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Your suggestion will be reviewed by the FoundersFleet team
+                </div>
+            </div>
+            
+            <div class="flex gap-3 mt-6">
+                <button onclick="closeSuggestionModal()" 
+                        class="flex-1 px-4 py-2 border border-border rounded-lg hover:bg-gray-50 transition-all">
+                    Cancel
+                </button>
+                <button onclick="submitSuggestion()" 
+                        class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                    Submit Suggestion
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

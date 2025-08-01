@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communications - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    <script src="search-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .comms-item {
+            transition: all 0.2s ease;
+        }
+        .comms-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .comms-item.unread {
+            background: #F0F9FF;
+            border-left: 3px solid #000000;
+        }
+        
+        /* Message preview modal */
+        .message-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        .message-modal.show {
+            display: flex;
+        }
+        .message-content {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden flex">
+        <!-- Left Content -->
+        <div class="flex-1 overflow-auto" id="main-content">
+            <!-- Page Content -->
+            <div class="px-8 py-8">
+                <!-- Page Header -->
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">Comms</h1>
+                        <p class="text-text-secondary">All your messages and notifications in one place</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="markAllRead()" class="px-4 py-2 text-text-secondary hover:text-primary transition-all">
+                            <i class="fas fa-check-double mr-2"></i>Mark all read
+                        </button>
+                        <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="newMessage()">
+                            <i class="fas fa-plus"></i>New Message
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="mb-6">
+                    <div class="relative">
+                        <input type="text" id="comms-search" placeholder="Search messages and notifications..." 
+                               class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all"
+                               onkeyup="searchComms(event)">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- Unified Filters -->
+                <div class="flex gap-2 mb-6 flex-wrap">
+                    <button class="px-4 py-2 bg-primary text-white text-sm rounded-lg transition-all" onclick="filterComms('all')" data-filter="all">
+                        All
+                        <span class="ml-2 px-2 py-0.5 bg-white/20 rounded text-xs">15</span>
+                    </button>
+                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('messages')" data-filter="messages">
+                        Messages
+                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">3</span>
+                    </button>
+                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('notifications')" data-filter="notifications">
+                        Notifications
+                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">12</span>
+                    </button>
+                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('squad')" data-filter="squad">
+                        Squad
+                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">5</span>
+                    </button>
+                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('missions')" data-filter="missions">
+                        Missions
+                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">2</span>
+                    </button>
+                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('system')" data-filter="system">
+                        System
+                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">1</span>
+                    </button>
+                </div>
+
+                <!-- Unified Content Area -->
+                <div id="comms-content" class="space-y-4">
+                    <!-- Message: Squad -->
+                    <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="squad" onclick="openMessage('squad-1')">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 rounded-lg bg-primary text-white flex items-center justify-center font-semibold">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">B2B SaaS Squad</h3>
+                                        <p class="text-sm text-text-secondary mt-1">Sarah: Just launched our beta! 🚀</p>
+                                    </div>
+                                    <span class="text-xs text-text-muted whitespace-nowrap">10 min ago</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">Message</span>
+                                    <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded">Squad</span>
+                                    <span class="text-xs text-text-muted">12 members</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification: Squad Meeting -->
+                    <div class="comms-item unread bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="notifications" data-category="squad" onclick="handleNotificationClick('squad-detail.html?squad=alpha')">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                                    <i class="fas fa-users text-white"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">Squad Alpha meeting in 30 minutes</h3>
+                                        <p class="text-sm text-text-secondary mt-1">Don't forget to prepare your weekly update on MVP progress</p>
+                                    </div>
+                                    <span class="text-xs text-text-muted whitespace-nowrap">30 min ago</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs rounded">Notification</span>
+                                    <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded">Squad</span>
+                                    <button class="text-xs text-primary hover:text-primary-hover" onclick="event.stopPropagation(); joinMeeting()">Join Meeting</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Message: Direct -->
+                    <div class="comms-item unread bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="direct" onclick="openMessage('direct-1')">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">MP</div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">Marcus Park</h3>
+                                        <p class="text-sm text-text-secondary mt-1">Hey! Loved your thoughts on marketplace dynamics...</p>
+                                    </div>
+                                    <span class="text-xs text-text-muted whitespace-nowrap">2 hours ago</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">Message</span>
+                                    <span class="px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded">Direct</span>
+                                    <span class="w-2 h-2 bg-primary rounded-full" title="Unread"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification: Mission Unlocked -->
+                    <div class="comms-item unread bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="notifications" data-category="missions" onclick="handleNotificationClick('objective-detail.html?objective=mvp-development')">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-flag text-purple-600"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">New mission unlocked!</h3>
+                                        <p class="text-sm text-text-secondary mt-1">You've completed prerequisites for "Build Your MVP" mission</p>
+                                    </div>
+                                    <span class="text-xs text-text-muted whitespace-nowrap">2 hours ago</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs rounded">Notification</span>
+                                    <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs rounded">Achievement</span>
+                                    <button class="text-xs text-primary hover:text-primary-hover" onclick="event.stopPropagation(); window.location.href='objective-detail.html?objective=mvp-development'">Start Mission</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Message: Squad -->
+                    <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="squad" onclick="openMessage('squad-2')">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 rounded-lg bg-purple-600 text-white flex items-center justify-center font-semibold">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">Marketplace Builders</h3>
+                                        <p class="text-sm text-text-secondary mt-1">Mike: Anyone dealt with payment splits?</p>
+                                    </div>
+                                    <span class="text-xs text-text-muted whitespace-nowrap">2 hours ago</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">Message</span>
+                                    <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded">Squad</span>
+                                    <span class="text-xs text-text-muted">8 members</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification: Squad Activity -->
+                    <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="notifications" data-category="squad" onclick="handleNotificationClick('founder-profile.html?founder=sarah-chen')">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                    <span class="text-green-700 font-semibold">SC</span>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">Sarah Chen completed Customer Discovery Sprint</h3>
+                                        <p class="text-sm text-text-secondary mt-1">Your squad member just finished a major milestone!</p>
+                                    </div>
+                                    <span class="text-xs text-text-muted whitespace-nowrap">Yesterday</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs rounded">Notification</span>
+                                    <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded">Squad Activity</span>
+                                    <button class="text-xs text-primary hover:text-primary-hover" onclick="event.stopPropagation(); congratulate('sarah-chen')">Send Congrats</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notification: System -->
+                    <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="notifications" data-category="system" onclick="handleNotificationClick('apps.html')">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-shapes text-orange-600"></i>
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">New app available: Pitch Deck Builder</h3>
+                                        <p class="text-sm text-text-secondary mt-1">AI-powered tool to create investor-ready pitch decks</p>
+                                    </div>
+                                    <span class="text-xs text-text-muted whitespace-nowrap">3 days ago</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs rounded">Notification</span>
+                                    <span class="px-2 py-1 bg-orange-50 text-orange-700 text-xs rounded">New App</span>
+                                    <button class="text-xs text-primary hover:text-primary-hover" onclick="event.stopPropagation(); window.location.href='apps.html'">Explore App</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel for Message Details -->
+        <div id="rightPanel" class="w-[500px] bg-white border-l border-border overflow-hidden hidden flex flex-col">
+            <!-- Panel Header -->
+            <div class="p-4 border-b border-border flex items-center justify-between bg-white">
+                <div id="panelHeader">
+                    <h3 class="font-semibold text-text-primary">Select a message</h3>
+                </div>
+                <button onclick="closePanel()" class="p-2 hover:bg-section-bg rounded transition-all">
+                    <i class="fas fa-times text-text-secondary"></i>
+                </button>
+            </div>
+
+            <!-- Panel Messages -->
+            <div class="flex-1 overflow-y-auto p-4 bg-section-bg" id="panelMessages">
+                <div class="text-center text-text-secondary py-8">
+                    <i class="fas fa-inbox text-4xl mb-3 opacity-50"></i>
+                    <p>Select a message to view details</p>
+                </div>
+            </div>
+
+            <!-- Panel Input (for messages only) -->
+            <div class="p-4 border-t border-border bg-white hidden" id="panelInput">
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Type a message..." class="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="app.js"></script>
+    <script src="dev-tools.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('comms');
+
+        // Current filter
+        let currentFilter = 'all';
+
+        // Filter functionality
+        function filterComms(filter) {
+            currentFilter = filter;
+            
+            // Update button styles
+            const buttons = document.querySelectorAll('[data-filter]');
+            buttons.forEach(btn => {
+                if (btn.dataset.filter === filter) {
+                    btn.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border');
+                    btn.classList.add('bg-primary', 'text-white');
+                } else {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border');
+                }
+            });
+            
+            // Filter items
+            const items = document.querySelectorAll('.comms-item');
+            items.forEach(item => {
+                if (filter === 'all') {
+                    item.style.display = 'block';
+                } else if (filter === 'messages' || filter === 'notifications') {
+                    item.style.display = item.dataset.type === filter ? 'block' : 'none';
+                } else {
+                    // Filter by category (squad, missions, system)
+                    item.style.display = item.dataset.category === filter ? 'block' : 'none';
+                }
+            });
+        }
+
+        // Mark all as read
+        function markAllRead() {
+            document.querySelectorAll('.comms-item.unread').forEach(item => {
+                item.classList.remove('unread');
+            });
+            // Update counts
+            updateCounts();
+        }
+
+        // Update counts in filter buttons
+        function updateCounts() {
+            // In a real app, this would calculate actual counts
+            console.log('Updating counts...');
+        }
+
+        // Handle notification click
+        function handleNotificationClick(url) {
+            // Show notification in panel instead of navigating
+            event.stopPropagation();
+            
+            const panel = document.getElementById('rightPanel');
+            const panelHeader = document.getElementById('panelHeader');
+            const panelMessages = document.getElementById('panelMessages');
+            const panelInput = document.getElementById('panelInput');
+            
+            // Show panel
+            panel.classList.remove('hidden');
+            panel.classList.add('flex');
+            
+            // Mark item as read
+            event.currentTarget.classList.remove('unread');
+            
+            // Hide input for notifications
+            panelInput.classList.add('hidden');
+            
+            // Get notification details from the clicked element
+            const title = event.currentTarget.querySelector('h3').textContent;
+            const description = event.currentTarget.querySelector('p').textContent;
+            const time = event.currentTarget.querySelector('.text-xs.text-text-muted').textContent;
+            
+            panelHeader.innerHTML = `
+                <h3 class="font-semibold text-text-primary">Notification Details</h3>
+            `;
+            
+            panelMessages.innerHTML = `
+                <div class="bg-white rounded-lg p-6">
+                    <h3 class="font-semibold text-text-primary text-lg mb-2">${title}</h3>
+                    <p class="text-text-secondary mb-4">${description}</p>
+                    <p class="text-xs text-text-muted mb-6">${time}</p>
+                    <button onclick="window.location.href='${url}'" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                        View Details
+                    </button>
+                </div>
+            `;
+        }
+
+        // Open message panel
+        function openMessage(conversationId) {
+            const panel = document.getElementById('rightPanel');
+            const panelHeader = document.getElementById('panelHeader');
+            const panelMessages = document.getElementById('panelMessages');
+            const panelInput = document.getElementById('panelInput');
+            
+            // Show panel
+            panel.classList.remove('hidden');
+            panel.classList.add('flex');
+            
+            // Mark item as read
+            event.currentTarget.classList.remove('unread');
+            
+            // Show input for messages
+            panelInput.classList.remove('hidden');
+            
+            // Load conversation details (simulated)
+            if (conversationId === 'squad-1') {
+                panelHeader.innerHTML = `
+                    <h3 class="font-semibold text-text-primary">B2B SaaS Squad</h3>
+                    <p class="text-sm text-text-secondary">12 members • Last active 10m ago</p>
+                `;
+                panelMessages.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold flex-shrink-0">SC</div>
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="font-semibold text-sm">Sarah Chen</span>
+                                    <span class="text-xs text-text-muted">2:34 PM</span>
+                                </div>
+                                <div class="bg-white px-4 py-2 rounded-lg max-w-md shadow-sm">
+                                    Hey team! Just launched our beta version. Check it out at beta.datasync.io 🚀
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 justify-end">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1 justify-end">
+                                    <span class="text-xs text-text-muted">2:35 PM</span>
+                                </div>
+                                <div class="bg-primary text-white px-4 py-2 rounded-lg max-w-md">
+                                    Awesome! Checking it out now. The landing page looks great!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold flex-shrink-0">JK</div>
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="font-semibold text-sm">James Kim</span>
+                                    <span class="text-xs text-text-muted">2:36 PM</span>
+                                </div>
+                                <div class="bg-white px-4 py-2 rounded-lg max-w-md shadow-sm">
+                                    Congrats Sarah! The onboarding flow is super smooth. How did you handle the auth?
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (conversationId === 'direct-1') {
+                panelHeader.innerHTML = `
+                    <h3 class="font-semibold text-text-primary">Marcus Park</h3>
+                    <p class="text-sm text-text-secondary">Active now</p>
+                `;
+                panelMessages.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold flex-shrink-0">MP</div>
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="font-semibold text-sm">Marcus Park</span>
+                                    <span class="text-xs text-text-muted">2:00 PM</span>
+                                </div>
+                                <div class="bg-white px-4 py-2 rounded-lg max-w-md shadow-sm">
+                                    Hey! Loved your thoughts on marketplace dynamics during the last squad meeting. Would love to connect and discuss potential synergies between our platforms.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (conversationId === 'squad-2') {
+                panelHeader.innerHTML = `
+                    <h3 class="font-semibold text-text-primary">Marketplace Builders</h3>
+                    <p class="text-sm text-text-secondary">8 members • Last active 2h ago</p>
+                `;
+                panelMessages.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-semibold flex-shrink-0">MJ</div>
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="font-semibold text-sm">Mike Johnson</span>
+                                    <span class="text-xs text-text-muted">2 hours ago</span>
+                                </div>
+                                <div class="bg-white px-4 py-2 rounded-lg max-w-md shadow-sm">
+                                    Anyone dealt with payment splits for multi-vendor marketplaces? Running into some edge cases with Stripe Connect.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Close panel
+        function closePanel() {
+            const panel = document.getElementById('rightPanel');
+            panel.classList.add('hidden');
+            panel.classList.remove('flex');
+        }
+
+        // New message
+        function newMessage() {
+            alert('New message composer would open here');
+        }
+
+        // Join meeting
+        function joinMeeting() {
+            alert('Joining meeting...');
+        }
+
+        // Send congratulations
+        function congratulate(founderId) {
+            alert(`Sending congratulations to ${founderId}...`);
+        }
+
+        // Search communications
+        function searchComms(event) {
+            const searchTerm = event.target.value.toLowerCase();
+            const items = document.querySelectorAll('.comms-item');
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // If empty, apply current filter
+            if (!searchTerm) {
+                filterComms(currentFilter);
+            }
+        }
+    </script>
+</body>
+</html>

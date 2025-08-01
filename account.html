@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="boarding-pass-styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="nav-component.js"></script>
+    <script src="notifications-component.js"></script>
+    <script src="search-component.js"></script>
     
     <script>
         tailwind.config = {
@@ -205,6 +207,57 @@
                             </p>
                         </div>
 
+                        <!-- Top Objectives -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h2 class="text-xl font-semibold text-text-primary mb-4">Top Objectives</h2>
+                            <div class="space-y-4">
+                                <div class="bg-gray-50 rounded-lg p-3 hover:bg-gray-100 cursor-pointer transition-all" onclick="window.location.href='objective-detail.html?objective=idea-validation'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-6 h-6 bg-black rounded flex items-center justify-center flex-shrink-0">
+                                                <i class="fas fa-lightbulb text-xs text-white"></i>
+                                            </div>
+                                            <h5 class="text-sm font-semibold text-text-primary">Idea Validation</h5>
+                                        </div>
+                                        <span class="text-xs text-text-secondary">2/6 missions</span>
+                                    </div>
+                                    <div class="mt-1">
+                                        <span class="text-xs text-text-secondary">Current: Customer Discovery Sprint</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 rounded-lg p-3 hover:bg-gray-100 cursor-pointer transition-all" onclick="window.location.href='objective-detail.html?objective=mvp-development'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-6 h-6 bg-black rounded flex items-center justify-center flex-shrink-0">
+                                                <i class="fas fa-code text-xs text-white"></i>
+                                            </div>
+                                            <h5 class="text-sm font-semibold text-text-primary">MVP Development</h5>
+                                        </div>
+                                        <span class="text-xs text-text-secondary">1/6 missions</span>
+                                    </div>
+                                    <div class="mt-1">
+                                        <span class="text-xs text-text-secondary">Current: Create Product Requirements Doc</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-50 rounded-lg p-3 hover:bg-gray-100 cursor-pointer transition-all" onclick="window.location.href='objective-detail.html?objective=launch-product'">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-6 h-6 bg-black rounded flex items-center justify-center flex-shrink-0">
+                                                <i class="fas fa-rocket text-xs text-white"></i>
+                                            </div>
+                                            <h5 class="text-sm font-semibold text-text-primary">Launch Your Product</h5>
+                                        </div>
+                                        <span class="text-xs text-text-secondary">0/5 missions</span>
+                                    </div>
+                                    <div class="mt-1">
+                                        <span class="text-xs text-text-secondary">Next: Create Landing Page</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Experience -->
                         <div class="bg-card-bg border border-border rounded-lg p-6">
                             <div class="flex items-center justify-between mb-4">
@@ -356,11 +409,11 @@
                             <h3 class="text-lg font-semibold text-text-primary mb-4">Profile Completion</h3>
                             <div class="mb-4">
                                 <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm text-text-secondary">82% Complete</span>
-                                    <span class="text-sm font-medium text-primary">+18%</span>
+                                    <span class="text-sm text-text-secondary">90% Complete</span>
+                                    <span class="text-sm font-medium text-primary">+10%</span>
                                 </div>
                                 <div class="w-full bg-section-bg rounded-full h-2">
-                                    <div class="bg-primary h-2 rounded-full" style="width: 82%"></div>
+                                    <div class="bg-primary h-2 rounded-full" style="width: 90%"></div>
                                 </div>
                             </div>
                             <div class="space-y-2">
@@ -370,15 +423,23 @@
                                 </div>
                                 <div class="flex items-center gap-2 text-sm">
                                     <i class="fas fa-check-circle text-green-600"></i>
-                                    <span class="text-text-secondary">Experience added</span>
+                                    <span class="text-text-secondary">LinkedIn connected</span>
                                 </div>
                                 <div class="flex items-center gap-2 text-sm">
                                     <i class="fas fa-check-circle text-green-600"></i>
-                                    <span class="text-text-secondary">Skills listed</span>
+                                    <span class="text-text-secondary">Startup details added</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Top objectives selected</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm">
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                    <span class="text-text-secondary">Squad matched</span>
                                 </div>
                                 <div class="flex items-center gap-2 text-sm">
                                     <i class="fas fa-circle text-text-muted"></i>
-                                    <span class="text-text-secondary">Profile photo</span>
+                                    <span class="text-text-secondary">First mission completed</span>
                                 </div>
                             </div>
                         </div>

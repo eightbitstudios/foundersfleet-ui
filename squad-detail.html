@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="boarding-pass-styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="nav-component.js"></script>
+    <script src="notifications-component.js"></script>
+    <script src="search-component.js"></script>
     
     <script>
         tailwind.config = {
@@ -114,7 +116,10 @@
 
                         <!-- Squad Members -->
                         <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h2 class="text-xl font-semibold text-text-primary mb-4">Squad Members</h2>
+                            <div class="flex items-center justify-between mb-4">
+                                <h2 class="text-xl font-semibold text-text-primary">Squad Members</h2>
+                                <span id="seats-filled" class="text-sm text-text-secondary">4/5 seats filled</span>
+                            </div>
                             <div id="squad-members-detail" class="space-y-4">
                                 <!-- Members with objectives/missions will be loaded here -->
                             </div>
@@ -176,9 +181,8 @@
                                 </span>
                             </div>
                             <div class="space-y-4">
-                                <div class="flex items-start gap-3 pb-4 border-b border-border">
-                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">AR</div>
-                                    <div class="flex-1">
+                                <div class="pb-4 border-b border-border">
+                                    <div>
                                         <div class="flex items-center justify-between">
                                             <h4 class="font-medium text-text-primary">Aisha Robinson</h4>
                                             <span class="text-xs text-text-muted">2 hours ago</span>
@@ -187,9 +191,8 @@
                                     </div>
                                 </div>
                                 
-                                <div class="flex items-start gap-3 pb-4 border-b border-border">
-                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">SC</div>
-                                    <div class="flex-1">
+                                <div class="pb-4 border-b border-border">
+                                    <div>
                                         <div class="flex items-center justify-between">
                                             <h4 class="font-medium text-text-primary">Sarah Chen</h4>
                                             <span class="text-xs text-text-muted">5 hours ago</span>
@@ -198,9 +201,8 @@
                                     </div>
                                 </div>
                                 
-                                <div class="flex items-start gap-3">
-                                    <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-sm font-semibold">JK</div>
-                                    <div class="flex-1">
+                                <div>
+                                    <div>
                                         <div class="flex items-center justify-between">
                                             <h4 class="font-medium text-text-primary">James Kim</h4>
                                             <span class="text-xs text-text-muted">1 day ago</span>

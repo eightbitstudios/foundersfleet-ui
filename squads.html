@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="nav-component.js"></script>
+    <script src="notifications-component.js"></script>
+    <script src="search-component.js"></script>
     
     <script>
         tailwind.config = {
@@ -91,11 +93,28 @@
                         <i class="fas fa-plus"></i>Form Squad
                     </button>
                 </div>
+
+                <!-- Squad Matching Onboarding Module -->
+                <div id="squad-onboarding" class="mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-6 relative">
+                    <button onclick="dismissSquadOnboarding()" class="absolute top-4 right-4 text-white/60 hover:text-white transition-all">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                    <div>
+                        <h2 class="text-xl font-bold mb-2">Find Your Squad 🚀</h2>
+                        <p class="text-white/90 mb-4">
+                            Get matched with other founders at your stage to help to keep moving and accountable
+                        </p>
+                        <button onclick="window.location.href='onboarding-profile.html'" class="px-5 py-2.5 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all font-medium">
+                            Get Matched
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
                 
                 <!-- Search Bar -->
                 <div class="mb-6">
                     <div class="relative">
-                        <input type="text" placeholder="Search squads by name, focus area, or description..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all">
+                        <input type="text" id="squads-search" placeholder="Search squads by name, focus area, or description..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all" onkeypress="handleSearch(event)">
                         <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
@@ -384,6 +403,43 @@
             alert('Filter modal would open here');
         }
 
+
+        // Dismiss squad onboarding
+        function dismissSquadOnboarding() {
+            const onboardingModule = document.getElementById('squad-onboarding');
+            if (onboardingModule) {
+                onboardingModule.style.transition = 'all 0.3s ease-out';
+                onboardingModule.style.opacity = '0';
+                onboardingModule.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    onboardingModule.remove();
+                }, 300);
+                
+                // Save dismissal state
+                localStorage.setItem('squadOnboardingDismissed', 'true');
+            }
+        }
+        
+        // Check if onboarding should be shown
+        window.addEventListener('DOMContentLoaded', function() {
+            const onboardingDismissed = localStorage.getItem('squadOnboardingDismissed');
+            if (onboardingDismissed === 'true') {
+                const onboardingModule = document.getElementById('squad-onboarding');
+                if (onboardingModule) {
+                    onboardingModule.remove();
+                }
+            }
+        });
+
+        // Handle search
+        function handleSearch(event) {
+            if (event.key === 'Enter') {
+                const query = event.target.value.trim();
+                if (query) {
+                    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+                }
+            }
+        }
 
         // Initialize navigation
         initializeNavigation('squads');

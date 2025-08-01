@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    <script src="notifications-component.js"></script>
+    <script src="search-component.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Search Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-4 mb-6">
+                        <button onclick="history.back()" class="text-text-secondary hover:text-primary transition-all" id="back-button">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <h1 class="text-3xl font-bold text-text-primary" id="page-title">Search</h1>
+                    </div>
+                    
+                    <!-- Search Bar -->
+                    <div class="relative mb-6">
+                        <input type="text" id="search-input" placeholder="Search across FoundersFleet..." 
+                               class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all text-lg"
+                               value="">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+
+                    <!-- Search Filters -->
+                    <div class="flex items-center gap-2 mb-6">
+                        <button onclick="filterResults('all')" class="filter-btn px-4 py-2 bg-primary text-white rounded-lg transition-all">
+                            All Results
+                        </button>
+                        <button onclick="filterResults('objectives')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
+                            Objectives
+                        </button>
+                        <button onclick="filterResults('missions')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
+                            Missions
+                        </button>
+                        <button onclick="filterResults('squads')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
+                            Squads
+                        </button>
+                        <button onclick="filterResults('founders')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
+                            Founders
+                        </button>
+                    </div>
+
+                    <!-- Results Count -->
+                    <p class="text-text-secondary" id="results-info">
+                        Showing <span id="results-count" class="font-semibold text-text-primary">12</span> results for 
+                        "<span id="search-query" class="font-semibold text-text-primary">MVP</span>"
+                    </p>
+                </div>
+
+                <!-- Search Results -->
+                <div class="space-y-4" id="search-results">
+                    <!-- Objective Result -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="objectives" onclick="window.location.href='objective-detail.html?objective=mvp-development'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-code text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Objective</span>
+                                    <span class="text-xs text-primary">• 4 missions</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    <span class="highlight">MVP</span> Development
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Build and launch your minimum viable product. Learn to build an <span class="highlight">MVP</span> that tests your core assumptions with real users.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mission Result -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="missions" onclick="window.location.href='mission-detail.html?mission=build-mvp'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-flag text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Mission</span>
+                                    <span class="text-xs text-primary">• MVP Development</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    Build Your <span class="highlight">MVP</span>
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Create your minimum viable product with just enough features to validate your core hypothesis.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Squad Result -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="squads" onclick="window.location.href='squad-detail.html?squad=alpha'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-rocket text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Squad</span>
+                                    <span class="text-xs text-green-600">• Active</span>
+                                    <span class="text-xs text-text-muted">• 4/5 members</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    Squad Alpha
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    B2B SaaS founders working on <span class="highlight">MVP</span> launch. Weekly accountability for rapid iteration and customer feedback.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Founder Result -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="founders" onclick="window.location.href='founder-profile.html?founder=james-kim'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-white font-semibold">JK</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Founder</span>
+                                    <span class="text-xs text-primary">• Squad Alpha</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    James Kim
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Building DevTools Pro. Currently working on <span class="highlight">MVP</span> development and customer validation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More Results -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="missions">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-flag text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Mission</span>
+                                    <span class="text-xs text-primary">• MVP Development</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    Create Product Requirements Doc
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Define your <span class="highlight">MVP</span> features, user stories, and technical requirements in a clear document.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="objectives">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-rocket text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Objective</span>
+                                    <span class="text-xs text-primary">• 5 missions</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    Launch Your Product
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Take your <span class="highlight">MVP</span> to market with proper infrastructure, marketing, and distribution channels.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Message Result -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="messages" onclick="window.location.href='comms.html?type=message&id=squad-1'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-comment text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Message</span>
+                                    <span class="text-xs text-primary">• B2B SaaS Squad</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    Squad conversation about <span class="highlight">MVP</span> launch
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Sarah: "Just launched our beta <span class="highlight">MVP</span>! Check it out at beta.datasync.io 🚀"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Results State -->
+                <div id="no-results" class="hidden text-center py-12">
+                    <i class="fas fa-search text-gray-300 text-5xl mb-4"></i>
+                    <h3 class="text-xl font-semibold text-text-primary mb-2">No results found</h3>
+                    <p class="text-text-secondary">Try adjusting your search terms or filters</p>
+                </div>
+                
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden text-center py-20">
+                    <i class="fas fa-search text-gray-300 text-6xl mb-6"></i>
+                    <h2 class="text-2xl font-semibold text-text-primary mb-3">Search FoundersFleet</h2>
+                    <p class="text-lg text-text-secondary mb-8 max-w-lg mx-auto">
+                        Find objectives, missions, squads, founders, and conversations across the entire platform
+                    </p>
+                    
+                    <!-- Quick Search Suggestions -->
+                    <div class="max-w-2xl mx-auto">
+                        <p class="text-sm text-text-muted uppercase tracking-wider mb-4">Popular searches</p>
+                        <div class="flex flex-wrap gap-3 justify-center">
+                            <button onclick="searchFor('MVP')" class="px-4 py-2 bg-white border border-border rounded-lg hover:border-primary hover:shadow-sm transition-all text-sm">
+                                <i class="fas fa-code mr-2 text-primary"></i>MVP Development
+                            </button>
+                            <button onclick="searchFor('fundraising')" class="px-4 py-2 bg-white border border-border rounded-lg hover:border-primary hover:shadow-sm transition-all text-sm">
+                                <i class="fas fa-hand-holding-usd mr-2 text-primary"></i>Fundraising
+                            </button>
+                            <button onclick="searchFor('customer discovery')" class="px-4 py-2 bg-white border border-border rounded-lg hover:border-primary hover:shadow-sm transition-all text-sm">
+                                <i class="fas fa-users mr-2 text-primary"></i>Customer Discovery
+                            </button>
+                            <button onclick="searchFor('B2B SaaS')" class="px-4 py-2 bg-white border border-border rounded-lg hover:border-primary hover:shadow-sm transition-all text-sm">
+                                <i class="fas fa-cloud mr-2 text-primary"></i>B2B SaaS
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Get search query from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('q') || '';
+        
+        // Set search input value and query display
+        document.getElementById('search-input').value = searchQuery;
+        document.getElementById('search-query').textContent = searchQuery;
+        
+        // Handle empty state vs search results
+        if (!searchQuery) {
+            // Show empty state
+            document.getElementById('empty-state').classList.remove('hidden');
+            document.getElementById('search-results').style.display = 'none';
+            document.getElementById('results-info').style.display = 'none';
+            document.getElementById('back-button').style.display = 'none';
+            document.getElementById('page-title').textContent = 'Search';
+            
+            // Hide filter buttons in empty state
+            document.querySelector('.flex.items-center.gap-2.mb-6').style.display = 'none';
+        } else {
+            // Show search results
+            document.getElementById('empty-state').classList.add('hidden');
+            document.getElementById('search-results').style.display = 'block';
+            document.getElementById('results-info').style.display = 'block';
+            document.getElementById('back-button').style.display = 'block';
+            document.getElementById('page-title').textContent = 'Search Results';
+            
+            // Show filter buttons
+            document.querySelector('.flex.items-center.gap-2.mb-6').style.display = 'flex';
+        }
+        
+        // Filter functionality
+        let currentFilter = 'all';
+        
+        function filterResults(filter) {
+            currentFilter = filter;
+            
+            // Update button styles
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white');
+                btn.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border');
+            });
+            
+            const activeBtn = event.target;
+            activeBtn.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border');
+            activeBtn.classList.add('bg-primary', 'text-white');
+            
+            // Show/hide results
+            const results = document.querySelectorAll('.result-item');
+            let visibleCount = 0;
+            
+            results.forEach(result => {
+                if (filter === 'all' || result.dataset.type === filter) {
+                    result.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    result.style.display = 'none';
+                }
+            });
+            
+            // Update results count
+            document.getElementById('results-count').textContent = visibleCount;
+            
+            // Show no results if needed
+            document.getElementById('no-results').classList.toggle('hidden', visibleCount > 0);
+        }
+        
+        // Search input handler
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = e.target.value.trim();
+                if (query) {
+                    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+        
+        // Search for specific query
+        function searchFor(query) {
+            window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+        }
+        
+        // Highlight search terms
+        function highlightSearchTerms() {
+            const query = searchQuery.toLowerCase();
+            if (!query) return;
+            
+            // Simple highlight implementation
+            const style = document.createElement('style');
+            style.textContent = '.highlight { background-color: #FEF3C7; font-weight: 500; }';
+            document.head.appendChild(style);
+        }
+        
+        highlightSearchTerms();
+        
+        // Initialize navigation
+        initializeNavigation('');
+    </script>
+</body>
+</html>
