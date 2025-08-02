@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PitchPerfect - AI Pitch Coach | FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    <script src="app-launch-panel.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .slide-card {
+            transition: all 0.3s ease;
+        }
+        .slide-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        }
+        .score-circle {
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            animation: fillCircle 1.5s ease-out forwards;
+        }
+        @keyframes fillCircle {
+            to {
+                stroke-dashoffset: 88; /* 80% score */
+            }
+        }
+        .recording-indicator {
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .investor-match {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- App Header -->
+            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
+                            <i class="fas fa-arrow-left text-text-secondary"></i>
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-microphone text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-text-primary">PitchPerfect</h1>
+                                <p class="text-sm text-text-secondary">AI coach for perfect investor pitches</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                        </div>
+                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                            <i class="fas fa-play mr-2"></i>Configure
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="px-8 py-6">
+                <!-- Pitch Score Dashboard -->
+                <div class="mb-8 bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-8 border border-red-100">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-text-primary mb-2">Your Pitch Score</h2>
+                            <p class="text-text-secondary mb-4">AI-powered analysis of your latest pitch practice</p>
+                            <div class="flex items-center gap-8">
+                                <div class="relative w-32 h-32">
+                                    <svg class="w-32 h-32 transform -rotate-90">
+                                        <circle cx="64" cy="64" r="56" stroke="#E5E5E5" stroke-width="12" fill="none"></circle>
+                                        <circle cx="64" cy="64" r="56" stroke="#EF4444" stroke-width="12" fill="none" 
+                                                class="score-circle"></circle>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="text-center">
+                                            <div class="text-3xl font-bold text-text-primary">82</div>
+                                            <div class="text-sm text-text-secondary">Score</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-semibold text-text-primary mb-2">Strong Performance</h3>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center gap-2 text-sm">
+                                            <i class="fas fa-check-circle text-success"></i>
+                                            <span>Clear problem statement</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm">
+                                            <i class="fas fa-exclamation-circle text-warning"></i>
+                                            <span>Tighten market size explanation</span>
+                                        </div>
+                                        <div class="flex items-center gap-2 text-sm">
+                                            <i class="fas fa-check-circle text-success"></i>
+                                            <span>Strong team slide</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow-sm text-center">
+                            <div class="text-sm text-text-muted mb-1">Practice Sessions</div>
+                            <div class="text-3xl font-bold text-text-primary">12</div>
+                            <div class="text-xs text-success mt-1">+8 this week</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pitch Deck Builder -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Slide Overview -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold text-text-primary">Pitch Deck Slides</h3>
+                                <button class="text-sm text-primary hover:text-primary-hover">
+                                    <i class="fas fa-plus mr-1"></i>Add Slide
+                                </button>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Title Slide -->
+                                <div class="slide-card border border-border rounded-lg p-4 cursor-pointer hover:border-primary">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-text-muted">Slide 1</span>
+                                        <span class="px-2 py-1 bg-success/10 text-success text-xs rounded">Complete</span>
+                                    </div>
+                                    <h4 class="font-medium text-text-primary mb-1">Title & Vision</h4>
+                                    <p class="text-sm text-text-secondary">Your company name and tagline</p>
+                                    <div class="mt-3 aspect-video bg-section-bg rounded flex items-center justify-center">
+                                        <i class="fas fa-flag text-3xl text-gray-300"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Problem Slide -->
+                                <div class="slide-card border border-border rounded-lg p-4 cursor-pointer hover:border-primary">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-text-muted">Slide 2</span>
+                                        <span class="px-2 py-1 bg-success/10 text-success text-xs rounded">Complete</span>
+                                    </div>
+                                    <h4 class="font-medium text-text-primary mb-1">The Problem</h4>
+                                    <p class="text-sm text-text-secondary">Pain points you're solving</p>
+                                    <div class="mt-3 aspect-video bg-section-bg rounded flex items-center justify-center">
+                                        <i class="fas fa-exclamation-triangle text-3xl text-gray-300"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Solution Slide -->
+                                <div class="slide-card border border-warning border-2 rounded-lg p-4 cursor-pointer bg-yellow-50">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-text-muted">Slide 3</span>
+                                        <span class="px-2 py-1 bg-warning/10 text-warning text-xs rounded">In Progress</span>
+                                    </div>
+                                    <h4 class="font-medium text-text-primary mb-1">Our Solution</h4>
+                                    <p class="text-sm text-text-secondary">How you solve the problem</p>
+                                    <div class="mt-3 aspect-video bg-white rounded flex items-center justify-center border border-warning">
+                                        <i class="fas fa-lightbulb text-3xl text-warning"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- Market Size -->
+                                <div class="slide-card border border-border rounded-lg p-4 cursor-pointer hover:border-primary opacity-60">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-text-muted">Slide 4</span>
+                                        <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">Not Started</span>
+                                    </div>
+                                    <h4 class="font-medium text-text-primary mb-1">Market Size</h4>
+                                    <p class="text-sm text-text-secondary">TAM, SAM, SOM analysis</p>
+                                    <div class="mt-3 aspect-video bg-section-bg rounded flex items-center justify-center">
+                                        <i class="fas fa-chart-pie text-3xl text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 flex items-center justify-between text-sm">
+                                <span class="text-text-secondary">4 of 12 slides complete</span>
+                                <button class="text-primary hover:text-primary-hover">View Full Deck →</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Feedback & Tips -->
+                    <div class="space-y-6">
+                        <!-- Real-time Feedback -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">AI Feedback</h3>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                    <div class="flex items-start gap-2">
+                                        <i class="fas fa-lightbulb text-yellow-600 mt-0.5"></i>
+                                        <div>
+                                            <p class="text-sm font-medium text-text-primary">Strengthen Your Hook</p>
+                                            <p class="text-xs text-text-secondary mt-1">Start with a compelling statistic about the problem size</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                    <div class="flex items-start gap-2">
+                                        <i class="fas fa-info-circle text-blue-600 mt-0.5"></i>
+                                        <div>
+                                            <p class="text-sm font-medium text-text-primary">Pacing Tip</p>
+                                            <p class="text-xs text-text-secondary mt-1">Spend 30 seconds max on each slide</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-3 bg-green-50 border border-green-200 rounded-lg">
+                                    <div class="flex items-start gap-2">
+                                        <i class="fas fa-check-circle text-green-600 mt-0.5"></i>
+                                        <div>
+                                            <p class="text-sm font-medium text-text-primary">Great Team Intro</p>
+                                            <p class="text-xs text-text-secondary mt-1">Your backgrounds are highly relevant</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Practice Mode -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Practice Mode</h3>
+                            <div class="space-y-3">
+                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-text-primary">2-Minute Pitch</h4>
+                                            <p class="text-xs text-text-secondary">Perfect for elevator pitches</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-text-muted"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-text-primary">5-Minute Demo</h4>
+                                            <p class="text-xs text-text-secondary">Standard investor meeting</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-text-muted"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-text-primary">Q&A Session</h4>
+                                            <p class="text-xs text-text-secondary">Practice tough questions</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-text-muted"></i>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Investor Matching -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-text-primary">Investor Matches</h3>
+                        <button class="text-sm text-primary hover:text-primary-hover">
+                            View All →
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Investor Card 1 -->
+                        <div class="border border-border rounded-lg p-4 hover:shadow-md transition-all">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <h4 class="font-semibold text-text-primary">Sequoia Capital</h4>
+                                    <p class="text-sm text-text-secondary">Series A, B2B SaaS</p>
+                                </div>
+                                <span class="investor-match text-white px-2 py-1 rounded text-xs font-medium">92% fit</span>
+                            </div>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Check Size</span>
+                                    <span class="font-medium">$5-15M</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Portfolio</span>
+                                    <span class="font-medium">127 companies</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Recent Deal</span>
+                                    <span class="font-medium">Similar space</span>
+                                </div>
+                            </div>
+                            <button class="w-full mt-3 px-3 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
+                                Request Intro
+                            </button>
+                        </div>
+                        
+                        <!-- Investor Card 2 -->
+                        <div class="border border-border rounded-lg p-4 hover:shadow-md transition-all">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <h4 class="font-semibold text-text-primary">Andreessen Horowitz</h4>
+                                    <p class="text-sm text-text-secondary">Seed, Series A</p>
+                                </div>
+                                <span class="investor-match text-white px-2 py-1 rounded text-xs font-medium">88% fit</span>
+                            </div>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Check Size</span>
+                                    <span class="font-medium">$1-10M</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Portfolio</span>
+                                    <span class="font-medium">200+ companies</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Focus</span>
+                                    <span class="font-medium">AI/ML, SaaS</span>
+                                </div>
+                            </div>
+                            <button class="w-full mt-3 px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
+                                View Profile
+                            </button>
+                        </div>
+                        
+                        <!-- Investor Card 3 -->
+                        <div class="border border-border rounded-lg p-4 hover:shadow-md transition-all">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <h4 class="font-semibold text-text-primary">Y Combinator</h4>
+                                    <p class="text-sm text-text-secondary">Pre-seed, Seed</p>
+                                </div>
+                                <span class="investor-match text-white px-2 py-1 rounded text-xs font-medium">85% fit</span>
+                            </div>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Investment</span>
+                                    <span class="font-medium">$500K</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Batch</span>
+                                    <span class="font-medium">W25 Open</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-text-secondary">Deadline</span>
+                                    <span class="font-medium text-warning">2 weeks</span>
+                                </div>
+                            </div>
+                            <button class="w-full mt-3 px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
+                                Apply Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Practice History -->
+                <div class="bg-card-bg border border-border rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-text-primary mb-4">Recent Practice Sessions</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center">
+                                    <span class="text-xl font-bold text-success">88</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-text-primary">5-Minute Investor Pitch</h4>
+                                    <p class="text-sm text-text-secondary">Today at 2:30 PM • 5:12 duration</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button class="px-3 py-1 bg-white border border-border rounded text-sm hover:bg-gray-50">
+                                    <i class="fas fa-play mr-1"></i>Replay
+                                </button>
+                                <button class="px-3 py-1 bg-white border border-border rounded text-sm hover:bg-gray-50">
+                                    <i class="fas fa-chart-line mr-1"></i>Analysis
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-warning/10 rounded-lg flex items-center justify-center">
+                                    <span class="text-xl font-bold text-warning">76</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-text-primary">Q&A Practice</h4>
+                                    <p class="text-sm text-text-secondary">Yesterday • 12:45 duration</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button class="px-3 py-1 bg-white border border-border rounded text-sm hover:bg-gray-50">
+                                    <i class="fas fa-play mr-1"></i>Replay
+                                </button>
+                                <button class="px-3 py-1 bg-white border border-border rounded text-sm hover:bg-gray-50">
+                                    <i class="fas fa-chart-line mr-1"></i>Analysis
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('apps');
+
+        // App navigation
+        const appPages = [
+            'app-economaestro.html',
+            'app-runway.html',
+            'app-cofoundermatch.html',
+            'app-validateai.html',
+            'app-shipfast.html',
+            'app-firstusers.html',
+            'app-pitchperfect.html',
+            'app-launchpad.html',
+            'app-scaleops.html',
+            'app-delightiq.html',
+            'app-brandforge.html',
+            'app-salesflow.html',
+            'app-insighthub.html',
+            'app-searchmaster.html',
+            'app-goglobal.html',
+            'app-legalshield.html',
+            'app-teamsync.html'
+        ];
+
+        // Update counter
+        const currentUrl = window.location.pathname.split('/').pop();
+        const currentIndex = appPages.indexOf(currentUrl);
+        if (currentIndex !== -1) {
+            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
+        }
+
+        function navigateApp(direction) {
+            const currentUrl = window.location.pathname.split('/').pop();
+            const currentIndex = appPages.indexOf(currentUrl);
+            
+            if (currentIndex === -1) return;
+            
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % appPages.length;
+            } else {
+                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
+            }
+            
+            window.location.href = appPages[newIndex];
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.altKey && event.key === 'ArrowLeft') {
+                navigateApp('prev');
+            } else if (event.altKey && event.key === 'ArrowRight') {
+                navigateApp('next');
+            }
+        });
+        
+        // launchApp function is now handled by app-launch-panel.js
+        
+        // Go back to previous page
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Fallback to apps page if no history
+                window.location.href = 'apps.html';
+            }
+        }
+    </script>
+</body>
+</html>

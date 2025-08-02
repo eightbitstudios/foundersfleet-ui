@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Founders - FoundersFleet</title>
+    <title>Contacts - FoundersFleet</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -76,11 +76,11 @@
                 <!-- Page Header -->
                 <div class="mb-8 flex items-start justify-between">
                     <div>
-                        <h1 class="text-3xl font-bold text-text-primary mb-2">Connect with Founders</h1>
+                        <h1 class="text-3xl font-bold text-text-primary mb-2">Contacts</h1>
                         <p class="text-text-secondary">Build your network and learn from experienced founders</p>
                     </div>
-                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="inviteFounders()">
-                        <i class="fas fa-plus"></i>Invite Founders
+                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="inviteContacts()">
+                        <i class="fas fa-plus"></i>Invite Contacts
                     </button>
                 </div>
                 
@@ -96,7 +96,7 @@
                 <div class="bg-section-bg -mx-8 px-8 py-4 mb-6">
                     <div class="max-w-[1200px] mx-auto flex items-center justify-between">
                         <div class="flex gap-2">
-                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-tab="all" onclick="switchFounderTab('all')">All Founders</button>
+                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-tab="all" onclick="switchFounderTab('all')">Discover</button>
                             <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="connections" onclick="switchFounderTab('connections')">My Connections</button>
                             <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="recommended" onclick="switchFounderTab('recommended')">Recommended</button>
                         </div>
@@ -340,7 +340,7 @@
         }
 
         // Invite founders
-        function inviteFounders() {
+        function inviteContacts() {
             // In a real app, this would open an invite modal
             alert('Invite founders feature coming soon!');
         }
@@ -362,7 +362,7 @@
         }
 
         // Initialize navigation
-        initializeNavigation('founders');
+        initializeNavigation('contacts');
     </script>
 </body>
 </html>

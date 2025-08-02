@@ -2411,7 +2411,7 @@ function openAutoPilot() {
 function triggerAutoPilotWelcome() {
     if (window.location.pathname.includes('profile.html')) {
         showAutoPilotMessage('Complete your profile to get personalized founder recommendations!');
-    } else if (window.location.pathname.includes('founders.html')) {
+    } else if (window.location.pathname.includes('contacts.html')) {
         showAutoPilotMessage('Connect with 3 founders this week to expand your network.');
     } else if (window.location.pathname.includes('flightplan.html')) {
         showAutoPilotMessage('You have 2 missions ready to start. Focus on customer interviews first!');

@@ -10,6 +10,7 @@
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
+    <script src="tool-detail-panel.js"></script>
 
     <script>
         tailwind.config = {
@@ -84,30 +85,100 @@
                     </div>
                 </div>
                 
-                <!-- Tabs and Filter Section -->
-                <div class="bg-section-bg -mx-8 px-8 py-4 mb-6">
-                    <div class="max-w-[1200px] mx-auto flex items-center justify-between">
-                        <!-- Tabs -->
-                        <div class="flex gap-2">
-                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-tab="all" onclick="switchToolTab('all')">All Tools</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="recommended" onclick="switchToolTab('recommended')">Recommended</button>
-                        </div>
-                        
-                        <!-- Filter -->
-                        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-lg hover:border-primary transition-all" onclick="showFilterModal()">
-                            <i class="fas fa-filter text-sm"></i>
-                            <span class="text-sm font-medium">Filter</span>
+                <!-- Category Tabs Section -->
+                <div class="mb-6">
+                    <div class="flex gap-2 flex-wrap">
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-category="all" onclick="filterByCategory('all')">
+                            All Tools
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="infrastructure" onclick="filterByCategory('infrastructure')">
+                            Infrastructure
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="development" onclick="filterByCategory('development')">
+                            Development
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="product" onclick="filterByCategory('product')">
+                            Product
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="marketing" onclick="filterByCategory('marketing')">
+                            Marketing
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="sales" onclick="filterByCategory('sales')">
+                            Sales
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="analytics" onclick="filterByCategory('analytics')">
+                            Analytics
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="finance" onclick="filterByCategory('finance')">
+                            Finance
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="operations" onclick="filterByCategory('operations')">
+                            Operations
+                        </button>
+                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="legal" onclick="filterByCategory('legal')">
+                            Legal
                         </button>
                     </div>
                 </div>
                 
                 <!-- Main Content -->
                 <div>
-                    <!-- All Tools Tab -->
-                    <div id="all-tools-content" class="block">
-                        <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- All Tools Grid -->
+                    <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- DigitalOcean (FF Pick) -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" data-categories="infrastructure" onclick="openToolPanel('DigitalOcean')">
+                                    <!-- FF Pick Badge -->
+                                    <div class="absolute -top-2 -right-2 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-lg">
+                                        <i class="fas fa-star text-xs"></i>
+                                        FF Pick
+                                    </div>
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-server text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">DigitalOcean</h3>
+                                            <p class="text-sm text-text-secondary">Cloud infrastructure that grows with you</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Infrastructure</span>
+                                        </div>
+                                        <a href="https://digitalocean.com" target="_blank" class="text-primary hover:text-primary-hover" onclick="event.stopPropagation()">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Flutter (FF Pick) -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" data-categories="development" onclick="openToolPanel('Flutter')">
+                                    <!-- FF Pick Badge -->
+                                    <div class="absolute -top-2 -right-2 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-lg">
+                                        <i class="fas fa-star text-xs"></i>
+                                        FF Pick
+                                    </div>
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-blue-500 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-mobile-alt text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Flutter</h3>
+                                            <p class="text-sm text-text-secondary">Build beautiful native apps from a single codebase</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Development</span>
+                                        </div>
+                                        <a href="https://flutter.dev" target="_blank" class="text-primary hover:text-primary-hover" onclick="event.stopPropagation()">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
                                 <!-- Notion -->
-                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="product,operations">
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="product,operations" onclick="openToolPanel('Notion')">
                                     <div class="flex items-start gap-4 mb-4">
                                         <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
                                             <i class="fas fa-file-alt text-xl"></i>
@@ -122,7 +193,7 @@
                                             <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
                                             <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
                                         </div>
-                                        <a href="https://notion.so" target="_blank" class="text-primary hover:text-primary-hover">
+                                        <a href="https://notion.so" target="_blank" class="text-primary hover:text-primary-hover" onclick="event.stopPropagation()">
                                             <i class="fas fa-external-link-alt"></i>
                                         </a>
                                     </div>
@@ -149,8 +220,13 @@
                                     </div>
                                 </div>
 
-                                <!-- Stripe -->
-                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="finance,operations">
+                                <!-- Stripe (FF Pick) -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" data-categories="finance,operations" onclick="openToolPanel('Stripe')">
+                                    <!-- FF Pick Badge -->
+                                    <div class="absolute -top-2 -right-2 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-lg">
+                                        <i class="fas fa-star text-xs"></i>
+                                        FF Pick
+                                    </div>
                                     <div class="flex items-start gap-4 mb-4">
                                         <div class="w-12 h-12 rounded-lg bg-indigo-600 flex items-center justify-center text-white flex-shrink-0">
                                             <i class="fas fa-credit-card text-xl"></i>
@@ -165,7 +241,7 @@
                                             <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Finance</span>
                                             <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
                                         </div>
-                                        <a href="https://stripe.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                        <a href="https://stripe.com" target="_blank" class="text-primary hover:text-primary-hover" onclick="event.stopPropagation()">
                                             <i class="fas fa-external-link-alt"></i>
                                         </a>
                                     </div>
@@ -323,80 +399,50 @@
                                         </a>
                                     </div>
                                 </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Recommended Tab (Hidden by default) -->
-                    <div id="recommended-content" class="hidden">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Recommended tools will be shown here -->
-                            <!-- For now, showing a subset of tools -->
-                            
-                            <!-- Stripe -->
-                            <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
-                                <div class="flex items-start gap-4 mb-4">
-                                    <div class="w-12 h-12 rounded-lg bg-indigo-600 flex items-center justify-center text-white flex-shrink-0">
-                                        <i class="fas fa-credit-card text-xl"></i>
+
+                                <!-- GitHub -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="development,infrastructure" onclick="openToolPanel('GitHub')">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-gray-900 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fab fa-github text-xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">GitHub</h3>
+                                            <p class="text-sm text-text-secondary">Version control and collaboration for code</p>
+                                        </div>
                                     </div>
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-semibold text-text-primary mb-1">Stripe</h3>
-                                        <p class="text-sm text-text-secondary">Payment processing and subscription management</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Finance</span>
-                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
-                                    </div>
-                                    <a href="https://stripe.com" target="_blank" class="text-primary hover:text-primary-hover">
-                                        <i class="fas fa-external-link-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <!-- Notion -->
-                            <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
-                                <div class="flex items-start gap-4 mb-4">
-                                    <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center text-white flex-shrink-0">
-                                        <i class="fas fa-file-alt text-xl"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-semibold text-text-primary mb-1">Notion</h3>
-                                        <p class="text-sm text-text-secondary">All-in-one workspace for notes and documentation</p>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Development</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Infrastructure</span>
+                                        </div>
+                                        <a href="https://github.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="flex items-center justify-between">
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
-                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Operations</span>
+
+                                <!-- Vercel -->
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-categories="infrastructure,development">
+                                    <div class="flex items-start gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-lg bg-black flex items-center justify-center text-white flex-shrink-0">
+                                            <span class="font-bold text-xl">▲</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-lg font-semibold text-text-primary mb-1">Vercel</h3>
+                                            <p class="text-sm text-text-secondary">Deploy web projects with zero configuration</p>
+                                        </div>
                                     </div>
-                                    <a href="https://notion.so" target="_blank" class="text-primary hover:text-primary-hover">
-                                        <i class="fas fa-external-link-alt"></i>
-                                    </a>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Infrastructure</span>
+                                            <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Development</span>
+                                        </div>
+                                        <a href="https://vercel.com" target="_blank" class="text-primary hover:text-primary-hover">
+                                            <i class="fas fa-external-link-alt"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <!-- GitHub -->
-                            <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer">
-                                <div class="flex items-start gap-4 mb-4">
-                                    <div class="w-12 h-12 rounded-lg bg-gray-900 flex items-center justify-center text-white flex-shrink-0">
-                                        <i class="fab fa-github text-xl"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-semibold text-text-primary mb-1">GitHub</h3>
-                                        <p class="text-sm text-text-secondary">Version control and collaboration for code</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <div class="flex flex-wrap gap-2">
-                                        <span class="px-2 py-1 bg-section-bg text-text-primary rounded text-xs">Product</span>
-                                    </div>
-                                    <a href="https://github.com" target="_blank" class="text-primary hover:text-primary-hover">
-                                        <i class="fas fa-external-link-alt"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
         </div>
@@ -405,41 +451,65 @@
 
     <script src="app.js"></script>
     <script>
+        // Current category filter
+        let currentCategory = 'all';
 
-        // Switch tabs functionality
-        function switchToolTab(tab) {
+        // Filter by category
+        function filterByCategory(category) {
+            currentCategory = category;
+            
             // Update tab styling
-            const tabs = document.querySelectorAll('[data-tab]');
-            tabs.forEach(t => {
-                t.classList.remove('bg-primary', 'text-white');
-                t.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border', 'hover:border-primary', 'hover:text-primary');
+            const tabs = document.querySelectorAll('.category-tab');
+            tabs.forEach(tab => {
+                if (tab.dataset.category === category) {
+                    tab.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border');
+                    tab.classList.add('bg-primary', 'text-white');
+                } else {
+                    tab.classList.remove('bg-primary', 'text-white');
+                    tab.classList.add('bg-white', 'text-text-secondary', 'border', 'border-border');
+                }
             });
             
-            const activeTab = document.querySelector(`[data-tab="${tab}"]`);
-            activeTab.classList.remove('bg-white', 'text-text-secondary', 'border', 'border-border', 'hover:border-primary', 'hover:text-primary');
-            activeTab.classList.add('bg-primary', 'text-white');
-            
-            // Show/hide content
-            document.getElementById('all-tools-content').classList.add('hidden');
-            document.getElementById('recommended-content').classList.add('hidden');
-            
-            if (tab === 'all') {
-                document.getElementById('all-tools-content').classList.remove('hidden');
-            } else if (tab === 'recommended') {
-                document.getElementById('recommended-content').classList.remove('hidden');
-            }
+            // Filter tools
+            const tools = document.querySelectorAll('.tool-card');
+            tools.forEach(tool => {
+                if (category === 'all') {
+                    tool.style.display = 'block';
+                } else {
+                    const categories = tool.dataset.categories ? tool.dataset.categories.split(',') : [];
+                    tool.style.display = categories.includes(category) ? 'block' : 'none';
+                }
+            });
         }
-        
-        // Show filter modal
-        function showFilterModal() {
-            alert('Filter modal would open here with categories: Product, Marketing, Sales, Analytics, Finance, Operations, Legal');
-        }
+
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('input[type="text"]');
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const tools = document.querySelectorAll('.tool-card');
+                
+                tools.forEach(tool => {
+                    const title = tool.querySelector('h3').textContent.toLowerCase();
+                    const description = tool.querySelector('p').textContent.toLowerCase();
+                    const categories = tool.dataset.categories || '';
+                    
+                    const matchesSearch = title.includes(searchTerm) || 
+                                        description.includes(searchTerm) || 
+                                        categories.includes(searchTerm);
+                    
+                    const matchesCategory = currentCategory === 'all' || 
+                                          categories.split(',').includes(currentCategory);
+                    
+                    tool.style.display = matchesSearch && matchesCategory ? 'block' : 'none';
+                });
+            });
+        });
 
         // Contribute resource
         function contributeResource() {
             alert('Thank you for your interest in contributing! This feature is coming soon.');
         }
-
 
         // Initialize navigation
         initializeNavigation('tools');

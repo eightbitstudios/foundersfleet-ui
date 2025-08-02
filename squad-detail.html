@@ -11,6 +11,7 @@
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
+    <script src="message-panel.js"></script>
     
     <script>
         tailwind.config = {
@@ -94,6 +95,9 @@
                         </div>
                         
                         <div class="flex gap-3">
+                            <button onclick="sendSquadMessage()" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                                <i class="fas fa-paper-plane mr-2"></i>Send Squad Message
+                            </button>
                             <button onclick="inviteMember()" class="px-4 py-2 border border-border rounded hover:border-primary transition-all">
                                 <i class="fas fa-user-plus mr-2"></i>Invite Member
                             </button>
@@ -223,6 +227,28 @@
     <script>
 
         // Squad actions
+        function sendSquadMessage() {
+            // Get squad data from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const squadId = urlParams.get('squad') || 'alpha';
+            
+            // Get squad name from the page
+            const squadName = document.getElementById('squad-name').textContent;
+            
+            // Create recipient object for the squad
+            const squadRecipient = {
+                id: squadId === 'mvp' ? 'mvp-squad' : 
+                    squadId === 'b2b-saas' ? 'b2b-saas-squad' : 
+                    squadId === 'ai-ml' ? 'ai-ml-squad' : squadId,
+                name: squadName,
+                type: 'squad',
+                icon: 'fa-users'
+            };
+            
+            // Open message panel with squad pre-selected
+            openMessagePanel(squadRecipient);
+        }
+        
         function inviteMember() {
             alert('Invite member feature coming soon!');
         }

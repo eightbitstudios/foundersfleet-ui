@@ -11,6 +11,7 @@
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
+    <script src="message-panel.js"></script>
     
     <script>
         tailwind.config = {
@@ -72,7 +73,7 @@
             <!-- Profile Header -->
             <div class="sticky top-0 z-40">
                 <div class="max-w-[1200px] mx-auto px-8 py-6">
-                    <a href="founders.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all mb-6">
+                    <a href="contacts.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all mb-6">
                         <i class="fas fa-arrow-left"></i>
                         <span class="text-sm">Back to Founders</span>
                     </a>
@@ -567,7 +568,7 @@
             const founder = founderData[founderId];
             
             if (!founder) {
-                window.location.href = 'founders.html';
+                window.location.href = 'contacts.html';
                 return;
             }
             
@@ -646,7 +647,21 @@
 
         // Founder actions
         function sendMessage() {
-            alert('Messaging feature coming soon!');
+            const urlParams = new URLSearchParams(window.location.search);
+            const founderId = urlParams.get('founder');
+            const founder = founderData[founderId];
+            
+            if (founder) {
+                // Open message panel with recipient pre-filled
+                const recipient = {
+                    id: founderId,
+                    name: founder.name,
+                    type: 'founder',
+                    avatar: founder.avatar,
+                    color: 'bg-primary'
+                };
+                openMessagePanel(recipient);
+            }
         }
 
         function connectWithFounder() {

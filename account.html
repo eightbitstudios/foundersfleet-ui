@@ -11,6 +11,7 @@
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
+    <script src="change-plan-panel.js"></script>
     
     <script>
         tailwind.config = {
@@ -138,48 +139,45 @@
     <!-- Main Content Area -->
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- Profile Header -->
-            <div class="sticky top-0 z-40">
-                <div class="max-w-[1200px] mx-auto px-8 py-6">
-                    <div class="flex items-center justify-between mb-6">
-                        <a href="founder-profile.html" class="inline-flex items-center gap-2 text-text-secondary hover:text-primary transition-all">
-                            <i class="fas fa-eye"></i>
-                            <span class="text-sm">View Public Profile</span>
-                        </a>
-                        <button id="edit-mode-toggle" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
-                            <i class="fas fa-edit mr-2"></i>Edit Mode
-                        </button>
+            <!-- Page Content -->
+            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Page Header with Profile Info -->
+                <div class="mb-8 flex items-start justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold text-text-primary">Don Bora</h1>
+                        <p class="text-lg text-text-secondary mt-1">Co-founder at Eight Bit Studios • Founder at FoundersFleet</p>
+                        <div class="flex items-center gap-4 mt-2 text-sm text-text-muted">
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Chicago, IL
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fas fa-calendar"></i>
+                                Joined January 2024
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <i class="fa-solid fa-signature text-primary"></i>
+                                Verified
+                            </span>
+                            <span class="inline-flex items-center px-3 py-1 bg-primary text-white rounded text-xs font-medium">
+                                <i class="fas fa-crown mr-1"></i>
+                                Pro Plan
+                            </span>
+                        </div>
                     </div>
                     
-                    <div class="flex items-start justify-between">
-                        <div class="flex items-start gap-6">
-                            <!-- Profile photo placeholder removed -->
-                            <div>
-                                <h1 class="text-3xl font-bold text-text-primary editable-field inline-flex items-center gap-2" contenteditable="false" id="profile-name">
-                                    Don Bora <i class="fa-solid fa-signature text-primary text-lg ml-2" title="Verified"></i>
-                                    <i class="fas fa-pencil text-sm text-text-muted edit-icon"></i>
-                                </h1>
-                                <p class="text-xl text-text-secondary mt-1 editable-field inline-flex items-center gap-2" contenteditable="false" id="profile-title">
-                                    Co-founder at Eight Bit Studios • Founder at FoundersFleet
-                                    <i class="fas fa-pencil text-sm text-text-muted edit-icon"></i>
-                                </p>
-                                <div class="flex items-center gap-6 mt-3">
-                                    <span class="flex items-center gap-2 text-sm text-text-muted">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <span class="editable-field inline-flex items-center gap-1" contenteditable="false" id="profile-location">
-                                            Chicago, IL
-                                            <i class="fas fa-pencil text-xs edit-icon"></i>
-                                        </span>
-                                    </span>
-                                    <span class="flex items-center gap-2 text-sm text-text-muted">
-                                        <i class="fas fa-calendar"></i>
-                                        <span>Joined January 2024</span>
-                                    </span>
-                                </div>
-                            </div>
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col gap-3 items-end">
+                        <div class="flex gap-3">
+                            <a href="founder-profile.html" class="inline-flex items-center gap-2 px-4 py-2 text-text-secondary hover:text-primary border border-border rounded hover:border-primary transition-all">
+                                <i class="fas fa-eye"></i>
+                                <span class="text-sm">Public Profile</span>
+                            </a>
+                            <button id="edit-mode-toggle" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
+                                <i class="fas fa-edit mr-2"></i>Edit Mode
+                            </button>
                         </div>
-                        
-                        <div class="flex gap-3" id="action-buttons">
+                        <div class="flex gap-3">
                             <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-all hidden" id="save-changes">
                                 <i class="fas fa-check mr-2"></i>Save Changes
                             </button>
@@ -189,10 +187,21 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Profile Content -->
-            <div class="max-w-[1200px] mx-auto px-8 py-8">
+                <!-- Pricing Container -->
+                <div class="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm">
+                            <span class="font-medium text-text-primary">You're on the Pro plan:</span>
+                            <span class="text-text-secondary">3/3 Squads | 3/3 Apps</span>
+                        </p>
+                        <button onclick="openPlanPanel()" class="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                            Change Plan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Profile Content -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <!-- Left Column - Main Content -->
                     <div class="lg:col-span-2 space-y-6">

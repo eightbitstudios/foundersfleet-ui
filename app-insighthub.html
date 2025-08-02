@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InsightHub - Data Analytics Platform | FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    <script src="app-launch-panel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        }
+        .data-stream {
+            background: linear-gradient(90deg, transparent, #3B82F6, transparent);
+            animation: stream 3s linear infinite;
+        }
+        @keyframes stream {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .insight-card {
+            transition: all 0.3s ease;
+        }
+        .insight-card:hover {
+            border-color: #3B82F6;
+            background: #F0F9FF;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+        .trend-up {
+            color: #10B981;
+        }
+        .trend-down {
+            color: #EF4444;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- App Header -->
+            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
+                            <i class="fas fa-arrow-left text-text-secondary"></i>
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-bar text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-text-primary">InsightHub</h1>
+                                <p class="text-sm text-text-secondary">Analytics & business intelligence</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                        </div>
+                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                            <i class="fas fa-play mr-2"></i>Configure
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="px-8 py-6">
+                <!-- Executive Summary -->
+                <div class="mb-8 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl p-8 border border-cyan-100">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-text-primary mb-2">Executive Dashboard</h2>
+                            <p class="text-text-secondary mb-4">Your business at a glance</p>
+                            
+                            <!-- Key Performance Indicators -->
+                            <div class="grid grid-cols-4 gap-6">
+                                <div>
+                                    <div class="text-sm text-text-muted mb-1">Revenue</div>
+                                    <div class="flex items-baseline gap-2">
+                                        <div class="text-3xl font-bold text-text-primary">$142K</div>
+                                        <span class="text-sm trend-up">↑ 23%</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-text-muted mb-1">Active Users</div>
+                                    <div class="flex items-baseline gap-2">
+                                        <div class="text-3xl font-bold text-text-primary">2,847</div>
+                                        <span class="text-sm trend-up">↑ 15%</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-text-muted mb-1">Conversion Rate</div>
+                                    <div class="flex items-baseline gap-2">
+                                        <div class="text-3xl font-bold text-text-primary">4.2%</div>
+                                        <span class="text-sm trend-down">↓ 0.3%</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-sm text-text-muted mb-1">Churn Rate</div>
+                                    <div class="flex items-baseline gap-2">
+                                        <div class="text-3xl font-bold text-text-primary">2.8%</div>
+                                        <span class="text-sm trend-up text-success">↓ 0.5%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="text-sm text-text-muted mb-1">Health Score</div>
+                            <div class="text-3xl font-bold text-success">A+</div>
+                            <div class="text-xs text-text-secondary mt-1">Excellent</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Stream Indicator -->
+                    <div class="mt-6 h-1 bg-white/50 rounded-full overflow-hidden">
+                        <div class="data-stream h-full w-1/3"></div>
+                    </div>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <i class="fas fa-dollar-sign text-2xl text-success"></i>
+                            <span class="text-xs text-success bg-green-50 px-2 py-1 rounded">+12%</span>
+                        </div>
+                        <div class="text-xl font-bold text-text-primary">$42.5K</div>
+                        <div class="text-sm text-text-secondary">MRR</div>
+                        <div class="mt-3 text-xs text-text-muted">↑ $4.5K from last month</div>
+                    </div>
+                    
+                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <i class="fas fa-users text-2xl text-info"></i>
+                            <span class="text-xs text-info bg-blue-50 px-2 py-1 rounded">+8%</span>
+                        </div>
+                        <div class="text-xl font-bold text-text-primary">892</div>
+                        <div class="text-sm text-text-secondary">New Users</div>
+                        <div class="mt-3 text-xs text-text-muted">68% activation rate</div>
+                    </div>
+                    
+                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <i class="fas fa-clock text-2xl text-warning"></i>
+                            <span class="text-xs text-warning bg-yellow-50 px-2 py-1 rounded">-5%</span>
+                        </div>
+                        <div class="text-xl font-bold text-text-primary">3m 24s</div>
+                        <div class="text-sm text-text-secondary">Avg Session</div>
+                        <div class="mt-3 text-xs text-text-muted">Need improvement</div>
+                    </div>
+                    
+                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <i class="fas fa-star text-2xl text-purple-600"></i>
+                            <span class="text-xs text-purple-600 bg-purple-50 px-2 py-1 rounded">+0.3</span>
+                        </div>
+                        <div class="text-xl font-bold text-text-primary">4.7</div>
+                        <div class="text-sm text-text-secondary">User Rating</div>
+                        <div class="mt-3 text-xs text-text-muted">Based on 324 reviews</div>
+                    </div>
+                </div>
+
+                <!-- Analytics Dashboards -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Revenue Analytics -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-text-primary">Revenue Analytics</h3>
+                            <select class="text-sm border border-border rounded px-3 py-1">
+                                <option>Last 30 days</option>
+                                <option>Last 90 days</option>
+                                <option>Year to date</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- User Behavior -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold text-text-primary">User Behavior</h3>
+                            <button class="text-sm text-primary hover:text-primary-hover">Details →</button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="behaviorChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Insights & Predictions -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- AI Insights -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-text-primary mb-4">AI-Powered Insights</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="insight-card border border-border rounded-lg p-4 cursor-pointer">
+                                    <div class="flex items-start gap-3">
+                                        <i class="fas fa-chart-line text-success text-xl"></i>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">Growth Opportunity</h4>
+                                            <p class="text-sm text-text-secondary">Mobile users convert 3x better. Consider mobile-first features.</p>
+                                            <div class="mt-2 text-xs text-success">Potential impact: +$15K MRR</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="insight-card border border-border rounded-lg p-4 cursor-pointer">
+                                    <div class="flex items-start gap-3">
+                                        <i class="fas fa-exclamation-triangle text-warning text-xl"></i>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">Churn Risk Alert</h4>
+                                            <p class="text-sm text-text-secondary">15 power users showing decreased activity.</p>
+                                            <div class="mt-2 text-xs text-warning">Revenue at risk: $3.2K</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="insight-card border border-border rounded-lg p-4 cursor-pointer">
+                                    <div class="flex items-start gap-3">
+                                        <i class="fas fa-lightbulb text-info text-xl"></i>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">Feature Adoption</h4>
+                                            <p class="text-sm text-text-secondary">New dashboard has 82% adoption in first week.</p>
+                                            <div class="mt-2 text-xs text-info">Above target by 22%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="insight-card border border-border rounded-lg p-4 cursor-pointer">
+                                    <div class="flex items-start gap-3">
+                                        <i class="fas fa-rocket text-purple-600 text-xl"></i>
+                                        <div>
+                                            <h4 class="font-medium text-text-primary mb-1">Scaling Recommendation</h4>
+                                            <p class="text-sm text-text-secondary">Current growth rate supports Series A readiness.</p>
+                                            <div class="mt-2 text-xs text-purple-600">Timeline: Q2 2025</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Predictions -->
+                    <div class="space-y-6">
+                        <!-- Growth Forecast -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">90-Day Forecast</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm text-text-secondary">Revenue</span>
+                                        <span class="text-sm font-medium">$186K</span>
+                                    </div>
+                                    <div class="bg-gray-200 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm text-text-secondary">Users</span>
+                                        <span class="text-sm font-medium">4,250</span>
+                                    </div>
+                                    <div class="bg-gray-200 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm text-text-secondary">Engagement</span>
+                                        <span class="text-sm font-medium">72%</span>
+                                    </div>
+                                    <div class="bg-gray-200 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style="width: 72%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                                <p class="text-xs text-blue-700">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    95% confidence interval based on current trends
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Custom Reports -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Custom Reports</h3>
+                            <div class="space-y-2">
+                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-text-primary">Cohort Analysis</h4>
+                                            <p class="text-xs text-text-secondary">User retention by signup date</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-text-muted"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-text-primary">Funnel Analysis</h4>
+                                            <p class="text-xs text-text-secondary">Conversion at each stage</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-text-muted"></i>
+                                    </div>
+                                </button>
+                                
+                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="text-sm font-medium text-text-primary">LTV Analysis</h4>
+                                            <p class="text-xs text-text-secondary">Customer lifetime value trends</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-text-muted"></i>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Sources -->
+                <div class="bg-card-bg border border-border rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-text-primary mb-4">Connected Data Sources</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                            <i class="fas fa-database text-green-600"></i>
+                            <div>
+                                <div class="font-medium text-text-primary">PostgreSQL</div>
+                                <div class="text-xs text-text-secondary">Live sync</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                            <i class="fab fa-stripe text-blue-600"></i>
+                            <div>
+                                <div class="font-medium text-text-primary">Stripe</div>
+                                <div class="text-xs text-text-secondary">Every 15 min</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-orange-50 rounded-lg">
+                            <i class="fab fa-google text-orange-600"></i>
+                            <div>
+                                <div class="font-medium text-text-primary">Google Analytics</div>
+                                <div class="text-xs text-text-secondary">Real-time</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
+                            <i class="fas fa-comments text-purple-600"></i>
+                            <div>
+                                <div class="font-medium text-text-primary">Intercom</div>
+                                <div class="text-xs text-text-secondary">Every hour</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('apps');
+
+        // App navigation
+        const appPages = [
+            'app-economaestro.html',
+            'app-runway.html',
+            'app-cofoundermatch.html',
+            'app-validateai.html',
+            'app-shipfast.html',
+            'app-firstusers.html',
+            'app-pitchperfect.html',
+            'app-launchpad.html',
+            'app-scaleops.html',
+            'app-delightiq.html',
+            'app-brandforge.html',
+            'app-salesflow.html',
+            'app-insighthub.html',
+            'app-searchmaster.html',
+            'app-goglobal.html',
+            'app-legalshield.html',
+            'app-teamsync.html'
+        ];
+
+        // Update counter
+        const currentUrl = window.location.pathname.split('/').pop();
+        const currentIndex = appPages.indexOf(currentUrl);
+        if (currentIndex !== -1) {
+            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
+        }
+
+        function navigateApp(direction) {
+            const currentUrl = window.location.pathname.split('/').pop();
+            const currentIndex = appPages.indexOf(currentUrl);
+            
+            if (currentIndex === -1) return;
+            
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % appPages.length;
+            } else {
+                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
+            }
+            
+            window.location.href = appPages[newIndex];
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.altKey && event.key === 'ArrowLeft') {
+                navigateApp('prev');
+            } else if (event.altKey && event.key === 'ArrowRight') {
+                navigateApp('next');
+            }
+        });
+        
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan 1', 'Jan 7', 'Jan 14', 'Jan 21', 'Jan 28', 'Feb 4'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [32000, 35000, 38000, 37000, 41000, 42500],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Target',
+                    data: [30000, 32000, 34000, 36000, 38000, 40000],
+                    borderColor: '#E5E5E5',
+                    borderDash: [5, 5],
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value/1000 + 'k';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // User Behavior Chart
+        const behaviorCtx = document.getElementById('behaviorChart').getContext('2d');
+        new Chart(behaviorCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Power Users', 'Regular Users', 'Occasional', 'Dormant'],
+                datasets: [{
+                    data: [15, 35, 30, 20],
+                    backgroundColor: [
+                        '#10B981',
+                        '#3B82F6',
+                        '#F59E0B',
+                        '#EF4444'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        function customizeView() {
+            alert('Dashboard customization panel would open here');
+        }
+        
+        // launchApp function is now handled by app-launch-panel.js
+        
+        // Go back to previous page
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Fallback to apps page if no history
+                window.location.href = 'apps.html';
+            }
+        }
+    </script>
+</body>
+</html>

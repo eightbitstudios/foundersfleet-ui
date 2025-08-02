@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShipFast - MVP Development Platform | FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    <script src="app-launch-panel.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        .tech-badge {
+            transition: all 0.2s ease;
+        }
+        .tech-badge:hover {
+            transform: scale(1.05);
+        }
+        .timeline-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- App Header -->
+            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
+                            <i class="fas fa-arrow-left text-text-secondary"></i>
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-rocket text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-text-primary">ShipFast</h1>
+                                <p class="text-sm text-text-secondary">Build and deploy MVPs in record time</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                        </div>
+                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                            <i class="fas fa-play mr-2"></i>Configure
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="px-8 py-6">
+                <!-- MVP Progress Dashboard -->
+                <div class="mb-8 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-8 border border-green-100">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-text-primary mb-2">Your MVP Progress</h2>
+                            <p class="text-text-secondary mb-4">Ship your MVP in 30 days or less</p>
+                            <div class="flex items-center gap-6">
+                                <div>
+                                    <div class="text-3xl font-bold text-text-primary">Day 12</div>
+                                    <div class="text-sm text-text-secondary">of 30</div>
+                                </div>
+                                <div class="h-12 w-px bg-border"></div>
+                                <div>
+                                    <div class="text-3xl font-bold text-success">65%</div>
+                                    <div class="text-sm text-text-secondary">Complete</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="text-sm text-text-muted mb-1">Launch Date</div>
+                            <div class="text-xl font-bold text-text-primary">Feb 15, 2025</div>
+                            <div class="text-xs text-success mt-1">On Track</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Progress Bar -->
+                    <div class="mt-6 bg-white/50 rounded-full h-3 overflow-hidden">
+                        <div class="progress-bar bg-gradient-to-r from-green-500 to-emerald-500 h-full rounded-full" style="width: 65%"></div>
+                    </div>
+                </div>
+
+                <!-- Current Sprint -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Sprint Overview -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-text-primary mb-4">Current Sprint: Core Features</h3>
+                            
+                            <!-- Sprint Tasks -->
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3 p-3 bg-section-bg rounded-lg">
+                                    <input type="checkbox" checked class="w-4 h-4 text-success">
+                                    <div class="flex-1">
+                                        <span class="text-sm font-medium text-text-primary">User Authentication</span>
+                                        <span class="text-xs text-text-secondary ml-2">Completed</span>
+                                    </div>
+                                    <span class="text-xs text-success">✓</span>
+                                </div>
+                                
+                                <div class="flex items-center gap-3 p-3 bg-section-bg rounded-lg">
+                                    <input type="checkbox" checked class="w-4 h-4 text-success">
+                                    <div class="flex-1">
+                                        <span class="text-sm font-medium text-text-primary">Database Schema</span>
+                                        <span class="text-xs text-text-secondary ml-2">Completed</span>
+                                    </div>
+                                    <span class="text-xs text-success">✓</span>
+                                </div>
+                                
+                                <div class="flex items-center gap-3 p-3 border border-primary rounded-lg bg-yellow-50">
+                                    <input type="checkbox" class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <span class="text-sm font-medium text-text-primary">Core Feature: Dashboard</span>
+                                        <span class="text-xs text-warning ml-2">In Progress</span>
+                                    </div>
+                                    <span class="text-xs text-warning">75%</span>
+                                </div>
+                                
+                                <div class="flex items-center gap-3 p-3 bg-section-bg rounded-lg">
+                                    <input type="checkbox" class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <span class="text-sm font-medium text-text-primary">API Endpoints</span>
+                                        <span class="text-xs text-text-secondary ml-2">Up Next</span>
+                                    </div>
+                                    <span class="text-xs text-text-muted">0%</span>
+                                </div>
+                                
+                                <div class="flex items-center gap-3 p-3 bg-section-bg rounded-lg opacity-60">
+                                    <input type="checkbox" disabled class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <span class="text-sm font-medium text-text-primary">Payment Integration</span>
+                                        <span class="text-xs text-text-secondary ml-2">Blocked</span>
+                                    </div>
+                                    <span class="text-xs text-text-muted">-</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                                <i class="fas fa-plus mr-2"></i>Add Task
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack & Resources -->
+                    <div class="space-y-6">
+                        <!-- Tech Stack -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Your Tech Stack</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="w-6 h-6">
+                                        <span class="text-sm font-medium">React + Next.js</span>
+                                    </div>
+                                    <span class="tech-badge px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded">Frontend</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" class="w-6 h-6">
+                                        <span class="text-sm font-medium">Node.js + Express</span>
+                                    </div>
+                                    <span class="tech-badge px-2 py-1 bg-green-50 text-green-600 text-xs rounded">Backend</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" class="w-6 h-6">
+                                        <span class="text-sm font-medium">PostgreSQL</span>
+                                    </div>
+                                    <span class="tech-badge px-2 py-1 bg-purple-50 text-purple-600 text-xs rounded">Database</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-cloud text-orange-500 text-xl"></i>
+                                        <span class="text-sm font-medium">Vercel</span>
+                                    </div>
+                                    <span class="tech-badge px-2 py-1 bg-orange-50 text-orange-600 text-xs rounded">Hosting</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full mt-4 px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
+                                <i class="fas fa-cog mr-1"></i>Configure Stack
+                            </button>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                            <div class="space-y-2">
+                                <button class="w-full px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all text-left">
+                                    <i class="fas fa-code mr-2"></i>Generate Boilerplate
+                                </button>
+                                <button class="w-full px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all text-left">
+                                    <i class="fas fa-database mr-2"></i>Setup Database
+                                </button>
+                                <button class="w-full px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all text-left">
+                                    <i class="fas fa-shield-alt mr-2"></i>Add Authentication
+                                </button>
+                                <button class="w-full px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all text-left">
+                                    <i class="fas fa-rocket mr-2"></i>Deploy to Production
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="feature-card bg-card-bg border border-border rounded-lg p-6">
+                        <i class="fas fa-magic text-2xl text-primary mb-3"></i>
+                        <h4 class="font-medium text-text-primary mb-1">AI Code Assistant</h4>
+                        <p class="text-sm text-text-secondary">Generate code with natural language prompts</p>
+                    </div>
+                    
+                    <div class="feature-card bg-card-bg border border-border rounded-lg p-6">
+                        <i class="fas fa-cubes text-2xl text-primary mb-3"></i>
+                        <h4 class="font-medium text-text-primary mb-1">Component Library</h4>
+                        <p class="text-sm text-text-secondary">Pre-built UI components ready to use</p>
+                    </div>
+                    
+                    <div class="feature-card bg-card-bg border border-border rounded-lg p-6">
+                        <i class="fas fa-sync text-2xl text-primary mb-3"></i>
+                        <h4 class="font-medium text-text-primary mb-1">One-Click Deploy</h4>
+                        <p class="text-sm text-text-secondary">Deploy to production instantly</p>
+                    </div>
+                    
+                    <div class="feature-card bg-card-bg border border-border rounded-lg p-6">
+                        <i class="fas fa-chart-line text-2xl text-primary mb-3"></i>
+                        <h4 class="font-medium text-text-primary mb-1">Built-in Analytics</h4>
+                        <p class="text-sm text-text-secondary">Track user behavior from day one</p>
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="bg-card-bg border border-border rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-text-primary mb-6">MVP Timeline</h3>
+                    <div class="relative">
+                        <!-- Timeline Line -->
+                        <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-border"></div>
+                        
+                        <!-- Timeline Items -->
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-4 h-4 bg-success rounded-full relative z-10 timeline-dot"></div>
+                                <div>
+                                    <h4 class="font-medium text-text-primary">Week 1: Foundation</h4>
+                                    <p class="text-sm text-text-secondary">Setup, authentication, database</p>
+                                    <span class="text-xs text-success">Completed</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="w-4 h-4 bg-warning rounded-full relative z-10"></div>
+                                <div>
+                                    <h4 class="font-medium text-text-primary">Week 2: Core Features</h4>
+                                    <p class="text-sm text-text-secondary">Build main functionality</p>
+                                    <span class="text-xs text-warning">In Progress</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="w-4 h-4 bg-gray-300 rounded-full relative z-10"></div>
+                                <div>
+                                    <h4 class="font-medium text-text-primary">Week 3: Polish & Test</h4>
+                                    <p class="text-sm text-text-secondary">UI polish, bug fixes, testing</p>
+                                    <span class="text-xs text-text-muted">Upcoming</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="w-4 h-4 bg-gray-300 rounded-full relative z-10"></div>
+                                <div>
+                                    <h4 class="font-medium text-text-primary">Week 4: Launch</h4>
+                                    <p class="text-sm text-text-secondary">Deploy and launch to users</p>
+                                    <span class="text-xs text-text-muted">Feb 15</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('apps');
+
+        // App navigation
+        const appPages = [
+            'app-economaestro.html',
+            'app-runway.html',
+            'app-cofoundermatch.html',
+            'app-validateai.html',
+            'app-shipfast.html',
+            'app-firstusers.html',
+            'app-pitchperfect.html',
+            'app-launchpad.html',
+            'app-scaleops.html',
+            'app-delightiq.html',
+            'app-brandforge.html',
+            'app-salesflow.html',
+            'app-insighthub.html',
+            'app-searchmaster.html',
+            'app-goglobal.html',
+            'app-legalshield.html',
+            'app-teamsync.html'
+        ];
+
+        // Update counter
+        const currentUrl = window.location.pathname.split('/').pop();
+        const currentIndex = appPages.indexOf(currentUrl);
+        if (currentIndex !== -1) {
+            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
+        }
+
+        function navigateApp(direction) {
+            const currentUrl = window.location.pathname.split('/').pop();
+            const currentIndex = appPages.indexOf(currentUrl);
+            
+            if (currentIndex === -1) return;
+            
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % appPages.length;
+            } else {
+                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
+            }
+            
+            window.location.href = appPages[newIndex];
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.altKey && event.key === 'ArrowLeft') {
+                navigateApp('prev');
+            } else if (event.altKey && event.key === 'ArrowRight') {
+                navigateApp('next');
+            }
+        });
+        
+        function createNewProject() {
+            // In a real app, this would open a project wizard
+            alert('New project wizard would open here');
+        }
+        
+        // launchApp function is now handled by app-launch-panel.js
+        
+        // Go back to previous page
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Fallback to apps page if no history
+                window.location.href = 'apps.html';
+            }
+        }
+    </script>
+</body>
+</html>

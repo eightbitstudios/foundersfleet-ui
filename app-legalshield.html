@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LegalShield - Legal & Compliance Hub | FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    <script src="app-launch-panel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- App Header -->
+            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
+                            <i class="fas fa-arrow-left text-text-secondary"></i>
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-gray-600 to-gray-800 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-shield-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-text-primary">LegalShield</h1>
+                                <p class="text-sm text-text-secondary">Legal documents & compliance tracker</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                            <span id="app-counter" class="text-xs text-text-secondary px-2">16 of 17</span>
+                            <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                        </div>
+                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                            <i class="fas fa-play mr-2"></i>Configure
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="p-8">
+                <!-- Compliance Overview -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Compliance Score -->
+                    <div class="lg:col-span-2 bg-gradient-to-r from-gray-50 to-blue-50 rounded-xl p-6 border border-gray-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold text-text-primary">Legal Compliance Status</h2>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check-circle text-success"></i>
+                                <span class="text-sm font-medium">Updated Today</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-white/70 rounded-lg p-4">
+                                <p class="text-xs text-text-muted mb-1">Incorporation</p>
+                                <p class="text-lg font-bold text-success">Complete</p>
+                                <p class="text-xs text-text-secondary mt-1">Delaware C-Corp</p>
+                            </div>
+                            <div class="bg-white/70 rounded-lg p-4">
+                                <p class="text-xs text-text-muted mb-1">Compliance</p>
+                                <p class="text-lg font-bold text-warning">85%</p>
+                                <p class="text-xs text-text-secondary mt-1">2 items pending</p>
+                            </div>
+                            <div class="bg-white/70 rounded-lg p-4">
+                                <p class="text-xs text-text-muted mb-1">Documents</p>
+                                <p class="text-lg font-bold text-text-primary">24</p>
+                                <p class="text-xs text-text-secondary mt-1">All signed</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Quick Actions</h3>
+                        <div class="space-y-3">
+                            <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-100 transition-all text-left">
+                                <i class="fas fa-file-contract text-primary mr-3"></i>
+                                <span class="text-sm font-medium">Generate NDA</span>
+                            </button>
+                            <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-100 transition-all text-left">
+                                <i class="fas fa-user-tie text-primary mr-3"></i>
+                                <span class="text-sm font-medium">Contractor Agreement</span>
+                            </button>
+                            <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-100 transition-all text-left">
+                                <i class="fas fa-file-invoice text-primary mr-3"></i>
+                                <span class="text-sm font-medium">Invoice Template</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Templates -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-text-primary">Legal Document Templates</h3>
+                        <button class="text-sm text-primary hover:text-primary-hover">View All →</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
+                                <i class="fas fa-file-contract text-blue-600"></i>
+                            </div>
+                            <h4 class="font-medium text-text-primary mb-1">Terms of Service</h4>
+                            <p class="text-xs text-text-secondary mb-3">Protect your platform</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-text-muted">Updated 2d ago</span>
+                                <i class="fas fa-arrow-right text-gray-400"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
+                                <i class="fas fa-user-shield text-purple-600"></i>
+                            </div>
+                            <h4 class="font-medium text-text-primary mb-1">Privacy Policy</h4>
+                            <p class="text-xs text-text-secondary mb-3">GDPR & CCPA compliant</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-text-muted">Updated 1w ago</span>
+                                <i class="fas fa-arrow-right text-gray-400"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-3">
+                                <i class="fas fa-handshake text-green-600"></i>
+                            </div>
+                            <h4 class="font-medium text-text-primary mb-1">NDA Template</h4>
+                            <p class="text-xs text-text-secondary mb-3">Mutual & one-way options</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-text-muted">Popular</span>
+                                <i class="fas fa-arrow-right text-gray-400"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="border border-border rounded-lg p-4 hover:shadow-md transition-all cursor-pointer">
+                            <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mb-3">
+                                <i class="fas fa-users text-orange-600"></i>
+                            </div>
+                            <h4 class="font-medium text-text-primary mb-1">Advisor Agreement</h4>
+                            <p class="text-xs text-text-secondary mb-3">FAST compliant</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-text-muted">New</span>
+                                <i class="fas fa-arrow-right text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compliance Tracker -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Active Contracts -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Active Contracts</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-green-600 text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Sarah Chen - Contractor</p>
+                                        <p class="text-xs text-text-muted">Expires in 45 days</p>
+                                    </div>
+                                </div>
+                                <button class="text-sm text-primary hover:text-primary-hover">View</button>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-clock text-yellow-600 text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">TechVentures - NDA</p>
+                                        <p class="text-xs text-text-muted">Pending signature</p>
+                                    </div>
+                                </div>
+                                <button class="text-sm text-warning hover:text-yellow-700">Follow up</button>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-check text-green-600 text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Office Lease - WeWork</p>
+                                        <p class="text-xs text-text-muted">Auto-renews in 90 days</p>
+                                    </div>
+                                </div>
+                                <button class="text-sm text-primary hover:text-primary-hover">Manage</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Compliance Checklist -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Compliance Checklist</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 p-3 bg-section-bg rounded-lg cursor-pointer hover:bg-gray-100">
+                                <input type="checkbox" checked class="w-4 h-4 text-primary">
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">Business Registration</p>
+                                    <p class="text-xs text-text-muted">Delaware C-Corp filed</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center gap-3 p-3 bg-section-bg rounded-lg cursor-pointer hover:bg-gray-100">
+                                <input type="checkbox" checked class="w-4 h-4 text-primary">
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">EIN Number</p>
+                                    <p class="text-xs text-text-muted">XX-XXXXXXX</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center gap-3 p-3 bg-section-bg rounded-lg cursor-pointer hover:bg-gray-100">
+                                <input type="checkbox" class="w-4 h-4 text-primary">
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">State Tax Registration</p>
+                                    <p class="text-xs text-text-muted">Due by March 15</p>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center gap-3 p-3 bg-section-bg rounded-lg cursor-pointer hover:bg-gray-100">
+                                <input type="checkbox" class="w-4 h-4 text-primary">
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">D&O Insurance</p>
+                                    <p class="text-xs text-text-muted">Recommended for Series A</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IP & Trademark -->
+                <div class="bg-card-bg border border-border rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-text-primary">Intellectual Property</h3>
+                        <button class="text-sm text-primary hover:text-primary-hover">File New →</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <div class="flex items-center gap-3 mb-3">
+                                <i class="fas fa-trademark text-green-600 text-xl"></i>
+                                <div>
+                                    <p class="font-medium">Trademark</p>
+                                    <p class="text-xs text-text-muted">FoundersFleet™</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-success">Registered</span>
+                                <span class="text-xs text-text-muted">Class 42</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                            <div class="flex items-center gap-3 mb-3">
+                                <i class="fas fa-copyright text-yellow-600 text-xl"></i>
+                                <div>
+                                    <p class="font-medium">Copyright</p>
+                                    <p class="text-xs text-text-muted">Source Code</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-warning">Pending</span>
+                                <span class="text-xs text-text-muted">In review</span>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-section-bg border border-border rounded-lg">
+                            <div class="flex items-center gap-3 mb-3">
+                                <i class="fas fa-file-alt text-text-muted text-xl"></i>
+                                <div>
+                                    <p class="font-medium">Patent</p>
+                                    <p class="text-xs text-text-muted">Available</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-text-muted">Not filed</span>
+                                <button class="text-xs text-primary hover:text-primary-hover">Start →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('apps');
+
+        // App navigation
+        const appPages = [
+            'app-economaestro.html',
+            'app-runway.html',
+            'app-cofoundermatch.html',
+            'app-validateai.html',
+            'app-shipfast.html',
+            'app-firstusers.html',
+            'app-pitchperfect.html',
+            'app-launchpad.html',
+            'app-scaleops.html',
+            'app-delightiq.html',
+            'app-brandforge.html',
+            'app-salesflow.html',
+            'app-insighthub.html',
+            'app-searchmaster.html',
+            'app-goglobal.html',
+            'app-legalshield.html',
+            'app-teamsync.html'
+        ];
+
+        // Update counter
+        const currentUrl = window.location.pathname.split('/').pop();
+        const currentIndex = appPages.indexOf(currentUrl);
+        if (currentIndex !== -1) {
+            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
+        }
+
+        function navigateApp(direction) {
+            const currentUrl = window.location.pathname.split('/').pop();
+            const currentIndex = appPages.indexOf(currentUrl);
+            
+            if (currentIndex === -1) return;
+            
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % appPages.length;
+            } else {
+                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
+            }
+            
+            window.location.href = appPages[newIndex];
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.altKey && event.key === 'ArrowLeft') {
+                navigateApp('prev');
+            } else if (event.altKey && event.key === 'ArrowRight') {
+                navigateApp('next');
+            }
+        });
+        
+        function createNewDocument() {
+            alert('Document template wizard would open here');
+        }
+        
+        // launchApp function is now handled by app-launch-panel.js
+        
+        // Go back to previous page
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Fallback to apps page if no history
+                window.location.href = 'apps.html';
+            }
+        }
+    </script>
+</body>
+</html>

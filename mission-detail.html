@@ -356,6 +356,18 @@
                             </div>
                         </div>
 
+                        <!-- Recommended Tools -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="font-semibold text-text-primary mb-4">Recommended Tools</h3>
+                            <div class="space-y-3" id="recommended-tools-container">
+                                <!-- Tools will be loaded dynamically -->
+                                <a href="tools.html" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
+                                    <i class="fas fa-tools text-primary group-hover:text-white"></i>
+                                    <span class="text-sm">Loading tools...</span>
+                                </a>
+                            </div>
+                        </div>
+
                         <!-- Related Missions -->
                         <div class="bg-card-bg border border-border rounded-lg p-6">
                             <h3 class="font-semibold text-text-primary mb-4">Next Missions</h3>
@@ -381,6 +393,45 @@
     <script>
         // Initialize navigation
         initializeNavigation('flightplan');
+        
+        // Recommended tools for mission categories
+        const recommendedToolsByCategory = {
+            'technical': [
+                { name: 'GitHub', icon: 'fa-code-branch', description: 'Version control', url: 'tools.html?category=development' },
+                { name: 'Vercel', icon: 'fa-cloud', description: 'Deploy your app', url: 'tools.html?category=infrastructure' },
+                { name: 'Linear', icon: 'fa-tasks', description: 'Track development', url: 'tools.html?category=product' }
+            ],
+            'validation': [
+                { name: 'Typeform', icon: 'fa-poll', description: 'Create surveys', url: 'tools.html?category=marketing' },
+                { name: 'Calendly', icon: 'fa-calendar-check', description: 'Schedule interviews', url: 'tools.html?category=sales' },
+                { name: 'Notion', icon: 'fa-file-alt', description: 'Document insights', url: 'tools.html?category=product' }
+            ],
+            'marketing': [
+                { name: 'Buffer', icon: 'fa-share-alt', description: 'Social scheduling', url: 'tools.html?category=marketing' },
+                { name: 'Figma', icon: 'fa-pen-nib', description: 'Design assets', url: 'tools.html?category=product' },
+                { name: 'HubSpot', icon: 'fa-magnet', description: 'Marketing automation', url: 'tools.html?category=marketing' }
+            ],
+            'legal': [
+                { name: 'Clerky', icon: 'fa-gavel', description: 'Legal documents', url: 'tools.html?category=legal' },
+                { name: 'Stripe Atlas', icon: 'fa-building', description: 'Incorporation', url: 'tools.html?category=legal' },
+                { name: 'DocuSign', icon: 'fa-signature', description: 'Digital signatures', url: 'tools.html?category=legal' }
+            ],
+            'sales': [
+                { name: 'HubSpot', icon: 'fa-magnet', description: 'CRM system', url: 'tools.html?category=sales' },
+                { name: 'Calendly', icon: 'fa-calendar-check', description: 'Demo scheduling', url: 'tools.html?category=sales' },
+                { name: 'Stripe', icon: 'fa-credit-card', description: 'Payment processing', url: 'tools.html?category=finance' }
+            ],
+            'analytics': [
+                { name: 'Mixpanel', icon: 'fa-chart-bar', description: 'User analytics', url: 'tools.html?category=analytics' },
+                { name: 'Google Analytics', icon: 'fa-chart-line', description: 'Web analytics', url: 'tools.html?category=analytics' },
+                { name: 'Airtable', icon: 'fa-table', description: 'Data tracking', url: 'tools.html?category=operations' }
+            ],
+            'default': [
+                { name: 'Notion', icon: 'fa-file-alt', description: 'Documentation', url: 'tools.html?category=product' },
+                { name: 'Linear', icon: 'fa-tasks', description: 'Task tracking', url: 'tools.html?category=product' },
+                { name: 'Slack', icon: 'fa-comments', description: 'Team communication', url: 'tools.html?category=product' }
+            ]
+        };
         
         // Load mission data based on URL parameter
         function loadMissionData() {
@@ -423,6 +474,9 @@
             
             // Update breadcrumb
             updateBreadcrumb(mission);
+            
+            // Load recommended tools
+            loadRecommendedTools(mission);
         }
         
         function getOverviewText(missionId, mission) {
@@ -515,6 +569,51 @@
                     objectiveLink.textContent = objective.name;
                 }
             }
+        }
+        
+        // Load recommended tools based on mission category
+        function loadRecommendedTools(mission) {
+            const container = document.getElementById('recommended-tools-container');
+            
+            // Determine mission category
+            let category = 'default';
+            
+            // Map missions to categories based on keywords or type
+            if (mission.category) {
+                category = mission.category.toLowerCase();
+            } else if (mission.title) {
+                const title = mission.title.toLowerCase();
+                if (title.includes('technical') || title.includes('dev') || title.includes('api') || title.includes('code')) {
+                    category = 'technical';
+                } else if (title.includes('validate') || title.includes('interview') || title.includes('survey') || title.includes('research')) {
+                    category = 'validation';
+                } else if (title.includes('market') || title.includes('launch') || title.includes('brand')) {
+                    category = 'marketing';
+                } else if (title.includes('legal') || title.includes('incorporation') || title.includes('terms') || title.includes('privacy')) {
+                    category = 'legal';
+                } else if (title.includes('sales') || title.includes('customer') || title.includes('pricing')) {
+                    category = 'sales';
+                } else if (title.includes('metric') || title.includes('analytic') || title.includes('data')) {
+                    category = 'analytics';
+                }
+            }
+            
+            const tools = recommendedToolsByCategory[category] || recommendedToolsByCategory['default'];
+            
+            let html = '';
+            tools.forEach(tool => {
+                html += `
+                    <a href="${tool.url}" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
+                        <i class="fas ${tool.icon} text-primary group-hover:text-white"></i>
+                        <div class="flex-1">
+                            <span class="text-sm font-medium">${tool.name}</span>
+                            <p class="text-xs text-text-secondary group-hover:text-white/80">${tool.description}</p>
+                        </div>
+                    </a>
+                `;
+            });
+            
+            container.innerHTML = html;
         }
         
         // Toggle action dropdown

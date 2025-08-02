@@ -65,7 +65,9 @@
       "Bash(then sed -i '' 's|<script src=\"\"notifications-component.js\"\"></script>|<script src=\"\"notifications-component.js\"\"></script>\\n    <script src=\"\"search-component.js\"\"></script>|' \"$file\")",
       "Bash(fi)",
       "Bash(for file in account.html objective-detail.html founder-profile.html squad-detail.html mission-detail.html search-results.html)",
-      "Bash(then sed -i '' 's|<script src=\"\"nav-component.js\"\"></script>|<script src=\"\"nav-component.js\"\"></script>\\n    <script src=\"\"notifications-component.js\"\"></script>\\n    <script src=\"\"search-component.js\"\"></script>|' \"$file\")"
+      "Bash(then sed -i '' 's|<script src=\"\"nav-component.js\"\"></script>|<script src=\"\"nav-component.js\"\"></script>\\n    <script src=\"\"notifications-component.js\"\"></script>\\n    <script src=\"\"search-component.js\"\"></script>|' \"$file\")",
+      "Bash(git push:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

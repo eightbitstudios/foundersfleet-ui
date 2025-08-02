@@ -46,33 +46,49 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
+        .comms-item:hover .archive-btn {
+            display: block !important;
+        }
         .comms-item.unread {
-            background: #F0F9FF;
             border-left: 3px solid #000000;
         }
         
-        /* Message preview modal */
-        .message-modal {
+        /* Message detail overlay */
+        .message-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
             display: none;
-            align-items: center;
-            justify-content: center;
             z-index: 100;
         }
-        .message-modal.show {
-            display: flex;
+        .message-overlay.show {
+            display: block;
         }
-        .message-content {
+        .message-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .message-panel {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 500px;
             background: white;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow: hidden;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
+        }
+        .message-overlay.show .message-panel {
+            transform: translateX(0);
+        }
+        @media (max-width: 640px) {
+            .message-panel {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -81,9 +97,8 @@
     <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 bg-background overflow-hidden flex">
-        <!-- Left Content -->
-        <div class="flex-1 overflow-auto" id="main-content">
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
             <!-- Page Content -->
             <div class="px-8 py-8">
                 <!-- Page Header -->
@@ -93,6 +108,9 @@
                         <p class="text-text-secondary">All your messages and notifications in one place</p>
                     </div>
                     <div class="flex gap-3">
+                        <button onclick="archiveOldMessages()" class="px-4 py-2 text-text-secondary hover:text-primary transition-all" title="Archive read messages older than 30 days">
+                            <i class="fas fa-archive mr-2"></i>Auto-archive old
+                        </button>
                         <button onclick="markAllRead()" class="px-4 py-2 text-text-secondary hover:text-primary transition-all">
                             <i class="fas fa-check-double mr-2"></i>Mark all read
                         </button>
@@ -112,38 +130,26 @@
                     </div>
                 </div>
 
-                <!-- Unified Filters -->
-                <div class="flex gap-2 mb-6 flex-wrap">
-                    <button class="px-4 py-2 bg-primary text-white text-sm rounded-lg transition-all" onclick="filterComms('all')" data-filter="all">
-                        All
-                        <span class="ml-2 px-2 py-0.5 bg-white/20 rounded text-xs">15</span>
+                <!-- Simplified Filters -->
+                <div class="flex gap-2 mb-6">
+                    <button class="px-4 py-2 bg-primary text-white text-sm rounded-lg transition-all" onclick="filterComms('unread')" data-filter="unread">
+                        Unread
+                        <span class="ml-2 px-2 py-0.5 bg-white/20 rounded text-xs">8</span>
                     </button>
-                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('messages')" data-filter="messages">
-                        Messages
-                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">3</span>
+                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('older')" data-filter="older">
+                        Older
+                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">30</span>
                     </button>
-                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('notifications')" data-filter="notifications">
-                        Notifications
-                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">12</span>
-                    </button>
-                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('squad')" data-filter="squad">
-                        Squad
-                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">5</span>
-                    </button>
-                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('missions')" data-filter="missions">
-                        Missions
-                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">2</span>
-                    </button>
-                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all" onclick="filterComms('system')" data-filter="system">
-                        System
-                        <span class="ml-2 px-2 py-0.5 bg-section-bg text-text-secondary rounded text-xs">1</span>
+                    <button class="px-4 py-2 bg-white text-text-secondary border border-border text-sm rounded-lg hover:border-primary hover:text-primary transition-all flex items-center gap-2" onclick="showFilterDropdown()">
+                        <i class="fas fa-filter text-sm"></i>
+                        Filter
                     </button>
                 </div>
 
                 <!-- Unified Content Area -->
                 <div id="comms-content" class="space-y-4">
                     <!-- Message: Squad -->
-                    <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="squad" onclick="openMessage('squad-1')">
+                    <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="squad" data-message-id="squad-1" data-age="0" onclick="openMessage('squad-1')">
                         <div class="flex gap-4">
                             <div class="flex-shrink-0">
                                 <div class="w-12 h-12 rounded-lg bg-primary text-white flex items-center justify-center font-semibold">
@@ -156,7 +162,12 @@
                                         <h3 class="font-semibold text-text-primary">B2B SaaS Squad</h3>
                                         <p class="text-sm text-text-secondary mt-1">Sarah: Just launched our beta! 🚀</p>
                                     </div>
-                                    <span class="text-xs text-text-muted whitespace-nowrap">10 min ago</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-text-muted whitespace-nowrap">10 min ago</span>
+                                        <button class="archive-btn hidden p-1 hover:bg-section-bg rounded transition-all" onclick="event.stopPropagation(); archiveMessage('squad-1')" title="Archive">
+                                            <i class="fas fa-archive text-xs text-text-muted hover:text-primary"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">Message</span>
@@ -193,7 +204,7 @@
                     </div>
 
                     <!-- Message: Direct -->
-                    <div class="comms-item unread bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="direct" onclick="openMessage('direct-1')">
+                    <div class="comms-item unread bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="direct" data-message-id="direct-1" data-age="2" onclick="openMessage('direct-1')">
                         <div class="flex gap-4">
                             <div class="flex-shrink-0">
                                 <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-semibold">MP</div>
@@ -204,7 +215,12 @@
                                         <h3 class="font-semibold text-text-primary">Marcus Park</h3>
                                         <p class="text-sm text-text-secondary mt-1">Hey! Loved your thoughts on marketplace dynamics...</p>
                                     </div>
-                                    <span class="text-xs text-text-muted whitespace-nowrap">2 hours ago</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-text-muted whitespace-nowrap">2 hours ago</span>
+                                        <button class="archive-btn hidden p-1 hover:bg-section-bg rounded transition-all" onclick="event.stopPropagation(); archiveMessage('direct-1')" title="Archive">
+                                            <i class="fas fa-archive text-xs text-text-muted hover:text-primary"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">Message</span>
@@ -241,7 +257,7 @@
                     </div>
 
                     <!-- Message: Squad -->
-                    <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="squad" onclick="openMessage('squad-2')">
+                    <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer" data-type="messages" data-category="squad" data-message-id="squad-2" data-age="2" onclick="openMessage('squad-2')">
                         <div class="flex gap-4">
                             <div class="flex-shrink-0">
                                 <div class="w-12 h-12 rounded-lg bg-purple-600 text-white flex items-center justify-center font-semibold">
@@ -254,7 +270,12 @@
                                         <h3 class="font-semibold text-text-primary">Marketplace Builders</h3>
                                         <p class="text-sm text-text-secondary mt-1">Mike: Anyone dealt with payment splits?</p>
                                     </div>
-                                    <span class="text-xs text-text-muted whitespace-nowrap">2 hours ago</span>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-text-muted whitespace-nowrap">2 hours ago</span>
+                                        <button class="archive-btn hidden p-1 hover:bg-section-bg rounded transition-all" onclick="event.stopPropagation(); archiveMessage('squad-2')" title="Archive">
+                                            <i class="fas fa-archive text-xs text-text-muted hover:text-primary"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">Message</span>
@@ -315,11 +336,111 @@
                         </div>
                     </div>
                 </div>
+                    
+                <!-- Archived Messages (Hidden by default) -->
+                <div class="archived-items hidden space-y-4">
+                        <!-- Archive Header -->
+                        <div class="mb-4 p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-archive text-gray-500"></i>
+                                    <div>
+                                        <h3 class="font-semibold text-text-primary">Archived Messages</h3>
+                                        <p class="text-sm text-text-secondary">Messages older than 30 days that have been read</p>
+                                    </div>
+                                </div>
+                                <button onclick="filterComms('all')" class="text-sm text-primary hover:text-primary-hover">
+                                    <i class="fas fa-arrow-left mr-1"></i> Back to All
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Archived Message -->
+                        <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer opacity-75" data-type="messages" data-category="archived" data-message-id="archived-1" data-age="45" onclick="openMessage('archived-1')">
+                            <div class="flex gap-4">
+                                <div class="flex-shrink-0">
+                                    <div class="w-12 h-12 rounded-full bg-gray-500 text-white flex items-center justify-center font-semibold">JD</div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">John Doe</h3>
+                                            <p class="text-sm text-text-secondary mt-1">Thanks for the intro to the investor!</p>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-xs text-text-muted whitespace-nowrap">45 days ago</span>
+                                            <button class="archive-btn p-1 hover:bg-section-bg rounded transition-all" onclick="event.stopPropagation(); unarchiveMessage('archived-1')" title="Unarchive">
+                                                <i class="fas fa-box-open text-xs text-text-muted hover:text-primary"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded">Archived</span>
+                                        <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">Message</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Archived Squad Message -->
+                        <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer opacity-75" data-type="messages" data-category="archived squad" onclick="openMessage('archived-squad-1')">
+                            <div class="flex gap-4">
+                                <div class="flex-shrink-0">
+                                    <div class="w-12 h-12 rounded-lg bg-gray-600 text-white flex items-center justify-center font-semibold">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">Growth Hackers Squad</h3>
+                                            <p class="text-sm text-text-secondary mt-1">Weekly sync notes from February</p>
+                                        </div>
+                                        <span class="text-xs text-text-muted whitespace-nowrap">2 months ago</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded">Archived</span>
+                                        <span class="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded">Message</span>
+                                        <span class="px-2 py-1 bg-green-50 text-green-700 text-xs rounded">Squad</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Archived Notification -->
+                        <div class="comms-item bg-card-bg border border-border rounded-lg p-6 cursor-pointer opacity-75" data-type="notifications" data-category="archived" onclick="handleNotificationClick('#')">
+                            <div class="flex gap-4">
+                                <div class="flex-shrink-0">
+                                    <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-trophy text-gray-600"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div>
+                                            <h3 class="font-semibold text-text-primary">Completed Fundraising Objective!</h3>
+                                            <p class="text-sm text-text-secondary mt-1">You finished all missions in the Fundraising track</p>
+                                        </div>
+                                        <span class="text-xs text-text-muted whitespace-nowrap">3 months ago</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded">Archived</span>
+                                        <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs rounded">Notification</span>
+                                        <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs rounded">Achievement</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </main>
+    </div>
 
-        <!-- Right Panel for Message Details -->
-        <div id="rightPanel" class="w-[500px] bg-white border-l border-border overflow-hidden hidden flex flex-col">
+    <!-- Message Detail Overlay -->
+    <div id="messageOverlay" class="message-overlay">
+        <div class="message-backdrop" onclick="closePanel()"></div>
+        <div class="message-panel">
             <!-- Panel Header -->
             <div class="p-4 border-b border-border flex items-center justify-between bg-white">
                 <div id="panelHeader">
@@ -356,9 +477,19 @@
     <script>
         // Initialize navigation
         initializeNavigation('comms');
+        
+        // Check if we should open new message from URL params
+        checkForNewMessageAction();
+        
+        // Initialize with unread filter
+        window.addEventListener('DOMContentLoaded', function() {
+            filterComms('unread');
+            updateCounts();
+        });
 
-        // Current filter
-        let currentFilter = 'all';
+        // Current filter and type filter
+        let currentFilter = 'unread';
+        let currentTypeFilter = 'all';
 
         // Filter functionality
         function filterComms(filter) {
@@ -376,18 +507,106 @@
                 }
             });
             
-            // Filter items
-            const items = document.querySelectorAll('.comms-item');
-            items.forEach(item => {
-                if (filter === 'all') {
-                    item.style.display = 'block';
-                } else if (filter === 'messages' || filter === 'notifications') {
-                    item.style.display = item.dataset.type === filter ? 'block' : 'none';
+            // Get all items including archived
+            const allItems = document.querySelectorAll('.comms-item');
+            const archivedSection = document.querySelector('.archived-items');
+            
+            // Hide archived section by default
+            if (archivedSection) {
+                archivedSection.classList.add('hidden');
+            }
+            
+            allItems.forEach(item => {
+                let shouldShow = false;
+                
+                if (filter === 'unread') {
+                    // Show only unread items
+                    shouldShow = item.classList.contains('unread');
+                } else if (filter === 'older') {
+                    // Show all items (read and unread)
+                    shouldShow = true;
+                }
+                
+                // Apply type filter if not 'all'
+                if (shouldShow && currentTypeFilter !== 'all') {
+                    if (currentTypeFilter === 'messages' || currentTypeFilter === 'notifications') {
+                        shouldShow = item.dataset.type === currentTypeFilter;
+                    } else {
+                        // Filter by category (squad, missions, system)
+                        const categories = item.dataset.category ? item.dataset.category.split(' ') : [];
+                        shouldShow = categories.includes(currentTypeFilter);
+                    }
+                }
+                
+                item.style.display = shouldShow ? 'block' : 'none';
+            });
+        }
+        
+        // Show filter dropdown
+        function showFilterDropdown() {
+            const dropdown = document.getElementById('filter-dropdown');
+            if (!dropdown) {
+                // Create dropdown if it doesn't exist
+                const dropdownHtml = `
+                    <div id="filter-dropdown" class="absolute mt-2 w-48 bg-white border border-border rounded-lg shadow-lg z-50" style="display: none;">
+                        <div class="p-2">
+                            <button onclick="applyTypeFilter('all')" class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all ${currentTypeFilter === 'all' ? 'bg-section-bg font-medium' : ''}">
+                                All Types
+                            </button>
+                            <button onclick="applyTypeFilter('messages')" class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all ${currentTypeFilter === 'messages' ? 'bg-section-bg font-medium' : ''}">
+                                Messages
+                            </button>
+                            <button onclick="applyTypeFilter('notifications')" class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all ${currentTypeFilter === 'notifications' ? 'bg-section-bg font-medium' : ''}">
+                                Notifications
+                            </button>
+                            <button onclick="applyTypeFilter('squad')" class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all ${currentTypeFilter === 'squad' ? 'bg-section-bg font-medium' : ''}">
+                                Squad
+                            </button>
+                            <button onclick="applyTypeFilter('missions')" class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all ${currentTypeFilter === 'missions' ? 'bg-section-bg font-medium' : ''}">
+                                Missions
+                            </button>
+                            <button onclick="applyTypeFilter('system')" class="w-full text-left px-3 py-2 text-sm hover:bg-section-bg rounded transition-all ${currentTypeFilter === 'system' ? 'bg-section-bg font-medium' : ''}">
+                                System
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Insert dropdown after the filter button
+                const filterButton = event.currentTarget;
+                filterButton.parentElement.style.position = 'relative';
+                filterButton.insertAdjacentHTML('afterend', dropdownHtml);
+                
+                // Show dropdown
+                setTimeout(() => {
+                    document.getElementById('filter-dropdown').style.display = 'block';
+                }, 10);
+            } else {
+                // Toggle dropdown
+                dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+        
+        // Apply type filter
+        function applyTypeFilter(type) {
+            currentTypeFilter = type;
+            filterComms(currentFilter);
+            
+            // Update dropdown button states
+            const dropdownButtons = document.querySelectorAll('#filter-dropdown button');
+            dropdownButtons.forEach(btn => {
+                if (btn.textContent.trim().toLowerCase().includes(type) || (type === 'all' && btn.textContent.trim() === 'All Types')) {
+                    btn.classList.add('bg-section-bg', 'font-medium');
                 } else {
-                    // Filter by category (squad, missions, system)
-                    item.style.display = item.dataset.category === filter ? 'block' : 'none';
+                    btn.classList.remove('bg-section-bg', 'font-medium');
                 }
             });
+            
+            // Hide dropdown
+            const dropdown = document.getElementById('filter-dropdown');
+            if (dropdown) {
+                dropdown.style.display = 'none';
+            }
         }
 
         // Mark all as read
@@ -401,8 +620,24 @@
 
         // Update counts in filter buttons
         function updateCounts() {
-            // In a real app, this would calculate actual counts
-            console.log('Updating counts...');
+            // Count unread and total items
+            const allItems = document.querySelectorAll('.comms-item');
+            const unreadItems = document.querySelectorAll('.comms-item.unread');
+            
+            // Update button counts
+            updateButtonCount('unread', unreadItems.length);
+            updateButtonCount('older', allItems.length);
+        }
+        
+        // Helper to update individual button count
+        function updateButtonCount(filter, count) {
+            const button = document.querySelector(`[data-filter="${filter}"]`);
+            if (button) {
+                const badge = button.querySelector('.ml-2, .ml-1');
+                if (badge) {
+                    badge.textContent = count;
+                }
+            }
         }
 
         // Handle notification click
@@ -410,14 +645,13 @@
             // Show notification in panel instead of navigating
             event.stopPropagation();
             
-            const panel = document.getElementById('rightPanel');
+            const overlay = document.getElementById('messageOverlay');
             const panelHeader = document.getElementById('panelHeader');
             const panelMessages = document.getElementById('panelMessages');
             const panelInput = document.getElementById('panelInput');
             
-            // Show panel
-            panel.classList.remove('hidden');
-            panel.classList.add('flex');
+            // Show overlay
+            overlay.classList.add('show');
             
             // Mark item as read
             event.currentTarget.classList.remove('unread');
@@ -448,14 +682,13 @@
 
         // Open message panel
         function openMessage(conversationId) {
-            const panel = document.getElementById('rightPanel');
+            const overlay = document.getElementById('messageOverlay');
             const panelHeader = document.getElementById('panelHeader');
             const panelMessages = document.getElementById('panelMessages');
             const panelInput = document.getElementById('panelInput');
             
-            // Show panel
-            panel.classList.remove('hidden');
-            panel.classList.add('flex');
+            // Show overlay
+            overlay.classList.add('show');
             
             // Mark item as read
             event.currentTarget.classList.remove('unread');
@@ -554,14 +787,115 @@
 
         // Close panel
         function closePanel() {
-            const panel = document.getElementById('rightPanel');
-            panel.classList.add('hidden');
-            panel.classList.remove('flex');
+            const overlay = document.getElementById('messageOverlay');
+            overlay.classList.remove('show');
         }
 
         // New message
         function newMessage() {
-            alert('New message composer would open here');
+            const overlay = document.getElementById('messageOverlay');
+            const panelHeader = document.getElementById('panelHeader');
+            const panelMessages = document.getElementById('panelMessages');
+            const panelInput = document.getElementById('panelInput');
+            
+            // Show overlay
+            overlay.classList.add('show');
+            
+            // Hide input for new message composition
+            panelInput.classList.add('hidden');
+            
+            panelHeader.innerHTML = `
+                <h3 class="font-semibold text-text-primary">New Message</h3>
+            `;
+            
+            panelMessages.innerHTML = `
+                <div class="bg-white rounded-lg p-6">
+                    <form id="new-message-form" class="space-y-4">
+                        <!-- To Field -->
+                        <div>
+                            <label class="block text-sm font-medium text-text-primary mb-2">To</label>
+                            <div class="relative">
+                                <input 
+                                    type="text" 
+                                    id="recipient-input" 
+                                    placeholder="Search for founders or squads..."
+                                    class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                                    autocomplete="off"
+                                >
+                                <div id="recipient-suggestions" class="absolute top-full left-0 right-0 mt-1 bg-white border border-border rounded-lg shadow-lg hidden max-h-48 overflow-y-auto z-10">
+                                    <!-- Suggestions will appear here -->
+                                </div>
+                            </div>
+                            <div id="selected-recipients" class="flex flex-wrap gap-2 mt-2">
+                                <!-- Selected recipients will appear here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Message Type -->
+                        <div>
+                            <label class="block text-sm font-medium text-text-primary mb-2">Message Type</label>
+                            <div class="flex gap-3">
+                                <label class="flex items-center">
+                                    <input type="radio" name="message-type" value="direct" checked class="mr-2">
+                                    <span class="text-sm">Direct Message</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="message-type" value="squad" class="mr-2">
+                                    <span class="text-sm">Squad Message</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Subject (optional) -->
+                        <div>
+                            <label class="block text-sm font-medium text-text-primary mb-2">
+                                Subject 
+                                <span class="text-text-muted font-normal">(optional)</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="message-subject"
+                                placeholder="What's this about?"
+                                class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                            >
+                        </div>
+                        
+                        <!-- Message -->
+                        <div>
+                            <label class="block text-sm font-medium text-text-primary mb-2">Message</label>
+                            <textarea 
+                                id="message-content"
+                                rows="6"
+                                placeholder="Type your message..."
+                                class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none"
+                            ></textarea>
+                        </div>
+                        
+                        <!-- Actions -->
+                        <div class="flex justify-between items-center pt-4">
+                            <button type="button" onclick="closePanel()" class="text-text-secondary hover:text-primary transition-all">
+                                Cancel
+                            </button>
+                            <button 
+                                type="submit" 
+                                class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                id="send-message-btn"
+                            >
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            // Initialize recipient search
+            initializeRecipientSearch();
+            
+            // Handle form submission
+            document.getElementById('new-message-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendNewMessage();
+            });
         }
 
         // Join meeting
@@ -592,6 +926,290 @@
             if (!searchTerm) {
                 filterComms(currentFilter);
             }
+        }
+        
+        // Initialize recipient search for new messages
+        let selectedRecipients = [];
+        
+        function initializeRecipientSearch() {
+            const input = document.getElementById('recipient-input');
+            const suggestions = document.getElementById('recipient-suggestions');
+            
+            // Mock data for recipients
+            const availableRecipients = [
+                { id: 'sarah-chen', name: 'Sarah Chen', type: 'founder', avatar: 'SC', color: 'bg-green-600' },
+                { id: 'marcus-park', name: 'Marcus Park', type: 'founder', avatar: 'MP', color: 'bg-primary' },
+                { id: 'james-kim', name: 'James Kim', type: 'founder', avatar: 'JK', color: 'bg-purple-600' },
+                { id: 'b2b-saas-squad', name: 'B2B SaaS Squad', type: 'squad', icon: 'fa-users' },
+                { id: 'marketplace-builders', name: 'Marketplace Builders', type: 'squad', icon: 'fa-users' },
+                { id: 'ai-ml-founders', name: 'AI/ML Founders', type: 'squad', icon: 'fa-users' }
+            ];
+            
+            input.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                
+                if (query.length < 2) {
+                    suggestions.classList.add('hidden');
+                    return;
+                }
+                
+                const filtered = availableRecipients.filter(r => 
+                    r.name.toLowerCase().includes(query) && 
+                    !selectedRecipients.find(s => s.id === r.id)
+                );
+                
+                if (filtered.length > 0) {
+                    suggestions.innerHTML = filtered.map(recipient => `
+                        <div class="px-4 py-2 hover:bg-section-bg cursor-pointer flex items-center gap-3" onclick="selectRecipient(${JSON.stringify(recipient).replace(/"/g, '&quot;')})">
+                            ${recipient.type === 'founder' ? `
+                                <div class="w-8 h-8 ${recipient.color} text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                                    ${recipient.avatar}
+                                </div>
+                            ` : `
+                                <div class="w-8 h-8 bg-primary text-white rounded-lg flex items-center justify-center">
+                                    <i class="fas ${recipient.icon} text-sm"></i>
+                                </div>
+                            `}
+                            <div>
+                                <div class="font-medium text-sm">${recipient.name}</div>
+                                <div class="text-xs text-text-muted capitalize">${recipient.type}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                    suggestions.classList.remove('hidden');
+                } else {
+                    suggestions.classList.add('hidden');
+                }
+            });
+            
+            // Hide suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#recipient-input') && !e.target.closest('#recipient-suggestions')) {
+                    suggestions.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Close filter dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('filter-dropdown');
+            if (dropdown && !event.target.closest('[onclick="showFilterDropdown()"]') && !event.target.closest('#filter-dropdown')) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        function selectRecipient(recipient) {
+            selectedRecipients.push(recipient);
+            updateSelectedRecipients();
+            document.getElementById('recipient-input').value = '';
+            document.getElementById('recipient-suggestions').classList.add('hidden');
+        }
+        
+        function removeRecipient(recipientId) {
+            selectedRecipients = selectedRecipients.filter(r => r.id !== recipientId);
+            updateSelectedRecipients();
+        }
+        
+        function updateSelectedRecipients() {
+            const container = document.getElementById('selected-recipients');
+            container.innerHTML = selectedRecipients.map(recipient => `
+                <div class="flex items-center gap-2 px-3 py-1 bg-section-bg rounded-full">
+                    <span class="text-sm">${recipient.name}</span>
+                    <button type="button" onclick="removeRecipient('${recipient.id}')" class="text-text-muted hover:text-primary">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            // Enable/disable send button based on recipients
+            const sendBtn = document.getElementById('send-message-btn');
+            if (sendBtn) {
+                sendBtn.disabled = selectedRecipients.length === 0;
+            }
+        }
+        
+        function sendNewMessage() {
+            const subject = document.getElementById('message-subject').value;
+            const content = document.getElementById('message-content').value;
+            const messageType = document.querySelector('input[name="message-type"]:checked').value;
+            
+            if (!content.trim()) {
+                alert('Please enter a message');
+                return;
+            }
+            
+            if (selectedRecipients.length === 0) {
+                alert('Please select at least one recipient');
+                return;
+            }
+            
+            // In a real app, this would send to the server
+            console.log('Sending message:', {
+                recipients: selectedRecipients,
+                subject,
+                content,
+                type: messageType
+            });
+            
+            // Show success and close panel
+            alert('Message sent successfully!');
+            closePanel();
+            
+            // Reset selected recipients
+            selectedRecipients = [];
+        }
+        
+        // Check URL parameters for new message action
+        function checkForNewMessageAction() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            const recipientId = urlParams.get('recipient');
+            const recipientName = urlParams.get('name');
+            
+            if (action === 'new' && recipientId && recipientName) {
+                // Open new message panel with pre-filled recipient
+                setTimeout(() => {
+                    newMessage();
+                    // Pre-select the recipient
+                    const recipient = {
+                        id: recipientId,
+                        name: recipientName,
+                        type: 'founder',
+                        avatar: recipientName.split(' ').map(n => n[0]).join('').toUpperCase(),
+                        color: 'bg-primary'
+                    };
+                    selectedRecipients.push(recipient);
+                    updateSelectedRecipients();
+                }, 100);
+            }
+        }
+        
+        // Archive individual message
+        function archiveMessage(messageId) {
+            const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (messageElement) {
+                // Move to archived section
+                const archivedSection = document.querySelector('.archived-items');
+                
+                // Update the message appearance
+                messageElement.classList.add('opacity-75');
+                messageElement.classList.remove('unread');
+                
+                // Add archived tag
+                const tagsContainer = messageElement.querySelector('.flex.items-center.gap-3');
+                const archivedTag = document.createElement('span');
+                archivedTag.className = 'px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded';
+                archivedTag.textContent = 'Archived';
+                tagsContainer.insertBefore(archivedTag, tagsContainer.firstChild);
+                
+                // Update archive button to unarchive
+                const archiveBtn = messageElement.querySelector('.archive-btn');
+                if (archiveBtn) {
+                    archiveBtn.innerHTML = '<i class="fas fa-box-open text-xs text-text-muted hover:text-primary"></i>';
+                    archiveBtn.setAttribute('onclick', `event.stopPropagation(); unarchiveMessage('${messageId}')`);
+                    archiveBtn.setAttribute('title', 'Unarchive');
+                }
+                
+                // Move element to archived section
+                archivedSection.appendChild(messageElement);
+                
+                // Update counts
+                updateCounts();
+                
+                // Show confirmation
+                showNotification('Message archived');
+            }
+        }
+        
+        // Unarchive message
+        function unarchiveMessage(messageId) {
+            const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+            if (messageElement) {
+                // Remove archived appearance
+                messageElement.classList.remove('opacity-75');
+                
+                // Remove archived tag
+                const archivedTag = messageElement.querySelector('.bg-gray-50.text-gray-700');
+                if (archivedTag && archivedTag.textContent === 'Archived') {
+                    archivedTag.remove();
+                }
+                
+                // Update archive button back to archive
+                const archiveBtn = messageElement.querySelector('.archive-btn');
+                if (archiveBtn) {
+                    archiveBtn.innerHTML = '<i class="fas fa-archive text-xs text-text-muted hover:text-primary"></i>';
+                    archiveBtn.setAttribute('onclick', `event.stopPropagation(); archiveMessage('${messageId}')`);
+                    archiveBtn.setAttribute('title', 'Archive');
+                }
+                
+                // Move element back to main content
+                const mainContent = document.getElementById('comms-content');
+                const archivedSection = document.querySelector('.archived-items');
+                mainContent.insertBefore(messageElement, archivedSection);
+                
+                // Update counts
+                updateCounts();
+                
+                // Show confirmation
+                showNotification('Message restored from archive');
+            }
+        }
+        
+        // Auto-archive old messages
+        function archiveOldMessages() {
+            const messages = document.querySelectorAll('.comms-item[data-type="messages"]:not(.archived-items .comms-item)');
+            let archivedCount = 0;
+            
+            messages.forEach(message => {
+                // Check if message is read (no unread class) and older than 30 days
+                const isRead = !message.classList.contains('unread');
+                const age = parseInt(message.dataset.age) || 0;
+                
+                // For demo purposes, we'll consider messages with certain time indicators as old
+                const timeText = message.querySelector('.text-xs.text-text-muted').textContent;
+                const isOld = timeText.includes('days ago') || timeText.includes('months ago') || 
+                             timeText.includes('Yesterday') || (age > 30);
+                
+                if (isRead && isOld) {
+                    const messageId = message.dataset.messageId;
+                    if (messageId) {
+                        archiveMessage(messageId);
+                        archivedCount++;
+                    }
+                }
+            });
+            
+            if (archivedCount > 0) {
+                showNotification(`Archived ${archivedCount} old message${archivedCount > 1 ? 's' : ''}`);
+            } else {
+                showNotification('No messages to archive');
+            }
+        }
+        
+        // Show notification toast
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-primary text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all transform translate-y-0';
+            notification.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-check-circle"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(1rem)';
+            }, 2000);
+            
+            // Remove after animation
+            setTimeout(() => {
+                notification.remove();
+            }, 2500);
         }
     </script>
 </body>

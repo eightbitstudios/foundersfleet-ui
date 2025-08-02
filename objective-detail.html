@@ -57,10 +57,21 @@
             <div class="max-w-[1200px] mx-auto px-8 py-8">
                 <!-- Breadcrumb and Action Button -->
                 <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center gap-2 text-sm text-text-secondary">
-                        <a href="flightplan.html" class="underline hover:text-primary transition-all">Flight Plan</a>
-                        <i class="fas fa-chevron-right text-xs"></i>
-                        <span class="text-text-primary">Objective</span>
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2 text-sm text-text-secondary">
+                            <a href="flightplan.html" class="underline hover:text-primary transition-all">Flight Plan</a>
+                            <i class="fas fa-chevron-right text-xs"></i>
+                            <span class="text-text-primary">Objective</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="navigateObjective('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous Objective">
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                            <span id="objective-counter" class="text-xs text-text-secondary px-2">1 of 14</span>
+                            <button onclick="navigateObjective('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next Objective">
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="relative">
@@ -102,15 +113,24 @@
                                 <h2 id="objective-title" class="text-2xl font-bold text-text-primary">Idea Validation</h2>
                             </div>
                             <p id="objective-description" class="text-text-secondary mb-6">Research, validate, and refine your concept to ensure you're solving a real problem that people will pay for.</p>
-                            <!-- Mission status in lower left -->
-                            <p class="text-lg text-text-primary font-medium">2/4 Missions Complete</p>
+                            
+                            <!-- Why This Matters - Best 3 bullets -->
+                            <div id="why-matters-bullets" class="space-y-2 mb-4">
+                                <!-- Bullets will be dynamically inserted here -->
+                            </div>
+                            
+                            <!-- Mission Status -->
+                            <p class="text-lg text-text-primary font-medium" id="mission-status">2/4 Missions Complete</p>
                         </div>
                         
-                        <!-- Estimated time in gray box on right -->
-                        <div class="flex items-center">
-                            <div class="bg-section-bg rounded-lg px-8 py-6 text-center w-full">
-                                <p class="text-2xl font-bold text-text-primary mb-2">2-4 weeks</p>
-                                <p class="text-sm text-text-secondary uppercase tracking-wide">Estimated Time</p>
+                        <!-- Right Column - Recommended Apps -->
+                        <div class="lg:col-span-1">
+                            <div class="bg-section-bg rounded-lg p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended Apps</h3>
+                                <div id="recommended-apps-container" class="space-y-3">
+                                    <!-- Apps will be loaded dynamically -->
+                                </div>
+                                <a href="apps.html" class="text-xs text-primary hover:text-primary-hover mt-3 inline-block">View all apps →</a>
                             </div>
                         </div>
                     </div>
@@ -255,55 +275,11 @@
                             </button>
                         </div>
 
-                        <!-- Objective Benefits -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Why This Objective Matters</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-start gap-3">
-                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
-                                    <p class="text-sm text-text-secondary">Avoid building something nobody wants</p>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
-                                    <p class="text-sm text-text-secondary">Save time and money by validating early</p>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
-                                    <p class="text-sm text-text-secondary">Build confidence in your direction</p>
-                                </div>
-                                <div class="flex items-start gap-3">
-                                    <i class="fas fa-check-circle text-success mt-0.5"></i>
-                                    <p class="text-sm text-text-secondary">Attract early supporters and advisors</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Recommended Apps -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended Apps</h3>
-                            <div class="space-y-3">
-                                <a href="tool-detail-economaestro.html" class="flex items-center gap-3 p-3 bg-purple-50 border border-purple-200 rounded hover:bg-purple-100 transition-all group">
-                                    <i class="fas fa-chart-line text-purple-600"></i>
-                                    <div class="flex-1">
-                                        <span class="text-sm font-medium text-text-primary">EconoMaestro</span>
-                                        <p class="text-xs text-text-secondary">Time your market entry</p>
-                                    </div>
-                                </a>
-                                <a href="apps.html" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
-                                    <i class="fas fa-rocket text-primary group-hover:text-white"></i>
-                                    <div class="flex-1">
-                                        <span class="text-sm text-text-primary group-hover:text-white">Product Tracker</span>
-                                        <p class="text-xs text-text-secondary group-hover:text-white/80">Coming Soon</p>
-                                    </div>
-                                </a>
-                            </div>
-                            <a href="apps.html" class="text-xs text-primary hover:text-primary-hover mt-3 inline-block">View all apps →</a>
-                        </div>
-
                         <!-- Recommended Tools -->
                         <div class="bg-card-bg border border-border rounded-lg p-6">
                             <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended Tools</h3>
-                            <div class="space-y-3">
+                            <div class="space-y-3" id="recommended-tools-container">
+                                <!-- Tools will be loaded dynamically -->
                                 <a href="tools.html" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
                                     <i class="fas fa-poll text-primary group-hover:text-white"></i>
                                     <span class="text-sm">Survey Tools</span>
@@ -330,7 +306,308 @@
         let currentFilter = 'active';
         
         // Objective data
+        // Recommended apps for each objective
+        const recommendedApps = {
+            'finding-cofounders': {
+                primary: {
+                    name: 'CoFounderMatch',
+                    url: 'app-cofoundermatch.html',
+                    icon: 'fa-user-friends',
+                    description: 'Find your perfect co-founder',
+                    color: 'blue'
+                }
+            },
+            'idea-validation': {
+                primary: {
+                    name: 'ValidateAI',
+                    url: 'app-validateai.html',
+                    icon: 'fa-lightbulb',
+                    description: 'AI-powered idea validation',
+                    color: 'yellow'
+                },
+                secondary: {
+                    name: 'EconoMaestro',
+                    url: 'app-economaestro.html',
+                    icon: 'fa-globe-americas',
+                    description: 'Time your market entry',
+                    color: 'indigo'
+                }
+            },
+            'mvp-development': {
+                primary: {
+                    name: 'ShipFast',
+                    url: 'app-shipfast.html',
+                    icon: 'fa-rocket',
+                    description: 'Build and deploy MVPs quickly',
+                    color: 'green'
+                }
+            },
+            'getting-first-customers': {
+                primary: {
+                    name: 'FirstUsers',
+                    url: 'app-firstusers.html',
+                    icon: 'fa-users',
+                    description: 'Find and convert early adopters',
+                    color: 'purple'
+                }
+            },
+            'fundraising': {
+                primary: {
+                    name: 'PitchPerfect',
+                    url: 'app-pitchperfect.html',
+                    icon: 'fa-microphone',
+                    description: 'Perfect your investor pitch',
+                    color: 'red'
+                },
+                secondary: {
+                    name: 'Runway',
+                    url: 'app-runway.html',
+                    icon: 'fa-chart-line',
+                    description: 'Financial modeling for fundraising',
+                    color: 'purple'
+                }
+            },
+            'product-launch': {
+                primary: {
+                    name: 'LaunchPad',
+                    url: 'app-launchpad.html',
+                    icon: 'fa-rocket',
+                    description: 'Orchestrate your product launch',
+                    color: 'indigo'
+                }
+            },
+            'scale-optimize': {
+                primary: {
+                    name: 'ScaleOps',
+                    url: 'app-scaleops.html',
+                    icon: 'fa-chart-line',
+                    description: 'Intelligent scaling & optimization',
+                    color: 'blue'
+                }
+            },
+            'customer-success': {
+                primary: {
+                    name: 'DelightIQ',
+                    url: 'app-delightiq.html',
+                    icon: 'fa-heart',
+                    description: 'Transform customers into advocates',
+                    color: 'red'
+                }
+            },
+            'marketing-branding': {
+                primary: {
+                    name: 'BrandForge',
+                    url: 'app-brandforge.html',
+                    icon: 'fa-palette',
+                    description: 'AI-powered brand identity creator',
+                    color: 'purple'
+                },
+                secondary: {
+                    name: 'SearchMaster',
+                    url: 'app-searchmaster.html',
+                    icon: 'fa-search',
+                    description: 'SEO & SEM optimization',
+                    color: 'blue'
+                }
+            },
+            'sales-process': {
+                primary: {
+                    name: 'SalesFlow',
+                    url: 'app-salesflow.html',
+                    icon: 'fa-chart-line',
+                    description: 'Close deals faster with AI insights',
+                    color: 'orange'
+                }
+            },
+            'data-analytics': {
+                primary: {
+                    name: 'InsightHub',
+                    url: 'app-insighthub.html',
+                    icon: 'fa-chart-bar',
+                    description: 'Real-time analytics & insights',
+                    color: 'blue'
+                }
+            },
+            'international-expansion': {
+                primary: {
+                    name: 'GoGlobal',
+                    url: 'app-goglobal.html',
+                    icon: 'fa-globe',
+                    description: 'Your guide to global expansion',
+                    color: 'green'
+                }
+            },
+            'operations-legal': {
+                primary: {
+                    name: 'LegalShield',
+                    url: 'app-legalshield.html',
+                    icon: 'fa-shield-alt',
+                    description: 'Legal documents & compliance tracker',
+                    color: 'gray'
+                },
+                secondary: {
+                    name: 'ScaleOps',
+                    url: 'app-scaleops.html',
+                    icon: 'fa-cogs',
+                    description: 'Operations management dashboard',
+                    color: 'blue'
+                }
+            },
+            'growth-traction': {
+                primary: {
+                    name: 'InsightHub',
+                    url: 'app-insighthub.html',
+                    icon: 'fa-chart-bar',
+                    description: 'Analytics & growth tracking',
+                    color: 'blue'
+                },
+                secondary: {
+                    name: 'SearchMaster',
+                    url: 'app-searchmaster.html',
+                    icon: 'fa-search',
+                    description: 'SEO & SEM optimization',
+                    color: 'green'
+                },
+                tertiary: {
+                    name: 'SalesFlow',
+                    url: 'app-salesflow.html',
+                    icon: 'fa-funnel-dollar',
+                    description: 'Sales pipeline management',
+                    color: 'orange'
+                }
+            },
+            'team-building': {
+                primary: {
+                    name: 'TeamSync',
+                    url: 'app-teamsync.html',
+                    icon: 'fa-users-cog',
+                    description: 'Team collaboration & culture builder',
+                    color: 'teal'
+                },
+                secondary: {
+                    name: 'CoFounderMatch',
+                    url: 'app-cofoundermatch.html',
+                    icon: 'fa-user-friends',
+                    description: 'Find team members & co-founders',
+                    color: 'blue'
+                }
+            },
+            'launch-product': {
+                primary: {
+                    name: 'LaunchPad',
+                    url: 'app-launchpad.html',
+                    icon: 'fa-rocket',
+                    description: 'Product launch command center',
+                    color: 'indigo'
+                },
+                secondary: {
+                    name: 'ShipFast',
+                    url: 'app-shipfast.html',
+                    icon: 'fa-shipping-fast',
+                    description: 'Deploy & ship code faster',
+                    color: 'cyan'
+                }
+            }
+        };
+
+        // Recommended tools for each objective
+        const recommendedTools = {
+            'finding-cofounders': [
+                { name: 'Calendly', icon: 'fa-calendar-check', description: 'Schedule co-founder interviews', category: 'sales' },
+                { name: 'Notion', icon: 'fa-file-alt', description: 'Track co-founder candidates', category: 'product' },
+                { name: 'Linear', icon: 'fa-tasks', description: 'Collaborate on early tasks', category: 'product' }
+            ],
+            'idea-validation': [
+                { name: 'Typeform', icon: 'fa-poll', description: 'Create user surveys', category: 'marketing' },
+                { name: 'Calendly', icon: 'fa-calendar-check', description: 'Schedule user interviews', category: 'sales' },
+                { name: 'Notion', icon: 'fa-file-alt', description: 'Document findings', category: 'product' }
+            ],
+            'mvp-development': [
+                { name: 'GitHub', icon: 'fa-code-branch', description: 'Version control', category: 'development' },
+                { name: 'Vercel', icon: 'fa-cloud', description: 'Deploy your MVP', category: 'infrastructure' },
+                { name: 'Figma', icon: 'fa-pen-nib', description: 'Design your UI', category: 'product' }
+            ],
+            'getting-first-customers': [
+                { name: 'HubSpot', icon: 'fa-magnet', description: 'CRM for early customers', category: 'marketing' },
+                { name: 'Typeform', icon: 'fa-poll', description: 'Collect feedback', category: 'marketing' },
+                { name: 'Calendly', icon: 'fa-calendar-check', description: 'Customer demos', category: 'sales' }
+            ],
+            'fundraising': [
+                { name: 'Airtable', icon: 'fa-table', description: 'Track investor pipeline', category: 'operations' },
+                { name: 'DocSend', icon: 'fa-file-pdf', description: 'Share pitch decks', category: 'sales' },
+                { name: 'Stripe Atlas', icon: 'fa-building', description: 'Incorporate properly', category: 'legal' }
+            ],
+            'product-launch': [
+                { name: 'Buffer', icon: 'fa-share-alt', description: 'Social media scheduling', category: 'marketing' },
+                { name: 'Mixpanel', icon: 'fa-chart-bar', description: 'Track launch metrics', category: 'analytics' },
+                { name: 'Intercom', icon: 'fa-comments', description: 'Customer support', category: 'sales' }
+            ],
+            'scale-optimize': [
+                { name: 'AWS', icon: 'fa-server', description: 'Scale infrastructure', category: 'infrastructure' },
+                { name: 'Mixpanel', icon: 'fa-chart-bar', description: 'Advanced analytics', category: 'analytics' },
+                { name: 'Linear', icon: 'fa-tasks', description: 'Team project management', category: 'product' }
+            ],
+            'customer-success': [
+                { name: 'Intercom', icon: 'fa-comments', description: 'Customer messaging', category: 'sales' },
+                { name: 'Mixpanel', icon: 'fa-chart-bar', description: 'User behavior analytics', category: 'analytics' },
+                { name: 'Typeform', icon: 'fa-poll', description: 'NPS surveys', category: 'marketing' }
+            ],
+            'marketing-branding': [
+                { name: 'Figma', icon: 'fa-pen-nib', description: 'Design brand assets', category: 'product' },
+                { name: 'Buffer', icon: 'fa-share-alt', description: 'Social media management', category: 'marketing' },
+                { name: 'Google Analytics', icon: 'fa-chart-line', description: 'Website analytics', category: 'analytics' }
+            ],
+            'sales-process': [
+                { name: 'HubSpot', icon: 'fa-magnet', description: 'Sales CRM', category: 'sales' },
+                { name: 'Calendly', icon: 'fa-calendar-check', description: 'Demo scheduling', category: 'sales' },
+                { name: 'Stripe', icon: 'fa-credit-card', description: 'Payment processing', category: 'finance' }
+            ],
+            'data-analytics': [
+                { name: 'Mixpanel', icon: 'fa-chart-bar', description: 'Product analytics', category: 'analytics' },
+                { name: 'Google Analytics', icon: 'fa-chart-line', description: 'Web analytics', category: 'analytics' },
+                { name: 'Airtable', icon: 'fa-table', description: 'Data organization', category: 'operations' }
+            ],
+            'international-expansion': [
+                { name: 'Stripe', icon: 'fa-credit-card', description: 'Multi-currency payments', category: 'finance' },
+                { name: 'Lokalise', icon: 'fa-language', description: 'App localization', category: 'product' },
+                { name: 'Wise', icon: 'fa-globe', description: 'International banking', category: 'finance' }
+            ],
+            'operations-legal': [
+                { name: 'Clerky', icon: 'fa-gavel', description: 'Legal documents', category: 'legal' },
+                { name: 'Stripe', icon: 'fa-credit-card', description: 'Payment infrastructure', category: 'finance' },
+                { name: 'Gusto', icon: 'fa-users', description: 'Payroll & compliance', category: 'operations' }
+            ],
+            'growth-traction': [
+                { name: 'Mixpanel', icon: 'fa-chart-bar', description: 'Growth analytics', category: 'analytics' },
+                { name: 'HubSpot', icon: 'fa-magnet', description: 'Marketing automation', category: 'marketing' },
+                { name: 'Google Ads', icon: 'fa-ad', description: 'Paid acquisition', category: 'marketing' }
+            ],
+            'team-building': [
+                { name: 'Linear', icon: 'fa-tasks', description: 'Team collaboration', category: 'product' },
+                { name: 'Notion', icon: 'fa-file-alt', description: 'Team wiki & docs', category: 'product' },
+                { name: 'Gusto', icon: 'fa-users', description: 'HR & payroll', category: 'operations' }
+            ],
+            'launch-product': [
+                { name: 'ProductHunt', icon: 'fa-trophy', description: 'Launch platform', category: 'marketing' },
+                { name: 'Buffer', icon: 'fa-share-alt', description: 'Social scheduling', category: 'marketing' },
+                { name: 'Vercel', icon: 'fa-cloud', description: 'Deploy updates', category: 'infrastructure' }
+            ]
+        };
+
         const objectiveData = {
+            'finding-cofounders': {
+                title: 'Finding Co-founders',
+                icon: 'fa-user-friends',
+                description: 'Find the right co-founder who complements your skills and shares your vision.',
+                missions: ['define-cofounder-needs', 'cofounder-outreach', 'cofounder-interviews', 'equity-agreement', 'cofounder-onboarding'],
+                progress: 0,
+                total: 5,
+                whyItMatters: [
+                    'Find complementary skills and shared vision',
+                    'Distribute workload and accelerate progress',
+                    'Increase chances of startup success'
+                ]
+            },
             'idea-validation': {
                 title: 'Idea Validation',
                 icon: 'fa-lightbulb',
@@ -338,7 +615,11 @@
                 missions: ['validate-idea', 'problem-survey', 'landing-page', 'social-media-test', 'no-code-prototype', 'competitor-analysis'],
                 progress: 2,
                 total: 6,
-                estimatedTime: '2-4 weeks'
+                whyItMatters: [
+                    'Avoid building something nobody wants',
+                    'Save time and money by validating early',
+                    'Build confidence in your direction'
+                ]
             },
             'mvp-development': {
                 title: 'MVP Development',
@@ -347,7 +628,11 @@
                 missions: ['product-requirements-doc', 'choose-tech-stack', 'design-mockups', 'dev-environment-setup', 'github-setup', 'build-mvp'],
                 progress: 1,
                 total: 6,
-                estimatedTime: '1-2 months'
+                whyItMatters: [
+                    'Test core assumptions with real users',
+                    'Get to market faster with focused features',
+                    'Learn and iterate based on feedback'
+                ]
             },
             'operations-legal': {
                 title: 'Operations & Legal',
@@ -356,7 +641,11 @@
                 missions: ['business-entity', 'stripe-setup', 'security-audit', 'analytics-setup'],
                 progress: 0,
                 total: 4,
-                estimatedTime: '2-3 weeks'
+                whyItMatters: [
+                    'Protect personal assets with proper structure',
+                    'Ensure compliance and avoid legal issues',
+                    'Build trust with customers and investors'
+                ]
             },
             'growth-traction': {
                 title: 'Growth & Traction',
@@ -365,7 +654,11 @@
                 missions: ['analytics-setup', 'landing-page', 'customer-interviews', 'launch-product-hunt'],
                 progress: 0,
                 total: 4,
-                estimatedTime: '4-6 weeks'
+                whyItMatters: [
+                    'Achieve product-market fit systematically',
+                    'Scale revenue predictably and efficiently',
+                    'Attract investors with proven traction'
+                ]
             },
             'fundraising': {
                 title: 'Fundraising',
@@ -374,7 +667,11 @@
                 missions: ['business-entity', 'analytics-setup', 'validate-idea', 'customer-interviews'],
                 progress: 0,
                 total: 4,
-                estimatedTime: '6-8 weeks'
+                whyItMatters: [
+                    'Accelerate growth with strategic capital',
+                    'Access valuable advisor networks',
+                    'Validate business model with investors'
+                ]
             },
             'team-building': {
                 title: 'Team Building',
@@ -383,7 +680,11 @@
                 missions: ['github-setup', 'security-audit', 'analytics-setup', 'business-entity'],
                 progress: 0,
                 total: 5,
-                estimatedTime: '3-4 weeks'
+                whyItMatters: [
+                    'Build a culture that attracts top talent',
+                    'Scale beyond what you can do alone',
+                    'Create lasting competitive advantage'
+                ]
             },
             'launch-product': {
                 title: 'Launch Your Product',
@@ -392,7 +693,11 @@
                 missions: ['go-to-market-strategy', 'apple-dev-account', 'launch-product-hunt', 'landing-page', 'stripe-setup'],
                 progress: 0,
                 total: 5,
-                estimatedTime: '3-4 weeks'
+                whyItMatters: [
+                    'Create momentum with strategic launch',
+                    'Maximize initial user acquisition',
+                    'Build foundation for sustainable growth'
+                ]
             },
             'product-launch': {
                 title: 'Product Launch',
@@ -401,7 +706,11 @@
                 missions: ['launch-product-hunt', 'landing-page', 'analytics-setup', 'stripe-setup'],
                 progress: 0,
                 total: 4,
-                estimatedTime: '2-3 weeks'
+                whyItMatters: [
+                    'Make a strong first impression',
+                    'Generate buzz and early adopters',
+                    'Set trajectory for future growth'
+                ]
             },
             'scale-optimize': {
                 title: 'Scale & Optimize',
@@ -410,7 +719,11 @@
                 missions: ['process-automation', 'performance-optimization', 'cost-optimization', 'analytics-setup', 'security-audit', 'infrastructure-scaling', 'monitoring-setup'],
                 progress: 0,
                 total: 7,
-                estimatedTime: '4-6 weeks'
+                whyItMatters: [
+                    'Handle growth without breaking systems',
+                    'Improve margins through efficiency',
+                    'Prepare for next stage of expansion'
+                ]
             },
             'customer-success': {
                 title: 'Customer Success',
@@ -419,7 +732,11 @@
                 missions: ['customer-onboarding', 'support-system', 'feedback-loops', 'customer-health-tracking', 'retention-strategies', 'community-building'],
                 progress: 0,
                 total: 6,
-                estimatedTime: '3-5 weeks'
+                whyItMatters: [
+                    'Reduce churn and increase lifetime value',
+                    'Turn customers into advocates',
+                    'Build sustainable competitive moat'
+                ]
             },
             'marketing-branding': {
                 title: 'Marketing & Branding',
@@ -428,7 +745,11 @@
                 missions: ['brand-identity', 'content-strategy', 'social-media-setup', 'email-marketing', 'seo-optimization', 'paid-advertising', 'influencer-outreach', 'pr-strategy'],
                 progress: 0,
                 total: 8,
-                estimatedTime: '4-6 weeks'
+                whyItMatters: [
+                    'Stand out in crowded markets',
+                    'Build trust and brand loyalty',
+                    'Drive consistent customer acquisition'
+                ]
             },
             'sales-process': {
                 title: 'Sales Process',
@@ -437,7 +758,11 @@
                 missions: ['sales-playbook', 'crm-setup', 'lead-qualification', 'demo-process', 'pricing-strategy', 'sales-collateral', 'pipeline-management'],
                 progress: 0,
                 total: 7,
-                estimatedTime: '3-5 weeks'
+                whyItMatters: [
+                    'Create predictable revenue growth',
+                    'Scale sales beyond founder-led',
+                    'Optimize conversion and deal size'
+                ]
             },
             'data-analytics': {
                 title: 'Data & Analytics',
@@ -446,7 +771,11 @@
                 missions: ['analytics-setup', 'kpi-dashboard', 'data-warehouse', 'reporting-automation', 'ab-testing-framework'],
                 progress: 0,
                 total: 5,
-                estimatedTime: '3-4 weeks'
+                whyItMatters: [
+                    'Make informed decisions, not guesses',
+                    'Identify opportunities and problems early',
+                    'Measure and improve what matters'
+                ]
             },
             'international-expansion': {
                 title: 'International Expansion',
@@ -455,7 +784,11 @@
                 missions: ['market-research-international', 'localization-strategy', 'international-legal', 'currency-payment-setup', 'international-shipping', 'local-partnerships', 'cultural-adaptation', 'international-marketing', 'global-support'],
                 progress: 0,
                 total: 9,
-                estimatedTime: '6-8 weeks'
+                whyItMatters: [
+                    'Access larger addressable markets',
+                    'Diversify revenue across regions',
+                    'Build a truly global company'
+                ]
             }
         };
 
@@ -473,21 +806,177 @@
                 document.getElementById('objective-title').textContent = objective.title;
                 document.getElementById('objective-description').textContent = objective.description;
                 
-                // Update mission status in lower left
-                const missionStatusDisplay = document.querySelector('.lg\\:col-span-2 p.text-lg');
+                // Update mission status above missions
+                const missionStatusDisplay = document.getElementById('mission-status');
                 if (missionStatusDisplay) {
                     missionStatusDisplay.textContent = `${objective.progress}/${objective.total} Missions Complete`;
                 }
                 
-                // Update estimated time in gray box
-                const timeDisplay = document.querySelector('.bg-section-bg p.text-2xl');
-                if (timeDisplay) {
-                    timeDisplay.textContent = objective.estimatedTime || '2-4 weeks';
-                }
                 
                 // Load missions
                 loadMissions(objective.missions, objective);
+                
+                // Load recommended apps
+                loadRecommendedApps(objectiveId);
+                
+                // Load recommended tools
+                loadRecommendedTools(objectiveId);
+                
+                // Load why it matters bullets
+                loadWhyItMatters(objective);
+                
+                // Update objective counter
+                const objectiveIds = Object.keys(objectiveData);
+                const currentIndex = objectiveIds.indexOf(objectiveId);
+                if (currentIndex !== -1) {
+                    document.getElementById('objective-counter').textContent = `${currentIndex + 1} of ${objectiveIds.length}`;
+                }
             }
+        }
+        
+        // Load why it matters bullets
+        function loadWhyItMatters(objective) {
+            const container = document.getElementById('why-matters-bullets');
+            if (!container || !objective.whyItMatters) return;
+            
+            let html = '';
+            objective.whyItMatters.forEach(bullet => {
+                html += `
+                    <div class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-success mt-0.5 flex-shrink-0"></i>
+                        <p class="text-sm text-text-secondary">${bullet}</p>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Load recommended apps for the objective
+        function loadRecommendedApps(objectiveId) {
+            const container = document.getElementById('recommended-apps-container');
+            const apps = recommendedApps[objectiveId];
+            
+            if (!apps) {
+                container.innerHTML = `
+                    <div class="text-center py-4">
+                        <p class="text-sm text-text-secondary">No specific apps recommended yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            // Add primary app
+            if (apps.primary) {
+                const colorStyles = {
+                    'blue': 'bg-blue-50 border-blue-200 hover:bg-blue-100 text-blue-600',
+                    'yellow': 'bg-yellow-50 border-yellow-200 hover:bg-yellow-100 text-yellow-600',
+                    'green': 'bg-green-50 border-green-200 hover:bg-green-100 text-green-600',
+                    'purple': 'bg-purple-50 border-purple-200 hover:bg-purple-100 text-purple-600',
+                    'red': 'bg-red-50 border-red-200 hover:bg-red-100 text-red-600',
+                    'orange': 'bg-orange-50 border-orange-200 hover:bg-orange-100 text-orange-600',
+                    'indigo': 'bg-indigo-50 border-indigo-200 hover:bg-indigo-100 text-indigo-600'
+                };
+                
+                const style = colorStyles[apps.primary.color] || colorStyles['blue'];
+                
+                html += `
+                    <a href="${apps.primary.url}" class="flex items-center gap-3 p-3 ${style.split(' ').slice(0, 3).join(' ')} border rounded ${style.split(' ').slice(3).join(' ')} transition-all group">
+                        <i class="fas ${apps.primary.icon} ${style.split(' ').pop()}"></i>
+                        <div class="flex-1">
+                            <span class="text-sm font-medium text-text-primary">${apps.primary.name}</span>
+                            <p class="text-xs text-text-secondary">${apps.primary.description}</p>
+                        </div>
+                    </a>
+                `;
+            }
+            
+            // Add secondary app if exists
+            if (apps.secondary) {
+                const colorStyles = {
+                    'blue': 'bg-blue-50 border-blue-200 hover:bg-blue-100 text-blue-600',
+                    'yellow': 'bg-yellow-50 border-yellow-200 hover:bg-yellow-100 text-yellow-600',
+                    'green': 'bg-green-50 border-green-200 hover:bg-green-100 text-green-600',
+                    'purple': 'bg-purple-50 border-purple-200 hover:bg-purple-100 text-purple-600',
+                    'red': 'bg-red-50 border-red-200 hover:bg-red-100 text-red-600',
+                    'orange': 'bg-orange-50 border-orange-200 hover:bg-orange-100 text-orange-600',
+                    'indigo': 'bg-indigo-50 border-indigo-200 hover:bg-indigo-100 text-indigo-600'
+                };
+                
+                const style = colorStyles[apps.secondary.color] || colorStyles['blue'];
+                
+                html += `
+                    <a href="${apps.secondary.url}" class="flex items-center gap-3 p-3 ${style.split(' ').slice(0, 3).join(' ')} border rounded ${style.split(' ').slice(3).join(' ')} transition-all group">
+                        <i class="fas ${apps.secondary.icon} ${style.split(' ').pop()}"></i>
+                        <div class="flex-1">
+                            <span class="text-sm font-medium text-text-primary">${apps.secondary.name}</span>
+                            <p class="text-xs text-text-secondary">${apps.secondary.description}</p>
+                        </div>
+                    </a>
+                `;
+            }
+            
+            // Add tertiary app if exists
+            if (apps.tertiary) {
+                const colorStyles = {
+                    'gray': 'bg-gray-50 border-gray-200 hover:bg-gray-100 text-gray-600',
+                    'blue': 'bg-blue-50 border-blue-200 hover:bg-blue-100 text-blue-600',
+                    'green': 'bg-green-50 border-green-200 hover:bg-green-100 text-green-600',
+                    'purple': 'bg-purple-50 border-purple-200 hover:bg-purple-100 text-purple-600',
+                    'cyan': 'bg-cyan-50 border-cyan-200 hover:bg-cyan-100 text-cyan-600',
+                    'red': 'bg-red-50 border-red-200 hover:bg-red-100 text-red-600',
+                    'orange': 'bg-orange-50 border-orange-200 hover:bg-orange-100 text-orange-600',
+                    'indigo': 'bg-indigo-50 border-indigo-200 hover:bg-indigo-100 text-indigo-600'
+                };
+                
+                const style = colorStyles[apps.tertiary.color] || colorStyles['blue'];
+                
+                html += `
+                    <a href="${apps.tertiary.url}" class="flex items-center gap-3 p-3 ${style.split(' ').slice(0, 3).join(' ')} border rounded ${style.split(' ').slice(3).join(' ')} transition-all group">
+                        <i class="fas ${apps.tertiary.icon} ${style.split(' ').pop()}"></i>
+                        <div class="flex-1">
+                            <span class="text-sm font-medium text-text-primary">${apps.tertiary.name}</span>
+                            <p class="text-xs text-text-secondary">${apps.tertiary.description}</p>
+                        </div>
+                    </a>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        // Load recommended tools for the objective
+        function loadRecommendedTools(objectiveId) {
+            const container = document.getElementById('recommended-tools-container');
+            const tools = recommendedTools[objectiveId];
+            
+            if (!tools || tools.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-4">
+                        <p class="text-sm text-text-secondary">No specific tools recommended yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            // Add each tool
+            tools.forEach(tool => {
+                html += `
+                    <a href="tools.html?category=${tool.category}" class="flex items-center gap-3 p-3 bg-section-bg rounded hover:bg-primary hover:text-white transition-all group">
+                        <i class="fas ${tool.icon} text-primary group-hover:text-white"></i>
+                        <div class="flex-1">
+                            <span class="text-sm font-medium">${tool.name}</span>
+                            <p class="text-xs text-text-secondary group-hover:text-white/80">${tool.description}</p>
+                        </div>
+                    </a>
+                `;
+            });
+            
+            container.innerHTML = html;
         }
         
         // Call initialization immediately
@@ -572,7 +1061,6 @@
                             ` : `
                                 <div class="mt-4">
                                     <div class="space-y-1">
-                                        <p class="text-sm text-text-secondary">Est. time: ${mission.estimatedTime}</p>
                                         <p class="text-sm text-text-secondary">Difficulty: ${mission.difficulty}</p>
                                     </div>
                                 </div>
@@ -597,6 +1085,28 @@
 
         function goBack() {
             window.location.href = 'flightplan.html';
+        }
+        
+        // Navigate to next or previous objective
+        function navigateObjective(direction) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentObjectiveId = urlParams.get('objective') || 'idea-validation';
+            
+            // Get all objective IDs in order
+            const objectiveIds = Object.keys(objectiveData);
+            const currentIndex = objectiveIds.indexOf(currentObjectiveId);
+            
+            if (currentIndex === -1) return;
+            
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % objectiveIds.length;
+            } else {
+                newIndex = currentIndex === 0 ? objectiveIds.length - 1 : currentIndex - 1;
+            }
+            
+            const newObjectiveId = objectiveIds[newIndex];
+            window.location.href = `objective-detail.html?objective=${newObjectiveId}`;
         }
         
         // Toggle action dropdown
@@ -690,6 +1200,21 @@
                 // Re-initialize page to ensure all data is loaded
                 initializePage();
             }, 100);
+        });
+        
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            // Only trigger if no input is focused
+            if (document.activeElement.tagName === 'INPUT' || 
+                document.activeElement.tagName === 'TEXTAREA') {
+                return;
+            }
+            
+            if (event.key === 'ArrowLeft') {
+                navigateObjective('prev');
+            } else if (event.key === 'ArrowRight') {
+                navigateObjective('next');
+            }
         });
     </script>
 

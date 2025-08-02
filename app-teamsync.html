@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamSync - Team Collaboration Hub | FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    <script src="app-launch-panel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- App Header -->
+            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
+                            <i class="fas fa-arrow-left text-text-secondary"></i>
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users-cog text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-text-primary">TeamSync</h1>
+                                <p class="text-sm text-text-secondary">Team collaboration & culture builder</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                            <span id="app-counter" class="text-xs text-text-secondary px-2">17 of 17</span>
+                            <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                        </div>
+                        <button class="px-4 py-2 bg-section-bg text-text-secondary rounded-lg hover:bg-gray-200 transition-all">
+                            <i class="fas fa-calendar-plus mr-2"></i>Schedule Sync
+                        </button>
+                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                            <i class="fas fa-play mr-2"></i>Configure
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="p-8">
+                <!-- Team Health Overview -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Team Health Score -->
+                    <div class="lg:col-span-2 bg-gradient-to-r from-teal-50 to-cyan-50 rounded-xl p-6 border border-teal-200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold text-text-primary">Team Health Score</h2>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-heart text-red-500"></i>
+                                <span class="text-2xl font-bold text-text-primary">87%</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-smile text-2xl text-success"></i>
+                                </div>
+                                <p class="text-xs text-text-muted">Happiness</p>
+                                <p class="text-sm font-bold">92%</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-comments text-2xl text-info"></i>
+                                </div>
+                                <p class="text-xs text-text-muted">Communication</p>
+                                <p class="text-sm font-bold">85%</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-trophy text-2xl text-warning"></i>
+                                </div>
+                                <p class="text-xs text-text-muted">Productivity</p>
+                                <p class="text-sm font-bold">88%</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <i class="fas fa-handshake text-2xl text-purple-600"></i>
+                                </div>
+                                <p class="text-xs text-text-muted">Collaboration</p>
+                                <p class="text-sm font-bold">84%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Stats -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Team Overview</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Team Size</span>
+                                <span class="text-sm font-medium">8 members</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Avg Tenure</span>
+                                <span class="text-sm font-medium">14 months</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Time Zones</span>
+                                <span class="text-sm font-medium">3 zones</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Next Sync</span>
+                                <span class="text-sm font-medium text-primary">Tomorrow 2pm</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Members -->
+                <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-semibold text-text-primary">Team Members</h3>
+                        <button class="text-sm text-primary hover:text-primary-hover">Add Member →</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="text-center p-4 border border-border rounded-lg hover:shadow-md transition-all">
+                            <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <span class="text-white font-bold text-xl">SC</span>
+                            </div>
+                            <h4 class="font-medium text-text-primary">Sarah Chen</h4>
+                            <p class="text-xs text-text-muted mb-2">Co-founder & CEO</p>
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">Active</span>
+                                <span class="text-xs text-text-muted">PST</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center p-4 border border-border rounded-lg hover:shadow-md transition-all">
+                            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <span class="text-white font-bold text-xl">MJ</span>
+                            </div>
+                            <h4 class="font-medium text-text-primary">Mike Johnson</h4>
+                            <p class="text-xs text-text-muted mb-2">CTO</p>
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">Active</span>
+                                <span class="text-xs text-text-muted">EST</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center p-4 border border-border rounded-lg hover:shadow-md transition-all">
+                            <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <span class="text-white font-bold text-xl">AR</span>
+                            </div>
+                            <h4 class="font-medium text-text-primary">Alex Rodriguez</h4>
+                            <p class="text-xs text-text-muted mb-2">Head of Product</p>
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-700 rounded">Away</span>
+                                <span class="text-xs text-text-muted">CST</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center p-4 border border-border rounded-lg hover:shadow-md transition-all">
+                            <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full mx-auto mb-3 flex items-center justify-center">
+                                <span class="text-white font-bold text-xl">JK</span>
+                            </div>
+                            <h4 class="font-medium text-text-primary">Jamie Kim</h4>
+                            <p class="text-xs text-text-muted mb-2">Lead Engineer</p>
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">Active</span>
+                                <span class="text-xs text-text-muted">PST</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Collaboration Tools -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Team Activities -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Team Building Activities</h3>
+                        <div class="space-y-3">
+                            <div class="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-text-primary">Weekly Stand-up Bingo</h4>
+                                    <span class="text-xs text-purple-600">Every Monday</span>
+                                </div>
+                                <p class="text-sm text-text-secondary mb-2">Fun way to start the week with team updates</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex -space-x-2">
+                                        <div class="w-6 h-6 bg-purple-200 rounded-full"></div>
+                                        <div class="w-6 h-6 bg-purple-300 rounded-full"></div>
+                                        <div class="w-6 h-6 bg-purple-400 rounded-full"></div>
+                                        <span class="text-xs text-text-muted ml-2">+5</span>
+                                    </div>
+                                    <button class="text-xs text-purple-600 hover:text-purple-700">Join →</button>
+                                </div>
+                            </div>
+                            
+                            <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-text-primary">Virtual Coffee Chat</h4>
+                                    <span class="text-xs text-blue-600">Tomorrow 3pm</span>
+                                </div>
+                                <p class="text-sm text-text-secondary mb-2">Casual 15-min breaks to connect</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex -space-x-2">
+                                        <div class="w-6 h-6 bg-blue-200 rounded-full"></div>
+                                        <div class="w-6 h-6 bg-blue-300 rounded-full"></div>
+                                        <span class="text-xs text-text-muted ml-2">+2</span>
+                                    </div>
+                                    <button class="text-xs text-blue-600 hover:text-blue-700">RSVP →</button>
+                                </div>
+                            </div>
+                            
+                            <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-medium text-text-primary">Team Trivia Night</h4>
+                                    <span class="text-xs text-green-600">Friday 5pm</span>
+                                </div>
+                                <p class="text-sm text-text-secondary mb-2">Monthly knowledge showdown!</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex -space-x-2">
+                                        <div class="w-6 h-6 bg-green-200 rounded-full"></div>
+                                        <div class="w-6 h-6 bg-green-300 rounded-full"></div>
+                                        <div class="w-6 h-6 bg-green-400 rounded-full"></div>
+                                        <span class="text-xs text-text-muted ml-2">+3</span>
+                                    </div>
+                                    <button class="text-xs text-green-600 hover:text-green-700">Sign up →</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Culture Dashboard -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4">Culture Pulse</h3>
+                        <canvas id="cultureChart" height="250"></canvas>
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div class="text-center p-3 bg-section-bg rounded-lg">
+                                <p class="text-2xl font-bold text-text-primary">4.7/5</p>
+                                <p class="text-xs text-text-muted">Team Satisfaction</p>
+                            </div>
+                            <div class="text-center p-3 bg-section-bg rounded-lg">
+                                <p class="text-2xl font-bold text-success">+12%</p>
+                                <p class="text-xs text-text-muted">Engagement Growth</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recognition & Feedback -->
+                <div class="bg-card-bg border border-border rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-text-primary">Recognition Wall</h3>
+                        <button class="text-sm text-primary hover:text-primary-hover">Give Kudos →</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fas fa-star text-yellow-500 text-xl"></i>
+                                <div>
+                                    <p class="font-medium text-sm">MVP of the Week</p>
+                                    <p class="text-xs text-text-muted">Sarah Chen</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">"Crushed the investor pitch and secured our seed round!"</p>
+                        </div>
+                        
+                        <div class="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fas fa-hands-helping text-purple-500 text-xl"></i>
+                                <div>
+                                    <p class="font-medium text-sm">Team Player</p>
+                                    <p class="text-xs text-text-muted">Mike Johnson</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">"Always there to help debug and mentor the team"</p>
+                        </div>
+                        
+                        <div class="p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fas fa-lightbulb text-green-500 text-xl"></i>
+                                <div>
+                                    <p class="font-medium text-sm">Innovation Award</p>
+                                    <p class="text-xs text-text-muted">Alex Rodriguez</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">"Revolutionary feature idea that users love!"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('apps');
+
+        // App navigation
+        const appPages = [
+            'app-economaestro.html',
+            'app-runway.html',
+            'app-cofoundermatch.html',
+            'app-validateai.html',
+            'app-shipfast.html',
+            'app-firstusers.html',
+            'app-pitchperfect.html',
+            'app-launchpad.html',
+            'app-scaleops.html',
+            'app-delightiq.html',
+            'app-brandforge.html',
+            'app-salesflow.html',
+            'app-insighthub.html',
+            'app-searchmaster.html',
+            'app-goglobal.html',
+            'app-legalshield.html',
+            'app-teamsync.html'
+        ];
+
+        // Update counter
+        const currentUrl = window.location.pathname.split('/').pop();
+        const currentIndex = appPages.indexOf(currentUrl);
+        if (currentIndex !== -1) {
+            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
+        }
+
+        function navigateApp(direction) {
+            const currentUrl = window.location.pathname.split('/').pop();
+            const currentIndex = appPages.indexOf(currentUrl);
+            
+            if (currentIndex === -1) return;
+            
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % appPages.length;
+            } else {
+                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
+            }
+            
+            window.location.href = appPages[newIndex];
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.altKey && event.key === 'ArrowLeft') {
+                navigateApp('prev');
+            } else if (event.altKey && event.key === 'ArrowRight') {
+                navigateApp('next');
+            }
+        });
+        
+        // Culture Chart
+        const ctx = document.getElementById('cultureChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['Trust', 'Innovation', 'Work-Life Balance', 'Growth', 'Recognition', 'Communication'],
+                datasets: [{
+                    label: 'Current',
+                    data: [90, 85, 82, 88, 87, 85],
+                    backgroundColor: 'rgba(20, 184, 166, 0.2)',
+                    borderColor: 'rgba(20, 184, 166, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(20, 184, 166, 1)'
+                }, {
+                    label: 'Target',
+                    data: [95, 90, 90, 90, 90, 90],
+                    backgroundColor: 'rgba(156, 163, 175, 0.1)',
+                    borderColor: 'rgba(156, 163, 175, 0.5)',
+                    borderWidth: 1,
+                    borderDash: [5, 5],
+                    pointBackgroundColor: 'rgba(156, 163, 175, 0.5)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        }
+                    }
+                }
+            }
+        });
+        
+        // launchApp function is now handled by app-launch-panel.js
+        
+        // Go back to previous page
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Fallback to apps page if no history
+                window.location.href = 'apps.html';
+            }
+        }
+    </script>
+</body>
+</html>

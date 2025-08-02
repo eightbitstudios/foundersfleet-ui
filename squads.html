@@ -10,6 +10,7 @@
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
+    <script src="change-plan-panel.js"></script>
     
     <script>
         tailwind.config = {
@@ -94,6 +95,19 @@
                     </button>
                 </div>
 
+                <!-- Pricing Notice -->
+                <div class="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm">
+                            <span class="font-medium text-text-primary">You're on the Pro plan:</span>
+                            <span class="text-text-secondary">3/3 Squads | 3/3 Apps</span>
+                        </p>
+                        <button onclick="openPlanPanel()" class="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                            Change Plan
+                        </button>
+                    </div>
+                </div>
+
                 <!-- Squad Matching Onboarding Module -->
                 <div id="squad-onboarding" class="mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-6 relative">
                     <button onclick="dismissSquadOnboarding()" class="absolute top-4 right-4 text-white/60 hover:text-white transition-all">
@@ -141,15 +155,15 @@
                     <!-- Your Squads Tab -->
                     <div id="your-squads-content" class="block">
                         <div class="space-y-4">
-                            <!-- Squad Alpha -->
-                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=alpha'">
+                            <!-- Squad MVP -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=mvp'">
                                 <div class="flex items-center justify-between mb-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
                                             <i class="fas fa-rocket text-white text-xl"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-xl font-bold text-text-primary">Squad Alpha</h3>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad MVP</h3>
                                             <p class="text-text-secondary text-xs">B2B SaaS • Build Stage</p>
                                         </div>
                                     </div>
@@ -167,56 +181,56 @@
                                 </div>
                             </div>
 
-                            <!-- Squad Beta -->
-                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=beta'">
+                            <!-- Squad B2B SaaS -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=b2b-saas'">
                                 <div class="flex items-center justify-between mb-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-chart-line text-white text-xl"></i>
+                                            <i class="fas fa-cloud text-white text-xl"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-xl font-bold text-text-primary">Squad Beta</h3>
-                                            <p class="text-text-secondary text-xs">E-commerce • Growth Stage</p>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad B2B SaaS</h3>
+                                            <p class="text-text-secondary text-xs">Enterprise SaaS • Scale Stage</p>
                                         </div>
                                     </div>
                                     <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Active</span>
                                 </div>
-                                <p class="text-text-secondary text-sm line-clamp-2 mb-4">Scaling e-commerce to 7-figures through shared tactics and relentless accountability.</p>
+                                <p class="text-text-secondary text-sm line-clamp-2 mb-4">Enterprise SaaS founders focused on scaling from $1M to $10M ARR. Weekly sync on sales, product, and growth.</p>
                                 <div class="flex items-center justify-between pt-4 border-t border-border">
                                     <div class="flex -space-x-2">
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">MP</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">CR</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">TS</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">+1</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">DK</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">LM</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">RS</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">+2</div>
                                     </div>
-                                    <span class="text-text-muted text-xs font-medium uppercase">4/5 SEATS FILLED</span>
+                                    <span class="text-text-muted text-xs font-medium uppercase">5/5 SEATS FILLED</span>
                                 </div>
                             </div>
 
-                            <!-- Squad Charlie (Pending) -->
-                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer opacity-75" onclick="window.location.href='squad-detail.html?squad=charlie'">
+
+                            <!-- Squad AI/ML -->
+                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=ai-ml'">
                                 <div class="flex items-center justify-between mb-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-users text-white text-xl"></i>
+                                            <i class="fas fa-robot text-white text-xl"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-xl font-bold text-text-primary">Squad Charlie</h3>
-                                            <p class="text-text-secondary text-xs">FinTech • Idea Stage</p>
+                                            <h3 class="text-xl font-bold text-text-primary">Squad AI/ML</h3>
+                                            <p class="text-text-secondary text-xs">AI/ML • Build Stage</p>
                                         </div>
                                     </div>
-                                    <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded">Pending</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Active</span>
                                 </div>
-                                <p class="text-text-secondary text-sm line-clamp-2 mb-4">FinTech innovators exploring blockchain and DeFi opportunities.</p>
+                                <p class="text-text-secondary text-sm line-clamp-2 mb-4">Deep tech founders pushing the boundaries of AI and machine learning.</p>
                                 <div class="flex items-center justify-between pt-4 border-t border-border">
                                     <div class="flex -space-x-2">
                                         <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">DT</div>
                                         <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">KL</div>
-                                        <div class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-xs font-semibold border-2 border-white">
-                                            <i class="fas fa-lock text-gray-500"></i>
-                                        </div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">AS</div>
+                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">+2</div>
                                     </div>
-                                    <span class="text-text-muted text-xs font-medium uppercase">2/5 SEATS FILLED</span>
+                                    <span class="text-text-muted text-xs font-medium uppercase">5/5 SEATS FILLED</span>
                                 </div>
                             </div>
                         </div>

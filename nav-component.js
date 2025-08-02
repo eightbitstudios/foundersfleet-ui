@@ -4,7 +4,7 @@ function renderNavigation(currentPage) {
   const navItems = [
     { href: 'flightplan.html', icon: 'fa-solid fa-route', page: 'flightplan' },
     { href: 'squads.html', icon: 'fa-solid fa-people-group', page: 'squads' },
-    { href: 'founders.html', icon: 'fa-solid fa-address-book', page: 'founders' },
+    { href: 'contacts.html', icon: 'fa-solid fa-address-book', page: 'contacts' },
     { href: 'tools.html', icon: 'fas fa-wrench', page: 'tools' },
     { href: 'apps.html', icon: 'fa-solid fa-shapes', page: 'apps' }
   ];

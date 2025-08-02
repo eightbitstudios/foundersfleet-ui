@@ -1,7 +1,7 @@
 // Squad data
 const squadData = {
-    'alpha': {
-        name: 'Squad Alpha',
+    'mvp': {
+        name: 'Squad MVP',
         icon: 'fa-rocket',
         tagline: 'B2B SaaS • Build Stage',
         status: 'Active',
@@ -87,14 +87,14 @@ const squadData = {
             { completed: true, text: 'Complete customer discovery' }
         ]
     },
-    'beta': {
-        name: 'Squad Beta',
-        icon: 'fa-chart-line',
-        tagline: 'E-commerce • Growth Stage',
+    'b2b-saas': {
+        name: 'Squad B2B SaaS',
+        icon: 'fa-cloud',
+        tagline: 'Enterprise SaaS • Scale Stage',
         status: 'Active',
         statusColor: 'green',
         founded: '4 months ago',
-        description: 'Scaling e-commerce to 7-figures through shared tactics and relentless accountability. We share conversion strategies, supply chain hacks, and growth experiments.',
+        description: 'Enterprise SaaS founders focused on scaling from $1M to $10M ARR. Weekly sync on sales, product, and growth.',
         schedule: 'Every Tuesday, 3:00 PM EST',
         nextMeeting: 'Tomorrow',
         members: [
@@ -174,12 +174,12 @@ const squadData = {
             { completed: false, text: 'Expand to 3 new markets' }
         ]
     },
-    'charlie': {
-        name: 'Squad Charlie',
-        icon: 'fa-brain',
-        tagline: 'AI/ML • Seed Stage',
-        status: 'Pending',
-        statusColor: 'yellow',
+    'ai-ml': {
+        name: 'Squad AI/ML',
+        icon: 'fa-robot',
+        tagline: 'AI/ML • Build Stage',
+        status: 'Active',
+        statusColor: 'green',
         founded: '3 weeks ago',
         description: 'Deep tech founders building intelligent systems. Technical depth meets business velocity. We dive deep into model architecture, data pipelines, and go-to-market for AI products.',
         schedule: 'Every Monday, 4:00 PM EST',
@@ -250,7 +250,7 @@ const squadData = {
 // Load squad detail based on URL parameter
 function loadSquadDetail() {
     const urlParams = new URLSearchParams(window.location.search);
-    const squadId = urlParams.get('squad') || 'alpha';
+    const squadId = urlParams.get('squad') || 'mvp';
     const squad = squadData[squadId];
     
     if (!squad) {

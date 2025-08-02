@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaunchPad - Product Launch Platform | FoundersFleet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="nav-component.js"></script>
+    <script src="app-launch-panel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#000000',
+                        'primary-hover': '#333333',
+                        'background': '#F8F9FA',
+                        'card-bg': '#FFFFFF',
+                        'text-primary': '#000000',
+                        'text-secondary': '#666666',
+                        'text-muted': '#999999',
+                        'border': '#E5E5E5',
+                        'section-bg': '#FAFAFA',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                        'danger': '#EF4444',
+                        'info': '#3B82F6'
+                    },
+                    borderRadius: {
+                        'xl': '32px'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .launch-card {
+            transition: all 0.3s ease;
+        }
+        .launch-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        }
+        .countdown-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .checklist-item {
+            transition: all 0.2s ease;
+        }
+        .checklist-item:hover {
+            background: #F3F4F6;
+        }
+        @keyframes pulse-dot {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .launch-timeline {
+            position: relative;
+        }
+        .launch-timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #E5E5E5;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-inter flex">
+    <!-- Navigation Placeholder -->
+    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 bg-background overflow-hidden">
+        <main class="h-full overflow-auto">
+            <!-- App Header -->
+            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
+                            <i class="fas fa-arrow-left text-text-secondary"></i>
+                        </button>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-rocket text-white"></i>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-bold text-text-primary">LaunchPad</h1>
+                                <p class="text-sm text-text-secondary">Orchestrate your perfect product launch</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                            </button>
+                        </div>
+                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                            <i class="fas fa-play mr-2"></i>Configure
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div class="px-8 py-6">
+                <!-- Launch Countdown Dashboard -->
+                <div class="mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-8 border border-indigo-100">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-text-primary mb-2">Launch Countdown</h2>
+                            <p class="text-text-secondary mb-4">Everything you need for a successful launch</p>
+                            
+                            <!-- Countdown Timer -->
+                            <div class="flex items-center gap-4">
+                                <div class="countdown-item text-white rounded-lg p-4 text-center">
+                                    <div class="text-3xl font-bold">14</div>
+                                    <div class="text-xs uppercase">Days</div>
+                                </div>
+                                <div class="countdown-item text-white rounded-lg p-4 text-center">
+                                    <div class="text-3xl font-bold">08</div>
+                                    <div class="text-xs uppercase">Hours</div>
+                                </div>
+                                <div class="countdown-item text-white rounded-lg p-4 text-center">
+                                    <div class="text-3xl font-bold">32</div>
+                                    <div class="text-xs uppercase">Minutes</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow-sm text-center">
+                            <div class="text-sm text-text-muted mb-1">Launch Date</div>
+                            <div class="text-2xl font-bold text-text-primary">March 1</div>
+                            <div class="text-sm text-info mt-1">Friday, 9:00 AM PST</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Launch Checklist & Channels -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <!-- Pre-Launch Checklist -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-xl font-semibold text-text-primary">Pre-Launch Checklist</h3>
+                                <span class="text-sm text-text-secondary">12/15 Complete</span>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <!-- Product Ready -->
+                                <div class="checklist-item flex items-center gap-3 p-3 rounded-lg">
+                                    <input type="checkbox" checked class="w-4 h-4 text-success">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-text-primary">Product is stable and tested</div>
+                                        <div class="text-xs text-text-secondary">All critical bugs fixed, QA approved</div>
+                                    </div>
+                                    <i class="fas fa-check-circle text-success"></i>
+                                </div>
+                                
+                                <!-- Landing Page -->
+                                <div class="checklist-item flex items-center gap-3 p-3 rounded-lg">
+                                    <input type="checkbox" checked class="w-4 h-4 text-success">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-text-primary">Landing page optimized</div>
+                                        <div class="text-xs text-text-secondary">Copy reviewed, CTAs tested, analytics setup</div>
+                                    </div>
+                                    <i class="fas fa-check-circle text-success"></i>
+                                </div>
+                                
+                                <!-- Email Campaign -->
+                                <div class="checklist-item flex items-center gap-3 p-3 rounded-lg border border-warning bg-yellow-50">
+                                    <input type="checkbox" class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-text-primary">Email campaign scheduled</div>
+                                        <div class="text-xs text-warning">3 emails drafted, need final review</div>
+                                    </div>
+                                    <button class="text-xs text-primary hover:text-primary-hover">Review →</button>
+                                </div>
+                                
+                                <!-- Press Kit -->
+                                <div class="checklist-item flex items-center gap-3 p-3 rounded-lg">
+                                    <input type="checkbox" class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-text-primary">Press kit prepared</div>
+                                        <div class="text-xs text-text-secondary">Screenshots, logos, press release</div>
+                                    </div>
+                                    <span class="text-xs text-text-muted">0/5</span>
+                                </div>
+                                
+                                <!-- Support Team -->
+                                <div class="checklist-item flex items-center gap-3 p-3 rounded-lg opacity-60">
+                                    <input type="checkbox" disabled class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-text-primary">Support team briefed</div>
+                                        <div class="text-xs text-text-secondary">FAQs, response templates ready</div>
+                                    </div>
+                                    <span class="text-xs text-text-muted">Pending</span>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full mt-4 px-4 py-2 bg-section-bg text-text-primary rounded-lg hover:bg-gray-200 transition-all">
+                                View Full Checklist (15 items)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Launch Channels -->
+                    <div class="space-y-6">
+                        <!-- Channel Status -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Launch Channels</h3>
+                            <div class="space-y-3">
+                                <!-- Product Hunt -->
+                                <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-rocket text-orange-600"></i>
+                                        <div>
+                                            <div class="font-medium text-text-primary">Product Hunt</div>
+                                            <div class="text-xs text-text-secondary">Hunter secured</div>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-success text-white text-xs rounded">Ready</span>
+                                </div>
+                                
+                                <!-- Hacker News -->
+                                <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fab fa-hacker-news text-orange-600"></i>
+                                        <div>
+                                            <div class="font-medium text-text-primary">Hacker News</div>
+                                            <div class="text-xs text-text-secondary">Post drafted</div>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-warning text-white text-xs rounded">Prep</span>
+                                </div>
+                                
+                                <!-- Twitter/X -->
+                                <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fab fa-twitter text-blue-600"></i>
+                                        <div>
+                                            <div class="font-medium text-text-primary">Twitter/X</div>
+                                            <div class="text-xs text-text-secondary">Thread ready</div>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-info text-white text-xs rounded">Scheduled</span>
+                                </div>
+                                
+                                <!-- LinkedIn -->
+                                <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fab fa-linkedin text-blue-700"></i>
+                                        <div>
+                                            <div class="font-medium text-text-primary">LinkedIn</div>
+                                            <div class="text-xs text-text-secondary">Not started</div>
+                                        </div>
+                                    </div>
+                                    <span class="px-2 py-1 bg-gray-500 text-white text-xs rounded">Todo</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Launch Day Schedule -->
+                        <div class="bg-card-bg border border-border rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-text-primary mb-4">Launch Day</h3>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center justify-between py-2 border-b border-border">
+                                    <span class="text-text-secondary">6:00 AM</span>
+                                    <span class="font-medium">Product Hunt Live</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-border">
+                                    <span class="text-text-secondary">7:00 AM</span>
+                                    <span class="font-medium">Email Blast #1</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-border">
+                                    <span class="text-text-secondary">9:00 AM</span>
+                                    <span class="font-medium">Social Media Push</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-text-secondary">12:00 PM</span>
+                                    <span class="font-medium">Team Check-in</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Launch Analytics Preview -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Traffic Sources -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h3 class="text-xl font-semibold text-text-primary mb-4">Expected Traffic Sources</h3>
+                        <canvas id="trafficChart" class="w-full" height="200"></canvas>
+                    </div>
+                    
+                    <!-- Launch Goals -->
+                    <div class="bg-card-bg border border-border rounded-lg p-6">
+                        <h3 class="text-xl font-semibold text-text-primary mb-4">Launch Goals</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm font-medium">Sign-ups</span>
+                                    <span class="text-sm text-text-secondary">Target: 1,000</span>
+                                </div>
+                                <div class="bg-gray-200 rounded-full h-2">
+                                    <div class="bg-info h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm font-medium">Product Hunt Rank</span>
+                                    <span class="text-sm text-text-secondary">Target: Top 5</span>
+                                </div>
+                                <div class="bg-gray-200 rounded-full h-2">
+                                    <div class="bg-warning h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm font-medium">Press Mentions</span>
+                                    <span class="text-sm text-text-secondary">Target: 10</span>
+                                </div>
+                                <div class="bg-gray-200 rounded-full h-2">
+                                    <div class="bg-success h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm font-medium">Social Shares</span>
+                                    <span class="text-sm text-text-secondary">Target: 500</span>
+                                </div>
+                                <div class="bg-gray-200 rounded-full h-2">
+                                    <div class="bg-purple-500 h-2 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Launch Timeline -->
+                <div class="bg-card-bg border border-border rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-text-primary mb-6">Launch Timeline</h3>
+                    <div class="launch-timeline">
+                        <div class="relative flex items-start gap-4 pb-6">
+                            <div class="w-10 h-10 bg-success rounded-full flex items-center justify-center relative z-10">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-text-primary">4 Weeks Before: Planning</h4>
+                                <p class="text-sm text-text-secondary mt-1">Define goals, identify channels, create timeline</p>
+                                <span class="text-xs text-success">Completed</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative flex items-start gap-4 pb-6">
+                            <div class="w-10 h-10 bg-success rounded-full flex items-center justify-center relative z-10">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-text-primary">3 Weeks Before: Content Creation</h4>
+                                <p class="text-sm text-text-secondary mt-1">Write copy, create visuals, prepare demos</p>
+                                <span class="text-xs text-success">Completed</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative flex items-start gap-4 pb-6">
+                            <div class="w-10 h-10 bg-warning rounded-full flex items-center justify-center relative z-10">
+                                <i class="fas fa-spinner fa-spin text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-medium text-text-primary">2 Weeks Before: Outreach</h4>
+                                <p class="text-sm text-text-secondary mt-1">Contact press, influencers, early users</p>
+                                <span class="text-xs text-warning">In Progress</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative flex items-start gap-4 pb-6">
+                            <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center relative z-10">
+                                <span class="text-white text-sm font-bold">4</span>
+                            </div>
+                            <div class="flex-1 opacity-60">
+                                <h4 class="font-medium text-text-primary">1 Week Before: Final Prep</h4>
+                                <p class="text-sm text-text-secondary mt-1">Test everything, brief team, schedule posts</p>
+                                <span class="text-xs text-text-muted">Upcoming</span>
+                            </div>
+                        </div>
+                        
+                        <div class="relative flex items-start gap-4">
+                            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center relative z-10">
+                                <i class="fas fa-rocket text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1 opacity-60">
+                                <h4 class="font-medium text-text-primary">Launch Day!</h4>
+                                <p class="text-sm text-text-secondary mt-1">Execute plan, monitor metrics, engage community</p>
+                                <span class="text-xs text-text-muted">March 1, 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Initialize navigation
+        initializeNavigation('apps');
+
+        // App navigation
+        const appPages = [
+            'app-economaestro.html',
+            'app-runway.html',
+            'app-cofoundermatch.html',
+            'app-validateai.html',
+            'app-shipfast.html',
+            'app-firstusers.html',
+            'app-pitchperfect.html',
+            'app-launchpad.html',
+            'app-scaleops.html',
+            'app-delightiq.html',
+            'app-brandforge.html',
+            'app-salesflow.html',
+            'app-insighthub.html',
+            'app-searchmaster.html',
+            'app-goglobal.html',
+            'app-legalshield.html',
+            'app-teamsync.html'
+        ];
+
+        // Update counter
+        const currentUrl = window.location.pathname.split('/').pop();
+        const currentIndex = appPages.indexOf(currentUrl);
+        if (currentIndex !== -1) {
+            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
+        }
+
+        function navigateApp(direction) {
+            const currentUrl = window.location.pathname.split('/').pop();
+            const currentIndex = appPages.indexOf(currentUrl);
+            
+            if (currentIndex === -1) return;
+            
+            let newIndex;
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % appPages.length;
+            } else {
+                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
+            }
+            
+            window.location.href = appPages[newIndex];
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.altKey && event.key === 'ArrowLeft') {
+                navigateApp('prev');
+            } else if (event.altKey && event.key === 'ArrowRight') {
+                navigateApp('next');
+            }
+        });
+        
+        // Initialize traffic sources chart
+        const ctx = document.getElementById('trafficChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Product Hunt', 'Twitter/X', 'Direct', 'Hacker News', 'Email', 'Other'],
+                datasets: [{
+                    data: [35, 25, 15, 10, 10, 5],
+                    backgroundColor: [
+                        '#F59E0B',
+                        '#3B82F6',
+                        '#10B981',
+                        '#EF4444',
+                        '#8B5CF6',
+                        '#6B7280'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        function startLaunch() {
+            alert('Launch sequence would begin here with real-time monitoring');
+        }
+        
+        // launchApp function is now handled by app-launch-panel.js
+        
+        // Go back to previous page
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Fallback to apps page if no history
+                window.location.href = 'apps.html';
+            }
+        }
+    </script>
+</body>
+</html>

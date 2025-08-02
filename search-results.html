@@ -70,11 +70,17 @@
                         <button onclick="filterResults('missions')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
                             Missions
                         </button>
+                        <button onclick="filterResults('apps')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
+                            Apps
+                        </button>
                         <button onclick="filterResults('squads')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
                             Squads
                         </button>
                         <button onclick="filterResults('founders')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
                             Founders
+                        </button>
+                        <button onclick="filterResults('tools')" class="filter-btn px-4 py-2 bg-white text-text-secondary border border-border rounded-lg hover:border-primary transition-all">
+                            Tools
                         </button>
                     </div>
 
@@ -172,6 +178,27 @@
                         </div>
                     </div>
 
+                    <!-- App Result -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="apps" onclick="window.location.href='app-runway.html'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-line text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">App</span>
+                                    <span class="text-xs text-primary">• Finance</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    Runway Calculator
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Track burn rate and runway for your <span class="highlight">MVP</span> development. Calculate how long your funding will last.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- More Results -->
                     <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="missions">
                         <div class="flex items-start gap-4">
@@ -213,6 +240,27 @@
                         </div>
                     </div>
                     
+                    <!-- App Result -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="apps" onclick="window.location.href='app-customercare.html'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-users text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">App</span>
+                                    <span class="text-xs text-primary">• Customer Success</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    CustomerCare Hub
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Manage customer feedback for your <span class="highlight">MVP</span>. Track support tickets, satisfaction scores, and retention.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <!-- Message Result -->
                     <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="messages" onclick="window.location.href='comms.html?type=message&id=squad-1'">
                         <div class="flex items-start gap-4">
@@ -229,6 +277,47 @@
                                 </h3>
                                 <p class="text-text-secondary text-sm">
                                     Sarah: "Just launched our beta <span class="highlight">MVP</span>! Check it out at beta.datasync.io 🚀"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tool Results -->
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="tools" onclick="window.location.href='tools.html#github'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-gray-700 to-gray-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fab fa-github text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Tool</span>
+                                    <span class="text-xs text-primary">• Development</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    GitHub
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Manage your <span class="highlight">MVP</span> codebase with version control, collaboration, and CI/CD pipelines.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" data-type="tools" onclick="window.location.href='tools.html#figma'">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fab fa-figma text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-xs text-text-muted uppercase">Tool</span>
+                                    <span class="text-xs text-primary">• Design</span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-text-primary mb-2">
+                                    Figma
+                                </h3>
+                                <p class="text-text-secondary text-sm">
+                                    Design and prototype your <span class="highlight">MVP</span> interface with collaborative design tools.
                                 </p>
                             </div>
                         </div>
