@@ -8,35 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="boarding-pass-styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
     <script src="change-plan-panel.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
         /* Keep minimal custom styles for Tailwind config */
@@ -140,13 +119,13 @@
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
             <!-- Page Content -->
-            <div class="max-w-[1200px] mx-auto px-8 py-8">
+            <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-4 md:py-8">
                 <!-- Page Header with Profile Info -->
-                <div class="mb-8 flex items-start justify-between">
+                <div class="mb-4 md:mb-8 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl font-bold text-text-primary">Don Bora</h1>
-                        <p class="text-lg text-text-secondary mt-1">Co-founder at Eight Bit Studios • Founder at FoundersFleet</p>
-                        <div class="flex items-center gap-4 mt-2 text-sm text-text-muted">
+                        <h1 class="text-2xl md:text-3xl font-bold text-text-primary">Don Bora</h1>
+                        <p class="text-base md:text-lg text-text-secondary mt-1">Co-founder at Eight Bit Studios • Founder at FoundersFleet</p>
+                        <div class="flex flex-wrap items-center gap-2 md:gap-4 mt-2 text-xs md:text-sm text-text-muted">
                             <span class="flex items-center gap-1">
                                 <i class="fas fa-map-marker-alt"></i>
                                 Chicago, IL
@@ -159,7 +138,7 @@
                                 <i class="fa-solid fa-signature text-primary"></i>
                                 Verified
                             </span>
-                            <span class="inline-flex items-center px-3 py-1 bg-primary text-white rounded text-xs font-medium">
+                            <span class="inline-flex items-center px-2 md:px-3 py-1 bg-primary text-white rounded text-xs font-medium">
                                 <i class="fas fa-crown mr-1"></i>
                                 Pro Plan
                             </span>
@@ -167,31 +146,31 @@
                     </div>
                     
                     <!-- Action Buttons -->
-                    <div class="flex flex-col gap-3 items-end">
-                        <div class="flex gap-3">
-                            <a href="founder-profile.html" class="inline-flex items-center gap-2 px-4 py-2 text-text-secondary hover:text-primary border border-border rounded hover:border-primary transition-all">
+                    <div class="flex flex-col gap-3 items-start md:items-end w-full md:w-auto">
+                        <div class="flex gap-2 md:gap-3 w-full md:w-auto">
+                            <a href="founder-profile.html" class="inline-flex items-center justify-center gap-2 px-3 md:px-4 py-2 text-text-secondary hover:text-primary border border-border rounded hover:border-primary transition-all flex-1 md:flex-initial">
                                 <i class="fas fa-eye"></i>
-                                <span class="text-sm">Public Profile</span>
+                                <span class="text-xs md:text-sm">Public Profile</span>
                             </a>
-                            <button id="edit-mode-toggle" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all">
-                                <i class="fas fa-edit mr-2"></i>Edit Mode
+                            <button id="edit-mode-toggle" class="px-3 md:px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all flex-1 md:flex-initial">
+                                <i class="fas fa-edit mr-1 md:mr-2"></i><span class="text-xs md:text-sm">Edit Mode</span>
                             </button>
                         </div>
-                        <div class="flex gap-3">
-                            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-all hidden" id="save-changes">
-                                <i class="fas fa-check mr-2"></i>Save Changes
+                        <div class="flex gap-2 md:gap-3 w-full md:w-auto">
+                            <button class="px-3 md:px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-all hidden flex-1 md:flex-initial" id="save-changes">
+                                <i class="fas fa-check mr-1 md:mr-2"></i><span class="text-xs md:text-sm">Save Changes</span>
                             </button>
-                            <button class="px-4 py-2 border border-border rounded hover:border-primary transition-all hidden" id="cancel-changes">
-                                Cancel
+                            <button class="px-3 md:px-4 py-2 border border-border rounded hover:border-primary transition-all hidden flex-1 md:flex-initial" id="cancel-changes">
+                                <span class="text-xs md:text-sm">Cancel</span>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Pricing Container -->
-                <div class="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm">
+                <div class="mb-4 md:mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-3 md:p-4">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                        <p class="text-xs md:text-sm">
                             <span class="font-medium text-text-primary">You're on the Pro plan:</span>
                             <span class="text-text-secondary">3/3 Squads | 3/3 Apps</span>
                         </p>
@@ -202,24 +181,24 @@
                 </div>
 
                 <!-- Profile Content -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
                     <!-- Left Column - Main Content -->
-                    <div class="lg:col-span-2 space-y-6">
+                    <div class="lg:col-span-2 space-y-4 md:space-y-6">
                         <!-- About -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <h2 class="text-xl font-semibold text-text-primary">About</h2>
+                        <div class="bg-card-bg border border-border rounded-lg p-4 md:p-6">
+                            <div class="flex items-center justify-between mb-3 md:mb-4">
+                                <h2 class="text-lg md:text-xl font-semibold text-text-primary">About</h2>
                                 <i class="fas fa-pencil text-text-muted edit-icon"></i>
                             </div>
-                            <p class="text-text-secondary leading-relaxed editable-field" contenteditable="false" id="profile-bio">
+                            <p class="text-xs md:text-base text-text-secondary leading-relaxed editable-field" contenteditable="false" id="profile-bio">
                                 Co-founder at Eight Bit Studios creating engaging web and mobile apps that delight users. 4x Inc. 5000 company. Passionate advocate for women and people of color in technology. 9x Co-Founder with experience in fractional CTO roles. Previously Chief Digital Officer at Belly, scaling merchant network from 8,000 to 12,000 locations.
                             </p>
                         </div>
 
                         <!-- Top Objectives -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h2 class="text-xl font-semibold text-text-primary mb-4">Top Objectives</h2>
-                            <div class="space-y-4">
+                        <div class="bg-card-bg border border-border rounded-lg p-4 md:p-6">
+                            <h2 class="text-lg md:text-xl font-semibold text-text-primary mb-3 md:mb-4">Top Objectives</h2>
+                            <div class="space-y-3 md:space-y-4">
                                 <div class="bg-gray-50 rounded-lg p-3 hover:bg-gray-100 cursor-pointer transition-all" onclick="window.location.href='objective-detail.html?objective=idea-validation'">
                                     <div class="flex items-center justify-between mb-2">
                                         <div class="flex items-center gap-2">

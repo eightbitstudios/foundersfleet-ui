@@ -11,35 +11,33 @@
     <script src="app-launch-panel.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
+        :root {
+            /* Fundraising Apps (Pink) */
+            --fundraising-primary: #EC4899;
+            --fundraising-primary-rgb: 236, 72, 153;
+            --fundraising-primary-hover: #DB2777;
+            --fundraising-bg-light: rgba(236, 72, 153, 0.1);
+            --fundraising-border-light: rgba(236, 72, 153, 0.2);
+        }
+
+        /* Accent color classes for this app */
+        .accent-bg { background-color: var(--fundraising-primary); }
+        .accent-bg-hover:hover { background-color: var(--fundraising-primary-hover); }
+        .accent-bg-light { background-color: var(--fundraising-bg-light); }
+        .accent-text { color: var(--fundraising-primary); }
+        .accent-border { border-color: var(--fundraising-primary); }
+        .accent-border-light { border-color: var(--fundraising-border-light); }
+
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
         .slide-card {
             transition: all 0.3s ease;
         }
@@ -65,19 +63,19 @@
             50% { opacity: 0.3; }
         }
         .investor-match {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--fundraising-primary) 0%, var(--fundraising-primary-hover) 100%);
         }
     </style>
 </head>
-<body class="bg-background min-h-screen font-inter flex">
+<body class="bg-gray-50 min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
     <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 bg-background overflow-hidden">
+    <div class="flex-1 bg-gray-50 overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
@@ -89,77 +87,164 @@
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">PitchPerfect</h1>
-                                <p class="text-sm text-text-secondary">AI coach for perfect investor pitches</p>
+                                <p class="text-sm text-text-secondary hidden md:block">AI coach for perfect investor pitches</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">8 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Pitch Score Dashboard -->
-                <div class="mb-8 bg-gradient-to-r from-red-50 to-pink-50 rounded-xl p-8 border border-red-100">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Your Pitch Score</h2>
-                            <p class="text-text-secondary mb-4">AI-powered analysis of your latest pitch practice</p>
-                            <div class="flex items-center gap-8">
-                                <div class="relative w-32 h-32">
-                                    <svg class="w-32 h-32 transform -rotate-90">
-                                        <circle cx="64" cy="64" r="56" stroke="#E5E5E5" stroke-width="12" fill="none"></circle>
-                                        <circle cx="64" cy="64" r="56" stroke="#EF4444" stroke-width="12" fill="none" 
-                                                class="score-circle"></circle>
-                                    </svg>
-                                    <div class="absolute inset-0 flex items-center justify-center">
-                                        <div class="text-center">
-                                            <div class="text-3xl font-bold text-text-primary">82</div>
-                                            <div class="text-sm text-text-secondary">Score</div>
-                                        </div>
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Nail Your Next Investor Pitch
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    Practice with AI feedback, perfect your story, and match with the right investors. Get funded faster with data-driven pitch coaching.
+                                </p>
+                            </div>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Pitch Score</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">82</span>
+                                        <span class="text-lg text-text-secondary">/100</span>
                                     </div>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-text-primary mb-2">Strong Performance</h3>
-                                    <div class="space-y-2">
-                                        <div class="flex items-center gap-2 text-sm">
-                                            <i class="fas fa-check-circle text-success"></i>
-                                            <span>Clear problem statement</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm">
-                                            <i class="fas fa-exclamation-circle text-warning"></i>
-                                            <span>Tighten market size explanation</span>
-                                        </div>
-                                        <div class="flex items-center gap-2 text-sm">
-                                            <i class="fas fa-check-circle text-success"></i>
-                                            <span>Strong team slide</span>
-                                        </div>
-                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">Strong performance</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white rounded-lg p-4 shadow-sm text-center">
-                            <div class="text-sm text-text-muted mb-1">Practice Sessions</div>
-                            <div class="text-3xl font-bold text-text-primary">12</div>
-                            <div class="text-xs text-success mt-1">+8 this week</div>
-                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Pitch Deck Builder -->
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Pitch Performance Metrics</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Clarity Score -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Clarity</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">89%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-comment-dots accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Message is clear — keep slides concise and focused.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs text-green-600">
+                                    <i class="fas fa-arrow-up"></i> +5%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Engagement -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Engagement</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">76%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-heart accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Good storytelling — add more customer examples.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs text-yellow-600">
+                                    <i class="fas fa-minus"></i> Stable
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Investor Fit -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Investor Fit</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">92%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-bullseye accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Excellent match — target Series A funds in SaaS.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs text-green-600">
+                                    <i class="fas fa-check-circle"></i> High
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Practice Count -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Practice</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">12</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-microphone accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Sessions this week — keep momentum going.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs text-green-600">
+                                    <i class="fas fa-arrow-up"></i> +8
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Pitch Analysis -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Pitch Feedback -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">AI Pitch Analysis</h3>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <i class="fas fa-check-circle text-success"></i>
+                                        <span>Clear problem statement</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <i class="fas fa-exclamation-circle text-warning"></i>
+                                        <span>Tighten market size explanation</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-sm">
+                                        <i class="fas fa-check-circle text-success"></i>
+                                        <span>Strong team slide</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pitch Deck Builder -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
                     <!-- Slide Overview -->
                     <div class="lg:col-span-2">
@@ -462,6 +547,7 @@
         const appPages = [
             'app-economaestro.html',
             'app-runway.html',
+            'app-investorlens.html',
             'app-cofoundermatch.html',
             'app-validateai.html',
             'app-shipfast.html',

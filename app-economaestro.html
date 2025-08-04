@@ -3,97 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EconoMaestro - Macro Insights for Strategic Timing | FoundersFleet</title>
+    <title>EconoMaestro - Economic Intelligence Dashboard | FoundersFleet</title>
+    <!-- 
+    APP CATEGORY: Financial & Analytics
+    
+    To change this app to a different category, update the CSS variables at line 63-68:
+    - Financial & Analytics (Purple): Use --financial-* variables
+    - Team & Networking (Blue): Use --team-* variables  
+    - Marketing & Growth (Green): Use --marketing-* variables
+    - Development & Technical (Orange): Use --dev-* variables
+    - Communication (Pink): Use --comm-* variables
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6',
-                        'accurate': '#22C55E',
-                        'inaccurate': '#DC2626'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
-        .forecaster-card {
-            transition: all 0.3s ease;
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team & Networking Apps (Blue) - CoFounderMatch, SkillSwap */
+            --team-primary: #2563EB;
+            --team-primary-rgb: 37, 99, 235;
+            --team-primary-hover: #1D4ED8;
+            --team-secondary: #0EA5E9;
+            --team-light-bg: #DBEAFE;
+            --team-light-border: #BFDBFE;
+            
+            /* Marketing & Growth Apps (Green) - ValidateAI, LaunchPad */
+            --marketing-primary: #10B981;
+            --marketing-primary-rgb: 16, 185, 129;
+            --marketing-primary-hover: #059669;
+            --marketing-secondary: #14B8A6;
+            --marketing-light-bg: #D1FAE5;
+            --marketing-light-border: #A7F3D0;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Current app accent colors (Financial category for EconoMaestro) */
+            --accent-primary: var(--financial-primary);
+            --accent-primary-rgb: var(--financial-primary-rgb);
+            --accent-primary-hover: var(--financial-primary-hover);
+            --accent-secondary: var(--financial-secondary);
+            --accent-light-bg: var(--financial-light-bg);
+            --accent-light-border: var(--financial-light-border);
         }
-        .forecaster-card:hover {
+        
+        .metric-card {
+            transition: all 0.2s ease;
+        }
+        .metric-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .accuracy-badge {
-            background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+        .trend-up {
+            color: var(--accent-primary);
         }
-        .accuracy-badge.low {
-            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+        .trend-down {
+            color: var(--accent-secondary);
         }
-        .accuracy-badge.medium {
-            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        .trend-neutral {
+            color: #6B7280;
         }
-        .opportunity-card {
-            border-left: 4px solid transparent;
-            transition: all 0.3s ease;
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
         }
-        .opportunity-card:hover {
-            border-left-color: #000;
-            background: #FAFAFA;
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
         }
-        .credibility-meter {
-            background: linear-gradient(to right, #DC2626 0%, #F59E0B 50%, #22C55E 100%);
-            height: 4px;
-            border-radius: 2px;
-            position: relative;
-        }
-        .credibility-marker {
-            position: absolute;
-            top: -8px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border: 3px solid #000;
-            border-radius: 50%;
-            transform: translateX(-50%);
-        }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
     </style>
 </head>
 <body class="bg-background min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
@@ -101,344 +128,565 @@
                         </button>
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-globe-americas text-white"></i>
+                                <i class="fas fa-chart-line text-white"></i>
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">EconoMaestro</h1>
-                                <p class="text-sm text-text-secondary">Read the economic room without an econ degree</p>
+                                <p class="text-sm text-text-secondary hidden md:block">Read the economic room without an econ degree</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">1 of 16</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">1 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Smart Take Index -->
-                <div class="mb-8 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-8 border border-indigo-100">
-                    <div class="flex items-center justify-between mb-6">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Today's Smart Take Index</h2>
-                            <p class="text-text-secondary">Consensus credibility score across top economists</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-5xl font-bold text-text-primary mb-1">72%</div>
-                            <div class="text-sm text-success font-medium">
-                                <i class="fas fa-arrow-up mr-1"></i>+5% from last week
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Your Optimal Move, Right Now
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    Cut through the noise. See the most important macro signals for your startup today — and the one action that will keep you ahead of the market.
+                                </p>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Key Consensus Points -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-white/80 backdrop-blur rounded-lg p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <i class="fas fa-chart-line text-success"></i>
-                                <h3 class="font-medium text-text-primary">Growth Outlook</h3>
-                            </div>
-                            <p class="text-sm text-text-secondary">Moderate expansion expected through Q2 2025</p>
-                            <div class="mt-2">
-                                <div class="credibility-meter">
-                                    <div class="credibility-marker" style="left: 78%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white/80 backdrop-blur rounded-lg p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <i class="fas fa-percentage text-warning"></i>
-                                <h3 class="font-medium text-text-primary">Interest Rates</h3>
-                            </div>
-                            <p class="text-sm text-text-secondary">Cuts likely in Q2, magnitude uncertain</p>
-                            <div class="mt-2">
-                                <div class="credibility-meter">
-                                    <div class="credibility-marker" style="left: 65%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-white/80 backdrop-blur rounded-lg p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <i class="fas fa-shopping-cart text-info"></i>
-                                <h3 class="font-medium text-text-primary">Consumer Spending</h3>
-                            </div>
-                            <p class="text-sm text-text-secondary">Resilient but showing signs of selectivity</p>
-                            <div class="mt-2">
-                                <div class="credibility-meter">
-                                    <div class="credibility-marker" style="left: 71%"></div>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Startup Growth Climate Index</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">78</span>
+                                        <span class="text-lg accent-text flex items-center">
+                                            <i class="fas fa-arrow-up mr-1"></i>+5
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">Favorable conditions</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Timing Advisor -->
-                <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-xl font-semibold text-text-primary">Timing Advisor</h2>
-                        <span class="px-3 py-1 bg-success/10 text-success rounded-full text-sm font-medium">
-                            <i class="fas fa-check-circle mr-1"></i>Good timing window
-                        </span>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-section-bg rounded-lg p-4">
-                            <h3 class="font-medium text-text-primary mb-2">
-                                <i class="fas fa-rocket text-primary mr-2"></i>Fundraising
-                            </h3>
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-2 h-2 bg-success rounded-full"></div>
-                                <span class="text-sm font-medium text-success">Favorable</span>
-                            </div>
-                            <p class="text-xs text-text-secondary">Rate cuts expected to increase capital availability</p>
-                        </div>
-                        
-                        <div class="bg-section-bg rounded-lg p-4">
-                            <h3 class="font-medium text-text-primary mb-2">
-                                <i class="fas fa-users text-primary mr-2"></i>Hiring
-                            </h3>
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-2 h-2 bg-warning rounded-full"></div>
-                                <span class="text-sm font-medium text-warning">Caution</span>
-                            </div>
-                            <p class="text-xs text-text-secondary">Talent available but wage pressure remains</p>
-                        </div>
-                        
-                        <div class="bg-section-bg rounded-lg p-4">
-                            <h3 class="font-medium text-text-primary mb-2">
-                                <i class="fas fa-store text-primary mr-2"></i>Market Expansion
-                            </h3>
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-2 h-2 bg-success rounded-full"></div>
-                                <span class="text-sm font-medium text-success">Favorable</span>
-                            </div>
-                            <p class="text-xs text-text-secondary">Consumer confidence stabilizing in key sectors</p>
-                        </div>
-                        
-                        <div class="bg-section-bg rounded-lg p-4">
-                            <h3 class="font-medium text-text-primary mb-2">
-                                <i class="fas fa-box text-primary mr-2"></i>Product Launch
-                            </h3>
-                            <div class="flex items-center gap-2 mb-1">
-                                <div class="w-2 h-2 bg-success rounded-full"></div>
-                                <span class="text-sm font-medium text-success">Favorable</span>
-                            </div>
-                            <p class="text-xs text-text-secondary">Q1 traditionally strong for new offerings</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Two Column Layout -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Left Column - Forecast Leaderboard -->
-                    <div class="lg:col-span-2">
-                        <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
-                            <div class="flex items-center justify-between mb-4">
-                                <h2 class="text-xl font-semibold text-text-primary">Forecast Credibility Leaderboard</h2>
-                                <button class="text-sm text-primary hover:text-primary-hover">
-                                    View All <i class="fas fa-arrow-right ml-1"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="space-y-4">
-                                <!-- Top Forecaster -->
-                                <div class="forecaster-card bg-section-bg rounded-lg p-4">
-                                    <div class="flex items-start justify-between">
-                                        <div class="flex items-start gap-3">
-                                            <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white font-bold">
-                                                1
-                                            </div>
-                                            <div>
-                                                <h3 class="font-semibold text-text-primary">Dr. Sarah Chen</h3>
-                                                <p class="text-sm text-text-secondary">Goldman Sachs Chief Economist</p>
-                                                <div class="flex items-center gap-4 mt-2 text-xs">
-                                                    <span class="text-success">
-                                                        <i class="fas fa-check-circle mr-1"></i>87% accuracy
-                                                    </span>
-                                                    <span class="text-text-muted">
-                                                        <i class="fas fa-fire mr-1"></i>12 streak
-                                                    </span>
-                                                    <span class="text-text-muted">
-                                                        <i class="fas fa-clock mr-1"></i>Updated 2h ago
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accuracy-badge text-white px-3 py-1 rounded-full text-sm font-medium">
-                                            87%
-                                        </div>
-                                    </div>
-                                    <div class="mt-3 p-3 bg-white rounded border border-border">
-                                        <p class="text-sm text-text-primary font-medium mb-1">Latest Take:</p>
-                                        <p class="text-sm text-text-secondary">"Soft landing achieved. Q2 2025 will see first rate cuts, unlocking pent-up investment demand."</p>
-                                    </div>
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Key Macros Shaping Your Outlook</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Interest Rates -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Fed Funds</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">5.50%</p>
                                 </div>
-                                
-                                <!-- Second Forecaster -->
-                                <div class="forecaster-card bg-section-bg rounded-lg p-4">
-                                    <div class="flex items-start justify-between">
-                                        <div class="flex items-start gap-3">
-                                            <div class="w-10 h-10 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center text-white font-bold">
-                                                2
-                                            </div>
-                                            <div>
-                                                <h3 class="font-semibold text-text-primary">Mohamed El-Erian</h3>
-                                                <p class="text-sm text-text-secondary">Allianz Chief Economic Advisor</p>
-                                                <div class="flex items-center gap-4 mt-2 text-xs">
-                                                    <span class="text-success">
-                                                        <i class="fas fa-check-circle mr-1"></i>84% accuracy
-                                                    </span>
-                                                    <span class="text-text-muted">
-                                                        <i class="fas fa-fire mr-1"></i>8 streak
-                                                    </span>
-                                                    <span class="text-text-muted">
-                                                        <i class="fas fa-clock mr-1"></i>Updated 5h ago
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accuracy-badge text-white px-3 py-1 rounded-full text-sm font-medium">
-                                            84%
-                                        </div>
-                                    </div>
-                                    <div class="mt-3 p-3 bg-white rounded border border-border">
-                                        <p class="text-sm text-text-primary font-medium mb-1">Latest Take:</p>
-                                        <p class="text-sm text-text-secondary">"Higher for longer is the new normal. Don't expect significant rate relief until Q3 2025."</p>
-                                    </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-percentage accent-text text-sm"></i>
                                 </div>
-                                
-                                <!-- Third Forecaster -->
-                                <div class="forecaster-card bg-section-bg rounded-lg p-4">
-                                    <div class="flex items-start justify-between">
-                                        <div class="flex items-start gap-3">
-                                            <div class="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center text-white font-bold">
-                                                3
-                                            </div>
-                                            <div>
-                                                <h3 class="font-semibold text-text-primary">Janet Yellen</h3>
-                                                <p class="text-sm text-text-secondary">US Treasury Secretary</p>
-                                                <div class="flex items-center gap-4 mt-2 text-xs">
-                                                    <span class="text-success">
-                                                        <i class="fas fa-check-circle mr-1"></i>81% accuracy
-                                                    </span>
-                                                    <span class="text-text-muted">
-                                                        <i class="fas fa-fire mr-1"></i>6 streak
-                                                    </span>
-                                                    <span class="text-text-muted">
-                                                        <i class="fas fa-clock mr-1"></i>Updated 1d ago
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="accuracy-badge text-white px-3 py-1 rounded-full text-sm font-medium">
-                                            81%
-                                        </div>
-                                    </div>
-                                    <div class="mt-3 p-3 bg-white rounded border border-border">
-                                        <p class="text-sm text-text-primary font-medium mb-1">Latest Take:</p>
-                                        <p class="text-sm text-text-secondary">"Inflation continues to moderate. Fiscal policy remains supportive of growth through 2025."</p>
-                                    </div>
-                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Rate stability suggests a steady cost of capital — consider locking in debt now.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-neutral">
+                                    <i class="fas fa-minus"></i> Unchanged
+                                </span>
                             </div>
                         </div>
 
-                        <!-- Interactive Forecast Explorer -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h2 class="text-xl font-semibold text-text-primary mb-4">Forecast Explorer</h2>
-                            
-                            <!-- Filters -->
-                            <div class="flex gap-2 mb-4 flex-wrap">
-                                <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm">All Topics</button>
-                                <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">Interest Rates</button>
-                                <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">Inflation</button>
-                                <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">Employment</button>
-                                <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">GDP Growth</button>
+                        <!-- Inflation -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">CPI</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">3.2%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-fire accent-text text-sm"></i>
+                                </div>
                             </div>
-                            
-                            <!-- Chart Container -->
-                            <div class="h-64 bg-section-bg rounded-lg flex items-center justify-center">
-                                <canvas id="forecastChart"></canvas>
+                            <p class="text-xs text-text-secondary">Inflation cooling — strengthens consumer spending outlook.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -0.3%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- GDP Growth -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">GDP</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">2.8%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-chart-line accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Growth ticking up — positive signal for expansion investments.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +0.4%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Unemployment -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Jobs</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">3.7%</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-users accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Low unemployment — talent is tight, act quickly on hiring decisions.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -0.1%
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Right Column - Adjacency Opportunities -->
-                    <div>
-                        <div class="bg-card-bg border border-border rounded-lg p-6 sticky top-24">
-                            <h2 class="text-xl font-semibold text-text-primary mb-4">Adjacency Opportunities</h2>
-                            <p class="text-sm text-text-secondary mb-4">Market expansions aligned with macro trends</p>
-                            
-                            <div class="space-y-3">
-                                <!-- Opportunity 1 -->
-                                <div class="opportunity-card p-4 bg-section-bg rounded-lg cursor-pointer">
-                                    <div class="flex items-start justify-between mb-2">
-                                        <h3 class="font-medium text-text-primary">Add Lending Services</h3>
-                                        <span class="px-2 py-1 bg-success/10 text-success rounded text-xs font-medium">High</span>
-                                    </div>
-                                    <p class="text-sm text-text-secondary mb-2">Rate cuts will increase demand for capital. Platform lending could capture this.</p>
-                                    <div class="flex items-center gap-3 text-xs text-text-muted">
-                                        <span><i class="fas fa-chart-line mr-1"></i>85% fit</span>
-                                        <span><i class="fas fa-users mr-1"></i>New side</span>
-                                    </div>
-                                </div>
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Strategic Timing Signals -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Timing Signals -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Founder Action Signals</h3>
                                 
-                                <!-- Opportunity 2 -->
-                                <div class="opportunity-card p-4 bg-section-bg rounded-lg cursor-pointer">
-                                    <div class="flex items-start justify-between mb-2">
-                                        <h3 class="font-medium text-text-primary">International Expansion</h3>
-                                        <span class="px-2 py-1 bg-warning/10 text-warning rounded text-xs font-medium">Medium</span>
+                                <div class="space-y-4">
+                                    <!-- Fundraising Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-rocket accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Fundraising Window</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">Favorable</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">Line up investor meetings within 30 days to ride the sentiment window.</p>
+                                            
+                                            <!-- Action Items -->
+                                            <div class="bg-white rounded-lg p-3 accent-border-light border">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Next 30 Days Action Plan:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Update deck with Q4 metrics and 2025 projections</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Reach out to Series A funds focusing on your sector</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Schedule meetings before holiday slowdown</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>85% confidence</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Next 3-6 months</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="text-sm text-text-secondary mb-2">EU markets showing stronger growth signals than US.</p>
-                                    <div class="flex items-center gap-3 text-xs text-text-muted">
-                                        <span><i class="fas fa-chart-line mr-1"></i>72% fit</span>
-                                        <span><i class="fas fa-globe mr-1"></i>New market</span>
+
+                                    <!-- Hiring Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light-secondary rounded-lg accent-border-light-secondary border">
+                                        <div class="w-10 h-10 accent-bg-light-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-users accent-text-secondary"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Talent Acquisition</h4>
+                                                <span class="px-2 py-1 accent-bg-light-secondary accent-text-secondary text-xs rounded-full font-medium">Moderate</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Post roles now, offer equity to attract top talent before market tightens.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>72% confidence</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Current quarter</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <!-- Opportunity 3 -->
-                                <div class="opportunity-card p-4 bg-section-bg rounded-lg cursor-pointer">
-                                    <div class="flex items-start justify-between mb-2">
-                                        <h3 class="font-medium text-text-primary">B2B Procurement</h3>
-                                        <span class="px-2 py-1 bg-success/10 text-success rounded text-xs font-medium">High</span>
-                                    </div>
-                                    <p class="text-sm text-text-secondary mb-2">Supply chain normalization creates procurement opportunities.</p>
-                                    <div class="flex items-center gap-3 text-xs text-text-muted">
-                                        <span><i class="fas fa-chart-line mr-1"></i>78% fit</span>
-                                        <span><i class="fas fa-exchange-alt mr-1"></i>New interaction</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Opportunity 4 -->
-                                <div class="opportunity-card p-4 bg-section-bg rounded-lg cursor-pointer">
-                                    <div class="flex items-start justify-between mb-2">
-                                        <h3 class="font-medium text-text-primary">Insurance Products</h3>
-                                        <span class="px-2 py-1 bg-warning/10 text-warning rounded text-xs font-medium">Medium</span>
-                                    </div>
-                                    <p class="text-sm text-text-secondary mb-2">Economic uncertainty driving demand for risk mitigation.</p>
-                                    <div class="flex items-center gap-3 text-xs text-text-muted">
-                                        <span><i class="fas fa-chart-line mr-1"></i>69% fit</span>
-                                        <span><i class="fas fa-shield-alt mr-1"></i>New service</span>
+
+                                    <!-- Expansion Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-globe accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Market Expansion</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">Strong</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Test entry into 1–2 adjacent markets while demand is rising.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>78% confidence</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Next 6 months</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <button class="w-full mt-4 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all text-sm">
-                                Explore All Opportunities
-                            </button>
+
+                            <!-- Economic Forecast Chart -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Key Economic Indicators</h3>
+                                    <select class="text-sm border border-border rounded-lg px-3 py-1">
+                                        <option>Last 6 months</option>
+                                        <option>Last year</option>
+                                        <option>Last 2 years</option>
+                                    </select>
+                                </div>
+                                <div class="h-64">
+                                    <canvas id="economicChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Forecast Credibility Leaderboard -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Who You Should Listen To</h3>
+                                    <div class="flex items-center gap-3">
+                                        <select class="text-xs border border-border rounded px-2 py-1">
+                                            <option>All Sectors</option>
+                                            <option>B2B SaaS</option>
+                                            <option>AI/ML</option>
+                                            <option>Fintech</option>
+                                        </select>
+                                        <button class="text-sm accent-text hover:opacity-80 flex items-center gap-1">
+                                            View All <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <!-- Top Forecaster -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg rounded-full flex items-center justify-center text-white font-bold">
+                                                    1
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Dr. Sarah Chen</h4>
+                                                    <p class="text-sm text-text-secondary">Goldman Sachs Chief Economist</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-check-circle mr-1"></i>87% accuracy
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-fire mr-1"></i>12 streak
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Updated 2h ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                87%
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Latest Take:</p>
+                                            <p class="text-sm text-text-secondary">Dr. Sarah Chen (87%): Predicts Q2 rate cuts — signals cheaper growth capital ahead.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Second Forecaster -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg-secondary rounded-full flex items-center justify-center text-white font-bold">
+                                                    2
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Mohamed El-Erian</h4>
+                                                    <p class="text-sm text-text-secondary">Allianz Chief Economic Advisor</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-check-circle mr-1"></i>84% accuracy
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-fire mr-1"></i>8 streak
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Updated 5h ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                84%
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Latest Take:</p>
+                                            <p class="text-sm text-text-secondary">Mohamed El‑Erian (84%): Warns against early optimism — keep burn in check until Q3.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Third Forecaster -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background: linear-gradient(to bottom right, var(--accent-primary), var(--accent-secondary));">
+                                                    3
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Janet Yellen</h4>
+                                                    <p class="text-sm text-text-secondary">US Treasury Secretary</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-check-circle mr-1"></i>81% accuracy
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-fire mr-1"></i>6 streak
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Updated 1d ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                81%
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Latest Take:</p>
+                                            <p class="text-sm text-text-secondary">Janet Yellen (81%): Expects steady fiscal support — good climate for B2B service demand.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Adjacent Opportunities Map -->
+                            <div class="accent-bg-light rounded-lg accent-border-light border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Adjacent Opportunities</h3>
+                                    <span class="text-xs accent-text font-medium">Based on your sector + timing</span>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <!-- Top Opportunity -->
+                                    <div class="bg-white rounded-lg p-4 accent-border-light border">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-magic accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">AI-Powered Analytics for Your Market</h4>
+                                            </div>
+                                            <span class="text-xs accent-bg-light accent-text px-2 py-1 rounded-full">92% fit</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">Given AI/ML's 95th percentile growth and your existing customer base, adding AI features could increase ARR by 35-50%.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>View playbook
+                                            </button>
+                                            <span class="text-text-muted">• 3-month implementation</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Second Opportunity -->
+                                    <div class="bg-white rounded-lg p-4 accent-border-light border">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light-secondary rounded flex items-center justify-center">
+                                                    <i class="fas fa-layer-group accent-text-secondary text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Vertical SaaS Expansion</h4>
+                                            </div>
+                                            <span class="text-xs accent-bg-light-secondary accent-text-secondary px-2 py-1 rounded-full">87% fit</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">SaaS growth at 2.3x average with moderate talent availability makes vertical expansion optimal now.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text-secondary hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>Explore sectors
+                                            </button>
+                                            <span class="text-text-muted">• 6-month runway</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Quick Insights -->
+                        <div class="space-y-6">
+                            <!-- Sector Performance -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Where the Growth Money Is Flowing</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-robot accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">AI/ML (+24%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Fastest‑growing — align product messaging to ride the AI wave.</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-cloud accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">SaaS (+18%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Strong — especially tools targeting cost savings and automation.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-coins accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Fintech (+12%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Focus on embedded finance opportunities.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-shopping-cart accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">E‑commerce (+5%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text-secondary text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Solid but competitive — niche targeting recommended.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-home accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Real Estate (–8%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-down accent-text-secondary text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Downturn — tread carefully unless in distressed asset plays.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Capital Markets -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Capital Flow Outlook</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">VC Deployment Rate</span>
+                                            <span class="text-sm font-medium">$42.3B</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 68%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">VC Deployment: $42.3B — actively flowing; approach VCs with traction now.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Dry Powder</span>
+                                            <span class="text-sm font-medium">$580B</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Dry Powder: $580B — funding reserves are high; investors are hunting quality deals.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">IPO Window</span>
+                                            <span class="text-sm font-medium accent-text-secondary">Weak</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">IPO Window: Weak — prioritize private growth and late‑stage fundraising over public markets.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Your Next Move</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Generate Investor Update</span>
+                                            <i class="fas fa-arrow-right text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Send an investor update with these favorable market signals.</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Export Economic Briefing</span>
+                                            <i class="fas fa-download text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Export a tailored economic briefing for your board.</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Set Growth Alerts</span>
+                                            <i class="fas fa-bell text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Set alerts for when your sector crosses a 10% growth threshold.</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Set Timing Alerts</span>
+                                            <i class="fas fa-bell text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Get notified when conditions change</p>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -451,80 +699,39 @@
         // Initialize navigation
         initializeNavigation('apps');
 
-        // App navigation
-        const appPages = [
-            'app-economaestro.html',
-            'app-runway.html',
-            'app-cofoundermatch.html',
-            'app-validateai.html',
-            'app-shipfast.html',
-            'app-firstusers.html',
-            'app-pitchperfect.html',
-            'app-launchpad.html',
-            'app-scaleops.html',
-            'app-delightiq.html',
-            'app-brandforge.html',
-            'app-salesflow.html',
-            'app-insighthub.html',
-            'app-searchmaster.html',
-            'app-goglobal.html',
-            'app-legalshield.html',
-            'app-teamsync.html'
-        ];
-
-        // Update counter
-        const currentUrl = window.location.pathname.split('/').pop();
-        const currentIndex = appPages.indexOf(currentUrl);
-        if (currentIndex !== -1) {
-            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
-        }
-
-        function navigateApp(direction) {
-            const currentUrl = window.location.pathname.split('/').pop();
-            const currentIndex = appPages.indexOf(currentUrl);
-            
-            if (currentIndex === -1) return;
-            
-            let newIndex;
-            if (direction === 'next') {
-                newIndex = (currentIndex + 1) % appPages.length;
-            } else {
-                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
-            }
-            
-            window.location.href = appPages[newIndex];
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'ArrowLeft') {
-                navigateApp('prev');
-            } else if (event.altKey && event.key === 'ArrowRight') {
-                navigateApp('next');
-            }
-        });
-
-        // Initialize forecast chart
-        const ctx = document.getElementById('forecastChart').getContext('2d');
-        const forecastChart = new Chart(ctx, {
+        // Initialize economic chart
+        const ctx = document.getElementById('economicChart').getContext('2d');
+        const economicChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024', 'Q1 2025', 'Q2 2025'],
+                labels: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
-                    label: 'Consensus Forecast',
-                    data: [5.25, 5.25, 5.0, 4.75, 4.5, 4.25],
-                    borderColor: '#000000',
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                    tension: 0.4,
-                    borderWidth: 3
-                }, {
-                    label: 'Actual',
-                    data: [5.25, 5.25, 5.0, null, null, null],
-                    borderColor: '#10B981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    label: 'Interest Rate',
+                    data: [5.25, 5.25, 5.25, 5.50, 5.50, 5.50],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.1)`,
                     tension: 0.4,
                     borderWidth: 2,
-                    borderDash: [5, 5]
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }, {
+                    label: 'Inflation Rate',
+                    data: [3.7, 3.5, 3.4, 3.3, 3.2, 3.2],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary-rgb')}, 0.1)`,
+                    tension: 0.4,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }, {
+                    label: 'GDP Growth',
+                    data: [2.1, 2.3, 2.4, 2.5, 2.7, 2.8],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.05)`,
+                    tension: 0.4,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
                 }]
             },
             options: {
@@ -532,20 +739,38 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: true,
-                        position: 'bottom'
-                    },
-                    title: {
-                        display: true,
-                        text: 'Federal Funds Rate Forecast vs Actual'
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            usePointStyle: true,
+                            font: {
+                                size: 12
+                            }
+                        }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: false,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
                         ticks: {
+                            font: {
+                                size: 11
+                            },
                             callback: function(value) {
                                 return value + '%';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
                             }
                         }
                     }
@@ -553,15 +778,45 @@
             }
         });
         
-        // launchApp function is now handled by app-launch-panel.js
-        
-        // Go back to previous page
+        // Go back function
         function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // Fallback to apps page if no history
-                window.location.href = 'apps.html';
+            window.location.href = 'apps.html';
+        }
+
+        // Navigate between apps
+        function navigateApp(direction) {
+            const apps = [
+                'app-economaestro.html',
+                'app-runway.html',
+                'app-investorlens.html',
+                'app-cofoundermatch.html',
+                'app-validateai.html',
+                'app-shipfast.html',
+                'app-firstusers.html',
+                'app-pitchperfect.html',
+                'app-launchpad.html',
+                'app-scaleops.html',
+                'app-delightiq.html',
+                'app-brandforge.html',
+                'app-salesflow.html',
+                'app-insighthub.html',
+                'app-searchmaster.html',
+                'app-legalshield.html',
+                'app-teamsync.html',
+                'app-goglobal.html'
+            ];
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const currentIndex = apps.indexOf(currentPage);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = currentIndex === 0 ? apps.length - 1 : currentIndex - 1;
+                } else {
+                    newIndex = currentIndex === apps.length - 1 ? 0 : currentIndex + 1;
+                }
+                window.location.href = apps[newIndex];
             }
         }
     </script>

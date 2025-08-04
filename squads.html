@@ -7,38 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
     <script src="change-plan-panel.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
         /* Hover state for squad cards */
@@ -83,21 +59,21 @@
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
             <!-- Page Content -->
-            <div class="max-w-[1200px] mx-auto px-8 py-8">
+            <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-4 md:py-8">
                 <!-- Page Header -->
-                <div class="mb-8 flex items-start justify-between">
+                <div class="mb-4 md:mb-8 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl font-bold text-text-primary mb-2">Form or Join a Squad</h1>
-                        <p class="text-text-secondary">Connect with founders at your stage and accelerate together</p>
+                        <h1 class="text-2xl md:text-3xl font-bold text-text-primary mb-1 md:mb-2">Form or Join a Squad</h1>
+                        <p class="text-sm md:text-base text-text-secondary">Connect with founders at your stage and accelerate together</p>
                     </div>
-                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="window.location.href='squad-form.html'">
+                    <button class="flex items-center justify-center gap-2 px-4 md:px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all w-full md:w-auto" onclick="window.location.href='squad-form.html'">
                         <i class="fas fa-plus"></i>Form Squad
                     </button>
                 </div>
 
                 <!-- Pricing Notice -->
-                <div class="mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
+                <div class="mb-4 md:mb-6 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-3 md:p-4">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                         <p class="text-sm">
                             <span class="font-medium text-text-primary">You're on the Pro plan:</span>
                             <span class="text-text-secondary">3/3 Squads | 3/3 Apps</span>
@@ -109,13 +85,13 @@
                 </div>
 
                 <!-- Squad Matching Onboarding Module -->
-                <div id="squad-onboarding" class="mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-6 relative">
+                <div id="squad-onboarding" class="mb-4 md:mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-4 md:p-6 relative">
                     <button onclick="dismissSquadOnboarding()" class="absolute top-4 right-4 text-white/60 hover:text-white transition-all">
                         <i class="fas fa-times text-lg"></i>
                     </button>
                     <div>
-                        <h2 class="text-xl font-bold mb-2">Find Your Squad 🚀</h2>
-                        <p class="text-white/90 mb-4">
+                        <h2 class="text-lg md:text-xl font-bold mb-2">Find Your Squad 🚀</h2>
+                        <p class="text-sm md:text-base text-white/90 mb-4">
                             Get matched with other founders at your stage to help to keep moving and accountable
                         </p>
                         <button onclick="window.location.href='onboarding-profile.html'" class="px-5 py-2.5 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all font-medium">
@@ -126,7 +102,7 @@
                 </div>
                 
                 <!-- Search Bar -->
-                <div class="mb-6">
+                <div class="mb-4 md:mb-6">
                     <div class="relative">
                         <input type="text" id="squads-search" placeholder="Search squads by name, focus area, or description..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all" onkeypress="handleSearch(event)">
                         <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -134,18 +110,18 @@
                 </div>
                 
                 <!-- Tabs and Filter Section -->
-                <div class="bg-section-bg -mx-8 px-8 py-4 mb-6">
+                <div class="bg-section-bg -mx-4 md:-mx-8 px-4 md:px-8 py-3 md:py-4 mb-4 md:mb-6">
                     <div class="max-w-[1200px] mx-auto flex items-center justify-between">
                         <!-- Tabs -->
-                        <div class="flex gap-2">
-                            <button class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-tab="your-squads" onclick="switchTab('your-squads')">Your Squads</button>
-                            <button class="px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="discover" onclick="switchTab('discover')">Discover</button>
+                        <div class="flex gap-1 md:gap-2">
+                            <button class="px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-primary text-white rounded-lg transition-all" data-tab="your-squads" onclick="switchTab('your-squads')">Your Squads</button>
+                            <button class="px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-tab="discover" onclick="switchTab('discover')">Discover</button>
                         </div>
                         
                         <!-- Filter -->
-                        <button class="flex items-center gap-2 px-4 py-2 bg-white border border-border rounded-lg hover:border-primary transition-all" onclick="showFilterModal()">
-                            <i class="fas fa-filter text-sm"></i>
-                            <span class="text-sm font-medium">Filter</span>
+                        <button class="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 bg-white border border-border rounded-lg hover:border-primary transition-all" onclick="showFilterModal()">
+                            <i class="fas fa-filter text-xs md:text-sm"></i>
+                            <span class="text-xs md:text-sm font-medium">Filter</span>
                         </button>
                     </div>
                 </div>
@@ -156,81 +132,81 @@
                     <div id="your-squads-content" class="block">
                         <div class="space-y-4">
                             <!-- Squad MVP -->
-                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=mvp'">
-                                <div class="flex items-center justify-between mb-4">
+                            <div class="bg-card-bg border border-border rounded-lg p-4 md:p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=mvp'">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3 md:mb-4 gap-2">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-rocket text-white text-xl"></i>
+                                        <div class="w-10 h-10 md:w-12 md:h-12 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-rocket text-white text-lg md:text-xl"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-xl font-bold text-text-primary">Squad MVP</h3>
+                                            <h3 class="text-lg md:text-xl font-bold text-text-primary">Squad MVP</h3>
                                             <p class="text-text-secondary text-xs">B2B SaaS • Build Stage</p>
                                         </div>
                                     </div>
-                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Active</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded self-start md:self-auto">Active</span>
                                 </div>
-                                <p class="text-text-secondary text-sm line-clamp-2 mb-4">Weekly check-ins for B2B SaaS founders grinding toward MVP launch. No drift, just drops.</p>
-                                <div class="flex items-center justify-between pt-4 border-t border-border">
+                                <p class="text-text-secondary text-xs md:text-sm line-clamp-2 mb-3 md:mb-4">Weekly check-ins for B2B SaaS founders grinding toward MVP launch. No drift, just drops.</p>
+                                <div class="flex items-center justify-between pt-3 md:pt-4 border-t border-border">
                                     <div class="flex -space-x-2">
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">AR</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">SC</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">JK</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">+1</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">AR</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">SC</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">JK</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">+1</div>
                                     </div>
-                                    <span class="text-text-muted text-xs font-medium uppercase">4/5 SEATS FILLED</span>
+                                    <span class="text-text-muted text-[10px] md:text-xs font-medium uppercase">4/5 SEATS FILLED</span>
                                 </div>
                             </div>
 
                             <!-- Squad B2B SaaS -->
-                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=b2b-saas'">
-                                <div class="flex items-center justify-between mb-4">
+                            <div class="bg-card-bg border border-border rounded-lg p-4 md:p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=b2b-saas'">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3 md:mb-4 gap-2">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-cloud text-white text-xl"></i>
+                                        <div class="w-10 h-10 md:w-12 md:h-12 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-cloud text-white text-lg md:text-xl"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-xl font-bold text-text-primary">Squad B2B SaaS</h3>
+                                            <h3 class="text-lg md:text-xl font-bold text-text-primary">Squad B2B SaaS</h3>
                                             <p class="text-text-secondary text-xs">Enterprise SaaS • Scale Stage</p>
                                         </div>
                                     </div>
-                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Active</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded self-start md:self-auto">Active</span>
                                 </div>
-                                <p class="text-text-secondary text-sm line-clamp-2 mb-4">Enterprise SaaS founders focused on scaling from $1M to $10M ARR. Weekly sync on sales, product, and growth.</p>
-                                <div class="flex items-center justify-between pt-4 border-t border-border">
+                                <p class="text-text-secondary text-xs md:text-sm line-clamp-2 mb-3 md:mb-4">Enterprise SaaS founders focused on scaling from $1M to $10M ARR. Weekly sync on sales, product, and growth.</p>
+                                <div class="flex items-center justify-between pt-3 md:pt-4 border-t border-border">
                                     <div class="flex -space-x-2">
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">DK</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">LM</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">RS</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">+2</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">DK</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">LM</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">RS</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">+2</div>
                                     </div>
-                                    <span class="text-text-muted text-xs font-medium uppercase">5/5 SEATS FILLED</span>
+                                    <span class="text-text-muted text-[10px] md:text-xs font-medium uppercase">5/5 SEATS FILLED</span>
                                 </div>
                             </div>
 
 
                             <!-- Squad AI/ML -->
-                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=ai-ml'">
-                                <div class="flex items-center justify-between mb-4">
+                            <div class="bg-card-bg border border-border rounded-lg p-4 md:p-6 hover:shadow-md transition-all cursor-pointer" onclick="window.location.href='squad-detail.html?squad=ai-ml'">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3 md:mb-4 gap-2">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-robot text-white text-xl"></i>
+                                        <div class="w-10 h-10 md:w-12 md:h-12 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-robot text-white text-lg md:text-xl"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-xl font-bold text-text-primary">Squad AI/ML</h3>
+                                            <h3 class="text-lg md:text-xl font-bold text-text-primary">Squad AI/ML</h3>
                                             <p class="text-text-secondary text-xs">AI/ML • Build Stage</p>
                                         </div>
                                     </div>
-                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">Active</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded self-start md:self-auto">Active</span>
                                 </div>
-                                <p class="text-text-secondary text-sm line-clamp-2 mb-4">Deep tech founders pushing the boundaries of AI and machine learning.</p>
-                                <div class="flex items-center justify-between pt-4 border-t border-border">
+                                <p class="text-text-secondary text-xs md:text-sm line-clamp-2 mb-3 md:mb-4">Deep tech founders pushing the boundaries of AI and machine learning.</p>
+                                <div class="flex items-center justify-between pt-3 md:pt-4 border-t border-border">
                                     <div class="flex -space-x-2">
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">DT</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">KL</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">AS</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">+2</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">DT</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">KL</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">AS</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">+2</div>
                                     </div>
-                                    <span class="text-text-muted text-xs font-medium uppercase">5/5 SEATS FILLED</span>
+                                    <span class="text-text-muted text-[10px] md:text-xs font-medium uppercase">5/5 SEATS FILLED</span>
                                 </div>
                             </div>
                         </div>
@@ -240,27 +216,27 @@
                     <div id="discover-content" class="hidden">
                         <div class="grid grid-cols-1 gap-4">
                             <!-- Squad Delta -->
-                            <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer" onclick="showSquadDetails('delta')">
-                                <div class="flex items-center justify-between mb-4">
+                            <div class="bg-card-bg border border-border rounded-lg p-4 md:p-6 hover:shadow-md transition-all cursor-pointer" onclick="showSquadDetails('delta')">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3 md:mb-4 gap-2">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 bg-black rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-mobile-alt text-white text-xl"></i>
+                                        <div class="w-10 h-10 md:w-12 md:h-12 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-mobile-alt text-white text-lg md:text-xl"></i>
                                         </div>
                                         <div>
-                                            <h3 class="text-xl font-bold text-text-primary">Squad Delta</h3>
+                                            <h3 class="text-lg md:text-xl font-bold text-text-primary">Squad Delta</h3>
                                             <p class="text-text-secondary text-xs">Mobile • Launch Stage</p>
                                         </div>
                                     </div>
-                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded">2 seats left</span>
+                                    <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded self-start md:self-auto">2 seats left</span>
                                 </div>
-                                <p class="text-text-secondary text-sm line-clamp-2 mb-4">Mobile-first founders building consumer apps with viral potential.</p>
-                                <div class="flex items-center justify-between pt-4 border-t border-border">
+                                <p class="text-text-secondary text-xs md:text-sm line-clamp-2 mb-3 md:mb-4">Mobile-first founders building consumer apps with viral potential.</p>
+                                <div class="flex items-center justify-between pt-3 md:pt-4 border-t border-border">
                                     <div class="flex -space-x-2">
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">TH</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">RK</div>
-                                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs font-semibold border-2 border-white">MM</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">TH</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">RK</div>
+                                        <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary text-white flex items-center justify-center text-[10px] md:text-xs font-semibold border-2 border-white">MM</div>
                                     </div>
-                                    <button class="px-4 py-1 text-sm bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="event.stopPropagation(); applyToSquad('delta')">
+                                    <button class="px-3 md:px-4 py-1 text-xs md:text-sm bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="event.stopPropagation(); applyToSquad('delta')">
                                         Apply
                                     </button>
                                 </div>

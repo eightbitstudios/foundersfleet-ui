@@ -7,34 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
         .conversation-item {
@@ -69,44 +48,44 @@
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
             <!-- Page Content -->
-            <div class="max-w-[1200px] mx-auto px-8 py-8">
+            <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-4 md:py-8">
                 <!-- Page Header -->
-                <div class="mb-8 flex items-start justify-between">
+                <div class="mb-4 md:mb-8 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl font-bold text-text-primary mb-2">Connect & Collaborate</h1>
-                        <p class="text-text-secondary">Messages with founders and squad members</p>
+                        <h1 class="text-2xl md:text-3xl font-bold text-text-primary mb-1 md:mb-2">Connect & Collaborate</h1>
+                        <p class="text-sm md:text-base text-text-secondary">Messages with founders and squad members</p>
                     </div>
-                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="newMessage()">
+                    <button class="flex items-center justify-center gap-2 px-4 md:px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all w-full md:w-auto" onclick="newMessage()">
                         <i class="fas fa-plus"></i>New Message
                     </button>
                 </div>
 
                 <!-- Main Chat Interface -->
-                <div class="bg-card-bg border border-border rounded-lg h-[calc(100vh-200px)] flex">
+                <div class="bg-card-bg border border-border rounded-lg h-[calc(100vh-250px)] md:h-[calc(100vh-200px)] flex flex-col md:flex-row">
                     <!-- Conversations List -->
-                    <div class="w-80 border-r border-border flex flex-col">
+                    <div class="w-full md:w-80 border-b md:border-b-0 md:border-r border-border flex flex-col h-40 md:h-auto overflow-hidden md:overflow-visible">
                         <!-- Search -->
-                        <div class="p-4 border-b border-border">
-                            <input type="text" placeholder="Search conversations..." class="w-full px-3 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary">
+                        <div class="p-3 md:p-4 border-b border-border hidden md:block">
+                            <input type="text" placeholder="Search conversations..." class="w-full px-3 py-2 text-sm border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                         
                         <!-- Conversations -->
                         <div class="flex-1 overflow-y-auto">
                             <!-- Squad Conversation -->
-                            <div class="conversation-item active p-4 cursor-pointer" onclick="selectConversation('squad-1')">
-                                <div class="flex gap-3">
-                                    <div class="w-12 h-12 rounded-lg bg-primary text-white flex items-center justify-center font-semibold flex-shrink-0">
-                                        <i class="fas fa-users"></i>
+                            <div class="conversation-item active p-3 md:p-4 cursor-pointer" onclick="selectConversation('squad-1')">
+                                <div class="flex gap-2 md:gap-3">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-primary text-white flex items-center justify-center font-semibold flex-shrink-0">
+                                        <i class="fas fa-users text-sm md:text-base"></i>
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div class="flex justify-between items-center">
-                                            <h4 class="font-semibold text-text-primary text-sm">B2B SaaS Squad</h4>
-                                            <span class="text-xs text-text-muted">10m</span>
+                                            <h4 class="font-semibold text-text-primary text-xs md:text-sm">B2B SaaS Squad</h4>
+                                            <span class="text-xs text-text-muted hidden md:inline">10m</span>
                                         </div>
-                                        <p class="text-sm text-text-secondary mt-1 truncate">Sarah: Just launched our beta! 🚀</p>
-                                        <div class="flex items-center gap-2 mt-2">
-                                            <span class="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">Squad</span>
-                                            <span class="px-2 py-1 bg-section-bg text-text-primary text-xs rounded-full">12 members</span>
+                                        <p class="text-xs md:text-sm text-text-secondary mt-1 truncate">Sarah: Just launched our beta! 🚀</p>
+                                        <div class="flex items-center gap-2 mt-1 md:mt-2">
+                                            <span class="px-2 py-0.5 md:py-1 bg-green-100 text-green-700 text-xs rounded-full hidden md:inline">Squad</span>
+                                            <span class="px-2 py-0.5 md:py-1 bg-section-bg text-text-primary text-xs rounded-full">12 members</span>
                                         </div>
                                     </div>
                                 </div>
@@ -229,18 +208,21 @@
                     <!-- Chat Area -->
                     <div class="flex-1 flex flex-col">
                         <!-- Chat Header -->
-                        <div class="p-4 border-b border-border">
+                        <div class="p-3 md:p-4 border-b border-border">
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center font-semibold">
-                                        <i class="fas fa-users"></i>
+                                <div class="flex items-center gap-2 md:gap-3">
+                                    <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-primary text-white flex items-center justify-center font-semibold">
+                                        <i class="fas fa-users text-sm md:text-base"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-text-primary">B2B SaaS Squad</h3>
-                                        <p class="text-sm text-text-secondary">12 members • 3 online</p>
+                                        <h3 class="text-sm md:text-base font-semibold text-text-primary">B2B SaaS Squad</h3>
+                                        <p class="text-xs md:text-sm text-text-secondary">12 members • 3 online</p>
                                     </div>
                                 </div>
-                                <button class="text-primary hover:text-primary-hover">
+                                <button class="text-primary hover:text-primary-hover md:hidden" onclick="toggleConversationsList()">
+                                    <i class="fas fa-bars"></i>
+                                </button>
+                                <button class="text-primary hover:text-primary-hover hidden md:block">
                                     <i class="fas fa-info-circle"></i>
                                 </button>
                             </div>
@@ -310,10 +292,10 @@
                         </div>
 
                         <!-- Message Input -->
-                        <div class="p-4 border-t border-border">
-                            <form onsubmit="sendMessage(event)" class="flex gap-3">
-                                <input type="text" id="message-input" placeholder="Message B2B SaaS Squad..." class="flex-1 px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-                                <button type="submit" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
+                        <div class="p-3 md:p-4 border-t border-border">
+                            <form onsubmit="sendMessage(event)" class="flex gap-2 md:gap-3">
+                                <input type="text" id="message-input" placeholder="Message B2B SaaS Squad..." class="flex-1 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                                <button type="submit" class="px-4 md:px-6 py-2 md:py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
                                     <i class="fas fa-paper-plane"></i>
                                 </button>
                             </form>

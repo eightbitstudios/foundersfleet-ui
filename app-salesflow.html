@@ -3,104 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SalesFlow - Sales Acceleration Platform | FoundersFleet</title>
+    <title>SalesFlow - Sales Process Intelligence | FoundersFleet</title>
+    <!-- 
+    APP CATEGORY: Marketing & Growth
+    
+    To change this app to a different category, update the CSS variables at line 63-68:
+    - Financial & Analytics (Purple): Use --financial-* variables
+    - Team & Networking (Blue): Use --team-* variables  
+    - Marketing & Growth (Green): Use --marketing-* variables
+    - Development & Technical (Orange): Use --dev-* variables
+    - Communication (Pink): Use --comm-* variables
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
-        .pipeline-stage {
-            transition: all 0.3s ease;
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team & Networking Apps (Blue) - CoFounderMatch, SkillSwap */
+            --team-primary: #2563EB;
+            --team-primary-rgb: 37, 99, 235;
+            --team-primary-hover: #1D4ED8;
+            --team-secondary: #0EA5E9;
+            --team-light-bg: #DBEAFE;
+            --team-light-border: #BFDBFE;
+            
+            /* Marketing & Growth Apps (Green) - ValidateAI, LaunchPad */
+            --marketing-primary: #10B981;
+            --marketing-primary-rgb: 16, 185, 129;
+            --marketing-primary-hover: #059669;
+            --marketing-secondary: #14B8A6;
+            --marketing-light-bg: #D1FAE5;
+            --marketing-light-border: #A7F3D0;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Current app accent colors (Marketing category for SalesFlow) */
+            --accent-primary: var(--marketing-primary);
+            --accent-primary-rgb: var(--marketing-primary-rgb);
+            --accent-primary-hover: var(--marketing-primary-hover);
+            --accent-secondary: var(--marketing-secondary);
+            --accent-light-bg: var(--marketing-light-bg);
+            --accent-light-border: var(--marketing-light-border);
         }
-        .pipeline-stage:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
-        .deal-card {
+        
+        .metric-card {
             transition: all 0.2s ease;
-            cursor: grab;
         }
-        .deal-card:active {
-            cursor: grabbing;
-            transform: scale(0.98);
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .deal-card:hover {
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        .trend-up {
+            color: var(--accent-primary);
         }
-        .activity-timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #E5E5E5;
+        .trend-down {
+            color: var(--accent-secondary);
         }
-        .progress-ring {
-            transform: rotate(-90deg);
+        .trend-neutral {
+            color: #6B7280;
         }
-        .progress-ring-circle {
-            stroke-dasharray: 283;
-            stroke-dashoffset: calc(283 - (283 * var(--progress) / 100));
-            transition: stroke-dashoffset 0.5s ease;
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
         }
-        .hot-lead {
-            animation: pulse-border 2s infinite;
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
         }
-        @keyframes pulse-border {
-            0% {
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-            }
-        }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
     </style>
 </head>
 <body class="bg-background min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
@@ -112,325 +132,480 @@
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">SalesFlow</h1>
-                                <p class="text-sm text-text-secondary">Close deals faster with AI insights</p>
+                                <p class="text-sm text-text-secondary hidden md:block">Close deals faster with AI insights</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">13 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Sales Performance Dashboard -->
-                <div class="mb-8 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl p-8 border border-orange-100">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Sales Dashboard</h2>
-                            <p class="text-text-secondary mb-4">Q1 2025 Performance</p>
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Turn Your Pipeline Into Predictable Revenue
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    AI-powered sales intelligence that shows you exactly which deals to prioritize, what actions to take, and when to take them for maximum close rates.
+                                </p>
+                            </div>
                             
-                            <!-- Key Metrics -->
-                            <div class="flex items-center gap-8">
-                                <div>
-                                    <div class="text-3xl font-bold text-text-primary">$284K</div>
-                                    <div class="text-sm text-text-secondary">Pipeline Value</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-success">$92K</div>
-                                    <div class="text-sm text-text-secondary">Closed Won</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-info">32%</div>
-                                    <div class="text-sm text-text-secondary">Win Rate</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-warning">18</div>
-                                    <div class="text-sm text-text-secondary">Days to Close</div>
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Predicted Monthly Close Rate</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">34%</span>
+                                        <span class="text-lg accent-text flex items-center">
+                                            <i class="fas fa-arrow-up mr-1"></i>+8%
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">Above average</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-white rounded-lg p-4 shadow-sm text-center">
-                            <div class="relative w-24 h-24">
-                                <svg class="progress-ring w-24 h-24">
-                                    <circle cx="48" cy="48" r="45" stroke="#E5E5E5" stroke-width="6" fill="none"></circle>
-                                    <circle cx="48" cy="48" r="45" stroke="#F59E0B" stroke-width="6" fill="none" 
-                                            class="progress-ring-circle" style="--progress: 68"></circle>
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Pipeline Performance</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Pipeline Value -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Pipeline Value</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$247K</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-dollar-sign accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Strong pipeline — focus on accelerating top deals.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +15%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Close Rate -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Close Rate</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">24%</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-target accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Above industry average — maintain momentum.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +3%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Avg Deal Size -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Avg Deal</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$12.5K</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-handshake accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Healthy deal size — explore upsell opportunities.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +$1.2K
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Sales Cycle -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Sales Cycle</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">42d</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-clock accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Accelerating — AI recommendations working.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -5 days
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Deal Intelligence -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- AI Recommendations -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">AI Deal Recommendations</h3>
+                                
+                                <div class="space-y-4">
+                                    <!-- High Priority Deal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-fire accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Acme Corp - $35K Deal</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">Hot</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">87% close probability — competitor evaluation ends Friday. Act now!</p>
+                                            
+                                            <!-- Action Items -->
+                                            <div class="bg-white rounded-lg p-3 accent-border-light border">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Recommended Next Actions:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Send competitive analysis document by Wednesday</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Schedule executive summary call with their CEO</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Prepare custom implementation timeline</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>87% close probability</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Decision by Friday</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Medium Priority Deal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light-secondary rounded-lg accent-border-light-secondary border">
+                                        <div class="w-10 h-10 accent-bg-light-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-chart-line accent-text-secondary"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">TechStart Inc - $18K Deal</h4>
+                                                <span class="px-2 py-1 accent-bg-light-secondary accent-text-secondary text-xs rounded-full font-medium">Warm</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">62% close probability — need to address pricing concerns and show ROI.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>62% close probability</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Next week follow-up</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Follow-up Deal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-phone accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Global Solutions - $28K Deal</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">Follow-up</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">No contact for 8 days — send re-engagement sequence immediately.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>45% close probability</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Re-engage today</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pipeline Chart -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Sales Pipeline Funnel</h3>
+                                    <select class="text-sm border border-border rounded-lg px-3 py-1">
+                                        <option>This Quarter</option>
+                                        <option>Last Quarter</option>
+                                        <option>This Year</option>
+                                    </select>
+                                </div>
+                                <div class="h-64">
+                                    <canvas id="pipelineChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Activity Tracking -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Recent Sales Activities</h3>
+                                    <div class="flex items-center gap-3">
+                                        <select class="text-xs border border-border rounded px-2 py-1">
+                                            <option>All Activities</option>
+                                            <option>Calls</option>
+                                            <option>Emails</option>
+                                            <option>Meetings</option>
+                                        </select>
+                                        <button class="text-sm accent-text hover:opacity-80 flex items-center gap-1">
+                                            View All <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <!-- Recent Activity -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg rounded-full flex items-center justify-center text-white">
+                                                    <i class="fas fa-phone text-sm"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Discovery Call - Acme Corp</h4>
+                                                    <p class="text-sm text-text-secondary">Discussed pain points, budget confirmed at $35K range</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-check-circle mr-1"></i>Completed
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>2 hours ago
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-user mr-1"></i>Sarah Chen
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                Hot
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Email Activity -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg-secondary rounded-full flex items-center justify-center text-white">
+                                                    <i class="fas fa-envelope text-sm"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Follow-up Email - TechStart Inc</h4>
+                                                    <p class="text-sm text-text-secondary">Sent ROI calculator and implementation timeline</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-eye mr-1"></i>Opened
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>5 hours ago
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-user mr-1"></i>Mike Johnson
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg-secondary text-white rounded-full text-sm font-medium">
+                                                Warm
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Meeting Activity -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: linear-gradient(to bottom right, var(--accent-primary), var(--accent-secondary));">
+                                                    <i class="fas fa-calendar text-sm"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Demo Scheduled - Global Solutions</h4>
+                                                    <p class="text-sm text-text-secondary">Product demo scheduled for Thursday 2PM</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-calendar-check mr-1"></i>Scheduled
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>1 day ago
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-user mr-1"></i>Alex Rodriguez
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                Demo
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Performance Insights -->
+                        <div class="space-y-6">
+                            <!-- Top Performers -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Top Sales Performers</h3>
+                                <div class="space-y-3">
                                     <div>
-                                        <div class="text-2xl font-bold text-text-primary">68%</div>
-                                        <div class="text-xs text-text-secondary">of Target</div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-trophy accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Sarah Chen</span>
+                                            </div>
+                                            <span class="text-sm font-bold accent-text">$85K</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 95%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">95% of monthly quota • 8 deals closed</p>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-medal accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Mike Johnson</span>
+                                            </div>
+                                            <span class="text-sm font-bold accent-text">$72K</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 80%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">80% of monthly quota • 6 deals closed</p>
+                                    </div>
 
-                <!-- Sales Pipeline -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold text-text-primary mb-4">Sales Pipeline</h3>
-                    <div class="grid grid-cols-5 gap-4">
-                        <!-- Lead Stage -->
-                        <div class="pipeline-stage bg-card-bg border border-border rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="font-medium text-text-primary">Lead</h4>
-                                <span class="text-sm text-text-secondary">$45K</span>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="deal-card bg-blue-50 border border-blue-200 rounded p-3 hot-lead">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="font-medium text-sm">TechStartup Inc</span>
-                                        <span class="text-xs text-danger">Hot</span>
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-star accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Alex Rodriguez</span>
+                                            </div>
+                                            <span class="text-sm font-bold accent-text">$58K</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 65%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">65% of monthly quota • 4 deals closed</p>
                                     </div>
-                                    <div class="text-xs text-text-secondary">$15,000 • John D.</div>
-                                </div>
-                                <div class="deal-card bg-section-bg border border-border rounded p-3">
-                                    <div class="font-medium text-sm mb-1">Growth Co</div>
-                                    <div class="text-xs text-text-secondary">$8,000 • Sarah M.</div>
-                                </div>
-                                <div class="deal-card bg-section-bg border border-border rounded p-3">
-                                    <div class="font-medium text-sm mb-1">Innovation Labs</div>
-                                    <div class="text-xs text-text-secondary">$22,000 • Mike T.</div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- Qualified Stage -->
-                        <div class="pipeline-stage bg-card-bg border border-border rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="font-medium text-text-primary">Qualified</h4>
-                                <span class="text-sm text-text-secondary">$78K</span>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="deal-card bg-section-bg border border-border rounded p-3">
-                                    <div class="font-medium text-sm mb-1">Enterprise X</div>
-                                    <div class="text-xs text-text-secondary">$45,000 • Lisa K.</div>
-                                </div>
-                                <div class="deal-card bg-section-bg border border-border rounded p-3">
-                                    <div class="font-medium text-sm mb-1">Scale Solutions</div>
-                                    <div class="text-xs text-text-secondary">$33,000 • Tom R.</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Proposal Stage -->
-                        <div class="pipeline-stage bg-card-bg border border-border rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="font-medium text-text-primary">Proposal</h4>
-                                <span class="text-sm text-text-secondary">$95K</span>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="deal-card bg-yellow-50 border border-yellow-200 rounded p-3">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="font-medium text-sm">MegaCorp</span>
-                                        <i class="fas fa-clock text-warning text-xs"></i>
-                                    </div>
-                                    <div class="text-xs text-text-secondary">$65,000 • Alex P.</div>
-                                </div>
-                                <div class="deal-card bg-section-bg border border-border rounded p-3">
-                                    <div class="font-medium text-sm mb-1">FastTrack Inc</div>
-                                    <div class="text-xs text-text-secondary">$30,000 • Emma W.</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Negotiation Stage -->
-                        <div class="pipeline-stage bg-card-bg border border-border rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="font-medium text-text-primary">Negotiation</h4>
-                                <span class="text-sm text-text-secondary">$66K</span>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="deal-card bg-green-50 border border-green-200 rounded p-3">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="font-medium text-sm">Global Tech</span>
-                                        <i class="fas fa-handshake text-success text-xs"></i>
-                                    </div>
-                                    <div class="text-xs text-text-secondary">$52,000 • David L.</div>
-                                </div>
-                                <div class="deal-card bg-section-bg border border-border rounded p-3">
-                                    <div class="font-medium text-sm mb-1">StartupHub</div>
-                                    <div class="text-xs text-text-secondary">$14,000 • Nina S.</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Closed Won Stage -->
-                        <div class="pipeline-stage bg-success/10 border border-success rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-3">
-                                <h4 class="font-medium text-success">Closed Won</h4>
-                                <span class="text-sm text-success font-bold">$92K</span>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="deal-card bg-white border border-success rounded p-3">
-                                    <div class="font-medium text-sm mb-1">Victory Corp</div>
-                                    <div class="text-xs text-text-secondary">$38,000 • Mark J.</div>
-                                </div>
-                                <div class="deal-card bg-white border border-success rounded p-3">
-                                    <div class="font-medium text-sm mb-1">Success Ltd</div>
-                                    <div class="text-xs text-text-secondary">$28,000 • Rachel B.</div>
-                                </div>
-                                <div class="deal-card bg-white border border-success rounded p-3">
-                                    <div class="font-medium text-sm mb-1">WinTech</div>
-                                    <div class="text-xs text-text-secondary">$26,000 • Chris M.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Activity & Insights -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Recent Activities -->
-                    <div class="lg:col-span-2">
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-xl font-semibold text-text-primary mb-4">Recent Activities</h3>
-                            <div class="activity-timeline relative">
-                                <div class="relative flex items-start gap-4 pb-4">
-                                    <div class="w-10 h-10 bg-info rounded-full flex items-center justify-center relative z-10">
-                                        <i class="fas fa-phone text-white text-sm"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="flex items-center justify-between">
-                                            <h4 class="font-medium text-text-primary">Call with TechStartup Inc</h4>
-                                            <span class="text-xs text-text-muted">10 min ago</span>
+                            <!-- Sales Health Score -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Sales Health Score</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Pipeline Quality</span>
+                                            <span class="text-sm font-medium accent-text">Excellent</span>
                                         </div>
-                                        <p class="text-sm text-text-secondary mt-1">Discussed pricing options, moving to proposal stage</p>
-                                        <div class="flex items-center gap-4 mt-2">
-                                            <button class="text-xs text-primary hover:text-primary-hover">View Notes →</button>
-                                            <button class="text-xs text-primary hover:text-primary-hover">Schedule Follow-up →</button>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 92%"></div>
                                         </div>
+                                        <p class="text-xs text-text-muted mt-1">Strong qualified leads with good close probability</p>
                                     </div>
-                                </div>
-                                
-                                <div class="relative flex items-start gap-4 pb-4">
-                                    <div class="w-10 h-10 bg-success rounded-full flex items-center justify-center relative z-10">
-                                        <i class="fas fa-envelope text-white text-sm"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="flex items-center justify-between">
-                                            <h4 class="font-medium text-text-primary">Proposal sent to MegaCorp</h4>
-                                            <span class="text-xs text-text-muted">2 hours ago</span>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Activity Level</span>
+                                            <span class="text-sm font-medium accent-text">High</span>
                                         </div>
-                                        <p class="text-sm text-text-secondary mt-1">$65,000 annual contract proposal</p>
-                                        <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded mt-2 inline-block">Waiting for response</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="relative flex items-start gap-4 pb-4">
-                                    <div class="w-10 h-10 bg-warning rounded-full flex items-center justify-center relative z-10">
-                                        <i class="fas fa-calendar text-white text-sm"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="flex items-center justify-between">
-                                            <h4 class="font-medium text-text-primary">Demo scheduled with Enterprise X</h4>
-                                            <span class="text-xs text-text-muted">Yesterday</span>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 88%"></div>
                                         </div>
-                                        <p class="text-sm text-text-secondary mt-1">Tomorrow at 2:00 PM PST</p>
+                                        <p class="text-xs text-text-muted mt-1">Consistent outreach and follow-up activities</p>
                                     </div>
-                                </div>
-                                
-                                <div class="relative flex items-start gap-4">
-                                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center relative z-10">
-                                        <i class="fas fa-trophy text-white text-sm"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <div class="flex items-center justify-between">
-                                            <h4 class="font-medium text-text-primary">Deal closed: Victory Corp</h4>
-                                            <span class="text-xs text-text-muted">2 days ago</span>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Deal Velocity</span>
+                                            <span class="text-sm font-medium accent-text">Improving</span>
                                         </div>
-                                        <p class="text-sm text-text-secondary mt-1">$38,000 - 2 year contract signed!</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 76%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Sales cycle shortened by 5 days this month</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- AI Sales Coach -->
-                    <div class="space-y-6">
-                        <!-- Next Best Actions -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">AI Recommendations</h3>
-                            <div class="space-y-3">
-                                <div class="p-3 bg-red-50 border border-red-200 rounded-lg">
-                                    <div class="flex items-start gap-2">
-                                        <i class="fas fa-fire text-danger mt-0.5"></i>
-                                        <div>
-                                            <p class="text-sm font-medium text-text-primary">Follow up on MegaCorp</p>
-                                            <p class="text-xs text-text-secondary mt-1">No response for 48h on $65K proposal</p>
+                            <!-- Quick Actions -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Send Follow-up Emails</span>
+                                            <i class="fas fa-envelope text-text-muted"></i>
                                         </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                                    <div class="flex items-start gap-2">
-                                        <i class="fas fa-lightbulb text-warning mt-0.5"></i>
-                                        <div>
-                                            <p class="text-sm font-medium text-text-primary">Upsell opportunity</p>
-                                            <p class="text-xs text-text-secondary mt-1">Global Tech likely needs premium features</p>
+                                        <p class="text-xs text-text-secondary">Auto-send personalized follow-ups to warm leads</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Schedule Demo Calls</span>
+                                            <i class="fas fa-calendar-plus text-text-muted"></i>
                                         </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                                    <div class="flex items-start gap-2">
-                                        <i class="fas fa-users text-info mt-0.5"></i>
-                                        <div>
-                                            <p class="text-sm font-medium text-text-primary">Bring in technical team</p>
-                                            <p class="text-xs text-text-secondary mt-1">Enterprise X demo needs tech support</p>
+                                        <p class="text-xs text-text-secondary">Book product demos with qualified prospects</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Generate Proposals</span>
+                                            <i class="fas fa-file-alt text-text-muted"></i>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sales Leaderboard -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Team Leaderboard</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-lg font-bold text-yellow-500">🥇</span>
-                                        <div>
-                                            <div class="font-medium text-text-primary">Sarah Miller</div>
-                                            <div class="text-xs text-text-secondary">$125K closed</div>
+                                        <p class="text-xs text-text-secondary">Create custom proposals for hot leads</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Export Pipeline Report</span>
+                                            <i class="fas fa-download text-text-muted"></i>
                                         </div>
-                                    </div>
-                                    <span class="text-sm font-medium text-success">156%</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-lg font-bold text-gray-400">🥈</span>
-                                        <div>
-                                            <div class="font-medium text-text-primary">John Davis</div>
-                                            <div class="text-xs text-text-secondary">$92K closed</div>
-                                        </div>
-                                    </div>
-                                    <span class="text-sm font-medium text-info">115%</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-lg font-bold text-orange-600">🥉</span>
-                                        <div>
-                                            <div class="font-medium text-text-primary">You</div>
-                                            <div class="text-xs text-text-secondary">$88K closed</div>
-                                        </div>
-                                    </div>
-                                    <span class="text-sm font-medium text-warning">110%</span>
+                                        <p class="text-xs text-text-secondary">Download detailed pipeline analysis</p>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -445,68 +620,100 @@
         // Initialize navigation
         initializeNavigation('apps');
 
-        // App navigation
-        const appPages = [
-            'app-economaestro.html',
-            'app-runway.html',
-            'app-cofoundermatch.html',
-            'app-validateai.html',
-            'app-shipfast.html',
-            'app-firstusers.html',
-            'app-pitchperfect.html',
-            'app-launchpad.html',
-            'app-scaleops.html',
-            'app-delightiq.html',
-            'app-brandforge.html',
-            'app-salesflow.html',
-            'app-insighthub.html',
-            'app-searchmaster.html',
-            'app-goglobal.html',
-            'app-legalshield.html',
-            'app-teamsync.html'
-        ];
-
-        // Update counter
-        const currentUrl = window.location.pathname.split('/').pop();
-        const currentIndex = appPages.indexOf(currentUrl);
-        if (currentIndex !== -1) {
-            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
-        }
-
-        function navigateApp(direction) {
-            const currentUrl = window.location.pathname.split('/').pop();
-            const currentIndex = appPages.indexOf(currentUrl);
-            
-            if (currentIndex === -1) return;
-            
-            let newIndex;
-            if (direction === 'next') {
-                newIndex = (currentIndex + 1) % appPages.length;
-            } else {
-                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
-            }
-            
-            window.location.href = appPages[newIndex];
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'ArrowLeft') {
-                navigateApp('prev');
-            } else if (event.altKey && event.key === 'ArrowRight') {
-                navigateApp('next');
+        // Initialize pipeline chart
+        const ctx = document.getElementById('pipelineChart').getContext('2d');
+        const pipelineChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Prospecting', 'Qualification', 'Proposal', 'Negotiation', 'Closed Won'],
+                datasets: [{
+                    label: 'Deal Count',
+                    data: [28, 18, 12, 8, 6],
+                    backgroundColor: [
+                        `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.8)`,
+                        `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.7)`,
+                        `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.6)`,
+                        `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.5)`,
+                        `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.9)`
+                    ],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary'),
+                    borderWidth: 2,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            }
+                        }
+                    }
+                }
             }
         });
         
-        // launchApp function is now handled by app-launch-panel.js
-        
-        // Go back to previous page
+        // Go back function
         function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // Fallback to apps page if no history
-                window.location.href = 'apps.html';
+            window.location.href = 'apps.html';
+        }
+
+        // Navigate between apps
+        function navigateApp(direction) {
+            const apps = [
+                'app-economaestro.html',
+                'app-runway.html',
+                'app-investorlens.html',
+                'app-cofoundermatch.html',
+                'app-validateai.html',
+                'app-shipfast.html',
+                'app-firstusers.html',
+                'app-pitchperfect.html',
+                'app-launchpad.html',
+                'app-scaleops.html',
+                'app-delightiq.html',
+                'app-brandforge.html',
+                'app-salesflow.html',
+                'app-insighthub.html',
+                'app-searchmaster.html',
+                'app-legalshield.html',
+                'app-teamsync.html',
+                'app-goglobal.html'
+            ];
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const currentIndex = apps.indexOf(currentPage);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = currentIndex === 0 ? apps.length - 1 : currentIndex - 1;
+                } else {
+                    newIndex = currentIndex === apps.length - 1 ? 0 : currentIndex + 1;
+                }
+                window.location.href = apps[newIndex];
             }
         }
     </script>

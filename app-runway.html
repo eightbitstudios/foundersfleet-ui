@@ -12,35 +12,26 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
+        :root {
+            /* Financial & Analytics Apps (Purple) */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-bg-light: rgba(147, 51, 234, 0.1);
+            --financial-border-light: rgba(147, 51, 234, 0.2);
+        }
+
+        /* Accent color classes for this app */
+        .accent-bg { background-color: var(--financial-primary); }
+        .accent-bg-hover:hover { background-color: var(--financial-primary-hover); }
+        .accent-bg-light { background-color: var(--financial-bg-light); }
+        .accent-text { color: var(--financial-primary); }
+        .accent-border { border-color: var(--financial-primary); }
+        .accent-border-light { border-color: var(--financial-border-light); }
+
         .metric-card {
             transition: all 0.3s ease;
         }
@@ -60,7 +51,7 @@
             height: 300px;
         }
         .ai-suggestion {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--financial-primary) 0%, var(--financial-primary-hover) 100%);
             color: white;
         }
         .pulse {
@@ -81,132 +72,180 @@
     <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 bg-background overflow-hidden">
+    <div class="flex-1 bg-gray-50 overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
                             <i class="fas fa-arrow-left text-text-secondary"></i>
                         </button>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-chart-line text-white"></i>
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">Runway</h1>
-                                <p class="text-sm text-text-secondary">AI-Powered Financial Modeling</p>
+                                <p class="text-sm text-text-secondary hidden md:block">Know exactly where your money is going</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">2 of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">2 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Welcome Section for First-Time Users -->
-                <div id="welcome-section" class="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-8 border border-purple-100">
-                    <div class="flex items-start justify-between">
-                        <div class="flex-1">
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Welcome to Runway</h2>
-                            <p class="text-text-secondary mb-4">Build investor-ready financial models in minutes, not days. Our AI understands your business model and creates dynamic projections.</p>
-                            <div class="flex gap-3">
-                                <button onclick="startQuickSetup()" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                                    <i class="fas fa-magic mr-2"></i>Quick Setup (2 min)
-                                </button>
-                                <button onclick="importData()" class="px-6 py-3 bg-white text-primary border border-border rounded-lg hover:border-primary transition-all">
-                                    <i class="fas fa-file-import mr-2"></i>Import Existing Data
-                                </button>
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Financial Clarity in Real-Time
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    Your burn rate, runway, and growth projections updated daily. Make confident financial decisions with AI-powered scenario planning.
+                                </p>
                             </div>
-                        </div>
-                        <button onclick="dismissWelcome()" class="text-text-muted hover:text-text-secondary">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Key Metrics Dashboard -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-sm font-medium text-text-muted">Monthly Burn Rate</h3>
-                            <i class="fas fa-fire text-danger"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-text-primary">$45,000</p>
-                        <p class="text-sm text-success mt-1">
-                            <i class="fas fa-arrow-down mr-1"></i>12% from last month
-                        </p>
-                    </div>
-
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-sm font-medium text-text-muted">Runway</h3>
-                            <i class="fas fa-calendar-alt text-warning"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-text-primary">18 months</p>
-                        <p class="text-sm text-text-secondary mt-1">
-                            Until Oct 2025
-                        </p>
-                    </div>
-
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-sm font-medium text-text-muted">ARR Projection</h3>
-                            <i class="fas fa-chart-line text-success"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-text-primary">$240K</p>
-                        <p class="text-sm text-success mt-1">
-                            <i class="fas fa-arrow-up mr-1"></i>On track
-                        </p>
-                    </div>
-
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="text-sm font-medium text-text-muted">Break-even</h3>
-                            <i class="fas fa-balance-scale text-info"></i>
-                        </div>
-                        <p class="text-2xl font-bold text-text-primary">Q3 2025</p>
-                        <p class="text-sm text-text-secondary mt-1">
-                            9 months away
-                        </p>
-                    </div>
-                </div>
-
-                <!-- AI Insights -->
-                <div class="ai-suggestion rounded-lg p-6 mb-8">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                            <i class="fas fa-brain text-white pulse"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="text-lg font-semibold text-white mb-2">AI Insight</h3>
-                            <p class="text-white/90 mb-3">Based on your current burn rate and growth trajectory, you'll need to raise your Series A by Q2 2025. Consider starting conversations with investors in Q1 to allow 3-4 months for the process.</p>
-                            <div class="flex gap-3">
-                                <button class="px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-all">
-                                    <i class="fas fa-calculator mr-2"></i>Model Series A
-                                </button>
-                                <button class="px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-all">
-                                    <i class="fas fa-users mr-2"></i>Find Investors
-                                </button>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Current Runway</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">18</span>
+                                        <span class="text-lg text-text-secondary">months</span>
+                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">Until Oct 2025</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Financial Health Metrics</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Monthly Burn -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Burn Rate</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$45,000</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-fire accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Monthly spend rate — optimize now to extend runway.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs text-green-600">
+                                    <i class="fas fa-arrow-down"></i> -12%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Runway -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Runway</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">18 months</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-calendar-alt accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Cash lasts until Oct 2025 — plan fundraise for Q2.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs text-yellow-600">
+                                    <i class="fas fa-clock"></i> Healthy
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- ARR -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">ARR</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$240K</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-chart-line accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Annual recurring revenue — accelerate sales to hit $500K.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs text-green-600">
+                                    <i class="fas fa-arrow-up"></i> On track
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Break-even -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Break-even</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">Q3 2025</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-balance-scale accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Profitability target — focus on unit economics now.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs text-blue-600">
+                                    <i class="fas fa-target"></i> 9 months
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - AI Insights -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- AI Insights -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">AI Financial Advisor</h3>
+                                <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                    <div class="w-10 h-10 accent-bg rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-brain text-white"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-text-primary mb-2">Series A Timing Alert</h4>
+                                        <p class="text-sm text-text-secondary mb-3">Based on your current burn rate and growth trajectory, you'll need to raise your Series A by Q2 2025. Consider starting conversations with investors in Q1 to allow 3-4 months for the process.</p>
+                                        <div class="flex gap-3">
+                                            <button class="px-3 py-1.5 accent-bg text-white rounded text-sm accent-bg-hover transition-all">
+                                                <i class="fas fa-calculator mr-1"></i>Model Series A
+                                            </button>
+                                            <button class="px-3 py-1.5 bg-white accent-text border accent-border rounded text-sm hover:bg-gray-50 transition-all">
+                                                <i class="fas fa-users mr-1"></i>Find Investors
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                 <!-- Scenario Planning -->
                 <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
@@ -334,6 +373,7 @@
         const appPages = [
             'app-economaestro.html',
             'app-runway.html',
+            'app-investorlens.html',
             'app-cofoundermatch.html',
             'app-validateai.html',
             'app-shipfast.html',
@@ -346,9 +386,9 @@
             'app-salesflow.html',
             'app-insighthub.html',
             'app-searchmaster.html',
-            'app-goglobal.html',
             'app-legalshield.html',
-            'app-teamsync.html'
+            'app-teamsync.html',
+            'app-goglobal.html'
         ];
 
         // Update counter

@@ -5,43 +5,48 @@ let appPanelOpen = false;
 const appConfigs = {
     'EconoMaestro': {
         name: 'EconoMaestro',
-        icon: 'fa-globe-americas',
+        icon: 'fa-chart-line',
         iconBg: 'bg-gradient-to-br from-indigo-500 to-purple-600',
         sections: {
             configuration: {
-                title: 'Configuration',
+                title: 'Your Startup Context',
                 items: [
-                    { label: 'Target Market', value: 'Global', type: 'select', options: ['Global', 'US Only', 'Europe', 'Asia'] },
-                    { label: 'Update Frequency', value: 'Real-time', type: 'select', options: ['Real-time', 'Daily', 'Weekly'] },
-                    { label: 'Forecast Horizon', value: '12 months', type: 'select', options: ['3 months', '6 months', '12 months', '24 months'] },
-                    { label: 'Risk Tolerance', value: 'Moderate', type: 'select', options: ['Conservative', 'Moderate', 'Aggressive'] }
+                    { label: 'Industry Sector', value: 'B2B SaaS', type: 'select', options: ['B2B SaaS', 'AI/ML', 'Fintech', 'E-commerce', 'HealthTech', 'EdTech', 'Marketplace', 'Consumer', 'DeepTech'] },
+                    { label: 'Current Stage', value: 'Pre-seed', type: 'select', options: ['Pre-revenue', 'Pre-seed', 'Seed', 'Series A', 'Series B+', 'Bootstrapped'] },
+                    { label: 'Primary Market', value: 'United States', type: 'select', options: ['United States', 'Europe', 'Asia-Pacific', 'Latin America', 'Global'] },
+                    { label: 'Next Milestone', value: 'Raise Seed Round', type: 'select', options: ['First Customer', 'Product-Market Fit', 'Raise Seed Round', 'Raise Series A', 'Profitability', 'International Expansion'] },
+                    { label: 'Burn Rate', value: '$25K-50K/mo', type: 'select', options: ['< $10K/mo', '$10K-25K/mo', '$25K-50K/mo', '$50K-100K/mo', '$100K-250K/mo', '> $250K/mo'] },
+                    { label: 'Knowledge', value: '', type: 'file', accept: '.pdf,.doc,.docx' },
+                    { label: 'Additional Context', value: '', type: 'textarea', placeholder: 'Paste any relevant startup information here...' }
                 ]
             },
             settings: {
-                title: 'Alert Settings',
+                title: 'Timing Alerts',
                 items: [
-                    { label: 'Economic Indicators', value: true, type: 'toggle' },
-                    { label: 'Market Volatility', value: true, type: 'toggle' },
-                    { label: 'Policy Changes', value: false, type: 'toggle' },
-                    { label: 'Email Notifications', value: true, type: 'toggle' }
+                    { label: 'Fundraising Windows', value: true, type: 'toggle' },
+                    { label: 'Hiring Opportunities', value: true, type: 'toggle' },
+                    { label: 'Market Expansion Signals', value: false, type: 'toggle' },
+                    { label: 'Competitor Funding Alerts', value: true, type: 'toggle' },
+                    { label: 'Sector-Specific Trends', value: true, type: 'toggle' }
                 ]
             },
             integrations: {
-                title: 'Integrations',
+                title: 'Data Sources',
                 items: [
-                    { name: 'Slack', connected: true, icon: 'fa-slack' },
-                    { name: 'Bloomberg Terminal', connected: false, icon: 'fa-chart-bar' },
-                    { name: 'Google Sheets', connected: true, icon: 'fa-table' },
-                    { name: 'Zapier', connected: false, icon: 'fa-bolt' }
+                    { name: 'FoundersFleet Profile', connected: true, icon: 'fa-user-circle' },
+                    { name: 'Stripe (Revenue Data)', connected: false, icon: 'fa-credit-card' },
+                    { name: 'QuickBooks (Burn Rate)', connected: false, icon: 'fa-calculator' },
+                    { name: 'LinkedIn (Team Size)', connected: true, icon: 'fa-linkedin' },
+                    { name: 'Crunchbase (Competitor Intel)', connected: false, icon: 'fa-database' }
                 ]
             },
             actions: {
                 title: 'Quick Actions',
                 items: [
-                    { label: 'Generate Report', icon: 'fa-file-pdf', action: 'generateReport' },
-                    { label: 'Schedule Briefing', icon: 'fa-calendar', action: 'scheduleBriefing' },
-                    { label: 'Export Data', icon: 'fa-download', action: 'exportData' },
-                    { label: 'View Tutorial', icon: 'fa-play-circle', action: 'viewTutorial' }
+                    { label: 'Investor Update', icon: 'fa-envelope', action: 'generateInvestorUpdate' },
+                    { label: 'Board Deck Export', icon: 'fa-presentation', action: 'exportBoardDeck' },
+                    { label: 'Scenario Planning', icon: 'fa-project-diagram', action: 'scenarioPlanning' },
+                    { label: 'Share with Advisors', icon: 'fa-share-alt', action: 'shareAdvisors' }
                 ]
             }
         }
@@ -339,20 +344,51 @@ function openAppPanel(appName) {
                     ${config.sections.configuration.title}
                 </h4>
                 <div class="space-y-3">
-                    ${config.sections.configuration.items.map(item => `
-                        <div class="flex items-center justify-between">
-                            <label class="text-sm text-text-secondary">${item.label}</label>
-                            ${item.type === 'select' ? `
-                                <select class="px-3 py-1 border border-border rounded-lg text-sm bg-white">
-                                    ${item.options.map(opt => `
-                                        <option ${opt === item.value ? 'selected' : ''}>${opt}</option>
-                                    `).join('')}
-                                </select>
-                            ` : `
-                                <input type="text" value="${item.value}" class="px-3 py-1 border border-border rounded-lg text-sm" />
-                            `}
-                        </div>
-                    `).join('')}
+                    ${config.sections.configuration.items.map(item => {
+                        if (item.type === 'file') {
+                            return `
+                                <div class="space-y-2">
+                                    <label class="text-sm text-text-secondary">${item.label}</label>
+                                    <div class="flex items-center gap-2">
+                                        <label class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:bg-gray-50 cursor-pointer flex items-center gap-2">
+                                            <i class="fas fa-paperclip text-text-secondary"></i>
+                                            <span>Choose File</span>
+                                            <input type="file" accept="${item.accept || ''}" class="hidden" />
+                                        </label>
+                                        <span class="text-xs text-text-muted">No file chosen</span>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (item.type === 'textarea') {
+                            return `
+                                <div class="space-y-2">
+                                    <label class="text-sm text-text-secondary">${item.label}</label>
+                                    <textarea 
+                                        placeholder="${item.placeholder || ''}" 
+                                        class="w-full px-3 py-2 border border-border rounded-lg text-sm resize-none h-24"
+                                    >${item.value}</textarea>
+                                </div>
+                            `;
+                        } else if (item.type === 'select') {
+                            return `
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm text-text-secondary">${item.label}</label>
+                                    <select class="px-3 py-1 border border-border rounded-lg text-sm bg-white">
+                                        ${item.options.map(opt => `
+                                            <option ${opt === item.value ? 'selected' : ''}>${opt}</option>
+                                        `).join('')}
+                                    </select>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm text-text-secondary">${item.label}</label>
+                                    <input type="text" value="${item.value}" class="px-3 py-1 border border-border rounded-lg text-sm" />
+                                </div>
+                            `;
+                        }
+                    }).join('')}
                 </div>
             </div>
             

@@ -3,98 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InsightHub - Data Analytics Platform | FoundersFleet</title>
+    <title>InsightHub - Business Intelligence Dashboard | FoundersFleet</title>
+    <!-- 
+    APP CATEGORY: Financial & Analytics
+    
+    To change this app to a different category, update the CSS variables at line 63-68:
+    - Financial & Analytics (Purple): Use --financial-* variables
+    - Team & Networking (Blue): Use --team-* variables  
+    - Marketing & Growth (Green): Use --marketing-* variables
+    - Development & Technical (Orange): Use --dev-* variables
+    - Communication (Pink): Use --comm-* variables
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team & Networking Apps (Blue) - CoFounderMatch, SkillSwap */
+            --team-primary: #2563EB;
+            --team-primary-rgb: 37, 99, 235;
+            --team-primary-hover: #1D4ED8;
+            --team-secondary: #0EA5E9;
+            --team-light-bg: #DBEAFE;
+            --team-light-border: #BFDBFE;
+            
+            /* Marketing & Growth Apps (Green) - ValidateAI, LaunchPad */
+            --marketing-primary: #10B981;
+            --marketing-primary-rgb: 16, 185, 129;
+            --marketing-primary-hover: #059669;
+            --marketing-secondary: #14B8A6;
+            --marketing-light-bg: #D1FAE5;
+            --marketing-light-border: #A7F3D0;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Current app accent colors (Financial category for InsightHub) */
+            --accent-primary: var(--financial-primary);
+            --accent-primary-rgb: var(--financial-primary-rgb);
+            --accent-primary-hover: var(--financial-primary-hover);
+            --accent-secondary: var(--financial-secondary);
+            --accent-light-bg: var(--financial-light-bg);
+            --accent-light-border: var(--financial-light-border);
+        }
+        
         .metric-card {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         .metric-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-        }
-        .data-stream {
-            background: linear-gradient(90deg, transparent, #3B82F6, transparent);
-            animation: stream 3s linear infinite;
-        }
-        @keyframes stream {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        .insight-card {
-            transition: all 0.3s ease;
-        }
-        .insight-card:hover {
-            border-color: #3B82F6;
-            background: #F0F9FF;
-        }
-        .chart-container {
-            position: relative;
-            height: 300px;
-        }
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-            }
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
         .trend-up {
-            color: #10B981;
+            color: var(--accent-primary);
         }
         .trend-down {
-            color: #EF4444;
+            color: var(--accent-secondary);
         }
+        .trend-neutral {
+            color: #6B7280;
+        }
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
+        }
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
+        }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
     </style>
 </head>
 <body class="bg-background min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
@@ -106,317 +132,503 @@
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">InsightHub</h1>
-                                <p class="text-sm text-text-secondary">Analytics & business intelligence</p>
+                                <p class="text-sm text-text-secondary hidden md:block">Real-time analytics & business intelligence</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">14 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Executive Summary -->
-                <div class="mb-8 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl p-8 border border-cyan-100">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Executive Dashboard</h2>
-                            <p class="text-text-secondary mb-4">Your business at a glance</p>
-                            
-                            <!-- Key Performance Indicators -->
-                            <div class="grid grid-cols-4 gap-6">
-                                <div>
-                                    <div class="text-sm text-text-muted mb-1">Revenue</div>
-                                    <div class="flex items-baseline gap-2">
-                                        <div class="text-3xl font-bold text-text-primary">$142K</div>
-                                        <span class="text-sm trend-up">↑ 23%</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-text-muted mb-1">Active Users</div>
-                                    <div class="flex items-baseline gap-2">
-                                        <div class="text-3xl font-bold text-text-primary">2,847</div>
-                                        <span class="text-sm trend-up">↑ 15%</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-text-muted mb-1">Conversion Rate</div>
-                                    <div class="flex items-baseline gap-2">
-                                        <div class="text-3xl font-bold text-text-primary">4.2%</div>
-                                        <span class="text-sm trend-down">↓ 0.3%</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="text-sm text-text-muted mb-1">Churn Rate</div>
-                                    <div class="flex items-baseline gap-2">
-                                        <div class="text-3xl font-bold text-text-primary">2.8%</div>
-                                        <span class="text-sm trend-up text-success">↓ 0.5%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-white rounded-lg p-4 shadow-sm">
-                            <div class="text-sm text-text-muted mb-1">Health Score</div>
-                            <div class="text-3xl font-bold text-success">A+</div>
-                            <div class="text-xs text-text-secondary mt-1">Excellent</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Data Stream Indicator -->
-                    <div class="mt-6 h-1 bg-white/50 rounded-full overflow-hidden">
-                        <div class="data-stream h-full w-1/3"></div>
-                    </div>
-                </div>
-
-                <!-- Metrics Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-dollar-sign text-2xl text-success"></i>
-                            <span class="text-xs text-success bg-green-50 px-2 py-1 rounded">+12%</span>
-                        </div>
-                        <div class="text-xl font-bold text-text-primary">$42.5K</div>
-                        <div class="text-sm text-text-secondary">MRR</div>
-                        <div class="mt-3 text-xs text-text-muted">↑ $4.5K from last month</div>
-                    </div>
-                    
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-users text-2xl text-info"></i>
-                            <span class="text-xs text-info bg-blue-50 px-2 py-1 rounded">+8%</span>
-                        </div>
-                        <div class="text-xl font-bold text-text-primary">892</div>
-                        <div class="text-sm text-text-secondary">New Users</div>
-                        <div class="mt-3 text-xs text-text-muted">68% activation rate</div>
-                    </div>
-                    
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-clock text-2xl text-warning"></i>
-                            <span class="text-xs text-warning bg-yellow-50 px-2 py-1 rounded">-5%</span>
-                        </div>
-                        <div class="text-xl font-bold text-text-primary">3m 24s</div>
-                        <div class="text-sm text-text-secondary">Avg Session</div>
-                        <div class="mt-3 text-xs text-text-muted">Need improvement</div>
-                    </div>
-                    
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-star text-2xl text-purple-600"></i>
-                            <span class="text-xs text-purple-600 bg-purple-50 px-2 py-1 rounded">+0.3</span>
-                        </div>
-                        <div class="text-xl font-bold text-text-primary">4.7</div>
-                        <div class="text-sm text-text-secondary">User Rating</div>
-                        <div class="mt-3 text-xs text-text-muted">Based on 324 reviews</div>
-                    </div>
-                </div>
-
-                <!-- Analytics Dashboards -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                    <!-- Revenue Analytics -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-semibold text-text-primary">Revenue Analytics</h3>
-                            <select class="text-sm border border-border rounded px-3 py-1">
-                                <option>Last 30 days</option>
-                                <option>Last 90 days</option>
-                                <option>Year to date</option>
-                            </select>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="revenueChart"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- User Behavior -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-xl font-semibold text-text-primary">User Behavior</h3>
-                            <button class="text-sm text-primary hover:text-primary-hover">Details →</button>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="behaviorChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- AI Insights & Predictions -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                    <!-- AI Insights -->
-                    <div class="lg:col-span-2">
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-xl font-semibold text-text-primary mb-4">AI-Powered Insights</h3>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="insight-card border border-border rounded-lg p-4 cursor-pointer">
-                                    <div class="flex items-start gap-3">
-                                        <i class="fas fa-chart-line text-success text-xl"></i>
-                                        <div>
-                                            <h4 class="font-medium text-text-primary mb-1">Growth Opportunity</h4>
-                                            <p class="text-sm text-text-secondary">Mobile users convert 3x better. Consider mobile-first features.</p>
-                                            <div class="mt-2 text-xs text-success">Potential impact: +$15K MRR</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="insight-card border border-border rounded-lg p-4 cursor-pointer">
-                                    <div class="flex items-start gap-3">
-                                        <i class="fas fa-exclamation-triangle text-warning text-xl"></i>
-                                        <div>
-                                            <h4 class="font-medium text-text-primary mb-1">Churn Risk Alert</h4>
-                                            <p class="text-sm text-text-secondary">15 power users showing decreased activity.</p>
-                                            <div class="mt-2 text-xs text-warning">Revenue at risk: $3.2K</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="insight-card border border-border rounded-lg p-4 cursor-pointer">
-                                    <div class="flex items-start gap-3">
-                                        <i class="fas fa-lightbulb text-info text-xl"></i>
-                                        <div>
-                                            <h4 class="font-medium text-text-primary mb-1">Feature Adoption</h4>
-                                            <p class="text-sm text-text-secondary">New dashboard has 82% adoption in first week.</p>
-                                            <div class="mt-2 text-xs text-info">Above target by 22%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="insight-card border border-border rounded-lg p-4 cursor-pointer">
-                                    <div class="flex items-start gap-3">
-                                        <i class="fas fa-rocket text-purple-600 text-xl"></i>
-                                        <div>
-                                            <h4 class="font-medium text-text-primary mb-1">Scaling Recommendation</h4>
-                                            <p class="text-sm text-text-secondary">Current growth rate supports Series A readiness.</p>
-                                            <div class="mt-2 text-xs text-purple-600">Timeline: Q2 2025</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Predictions -->
-                    <div class="space-y-6">
-                        <!-- Growth Forecast -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">90-Day Forecast</h3>
-                            <div class="space-y-3">
-                                <div>
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-sm text-text-secondary">Revenue</span>
-                                        <span class="text-sm font-medium">$186K</span>
-                                    </div>
-                                    <div class="bg-gray-200 rounded-full h-2">
-                                        <div class="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full" style="width: 78%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-sm text-text-secondary">Users</span>
-                                        <span class="text-sm font-medium">4,250</span>
-                                    </div>
-                                    <div class="bg-gray-200 rounded-full h-2">
-                                        <div class="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-sm text-text-secondary">Engagement</span>
-                                        <span class="text-sm font-medium">72%</span>
-                                    </div>
-                                    <div class="bg-gray-200 rounded-full h-2">
-                                        <div class="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full" style="width: 72%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-4 p-3 bg-blue-50 rounded-lg">
-                                <p class="text-xs text-blue-700">
-                                    <i class="fas fa-info-circle mr-1"></i>
-                                    95% confidence interval based on current trends
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Transform Data Into Decisions
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    AI-powered business intelligence that automatically surfaces the insights that matter most. Stop hunting through spreadsheets — get the answers that drive growth.
                                 </p>
                             </div>
-                        </div>
-
-                        <!-- Custom Reports -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Custom Reports</h3>
-                            <div class="space-y-2">
-                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="text-sm font-medium text-text-primary">Cohort Analysis</h4>
-                                            <p class="text-xs text-text-secondary">User retention by signup date</p>
-                                        </div>
-                                        <i class="fas fa-chevron-right text-text-muted"></i>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Business Health Score</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">87</span>
+                                        <span class="text-lg accent-text flex items-center">
+                                            <i class="fas fa-arrow-up mr-1"></i>+12
+                                        </span>
                                     </div>
-                                </button>
-                                
-                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="text-sm font-medium text-text-primary">Funnel Analysis</h4>
-                                            <p class="text-xs text-text-secondary">Conversion at each stage</p>
-                                        </div>
-                                        <i class="fas fa-chevron-right text-text-muted"></i>
-                                    </div>
-                                </button>
-                                
-                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                                    <div class="flex items-center justify-between">
-                                        <div>
-                                            <h4 class="text-sm font-medium text-text-primary">LTV Analysis</h4>
-                                            <p class="text-xs text-text-secondary">Customer lifetime value trends</p>
-                                        </div>
-                                        <i class="fas fa-chevron-right text-text-muted"></i>
-                                    </div>
-                                </button>
+                                    <p class="text-xs text-text-muted mt-2">Excellent health</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Data Sources -->
-                <div class="bg-card-bg border border-border rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-text-primary mb-4">Connected Data Sources</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                            <i class="fas fa-database text-green-600"></i>
-                            <div>
-                                <div class="font-medium text-text-primary">PostgreSQL</div>
-                                <div class="text-xs text-text-secondary">Live sync</div>
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Executive Dashboard</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Revenue -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Monthly Revenue</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$127K</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-dollar-sign accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Strong growth trajectory maintained.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +23%
+                                </span>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
-                            <i class="fab fa-stripe text-blue-600"></i>
-                            <div>
-                                <div class="font-medium text-text-primary">Stripe</div>
-                                <div class="text-xs text-text-secondary">Every 15 min</div>
+
+                        <!-- Customer Growth -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Active Users</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">2,847</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-users accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Steady user acquisition rate.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +18%
+                                </span>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 p-3 bg-orange-50 rounded-lg">
-                            <i class="fab fa-google text-orange-600"></i>
-                            <div>
-                                <div class="font-medium text-text-primary">Google Analytics</div>
-                                <div class="text-xs text-text-secondary">Real-time</div>
+
+                        <!-- Conversion Rate -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Conversion</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">3.8%</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-percentage accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Above industry benchmark.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +0.4%
+                                </span>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
-                            <i class="fas fa-comments text-purple-600"></i>
-                            <div>
-                                <div class="font-medium text-text-primary">Intercom</div>
-                                <div class="text-xs text-text-secondary">Every hour</div>
+
+                        <!-- Churn Rate -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Churn Rate</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">2.1%</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-chart-line-down accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Low churn indicates strong retention.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -0.3%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - AI Insights -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- AI Insights -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">AI-Generated Insights</h3>
+                                
+                                <div class="space-y-4">
+                                    <!-- Revenue Insight -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-brain accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Revenue Growth Opportunity</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">High Impact</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">Your premium plan conversion increased 34% after the latest feature release. Push similar value-adds to boost ARR.</p>
+                                            
+                                            <!-- Action Items -->
+                                            <div class="bg-white rounded-lg p-3 accent-border-light border">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Recommended Actions:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Launch targeted email campaign to free users</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Add premium feature prompts in key workflows</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Create demo videos showcasing premium benefits</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>94% confidence</span>
+                                                <span><i class="fas fa-dollar-sign mr-1"></i>Est. +$15K MRR</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Customer Insight -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light-secondary rounded-lg accent-border-light-secondary border">
+                                        <div class="w-10 h-10 accent-bg-light-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-user-friends accent-text-secondary"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Customer Behavior Pattern</h4>
+                                                <span class="px-2 py-1 accent-bg-light-secondary accent-text-secondary text-xs rounded-full font-medium">Trend</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Users who complete onboarding within 24 hours have 3.2x higher lifetime value. Optimize the new user experience.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>87% confidence</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Quick win</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Performance Alert -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-exclamation-triangle accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Performance Alert</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">Action Needed</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Website load times increased 15% this week. Users are bouncing before seeing your value proposition.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>Critical</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Fix within 48h</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Performance Chart -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Business Performance Trends</h3>
+                                    <select class="text-sm border border-border rounded-lg px-3 py-1">
+                                        <option>Last 6 months</option>
+                                        <option>Last quarter</option>
+                                        <option>This year</option>
+                                    </select>
+                                </div>
+                                <div class="h-64">
+                                    <canvas id="performanceChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Custom Reports -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Custom Reports</h3>
+                                    <div class="flex items-center gap-3">
+                                        <select class="text-xs border border-border rounded px-2 py-1">
+                                            <option>All Reports</option>
+                                            <option>Revenue</option>
+                                            <option>Customer</option>
+                                            <option>Product</option>
+                                        </select>
+                                        <button class="text-sm accent-text hover:opacity-80 flex items-center gap-1">
+                                            Create New <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <!-- Report 1 -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg rounded-full flex items-center justify-center text-white">
+                                                    <i class="fas fa-chart-bar text-sm"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Weekly Revenue Breakdown</h4>
+                                                    <p class="text-sm text-text-secondary">Revenue by product line, customer segment, and geography</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-calendar mr-1"></i>Weekly
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Last run: 2 hours ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-sm accent-text hover:opacity-80">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                                <button class="text-sm accent-text hover:opacity-80">
+                                                    <i class="fas fa-share"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Report 2 -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg-secondary rounded-full flex items-center justify-center text-white">
+                                                    <i class="fas fa-users text-sm"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Customer Health Monitor</h4>
+                                                    <p class="text-sm text-text-secondary">Churn risk analysis and customer satisfaction metrics</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-calendar mr-1"></i>Daily
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Last run: 6 hours ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-sm accent-text hover:opacity-80">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                                <button class="text-sm accent-text hover:opacity-80">
+                                                    <i class="fas fa-share"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Report 3 -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: linear-gradient(to bottom right, var(--accent-primary), var(--accent-secondary));">
+                                                    <i class="fas fa-rocket text-sm"></i>
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Growth Metrics Dashboard</h4>
+                                                    <p class="text-sm text-text-secondary">User acquisition, activation, and retention analysis</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-calendar mr-1"></i>Monthly
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Last run: 1 day ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <button class="text-sm accent-text hover:opacity-80">
+                                                    <i class="fas fa-download"></i>
+                                                </button>
+                                                <button class="text-sm accent-text hover:opacity-80">
+                                                    <i class="fas fa-share"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Data Sources & Alerts -->
+                        <div class="space-y-6">
+                            <!-- Data Sources -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Connected Data Sources</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-database accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">PostgreSQL</span>
+                                            </div>
+                                            <span class="text-xs accent-text font-medium">Active</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 100%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Main application database • Last sync: Real-time</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-credit-card accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Stripe</span>
+                                            </div>
+                                            <span class="text-xs accent-text font-medium">Active</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 95%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Payment processing • Last sync: 5 mins ago</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-chart-line accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Google Analytics</span>
+                                            </div>
+                                            <span class="text-xs accent-text font-medium">Active</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 88%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Website analytics • Last sync: 1 hour ago</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-envelope accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Mailchimp</span>
+                                            </div>
+                                            <span class="text-xs accent-text-secondary font-medium">Syncing</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 72%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Email campaigns • Last sync: 3 hours ago</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Smart Alerts -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Smart Alerts</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Revenue Alerts</span>
+                                            <span class="text-sm font-medium accent-text">3 Active</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Daily revenue drops, monthly target alerts</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Customer Health</span>
+                                            <span class="text-sm font-medium accent-text">5 Active</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Churn risk, usage drops, NPS changes</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Performance</span>
+                                            <span class="text-sm font-medium accent-text">2 Active</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 60%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Website speed, API response times</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Export Executive Summary</span>
+                                            <i class="fas fa-download text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Generate board-ready executive dashboard</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Schedule Report</span>
+                                            <i class="fas fa-calendar-plus text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Set up automated reporting schedules</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Create Dashboard</span>
+                                            <i class="fas fa-plus text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Build custom dashboards for your team</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Set Alert</span>
+                                            <i class="fas fa-bell text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Create smart alerts for key metrics</p>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -430,117 +642,31 @@
         // Initialize navigation
         initializeNavigation('apps');
 
-        // App navigation
-        const appPages = [
-            'app-economaestro.html',
-            'app-runway.html',
-            'app-cofoundermatch.html',
-            'app-validateai.html',
-            'app-shipfast.html',
-            'app-firstusers.html',
-            'app-pitchperfect.html',
-            'app-launchpad.html',
-            'app-scaleops.html',
-            'app-delightiq.html',
-            'app-brandforge.html',
-            'app-salesflow.html',
-            'app-insighthub.html',
-            'app-searchmaster.html',
-            'app-goglobal.html',
-            'app-legalshield.html',
-            'app-teamsync.html'
-        ];
-
-        // Update counter
-        const currentUrl = window.location.pathname.split('/').pop();
-        const currentIndex = appPages.indexOf(currentUrl);
-        if (currentIndex !== -1) {
-            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
-        }
-
-        function navigateApp(direction) {
-            const currentUrl = window.location.pathname.split('/').pop();
-            const currentIndex = appPages.indexOf(currentUrl);
-            
-            if (currentIndex === -1) return;
-            
-            let newIndex;
-            if (direction === 'next') {
-                newIndex = (currentIndex + 1) % appPages.length;
-            } else {
-                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
-            }
-            
-            window.location.href = appPages[newIndex];
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'ArrowLeft') {
-                navigateApp('prev');
-            } else if (event.altKey && event.key === 'ArrowRight') {
-                navigateApp('next');
-            }
-        });
-        
-        // Revenue Chart
-        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-        new Chart(revenueCtx, {
+        // Initialize performance chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Jan 1', 'Jan 7', 'Jan 14', 'Jan 21', 'Jan 28', 'Feb 4'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                 datasets: [{
-                    label: 'Revenue',
-                    data: [32000, 35000, 38000, 37000, 41000, 42500],
-                    borderColor: '#3B82F6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    label: 'Revenue ($K)',
+                    data: [98, 105, 112, 118, 125, 127],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.1)`,
                     tension: 0.4,
-                    fill: true
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
                 }, {
-                    label: 'Target',
-                    data: [30000, 32000, 34000, 36000, 38000, 40000],
-                    borderColor: '#E5E5E5',
-                    borderDash: [5, 5],
+                    label: 'Active Users',
+                    data: [2200, 2350, 2480, 2650, 2750, 2847],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary-rgb')}, 0.1)`,
                     tension: 0.4,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value/1000 + 'k';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        
-        // User Behavior Chart
-        const behaviorCtx = document.getElementById('behaviorChart').getContext('2d');
-        new Chart(behaviorCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Power Users', 'Regular Users', 'Occasional', 'Dormant'],
-                datasets: [{
-                    data: [15, 35, 30, 20],
-                    backgroundColor: [
-                        '#10B981',
-                        '#3B82F6',
-                        '#F59E0B',
-                        '#EF4444'
-                    ],
-                    borderWidth: 0
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    yAxisID: 'y1'
                 }]
             },
             options: {
@@ -551,8 +677,50 @@
                         position: 'bottom',
                         labels: {
                             padding: 15,
+                            usePointStyle: true,
                             font: {
                                 size: 12
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            },
+                            callback: function(value) {
+                                return '$' + value + 'K';
+                            }
+                        }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
                             }
                         }
                     }
@@ -560,19 +728,45 @@
             }
         });
         
-        function customizeView() {
-            alert('Dashboard customization panel would open here');
-        }
-        
-        // launchApp function is now handled by app-launch-panel.js
-        
-        // Go back to previous page
+        // Go back function
         function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // Fallback to apps page if no history
-                window.location.href = 'apps.html';
+            window.location.href = 'apps.html';
+        }
+
+        // Navigate between apps
+        function navigateApp(direction) {
+            const apps = [
+                'app-economaestro.html',
+                'app-runway.html',
+                'app-investorlens.html',
+                'app-cofoundermatch.html',
+                'app-validateai.html',
+                'app-shipfast.html',
+                'app-firstusers.html',
+                'app-pitchperfect.html',
+                'app-launchpad.html',
+                'app-scaleops.html',
+                'app-delightiq.html',
+                'app-brandforge.html',
+                'app-salesflow.html',
+                'app-insighthub.html',
+                'app-searchmaster.html',
+                'app-legalshield.html',
+                'app-teamsync.html',
+                'app-goglobal.html'
+            ];
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const currentIndex = apps.indexOf(currentPage);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = currentIndex === 0 ? apps.length - 1 : currentIndex - 1;
+                } else {
+                    newIndex = currentIndex === apps.length - 1 ? 0 : currentIndex + 1;
+                }
+                window.location.href = apps[newIndex];
             }
         }
     </script>

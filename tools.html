@@ -7,35 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
     <script src="tool-detail-panel.js"></script>
 
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
         
@@ -65,20 +44,20 @@
     <div class="flex-1 bg-background overflow-hidden">
                 <main class="h-full overflow-auto">
                 <!-- Main Content Area -->
-        <div class="max-w-[1200px] mx-auto px-8 py-8">
+        <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-4 md:py-8">
                 <!-- Page Header -->
-                <div class="mb-8 flex items-start justify-between">
+                <div class="mb-4 md:mb-8 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl font-bold text-text-primary mb-2">Tools</h1>
-                        <p class="text-text-secondary">Third-party tools curated by fellow founders</p>
+                        <h1 class="text-2xl md:text-3xl font-bold text-text-primary mb-1 md:mb-2">Tools</h1>
+                        <p class="text-sm md:text-base text-text-secondary">Third-party tools curated by fellow founders</p>
                     </div>
-                    <button class="flex items-center gap-2 px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="contributeResource()">
+                    <button class="flex items-center justify-center gap-2 px-4 md:px-6 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all w-full md:w-auto" onclick="contributeResource()">
                         <i class="fas fa-plus"></i>Suggest
                     </button>
                 </div>
                 
                 <!-- Search Bar -->
-                <div class="mb-6">
+                <div class="mb-4 md:mb-6">
                     <div class="relative">
                         <input type="text" placeholder="Search tools by name or category..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all">
                         <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -86,36 +65,36 @@
                 </div>
                 
                 <!-- Category Tabs Section -->
-                <div class="mb-6">
-                    <div class="flex gap-2 flex-wrap">
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg transition-all" data-category="all" onclick="filterByCategory('all')">
+                <div class="mb-4 md:mb-6">
+                    <div class="flex gap-1 md:gap-2 flex-wrap">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-primary text-white rounded-lg transition-all" data-category="all" onclick="filterByCategory('all')">
                             All Tools
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="infrastructure" onclick="filterByCategory('infrastructure')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="infrastructure" onclick="filterByCategory('infrastructure')">
                             Infrastructure
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="development" onclick="filterByCategory('development')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="development" onclick="filterByCategory('development')">
                             Development
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="product" onclick="filterByCategory('product')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="product" onclick="filterByCategory('product')">
                             Product
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="marketing" onclick="filterByCategory('marketing')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="marketing" onclick="filterByCategory('marketing')">
                             Marketing
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="sales" onclick="filterByCategory('sales')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="sales" onclick="filterByCategory('sales')">
                             Sales
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="analytics" onclick="filterByCategory('analytics')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="analytics" onclick="filterByCategory('analytics')">
                             Analytics
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="finance" onclick="filterByCategory('finance')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="finance" onclick="filterByCategory('finance')">
                             Finance
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="operations" onclick="filterByCategory('operations')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="operations" onclick="filterByCategory('operations')">
                             Operations
                         </button>
-                        <button class="category-tab px-4 py-2 text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="legal" onclick="filterByCategory('legal')">
+                        <button class="category-tab px-3 md:px-4 py-2 text-xs md:text-sm font-medium bg-white text-text-secondary border border-border rounded-lg hover:border-primary hover:text-primary transition-all" data-category="legal" onclick="filterByCategory('legal')">
                             Legal
                         </button>
                     </div>
@@ -124,21 +103,21 @@
                 <!-- Main Content -->
                 <div>
                     <!-- All Tools Grid -->
-                    <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div id="tools-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                                 <!-- DigitalOcean (FF Pick) -->
-                                <div class="tool-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" data-categories="infrastructure" onclick="openToolPanel('DigitalOcean')">
+                                <div class="tool-card bg-card-bg border border-border rounded-lg p-4 md:p-6 hover:shadow-md transition-all cursor-pointer relative" data-categories="infrastructure" onclick="openToolPanel('DigitalOcean')">
                                     <!-- FF Pick Badge -->
-                                    <div class="absolute -top-2 -right-2 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-lg">
+                                    <div class="absolute -top-2 -right-2 bg-primary text-white px-2 md:px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1 shadow-lg">
                                         <i class="fas fa-star text-xs"></i>
                                         FF Pick
                                     </div>
-                                    <div class="flex items-start gap-4 mb-4">
-                                        <div class="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white flex-shrink-0">
-                                            <i class="fas fa-server text-xl"></i>
+                                    <div class="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
+                                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-blue-600 flex items-center justify-center text-white flex-shrink-0">
+                                            <i class="fas fa-server text-lg md:text-xl"></i>
                                         </div>
                                         <div class="flex-1">
-                                            <h3 class="text-lg font-semibold text-text-primary mb-1">DigitalOcean</h3>
-                                            <p class="text-sm text-text-secondary">Cloud infrastructure that grows with you</p>
+                                            <h3 class="text-base md:text-lg font-semibold text-text-primary mb-1">DigitalOcean</h3>
+                                            <p class="text-xs md:text-sm text-text-secondary">Cloud infrastructure that grows with you</p>
                                         </div>
                                     </div>
                                     <div class="flex items-center justify-between">

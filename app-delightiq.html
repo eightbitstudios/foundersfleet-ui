@@ -4,49 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DelightIQ - Customer Success Platform | FoundersFleet</title>
+    <!-- 
+    APP CATEGORY: Communication
+    
+    To change this app to a different category, update the CSS variables at line 63-68:
+    - Financial & Analytics (Purple): Use --financial-* variables
+    - Team & Networking (Blue): Use --team-* variables  
+    - Marketing & Growth (Green): Use --marketing-* variables
+    - Development & Technical (Orange): Use --dev-* variables
+    - Communication (Pink): Use --comm-* variables
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
+    <style>
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team & Networking Apps (Blue) - CoFounderMatch, SkillSwap */
+            --team-primary: #2563EB;
+            --team-primary-rgb: 37, 99, 235;
+            --team-primary-hover: #1D4ED8;
+            --team-secondary: #0EA5E9;
+            --team-light-bg: #DBEAFE;
+            --team-light-border: #BFDBFE;
+            
+            /* Marketing & Growth Apps (Green) - ValidateAI, LaunchPad */
+            --marketing-primary: #10B981;
+            --marketing-primary-rgb: 16, 185, 129;
+            --marketing-primary-hover: #059669;
+            --marketing-secondary: #14B8A6;
+            --marketing-light-bg: #D1FAE5;
+            --marketing-light-border: #A7F3D0;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Current app accent colors (Communication category for DelightIQ) */
+            --accent-primary: var(--comm-primary);
+            --accent-primary-rgb: var(--comm-primary-rgb);
+            --accent-primary-hover: var(--comm-primary-hover);
+            --accent-secondary: var(--comm-secondary);
+            --accent-light-bg: var(--comm-light-bg);
+            --accent-light-border: var(--comm-light-border);
+        }
+        
+        .metric-card {
+            transition: all 0.2s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .trend-up {
+            color: var(--accent-primary);
+        }
+        .trend-down {
+            color: var(--accent-secondary);
+        }
+        .trend-neutral {
+            color: #6B7280;
+        }
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
+        }
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
+        }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
+    </style>
 </head>
 <body class="bg-background min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
@@ -58,210 +132,547 @@
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">DelightIQ</h1>
-                                <p class="text-sm text-text-secondary">Transform customers into advocates</p>
+                                <p class="text-sm text-text-secondary hidden md:block">Transform customers into advocates</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">10 of 17</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">11 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="p-6">
-                <!-- Key Metrics Row -->
-                <div class="grid grid-cols-4 gap-4 mb-6">
-                    <div class="bg-card-bg border border-border rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-sm text-text-secondary">NPS Score</span>
-                            <i class="fas fa-heart text-pink-500 text-sm"></i>
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Customer Satisfaction at All-Time High
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    AI-powered customer success platform tracking every touchpoint. Real-time sentiment analysis turning feedback into actionable insights.
+                                </p>
+                            </div>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Customer Health Score</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">87</span>
+                                        <span class="text-lg accent-text flex items-center">
+                                            <i class="fas fa-arrow-up mr-1"></i>+5
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">Excellent satisfaction</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="text-2xl font-bold text-text-primary">87</div>
-                        <div class="text-xs text-success">+5 this month</div>
-                    </div>
-                    
-                    <div class="bg-card-bg border border-border rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-sm text-text-secondary">Response Time</span>
-                            <i class="fas fa-clock text-warning text-sm"></i>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary">2.4h</div>
-                        <div class="text-xs text-success">-12% faster</div>
-                    </div>
-                    
-                    <div class="bg-card-bg border border-border rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-sm text-text-secondary">Resolution Rate</span>
-                            <i class="fas fa-check-circle text-success text-sm"></i>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary">94%</div>
-                        <div class="text-xs text-success">+8% improved</div>
-                    </div>
-                    
-                    <div class="bg-card-bg border border-border rounded-lg p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-sm text-text-secondary">Churn Risk</span>
-                            <i class="fas fa-exclamation-triangle text-danger text-sm"></i>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary">3.2%</div>
-                        <div class="text-xs text-warning">+2% increase</div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Main Content Grid -->
-                <div class="grid grid-cols-3 gap-6">
-                    <!-- Customer Health Monitor -->
-                    <div class="col-span-2">
-                        <div class="bg-card-bg border border-border rounded-lg p-4">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Customer Health Monitor</h3>
-                            
-                            <div class="space-y-3">
-                                <!-- At Risk Customer -->
-                                <div class="flex items-center gap-3 p-3 bg-red-50 border border-red-200 rounded-lg">
-                                    <div class="w-10 h-10 bg-danger rounded-full flex items-center justify-center text-white font-bold">
-                                        JD
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-text-primary">John's Startup Inc.</h4>
-                                        <p class="text-sm text-text-secondary">No login for 14 days • Support ticket open</p>
-                                    </div>
-                                    <span class="px-2 py-1 bg-danger text-white text-xs rounded">At Risk</span>
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Key Customer Success Metrics</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- NPS Score -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">NPS</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">87</p>
                                 </div>
-                                
-                                <!-- Declining Health -->
-                                <div class="flex items-center gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                                    <div class="w-10 h-10 bg-warning rounded-full flex items-center justify-center text-white font-bold">
-                                        TC
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-text-primary">TechCorp Solutions</h4>
-                                        <p class="text-sm text-text-secondary">Usage down 30% • Last NPS: 6</p>
-                                    </div>
-                                    <span class="px-2 py-1 bg-warning text-white text-xs rounded">Declining</span>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-heart accent-text text-sm"></i>
                                 </div>
-                                
-                                <!-- Champion Customer -->
-                                <div class="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                                    <div class="w-10 h-10 bg-success rounded-full flex items-center justify-center text-white font-bold">
-                                        GS
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-text-primary">Growth Startups</h4>
-                                        <p class="text-sm text-text-secondary">Power user • 3 referrals • NPS: 10</p>
-                                    </div>
-                                    <span class="px-2 py-1 bg-success text-white text-xs rounded">Champion</span>
-                                </div>
-                                
-                                <!-- New Customer -->
-                                <div class="flex items-center gap-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                                    <div class="w-10 h-10 bg-info rounded-full flex items-center justify-center text-white font-bold">
-                                        NV
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-medium text-text-primary">NextVentures</h4>
-                                        <p class="text-sm text-text-secondary">Day 3 of trial • 2 team members</p>
-                                    </div>
-                                    <span class="px-2 py-1 bg-info text-white text-xs rounded">Onboarding</span>
-                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Net Promoter Score showing strong customer loyalty.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +5
+                                </span>
                             </div>
                         </div>
 
-                        <!-- Customer Journey Chart -->
-                        <div class="bg-card-bg border border-border rounded-lg p-4 mt-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Journey Stage Health</h3>
-                            <canvas id="journeyChart" height="200"></canvas>
+                        <!-- Response Time -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Response</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">2.4h</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-clock accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Average support response time getting faster.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -12%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Resolution Rate -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Resolution</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">94%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-check-circle accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">First-contact resolution rate excellent.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +8%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Churn Risk -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Churn Risk</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">3.2%</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-exclamation-triangle accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Customers at risk of churning need attention.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +0.3%
+                                </span>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Right Column -->
-                    <div class="space-y-6">
-                        <!-- Sentiment Analysis -->
-                        <div class="bg-card-bg border border-border rounded-lg p-4">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Sentiment Trends</h3>
-                            <div class="space-y-3">
-                                <div>
-                                    <div class="flex items-center justify-between text-sm mb-1">
-                                        <span>Support Tickets</span>
-                                        <span class="text-warning">65%</span>
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Customer Health Insights -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Customer Health Signals -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Customer Success Action Signals</h3>
+                                
+                                <div class="space-y-4">
+                                    <!-- At-Risk Customer Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-exclamation-triangle accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">High-Value Customer at Risk</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">Urgent</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">TechCorp Solutions hasn’t logged in for 14 days. $50k ARR at stake.</p>
+                                            
+                                            <!-- Action Items -->
+                                            <div class="bg-white rounded-lg p-3 accent-border-light border">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Immediate Actions Required:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-phone accent-text mt-0.5"></i>
+                                                        <span>Executive check-in call within 24 hours</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-gift accent-text mt-0.5"></i>
+                                                        <span>Personalized feature demo or training</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-heart accent-text mt-0.5"></i>
+                                                        <span>Win-back campaign with special offer</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>92% save probability</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Action needed today</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
-                                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 65%"></div>
+
+                                    <!-- Champion Expansion Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light-secondary rounded-lg accent-border-light-secondary border">
+                                        <div class="w-10 h-10 accent-bg-light-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-crown accent-text-secondary"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Champion Ready for Expansion</h4>
+                                                <span class="px-2 py-1 accent-bg-light-secondary accent-text-secondary text-xs rounded-full font-medium">Opportunity</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Growth Startups: NPS 10, 3 referrals sent, using 95% of features.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>85% upsell likelihood</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Next 2 weeks</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between text-sm mb-1">
-                                        <span>Product Reviews</span>
-                                        <span class="text-success">82%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
-                                        <div class="bg-green-500 h-2 rounded-full" style="width: 82%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between text-sm mb-1">
-                                        <span>Social Mentions</span>
-                                        <span class="text-success">78%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
-                                        <div class="bg-green-600 h-2 rounded-full" style="width: 78%"></div>
+
+                                    <!-- Onboarding Success Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-rocket accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">New Customer Activation</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">On Track</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">NextVentures completed setup. Perfect time for feature walkthrough.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>78% success probability</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Week 1 critical</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <!-- Quick Actions -->
-                        <div class="bg-card-bg border border-border rounded-lg p-4">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Suggested Actions</h3>
-                            <div class="space-y-2">
-                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                                    <h4 class="text-sm font-medium text-text-primary">Win-back Campaign</h4>
-                                    <p class="text-xs text-text-secondary">5 at-risk customers</p>
-                                </button>
+
+                            <!-- Customer Journey Analytics Chart -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Customer Journey Health</h3>
+                                    <select class="text-sm border border-border rounded-lg px-3 py-1">
+                                        <option>Current quarter</option>
+                                        <option>Last quarter</option>
+                                        <option>Year to date</option>
+                                    </select>
+                                </div>
+                                <div class="h-64">
+                                    <canvas id="journeyChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Customer Success Leaderboard -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Customer Health Champions</h3>
+                                    <div class="flex items-center gap-3">
+                                        <select class="text-xs border border-border rounded px-2 py-1">
+                                            <option>All Customers</option>
+                                            <option>Enterprise</option>
+                                            <option>SMB</option>
+                                            <option>Startup</option>
+                                        </select>
+                                        <button class="text-sm accent-text hover:opacity-80 flex items-center gap-1">
+                                            View All <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
                                 
-                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                                    <h4 class="text-sm font-medium text-text-primary">Feature Tutorial</h4>
-                                    <p class="text-xs text-text-secondary">Low feature adoption</p>
-                                </button>
+                                <div class="space-y-4">
+                                    <!-- Top Customer -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg rounded-full flex items-center justify-center text-white font-bold">
+                                                    GS
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Growth Startups</h4>
+                                                    <p class="text-sm text-text-secondary">Enterprise • $75k ARR</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-heart mr-1"></i>NPS: 10
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-users mr-1"></i>3 referrals
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-chart-line mr-1"></i>95% feature usage
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                Champion
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Recent Feedback:</p>
+                                            <p class="text-sm text-text-secondary">“Amazing platform! Already referring to other founders.”</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Second Customer -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg-secondary rounded-full flex items-center justify-center text-white font-bold">
+                                                    NV
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">NextVentures</h4>
+                                                    <p class="text-sm text-text-secondary">SMB • $25k ARR</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-heart mr-1"></i>NPS: 9
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Day 3 trial
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-chart-line mr-1"></i>78% feature usage
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                Onboarding
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Recent Activity:</p>
+                                            <p class="text-sm text-text-secondary">Completed setup, added 2 team members, exploring features.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Third Customer -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background: linear-gradient(to bottom right, var(--accent-primary), var(--accent-secondary));">
+                                                    TC
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">TechCorp Solutions</h4>
+                                                    <p class="text-sm text-text-secondary">Enterprise • $50k ARR</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-exclamation-triangle mr-1"></i>NPS: 6
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-arrow-down mr-1"></i>Usage -30%
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>14 days inactive
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                At Risk
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Risk Factors:</p>
+                                            <p class="text-sm text-text-secondary">Low engagement, support ticket unresolved, contract renewal in 60 days.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Success Opportunity Map -->
+                            <div class="accent-bg-light rounded-lg accent-border-light border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Customer Success Opportunities</h3>
+                                    <span class="text-xs accent-text font-medium">AI-powered recommendations</span>
+                                </div>
                                 
-                                <button class="w-full p-3 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                                    <h4 class="text-sm font-medium text-text-primary">Loyalty Program</h4>
-                                    <p class="text-xs text-text-secondary">Reward champions</p>
-                                </button>
+                                <div class="space-y-3">
+                                    <!-- Top Opportunity -->
+                                    <div class="bg-white rounded-lg p-4 accent-border-light border">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-users accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Referral Program Launch</h4>
+                                            </div>
+                                            <span class="text-xs accent-bg-light accent-text px-2 py-1 rounded-full">High Impact</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">5 champions ready to refer. Potential 12 new customers worth $180k ARR.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>Launch program
+                                            </button>
+                                            <span class="text-text-muted">• 2-week implementation</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Second Opportunity -->
+                                    <div class="bg-white rounded-lg p-4 accent-border-light border">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light-secondary rounded flex items-center justify-center">
+                                                    <i class="fas fa-graduation-cap accent-text-secondary text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Advanced Training Program</h4>
+                                            </div>
+                                            <span class="text-xs accent-bg-light-secondary accent-text-secondary px-2 py-1 rounded-full">Retention</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">15 customers using <60% of features. Training could boost retention by 25%.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text-secondary hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>Schedule training
+                                            </button>
+                                            <span class="text-text-muted">• Monthly webinars</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Recent Feedback -->
-                        <div class="bg-card-bg border border-border rounded-lg p-4">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Recent Feedback</h3>
-                            <div class="space-y-3 max-h-64 overflow-y-auto">
-                                <div class="p-3 bg-green-50 rounded-lg">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="font-medium text-sm">Sarah M.</span>
-                                        <span class="text-xs text-text-muted">2h ago</span>
+
+                        <!-- Right Column - Quick Insights -->
+                        <div class="space-y-6">
+                            <!-- Sentiment Analysis -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Real-Time Sentiment Analysis</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-ticket-alt accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Support Tickets (78%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Positive sentiment trending up in support interactions.</p>
                                     </div>
-                                    <p class="text-sm text-text-secondary">"Amazing dashboard! Saved me hours."</p>
-                                    <span class="text-xs text-success">😍 Promoter</span>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-star accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Product Reviews (85%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">High satisfaction scores across all review platforms.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-comments accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Social Mentions (82%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text-secondary text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Strong positive buzz on social media channels.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-envelope accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Email Feedback (91%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Direct customer feedback overwhelmingly positive.</p>
+                                    </div>
                                 </div>
-                                
-                                <div class="p-3 bg-yellow-50 rounded-lg">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="font-medium text-sm">Mike T.</span>
-                                        <span class="text-xs text-text-muted">5h ago</span>
+                            </div>
+
+                            <!-- Customer Lifecycle -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Customer Lifecycle Health</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Onboarding Success</span>
+                                            <span class="text-sm font-medium">92%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 92%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">New customers completing setup successfully.</p>
                                     </div>
-                                    <p class="text-sm text-text-secondary">"Pricing is a bit high."</p>
-                                    <span class="text-xs text-warning">😐 Passive</span>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Feature Adoption</span>
+                                            <span class="text-sm font-medium">78%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 78%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Average feature usage across customer base.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Retention Rate</span>
+                                            <span class="text-sm font-medium accent-text">96.8%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 97%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Customer retention exceeding industry benchmarks.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Success Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Launch Referral Program</span>
+                                            <i class="fas fa-arrow-right text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">5 champions ready to refer new customers.</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Send Win-Back Campaign</span>
+                                            <i class="fas fa-envelope text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">3 at-risk customers need immediate attention.</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Schedule Training</span>
+                                            <i class="fas fa-graduation-cap text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Boost feature adoption with guided sessions.</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Export Health Report</span>
+                                            <i class="fas fa-download text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Generate executive customer health summary.</p>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -276,83 +687,30 @@
         // Initialize navigation
         initializeNavigation('apps');
 
-        // App navigation
-        const appPages = [
-            'app-economaestro.html',
-            'app-runway.html',
-            'app-cofoundermatch.html',
-            'app-validateai.html',
-            'app-shipfast.html',
-            'app-firstusers.html',
-            'app-pitchperfect.html',
-            'app-launchpad.html',
-            'app-scaleops.html',
-            'app-delightiq.html',
-            'app-brandforge.html',
-            'app-salesflow.html',
-            'app-insighthub.html',
-            'app-searchmaster.html',
-            'app-goglobal.html',
-            'app-legalshield.html',
-            'app-teamsync.html'
-        ];
-
-        // Update counter
-        const currentUrl = window.location.pathname.split('/').pop();
-        const currentIndex = appPages.indexOf(currentUrl);
-        if (currentIndex !== -1) {
-            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
-        }
-
-        function navigateApp(direction) {
-            const currentUrl = window.location.pathname.split('/').pop();
-            const currentIndex = appPages.indexOf(currentUrl);
-            
-            if (currentIndex === -1) return;
-            
-            let newIndex;
-            if (direction === 'next') {
-                newIndex = (currentIndex + 1) % appPages.length;
-            } else {
-                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
-            }
-            
-            window.location.href = appPages[newIndex];
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'ArrowLeft') {
-                navigateApp('prev');
-            } else if (event.altKey && event.key === 'ArrowRight') {
-                navigateApp('next');
-            }
-        });
-        
-        // Customer Journey Chart
+        // Initialize customer journey chart
         const ctx = document.getElementById('journeyChart').getContext('2d');
-        new Chart(ctx, {
+        const journeyChart = new Chart(ctx, {
             type: 'radar',
             data: {
                 labels: ['Onboarding', 'Activation', 'Adoption', 'Retention', 'Expansion', 'Advocacy'],
                 datasets: [{
                     label: 'Current Health',
                     data: [92, 85, 78, 82, 65, 88],
-                    borderColor: '#10B981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.2)',
-                    pointBackgroundColor: '#10B981',
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.1)`,
+                    pointBackgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary'),
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#10B981'
+                    pointHoverBorderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary')
                 }, {
                     label: 'Target',
                     data: [90, 90, 85, 85, 80, 90],
-                    borderColor: '#E5E5E5',
-                    backgroundColor: 'rgba(229, 229, 229, 0.1)',
-                    pointBackgroundColor: '#E5E5E5',
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary-rgb')}, 0.1)`,
+                    pointBackgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary'),
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#E5E5E5',
+                    pointHoverBorderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary'),
                     borderDash: [5, 5]
                 }]
             },
@@ -363,9 +721,10 @@
                     legend: {
                         position: 'bottom',
                         labels: {
-                            padding: 10,
+                            padding: 15,
+                            usePointStyle: true,
                             font: {
-                                size: 11
+                                size: 12
                             }
                         }
                     }
@@ -374,23 +733,59 @@
                     r: {
                         beginAtZero: true,
                         max: 100,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
                         ticks: {
-                            stepSize: 20
+                            stepSize: 20,
+                            font: {
+                                size: 11
+                            }
                         }
                     }
                 }
             }
         });
         
-        // launchApp function is now handled by app-launch-panel.js
-        
-        // Go back to previous page
+        // Go back function
         function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // Fallback to apps page if no history
-                window.location.href = 'apps.html';
+            window.location.href = 'apps.html';
+        }
+
+        // Navigate between apps
+        function navigateApp(direction) {
+            const apps = [
+                'app-economaestro.html',
+                'app-runway.html',
+                'app-investorlens.html',
+                'app-cofoundermatch.html',
+                'app-validateai.html',
+                'app-shipfast.html',
+                'app-firstusers.html',
+                'app-pitchperfect.html',
+                'app-launchpad.html',
+                'app-scaleops.html',
+                'app-delightiq.html',
+                'app-brandforge.html',
+                'app-salesflow.html',
+                'app-insighthub.html',
+                'app-searchmaster.html',
+                'app-legalshield.html',
+                'app-teamsync.html',
+                'app-goglobal.html'
+            ];
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const currentIndex = apps.indexOf(currentPage);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = currentIndex === 0 ? apps.length - 1 : currentIndex - 1;
+                } else {
+                    newIndex = currentIndex === apps.length - 1 ? 0 : currentIndex + 1;
+                }
+                window.location.href = apps[newIndex];
             }
         }
     </script>

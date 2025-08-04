@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShipFast - MVP Development Platform | FoundersFleet</title>
+    <title>InvestorLens - Think Like a VC | FoundersFleet</title>
     <!-- 
-    APP CATEGORY: Development & Technical
+    APP CATEGORY: Financial & Analytics
     
-    To change this app to a different category, update the CSS variables at line 63-68:
+    To change this app to a different category, update the CSS variables at line 72-77:
     - Financial & Analytics (Purple): Use --financial-* variables
     - Team Building (Green): Use --team-* variables  
     - Development & Technical (Orange): Use --dev-* variables
@@ -20,6 +20,7 @@
     <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
         tailwind.config = tailwindConfig;
@@ -28,7 +29,7 @@
         :root {
             /* App Category Color Systems */
             
-            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway, InvestorLens */
             --financial-primary: #9333EA;
             --financial-primary-rgb: 147, 51, 234;
             --financial-primary-hover: #7E22CE;
@@ -68,13 +69,13 @@
             --comm-light-bg: #FCE7F3;
             --comm-light-border: #FBCFE8;
             
-            /* Current app accent colors (Development category for ShipFast) */
-            --accent-primary: var(--dev-primary);
-            --accent-primary-rgb: var(--dev-primary-rgb);
-            --accent-primary-hover: var(--dev-primary-hover);
-            --accent-secondary: var(--dev-secondary);
-            --accent-light-bg: var(--dev-light-bg);
-            --accent-light-border: var(--dev-light-border);
+            /* Current app accent colors (Financial category for InvestorLens) */
+            --accent-primary: var(--financial-primary);
+            --accent-primary-rgb: var(--financial-primary-rgb);
+            --accent-primary-hover: var(--financial-primary-hover);
+            --accent-secondary: var(--financial-secondary);
+            --accent-light-bg: var(--financial-light-bg);
+            --accent-light-border: var(--financial-light-border);
         }
         
         .metric-card {
@@ -88,7 +89,7 @@
             color: var(--accent-primary);
         }
         .trend-down {
-            color: var(--accent-secondary);
+            color: #EF4444;
         }
         .trend-neutral {
             color: #6B7280;
@@ -126,12 +127,12 @@
                             <i class="fas fa-arrow-left text-text-secondary"></i>
                         </button>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-rocket text-white"></i>
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-eye text-white"></i>
                             </div>
                             <div>
-                                <h1 class="text-xl font-bold text-text-primary">ShipFast</h1>
-                                <p class="text-sm text-text-secondary hidden md:block">Build and deploy MVPs in record time</p>
+                                <h1 class="text-xl font-bold text-text-primary">InvestorLens</h1>
+                                <p class="text-sm text-text-secondary hidden md:block">See your startup through VC eyes</p>
                             </div>
                         </div>
                     </div>
@@ -140,7 +141,7 @@
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
                                 <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">6 of 18</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">3 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
                                 <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
@@ -159,24 +160,22 @@
                         <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                             <div class="flex-1">
                                 <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
-                                    Build & Ship Your MVP Fast
+                                    Think Like Your Future Investors
                                 </h2>
                                 <p class="text-base md:text-lg text-text-secondary mb-4">
-                                    AI-powered development platform with boilerplate code, automated deployment, and built-in analytics. Ship your MVP in days, not months.
+                                    Understand how VCs evaluate startups, construct portfolios, and make decisions. Align your metrics and storytelling with what investors actually care about.
                                 </p>
                             </div>
                             
                             <!-- Key Metric Highlight -->
                             <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
                                 <div class="text-center">
-                                    <p class="text-sm text-text-secondary mb-2">Development Progress</p>
+                                    <p class="text-sm text-text-secondary mb-2">VC Alignment Score</p>
                                     <div class="flex items-baseline justify-center gap-2">
-                                        <span class="text-4xl font-bold accent-text">73%</span>
-                                        <span class="text-lg accent-text flex items-center">
-                                            <i class="fas fa-arrow-up mr-1"></i>+18%
-                                        </span>
+                                        <span class="text-4xl font-bold accent-text">73</span>
+                                        <span class="text-lg text-text-secondary">/100</span>
                                     </div>
-                                    <p class="text-xs text-text-muted mt-2">On track for launch</p>
+                                    <p class="text-xs text-text-muted mt-2">Room to improve</p>
                                 </div>
                             </div>
                         </div>
@@ -188,77 +187,77 @@
             <div class="px-4 md:px-8 py-6">
                 <div class="max-w-7xl mx-auto">
                     <!-- Key Metrics Row -->
-                    <h3 class="text-lg font-semibold text-text-primary mb-4">Development Dashboard</h3>
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">How VCs Evaluate Your Startup</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                        <!-- Sprint Progress -->
+                        <!-- Return Multiple -->
                         <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
                             <div class="flex items-start justify-between mb-2">
                                 <div>
-                                    <span class="text-sm font-bold text-text-primary">Sprint Progress</span>
-                                    <p class="text-2xl font-bold text-text-primary mt-1">73%</p>
-                                </div>
-                                <div class="p-2 bg-gray-100 rounded-lg">
-                                    <i class="fas fa-tasks accent-text text-sm"></i>
-                                </div>
-                            </div>
-                            <p class="text-xs text-text-secondary">4 of 6 features complete — ahead of schedule for launch date.</p>
-                            <div class="mt-2 flex items-center gap-1">
-                                <span class="text-xs trend-up">
-                                    <i class="fas fa-arrow-up"></i> +18% this week
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Code Quality -->
-                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
-                            <div class="flex items-start justify-between mb-2">
-                                <div>
-                                    <span class="text-sm font-bold text-text-primary">Code Quality</span>
-                                    <p class="text-2xl font-bold text-text-primary mt-1">92%</p>
-                                </div>
-                                <div class="p-2 bg-gray-100 rounded-lg">
-                                    <i class="fas fa-code accent-text text-sm"></i>
-                                </div>
-                            </div>
-                            <p class="text-xs text-text-secondary">Excellent test coverage and clean architecture — ready for production scale.</p>
-                            <div class="mt-2 flex items-center gap-1">
-                                <span class="text-xs trend-up">
-                                    <i class="fas fa-arrow-up"></i> High quality
-                                </span>
-                            </div>
-                        </div>
-
-                        <!-- Days to Launch -->
-                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
-                            <div class="flex items-start justify-between mb-2">
-                                <div>
-                                    <span class="text-sm font-bold text-text-primary">Days to Launch</span>
-                                    <p class="text-2xl font-bold text-text-primary mt-1">12</p>
+                                    <span class="text-sm font-bold text-text-primary">Return Potential</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">8x</p>
                                 </div>
                                 <div class="p-2 bg-gray-100 rounded-lg">
                                     <i class="fas fa-rocket accent-text text-sm"></i>
                                 </div>
                             </div>
-                            <p class="text-xs text-text-secondary">On track for Feb 15 launch — maintain current velocity to hit target.</p>
+                            <p class="text-xs text-text-secondary">VCs need 10x+ returns — show how you'll get there with TAM and growth rate.</p>
                             <div class="mt-2 flex items-center gap-1">
                                 <span class="text-xs trend-neutral">
-                                    <i class="fas fa-clock"></i> On schedule
+                                    <i class="fas fa-info-circle"></i> Below target
                                 </span>
                             </div>
                         </div>
 
-                        <!-- Performance Score -->
+                        <!-- Market Size Score -->
                         <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
                             <div class="flex items-start justify-between mb-2">
                                 <div>
-                                    <span class="text-sm font-bold text-text-primary">Performance</span>
-                                    <p class="text-2xl font-bold text-text-primary mt-1">94</p>
+                                    <span class="text-sm font-bold text-text-primary">TAM Score</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">85%</p>
                                 </div>
                                 <div class="p-2 bg-gray-100 rounded-lg">
-                                    <i class="fas fa-tachometer-alt accent-text text-sm"></i>
+                                    <i class="fas fa-globe accent-text text-sm"></i>
                                 </div>
                             </div>
-                            <p class="text-xs text-text-secondary">Lighthouse score — optimized for speed with lazy loading and caching.</p>
+                            <p class="text-xs text-text-secondary">$2.3B market size is attractive — emphasize expansion potential in pitch.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-check"></i> Strong
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Team Score -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Team Score</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">72%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-users accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Good domain expertise — add technical co-founder to strengthen team.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-neutral">
+                                    <i class="fas fa-arrow-right"></i> Adequate
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Traction Score -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Traction</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">MoM 23%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-chart-line accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Strong growth rate — VCs want 20%+ MoM at seed stage. Keep it up!</p>
                             <div class="mt-2 flex items-center gap-1">
                                 <span class="text-xs trend-up">
                                     <i class="fas fa-arrow-up"></i> Excellent
@@ -269,272 +268,247 @@
 
                     <!-- Main Dashboard Grid -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <!-- Left Column - Current Sprint -->
+                        <!-- Left Column - VC Decision Framework -->
                         <div class="lg:col-span-2 space-y-6">
-                            <!-- Sprint Tasks -->
+                            <!-- Portfolio Construction Insights -->
                             <div class="bg-card-bg rounded-lg border border-border p-6">
-                                <h3 class="text-lg font-semibold text-text-primary mb-4">Current Sprint: Core Features</h3>
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">How VCs Build Portfolios</h3>
                                 
                                 <div class="space-y-4">
-                                    <!-- Completed Task -->
-                                    <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                                            <i class="fas fa-check text-white"></i>
+                                    <!-- Power Law Thinking -->
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-chart-area accent-text"></i>
                                         </div>
                                         <div class="flex-1">
                                             <div class="flex items-start justify-between mb-1">
-                                                <h4 class="font-medium text-text-primary">User Authentication System</h4>
-                                                <span class="px-2 py-1 bg-green-light text-green-600 text-xs rounded-full font-medium">Completed</span>
+                                                <h4 class="font-medium text-text-primary">Power Law Returns</h4>
+                                                <span class="px-2 py-1 bg-gray-100 accent-text text-xs rounded-full font-medium">Key Concept</span>
                                             </div>
-                                            <p class="text-sm text-text-secondary mb-3">OAuth integration, JWT tokens, password reset flow, and user profile management.</p>
+                                            <p class="text-sm text-text-secondary mb-3">1-2 investments return the entire fund. VCs need you to show 100x potential, not just 2-3x.</p>
                                             
-                                            <!-- Implementation Details -->
-                                            <div class="bg-white rounded-lg p-3 border border-gray-200">
-                                                <p class="text-xs font-medium text-text-primary mb-2">Implementation Highlights:</p>
+                                            <!-- Your Position -->
+                                            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Your Story:</p>
                                                 <ul class="space-y-1 text-xs text-text-secondary">
                                                     <li class="flex items-start gap-2">
-                                                        <i class="fas fa-check accent-text mt-0.5"></i>
-                                                        <span>Google & GitHub OAuth integration complete</span>
+                                                        <i class="fas fa-lightbulb accent-text mt-0.5"></i>
+                                                        <span>Show how you can capture 10%+ of your TAM</span>
                                                     </li>
                                                     <li class="flex items-start gap-2">
-                                                        <i class="fas fa-check accent-text mt-0.5"></i>
-                                                        <span>JWT-based session management with refresh tokens</span>
-                                                    </li>
-                                                    <li class="flex items-start gap-2">
-                                                        <i class="fas fa-check accent-text mt-0.5"></i>
-                                                        <span>Password strength validation and secure reset flow</span>
+                                                        <i class="fas fa-lightbulb accent-text mt-0.5"></i>
+                                                        <span>Demonstrate network effects or winner-take-all dynamics</span>
                                                     </li>
                                                 </ul>
                                             </div>
-                                            
-                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
-                                                <span><i class="fas fa-calendar mr-1"></i>Completed 2 days ago</span>
-                                                <span><i class="fas fa-code mr-1"></i>React + Node.js</span>
-                                            </div>
                                         </div>
                                     </div>
 
-                                    <!-- In Progress Task -->
+                                    <!-- Check Size Strategy -->
                                     <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200">
-                                        <div class="w-10 h-10 accent-bg rounded-lg flex items-center justify-center flex-shrink-0">
-                                            <i class="fas fa-cog text-white"></i>
+                                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-dollar-sign accent-text"></i>
                                         </div>
                                         <div class="flex-1">
                                             <div class="flex items-start justify-between mb-1">
-                                                <h4 class="font-medium text-text-primary">Core Dashboard & Analytics</h4>
-                                                <span class="px-2 py-1 bg-yellow-light text-yellow-600 text-xs rounded-full font-medium">In Progress - 75%</span>
+                                                <h4 class="font-medium text-text-primary">Ownership Targets</h4>
+                                                <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full font-medium">15-20% typical</span>
                                             </div>
-                                            <p class="text-sm text-text-secondary">Real-time data visualization with Chart.js, user activity tracking, and performance metrics.</p>
-                                            <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
-                                                <div class="accent-bg-secondary h-2 rounded-full" style="width: 75%"></div>
-                                            </div>
+                                            <p class="text-sm text-text-secondary mb-2">Seed VCs typically want 15-20% ownership. Plan your round size accordingly.</p>
                                             <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
-                                                <span><i class="fas fa-clock mr-1"></i>Due in 3 days</span>
-                                                <span><i class="fas fa-user mr-1"></i>Alex (Frontend)</span>
+                                                <span><i class="fas fa-calculator mr-1"></i>$2M on $10M = 20%</span>
+                                                <span><i class="fas fa-chart-pie mr-1"></i>Reserve 10% ESOP</span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- Upcoming Task -->
-                                    <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                    <!-- Follow-on Strategy -->
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200">
                                         <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                                            <i class="fas fa-credit-card accent-text"></i>
+                                            <i class="fas fa-layer-group accent-text"></i>
                                         </div>
                                         <div class="flex-1">
                                             <div class="flex items-start justify-between mb-1">
-                                                <h4 class="font-medium text-text-primary">Payment Integration</h4>
-                                                <span class="px-2 py-1 bg-gray-light text-gray-600 text-xs rounded-full font-medium">Up Next</span>
+                                                <h4 class="font-medium text-text-primary">Follow-on Reserves</h4>
+                                                <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full font-medium">50% reserved</span>
                                             </div>
-                                            <p class="text-sm text-text-secondary">Stripe integration with subscription management and webhook handling.</p>
+                                            <p class="text-sm text-text-secondary">VCs reserve capital for winners. Show clear milestones to earn their follow-on.</p>
                                             <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
-                                                <span><i class="fas fa-calendar mr-1"></i>Starts in 4 days</span>
-                                                <span><i class="fas fa-star mr-1"></i>High priority</span>
+                                                <span><i class="fas fa-flag mr-1"></i>Series A: $1M ARR</span>
+                                                <span><i class="fas fa-users mr-1"></i>100+ customers</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Development Framework -->
+                            <!-- Risk Assessment Framework -->
                             <div class="bg-white rounded-lg border border-gray-200 p-6">
                                 <div class="flex items-center justify-between mb-4">
-                                    <h3 class="text-lg font-semibold text-text-primary">AI Development Accelerators</h3>
-                                    <span class="text-xs accent-text font-medium">Save 80% development time</span>
+                                    <h3 class="text-lg font-semibold text-text-primary">Your Risk Profile (VC Perspective)</h3>
+                                    <span class="text-xs accent-text font-medium">Updated analysis</span>
                                 </div>
                                 
                                 <div class="space-y-3">
-                                    <!-- Code Generation -->
+                                    <!-- Market Risk -->
                                     <div class="bg-white rounded-lg p-4 border border-gray-200">
                                         <div class="flex items-start justify-between mb-2">
                                             <div class="flex items-center gap-2">
                                                 <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
-                                                    <i class="fas fa-magic accent-text text-sm"></i>
+                                                    <i class="fas fa-globe accent-text text-sm"></i>
                                                 </div>
-                                                <h4 class="font-medium text-text-primary">AI Code Generation</h4>
+                                                <h4 class="font-medium text-text-primary">Market Risk</h4>
                                             </div>
-                                            <span class="text-xs bg-gray-100 accent-text px-2 py-1 rounded-full">Active</span>
+                                            <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">Low</span>
                                         </div>
-                                        <p class="text-sm text-text-secondary mb-2">Generate React components, API endpoints, and database models from natural language descriptions.</p>
-                                        <div class="flex items-center gap-3 text-xs">
-                                            <button class="accent-text hover:opacity-80 font-medium">
-                                                <i class="fas fa-arrow-right mr-1"></i>Generate component
-                                            </button>
-                                            <span class="text-text-muted">• 47 components generated</span>
+                                        <p class="text-sm text-text-secondary mb-2">Large, growing market with clear customer pain points. VCs love this.</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
                                         </div>
                                     </div>
 
-                                    <!-- Auto Deployment -->
+                                    <!-- Execution Risk -->
                                     <div class="bg-white rounded-lg p-4 border border-gray-200">
                                         <div class="flex items-start justify-between mb-2">
                                             <div class="flex items-center gap-2">
                                                 <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
-                                                    <i class="fas fa-rocket accent-text-secondary text-sm"></i>
+                                                    <i class="fas fa-cogs accent-text text-sm"></i>
                                                 </div>
-                                                <h4 class="font-medium text-text-primary">One-Click Deployment</h4>
+                                                <h4 class="font-medium text-text-primary">Execution Risk</h4>
                                             </div>
-                                            <span class="text-xs bg-gray-100 accent-text-secondary px-2 py-1 rounded-full">Ready</span>
+                                            <span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">Medium</span>
                                         </div>
-                                        <p class="text-sm text-text-secondary mb-2">Automated CI/CD pipeline with Vercel integration, environment management, and rollback capability.</p>
-                                        <div class="flex items-center gap-3 text-xs">
-                                            <button class="accent-text-secondary hover:opacity-80 font-medium">
-                                                <i class="fas fa-play mr-1"></i>Deploy to production
-                                            </button>
-                                            <span class="text-text-muted">• Last deployed 2 hours ago</span>
+                                        <p class="text-sm text-text-secondary mb-2">Solid progress but need technical co-founder. Address this in fundraising.</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 65%"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Competition Risk -->
+                                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-chess accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Competition Risk</h4>
+                                            </div>
+                                            <span class="text-xs bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">Medium</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">Several competitors but clear differentiation. Emphasize your moat.</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 60%"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Right Column - Tech Stack & Resources -->
+                        <!-- Right Column - LP Metrics & Tools -->
                         <div class="space-y-6">
-                            <!-- Tech Stack -->
+                            <!-- Fund Economics -->
                             <div class="bg-card-bg rounded-lg border border-border p-6">
-                                <h3 class="text-lg font-semibold text-text-primary mb-4">Your Tech Stack</h3>
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">VC Fund Economics</h3>
                                 <div class="space-y-3">
                                     <div>
                                         <div class="flex items-center justify-between mb-1">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
-                                                    <i class="fab fa-react accent-text text-xs"></i>
-                                                </div>
-                                                <span class="text-sm font-medium">React + Next.js</span>
-                                            </div>
-                                            <span class="text-sm font-bold accent-text">Frontend</span>
+                                            <span class="text-sm text-text-secondary">Target Fund Return</span>
+                                            <span class="text-sm font-medium accent-text">3x+</span>
                                         </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="accent-bg h-2 rounded-full" style="width: 85%"></div>
-                                        </div>
-                                        <p class="text-xs text-text-muted mt-1">Modern React with TypeScript and Next.js 14</p>
+                                        <p class="text-xs text-text-muted">VCs promise LPs 3x+ returns</p>
                                     </div>
                                     
                                     <div>
                                         <div class="flex items-center justify-between mb-1">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
-                                                    <i class="fab fa-node-js accent-text text-xs"></i>
-                                                </div>
-                                                <span class="text-sm font-medium">Node.js + Express</span>
-                                            </div>
-                                            <span class="text-sm font-bold accent-text">Backend</span>
+                                            <span class="text-sm text-text-secondary">Success Rate</span>
+                                            <span class="text-sm font-medium">10-20%</span>
                                         </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 78%"></div>
-                                        </div>
-                                        <p class="text-xs text-text-muted mt-1">Express.js with JWT auth and PostgreSQL</p>
+                                        <p class="text-xs text-text-muted">Only 1-2 in 10 succeed big</p>
                                     </div>
 
                                     <div>
                                         <div class="flex items-center justify-between mb-1">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
-                                                    <i class="fas fa-database accent-text text-xs"></i>
-                                                </div>
-                                                <span class="text-sm font-medium">PostgreSQL</span>
-                                            </div>
-                                            <span class="text-sm font-bold accent-text">Database</span>
+                                            <span class="text-sm text-text-secondary">Your Needed Return</span>
+                                            <span class="text-sm font-medium accent-text">50x+</span>
                                         </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="accent-bg h-2 rounded-full" style="width: 92%"></div>
-                                        </div>
-                                        <p class="text-xs text-text-muted mt-1">Optimized schema with proper indexing</p>
+                                        <p class="text-xs text-text-muted">To return their fund</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Performance Metrics -->
+                            <!-- What VCs Look For -->
                             <div class="bg-card-bg rounded-lg border border-border p-6">
-                                <h3 class="text-lg font-semibold text-text-primary mb-4">Performance Metrics</h3>
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">VC Decision Factors</h3>
                                 <div class="space-y-4">
                                     <div>
                                         <div class="flex items-center justify-between mb-2">
-                                            <span class="text-sm text-text-secondary">Lighthouse Score</span>
-                                            <span class="text-sm font-medium accent-text">94/100</span>
+                                            <span class="text-sm text-text-secondary">Founder-Market Fit</span>
+                                            <span class="text-sm font-medium accent-text">Critical</span>
                                         </div>
                                         <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="accent-bg h-2 rounded-full" style="width: 94%"></div>
+                                            <div class="accent-bg h-2 rounded-full" style="width: 100%"></div>
                                         </div>
-                                        <p class="text-xs text-text-muted mt-1">Excellent performance optimization</p>
+                                        <p class="text-xs text-text-muted mt-1">Why are YOU the one to build this?</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Market Timing</span>
+                                            <span class="text-sm font-medium accent-text">Very Important</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Why is NOW the right time?</p>
                                     </div>
 
                                     <div>
                                         <div class="flex items-center justify-between mb-2">
-                                            <span class="text-sm text-text-secondary">Bundle Size</span>
-                                            <span class="text-sm font-medium">247 KB</span>
+                                            <span class="text-sm text-text-secondary">Scalability</span>
+                                            <span class="text-sm font-medium accent-text">Essential</span>
                                         </div>
                                         <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 65%"></div>
+                                            <div class="accent-bg h-2 rounded-full" style="width: 90%"></div>
                                         </div>
-                                        <p class="text-xs text-text-muted mt-1">Optimized with tree shaking and compression</p>
-                                    </div>
-
-                                    <div>
-                                        <div class="flex items-center justify-between mb-2">
-                                            <span class="text-sm text-text-secondary">Load Time</span>
-                                            <span class="text-sm font-medium accent-text">1.2s</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-2">
-                                            <div class="accent-bg h-2 rounded-full" style="width: 88%"></div>
-                                        </div>
-                                        <p class="text-xs text-text-muted mt-1">Fast initial page load with lazy loading</p>
+                                        <p class="text-xs text-text-muted mt-1">Can this be a $1B+ company?</p>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Quick Actions -->
                             <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
-                                <h3 class="text-lg font-semibold text-text-primary mb-4">Development Actions</h3>
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Alignment Actions</h3>
                                 <div class="space-y-3">
                                     <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
                                         <div class="flex items-center justify-between mb-1">
-                                            <span class="text-sm font-medium text-text-primary">Generate New Component</span>
-                                            <i class="fas fa-magic text-text-muted"></i>
-                                        </div>
-                                        <p class="text-xs text-text-secondary">Use AI to create React components from descriptions</p>
-                                    </button>
-                                    
-                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-sm font-medium text-text-primary">Deploy to Production</span>
-                                            <i class="fas fa-rocket text-text-muted"></i>
-                                        </div>
-                                        <p class="text-xs text-text-secondary">One-click deployment to Vercel with CI/CD</p>
-                                    </button>
-                                    
-                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-sm font-medium text-text-primary">Run Performance Audit</span>
-                                            <i class="fas fa-tachometer-alt text-text-muted"></i>
-                                        </div>
-                                        <p class="text-xs text-text-secondary">Analyze and optimize application performance</p>
-                                    </button>
-                                    
-                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <span class="text-sm font-medium text-text-primary">Setup Analytics</span>
+                                            <span class="text-sm font-medium text-text-primary">Model Your Return Path</span>
                                             <i class="fas fa-chart-line text-text-muted"></i>
                                         </div>
-                                        <p class="text-xs text-text-secondary">Integrate user tracking and conversion analytics</p>
+                                        <p class="text-xs text-text-secondary">Show how you'll achieve 50x+ returns</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">LP Update Template</span>
+                                            <i class="fas fa-file-alt text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Write updates like VCs report to LPs</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Risk Mitigation Plan</span>
+                                            <i class="fas fa-shield-alt text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Address key risks before VCs ask</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Portfolio Fit Analysis</span>
+                                            <i class="fas fa-puzzle-piece text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">See how you fit in VC portfolios</p>
                                     </button>
                                 </div>
                             </div>

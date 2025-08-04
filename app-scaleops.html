@@ -4,429 +4,675 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScaleOps - Scale & Optimize Platform | FoundersFleet</title>
+    <!-- 
+    APP CATEGORY: Development & Technical
+    
+    To change this app to a different category, update the CSS variables at line 63-68:
+    - Financial & Analytics (Purple): Use --financial-* variables
+    - Team & Networking (Blue): Use --team-* variables  
+    - Marketing & Growth (Green): Use --marketing-* variables
+    - Development & Technical (Orange): Use --dev-* variables
+    - Communication (Pink): Use --comm-* variables
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team & Networking Apps (Blue) - CoFounderMatch, SkillSwap */
+            --team-primary: #2563EB;
+            --team-primary-rgb: 37, 99, 235;
+            --team-primary-hover: #1D4ED8;
+            --team-secondary: #0EA5E9;
+            --team-light-bg: #DBEAFE;
+            --team-light-border: #BFDBFE;
+            
+            /* Marketing & Growth Apps (Green) - ValidateAI, LaunchPad */
+            --marketing-primary: #10B981;
+            --marketing-primary-rgb: 16, 185, 129;
+            --marketing-primary-hover: #059669;
+            --marketing-secondary: #14B8A6;
+            --marketing-light-bg: #D1FAE5;
+            --marketing-light-border: #A7F3D0;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Current app accent colors (Development category for ScaleOps) */
+            --accent-primary: var(--dev-primary);
+            --accent-primary-rgb: var(--dev-primary-rgb);
+            --accent-primary-hover: var(--dev-primary-hover);
+            --accent-secondary: var(--dev-secondary);
+            --accent-light-bg: var(--dev-light-bg);
+            --accent-light-border: var(--dev-light-border);
+        }
+        
         .metric-card {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         .metric-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .performance-bar {
-            transition: width 0.8s ease-out;
+        .trend-up {
+            color: var(--accent-primary);
         }
-        .optimization-score {
-            background: conic-gradient(#10B981 0deg, #10B981 calc(var(--score) * 3.6deg), #E5E5E5 calc(var(--score) * 3.6deg));
+        .trend-down {
+            color: var(--accent-secondary);
         }
-        .alert-pulse {
-            animation: pulse 2s infinite;
+        .trend-neutral {
+            color: #6B7280;
         }
-        @keyframes pulse {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.7;
-                transform: scale(1.05);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
         }
-        .scaling-indicator {
-            background: linear-gradient(45deg, #3B82F6 25%, #8B5CF6 25%, #8B5CF6 50%, #3B82F6 50%, #3B82F6 75%, #8B5CF6 75%, #8B5CF6);
-            background-size: 20px 20px;
-            animation: move 1s linear infinite;
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
         }
-        @keyframes move {
-            0% {
-                background-position: 0 0;
-            }
-            100% {
-                background-position: 20px 20px;
-            }
-        }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
     </style>
 </head>
 <body class="bg-background min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
                             <i class="fas fa-arrow-left text-text-secondary"></i>
                         </button>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-chart-line text-white"></i>
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">ScaleOps</h1>
-                                <p class="text-sm text-text-secondary">Intelligent scaling & optimization platform</p>
+                                <p class="text-sm text-text-secondary hidden md:block">Intelligent scaling & optimization platform</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">10 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Performance Overview -->
-                <div class="mb-8 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-8 border border-blue-100">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">System Performance</h2>
-                            <p class="text-text-secondary mb-4">Insights for scaling decisions</p>
-                            
-                            <!-- Key Metrics -->
-                            <div class="flex items-center gap-8">
-                                <div>
-                                    <div class="text-3xl font-bold text-text-primary">98.7%</div>
-                                    <div class="text-sm text-text-secondary">Uptime</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-success">245ms</div>
-                                    <div class="text-sm text-text-secondary">Avg Response</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-info">82%</div>
-                                    <div class="text-sm text-text-secondary">CPU Usage</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-warning">3.2TB</div>
-                                    <div class="text-sm text-text-secondary">Bandwidth</div>
-                                </div>
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    System Running at Peak Performance
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    AI-powered optimization keeping your infrastructure efficient and cost-effective. Real-time scaling decisions based on demand patterns.
+                                </p>
                             </div>
-                        </div>
-                        <div class="bg-white rounded-lg p-4 shadow-sm text-center">
-                            <div class="relative w-24 h-24">
-                                <div class="optimization-score w-24 h-24 rounded-full" style="--score: 85"></div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div>
-                                        <div class="text-2xl font-bold text-text-primary">85</div>
-                                        <div class="text-xs text-text-secondary">Score</div>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Optimization Score</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">94</span>
+                                        <span class="text-lg accent-text flex items-center">
+                                            <i class="fas fa-arrow-up mr-1"></i>+8
+                                        </span>
                                     </div>
+                                    <p class="text-xs text-text-muted mt-2">Excellent performance</p>
                                 </div>
                             </div>
-                            <div class="text-sm text-success mt-2">Excellent</div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Scaling Metrics Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <!-- Active Users -->
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-users text-2xl text-primary"></i>
-                            <span class="px-2 py-1 bg-success/10 text-success text-xs rounded">+12%</span>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary mb-1">45,239</div>
-                        <div class="text-sm text-text-secondary mb-3">Active Users</div>
-                        <div class="bg-gray-200 rounded-full h-1 overflow-hidden">
-                            <div class="performance-bar bg-success h-full rounded-full" style="width: 75%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Server Load -->
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-server text-2xl text-primary"></i>
-                            <span class="px-2 py-1 bg-warning/10 text-warning text-xs rounded alert-pulse">High</span>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary mb-1">82%</div>
-                        <div class="text-sm text-text-secondary mb-3">Server Load</div>
-                        <div class="bg-gray-200 rounded-full h-1 overflow-hidden">
-                            <div class="performance-bar bg-warning h-full rounded-full" style="width: 82%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Database Performance -->
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-database text-2xl text-primary"></i>
-                            <span class="px-2 py-1 bg-info/10 text-info text-xs rounded">Optimal</span>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary mb-1">12ms</div>
-                        <div class="text-sm text-text-secondary mb-3">Query Time</div>
-                        <div class="bg-gray-200 rounded-full h-1 overflow-hidden">
-                            <div class="performance-bar bg-info h-full rounded-full" style="width: 95%"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Cost Efficiency -->
-                    <div class="metric-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-dollar-sign text-2xl text-primary"></i>
-                            <span class="px-2 py-1 bg-success/10 text-success text-xs rounded">-8%</span>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary mb-1">$0.82</div>
-                        <div class="text-sm text-text-secondary mb-3">Per User/Mo</div>
-                        <div class="bg-gray-200 rounded-full h-1 overflow-hidden">
-                            <div class="performance-bar bg-success h-full rounded-full" style="width: 88%"></div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Critical Infrastructure Metrics</h3>
 
-                <!-- Infrastructure & Optimization -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                    <!-- Auto-Scaling Status -->
-                    <div class="lg:col-span-2">
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-xl font-semibold text-text-primary mb-4">Auto-Scaling Activity</h3>
-                            
-                            <div class="space-y-4">
-                                <!-- Current Scaling -->
-                                <div class="border border-info rounded-lg p-4 bg-blue-50">
-                                    <div class="flex items-center justify-between mb-2">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-2 h-2 bg-info rounded-full animate-pulse"></div>
-                                            <span class="font-medium text-text-primary">Scaling Up</span>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Server Load -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Load</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">82%</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-server accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">High load detected — auto-scaling in progress.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +15%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Response Time -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Response</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">185ms</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-clock accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Average response time within optimal range.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -12ms
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Active Instances -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Instances</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">12</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-cubes accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Active instances across all regions.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +2
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Cost Per Hour -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Cost/Hr</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$24.50</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-dollar-sign accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Current infrastructure cost per hour.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -8%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Scaling Operations -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Auto-Scaling Signals -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Smart Scaling Operations</h3>
+                                
+                                <div class="space-y-4">
+                                    <!-- Active Scaling Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-arrow-up accent-text"></i>
                                         </div>
-                                        <span class="text-sm text-info">In Progress</span>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Scale Up Required</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">Active</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">Traffic surge detected. Adding 3 instances in next 2 minutes.</p>
+                                            
+                                            <!-- Action Items -->
+                                            <div class="bg-white rounded-lg p-3 accent-border-light border">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Auto-scaling Actions:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Load balancer routing updated</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-clock accent-text mt-0.5"></i>
+                                                        <span>New instances launching (ETA: 90s)</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-clock accent-text mt-0.5"></i>
+                                                        <span>Performance monitoring active</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>95% confidence</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Next 2 minutes</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="text-sm text-text-secondary mb-2">Adding 2 more instances to handle increased load</div>
-                                    <div class="scaling-indicator h-2 rounded-full"></div>
+
+                                    <!-- Cost Optimization Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light-secondary rounded-lg accent-border-light-secondary border">
+                                        <div class="w-10 h-10 accent-bg-light-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-dollar-sign accent-text-secondary"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Cost Optimization</h4>
+                                                <span class="px-2 py-1 accent-bg-light-secondary accent-text-secondary text-xs rounded-full font-medium">Pending</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Switch to reserved instances for 30% cost savings on stable workloads.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>$12k savings/year</span>
+                                                <span><i class="fas fa-clock mr-1"></i>Review needed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Performance Optimization Signal -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-10 h-10 accent-bg-light rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-tachometer-alt accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Performance Tuning</h4>
+                                                <span class="px-2 py-1 accent-bg-light accent-text text-xs rounded-full font-medium">Recommended</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Database query optimization could reduce response time by 40ms.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>92% impact score</span>
+                                                <span><i class="fas fa-clock mr-1"></i>1-2 hours</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Infrastructure Performance Chart -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">System Performance Trends</h3>
+                                    <select class="text-sm border border-border rounded-lg px-3 py-1">
+                                        <option>Last 24 hours</option>
+                                        <option>Last week</option>
+                                        <option>Last month</option>
+                                    </select>
+                                </div>
+                                <div class="h-64">
+                                    <canvas id="performanceChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Resource Utilization Leaderboard -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Resource Efficiency by Region</h3>
+                                    <div class="flex items-center gap-3">
+                                        <select class="text-xs border border-border rounded px-2 py-1">
+                                            <option>All Regions</option>
+                                            <option>US East</option>
+                                            <option>EU West</option>
+                                            <option>Asia Pacific</option>
+                                        </select>
+                                        <button class="text-sm accent-text hover:opacity-80 flex items-center gap-1">
+                                            View Details <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 
-                                <!-- Recent Events -->
+                                <div class="space-y-4">
+                                    <!-- Top Region -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg rounded-full flex items-center justify-center text-white font-bold">
+                                                    1
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">US East (Virginia)</h4>
+                                                    <p class="text-sm text-text-secondary">12 instances • Load: 68%</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-check-circle mr-1"></i>94% efficiency
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-dollar-sign mr-1"></i>$18.50/hr
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Updated 30s ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                94%
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Optimization Status:</p>
+                                            <p class="text-sm text-text-secondary">Running at peak efficiency with auto-scaling handling traffic perfectly.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Second Region -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 accent-bg-secondary rounded-full flex items-center justify-center text-white font-bold">
+                                                    2
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">EU West (Ireland)</h4>
+                                                    <p class="text-sm text-text-secondary">8 instances • Load: 71%</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-check-circle mr-1"></i>88% efficiency
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-dollar-sign mr-1"></i>$22.30/hr
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Updated 1m ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                88%
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Optimization Status:</p>
+                                            <p class="text-sm text-text-secondary">Good performance. Consider CDN optimization for static assets.</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Third Region -->
+                                    <div class="p-4 bg-section-bg rounded-lg hover:shadow-sm transition-all">
+                                        <div class="flex items-start justify-between">
+                                            <div class="flex items-start gap-3">
+                                                <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background: linear-gradient(to bottom right, var(--accent-primary), var(--accent-secondary));">
+                                                    3
+                                                </div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-semibold text-text-primary">Asia Pacific (Tokyo)</h4>
+                                                    <p class="text-sm text-text-secondary">6 instances • Load: 84%</p>
+                                                    <div class="flex items-center gap-4 mt-2 text-xs">
+                                                        <span class="accent-text">
+                                                            <i class="fas fa-exclamation-triangle mr-1"></i>76% efficiency
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-dollar-sign mr-1"></i>$28.90/hr
+                                                        </span>
+                                                        <span class="text-text-muted">
+                                                            <i class="fas fa-clock mr-1"></i>Updated 2m ago
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="px-3 py-1 accent-bg text-white rounded-full text-sm font-medium">
+                                                76%
+                                            </span>
+                                        </div>
+                                        <div class="mt-3 p-3 bg-white rounded border border-border">
+                                            <p class="text-sm text-text-primary font-medium mb-1">Optimization Status:</p>
+                                            <p class="text-sm text-text-secondary">High load detected. Scaling up 2 instances recommended.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Optimization Recommendations Map -->
+                            <div class="accent-bg-light rounded-lg accent-border-light border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Smart Optimization Opportunities</h3>
+                                    <span class="text-xs accent-text font-medium">AI-powered recommendations</span>
+                                </div>
+                                
                                 <div class="space-y-3">
-                                    <div class="flex items-start gap-3 p-3 bg-section-bg rounded-lg">
-                                        <i class="fas fa-arrow-up text-success mt-0.5"></i>
-                                        <div class="flex-1">
-                                            <div class="font-medium text-text-primary">Scaled to 8 instances</div>
-                                            <div class="text-xs text-text-secondary">Traffic spike detected • 15 min ago</div>
+                                    <!-- Top Opportunity -->
+                                    <div class="bg-white rounded-lg p-4 accent-border-light border">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-database accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Database Connection Pooling</h4>
+                                            </div>
+                                            <span class="text-xs accent-bg-light accent-text px-2 py-1 rounded-full">High Impact</span>
                                         </div>
-                                        <span class="text-xs text-success">+25% capacity</span>
+                                        <p class="text-sm text-text-secondary mb-2">Optimize database connections to reduce response time by 45ms and handle 60% more concurrent users.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>Apply optimization
+                                            </button>
+                                            <span class="text-text-muted">• 15-minute implementation</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Second Opportunity -->
+                                    <div class="bg-white rounded-lg p-4 accent-border-light border">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light-secondary rounded flex items-center justify-center">
+                                                    <i class="fas fa-compress accent-text-secondary text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Image Compression & CDN</h4>
+                                            </div>
+                                            <span class="text-xs accent-bg-light-secondary accent-text-secondary px-2 py-1 rounded-full">Cost Saver</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">Reduce bandwidth costs by 35% and improve load times with optimized image delivery.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text-secondary hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>Enable compression
+                                            </button>
+                                            <span class="text-text-muted">• $500/month savings</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Quick Insights -->
+                        <div class="space-y-6">
+                            <!-- Current Resource Usage -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Real-Time Resource Usage</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-microchip accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">CPU (82%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">High usage detected — scaling instances now.</p>
                                     </div>
                                     
-                                    <div class="flex items-start gap-3 p-3 bg-section-bg rounded-lg">
-                                        <i class="fas fa-shield-alt text-info mt-0.5"></i>
-                                        <div class="flex-1">
-                                            <div class="font-medium text-text-primary">DDoS Protection Activated</div>
-                                            <div class="text-xs text-text-secondary">Suspicious traffic pattern • 1 hour ago</div>
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-memory accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Memory (64%)</span>
+                                            </div>
+                                            <i class="fas fa-minus accent-text-secondary text-xs"></i>
                                         </div>
-                                        <span class="text-xs text-info">Mitigated</span>
+                                        <p class="text-xs text-text-muted pl-10">Normal range — efficient memory utilization.</p>
                                     </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-hdd accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Storage (45%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-down accent-text text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Plenty of capacity — optimal for growth.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-network-wired accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Network (38%)</span>
+                                            </div>
+                                            <i class="fas fa-arrow-up accent-text-secondary text-xs"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted pl-10">Bandwidth usage increasing with traffic spike.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Cost & Efficiency -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Cost Efficiency Tracker</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Monthly Spend</span>
+                                            <span class="text-sm font-medium">$18,450</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Current spend: $18.4k — within budget range.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Cost per User</span>
+                                            <span class="text-sm font-medium">$0.24</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Cost per user: $0.24 — excellent efficiency.</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Optimization Score</span>
+                                            <span class="text-sm font-medium accent-text">94%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 94%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">AI optimization working at peak performance.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Scale Down Off-Peak</span>
+                                            <i class="fas fa-arrow-right text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Set auto-scaling rules for off-peak hours.</p>
+                                    </button>
                                     
-                                    <div class="flex items-start gap-3 p-3 bg-section-bg rounded-lg">
-                                        <i class="fas fa-arrow-down text-warning mt-0.5"></i>
-                                        <div class="flex-1">
-                                            <div class="font-medium text-text-primary">Scaled down to 5 instances</div>
-                                            <div class="text-xs text-text-secondary">Low traffic period • 3 hours ago</div>
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Export Performance Report</span>
+                                            <i class="fas fa-download text-text-muted"></i>
                                         </div>
-                                        <span class="text-xs text-warning">-20% cost</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Optimization Suggestions -->
-                    <div class="space-y-6">
-                        <!-- AI Recommendations -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">AI Recommendations</h3>
-                            <div class="space-y-3">
-                                <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                                    <div class="flex items-start gap-2">
-                                        <i class="fas fa-lightbulb text-yellow-600 mt-0.5"></i>
-                                        <div>
-                                            <p class="text-sm font-medium text-text-primary">Enable CDN Caching</p>
-                                            <p class="text-xs text-text-secondary mt-1">Reduce server load by 40%</p>
+                                        <p class="text-xs text-text-secondary">Generate detailed infrastructure report.</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Set Cost Alerts</span>
+                                            <i class="fas fa-bell text-text-muted"></i>
                                         </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="p-3 bg-green-50 border border-green-200 rounded-lg">
-                                    <div class="flex items-start gap-2">
-                                        <i class="fas fa-database text-green-600 mt-0.5"></i>
-                                        <div>
-                                            <p class="text-sm font-medium text-text-primary">Optimize Queries</p>
-                                            <p class="text-xs text-text-secondary mt-1">3 slow queries detected</p>
+                                        <p class="text-xs text-text-secondary">Alert when costs exceed $25k/month.</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Run Health Check</span>
+                                            <i class="fas fa-heartbeat text-text-muted"></i>
                                         </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                                    <div class="flex items-start gap-2">
-                                        <i class="fas fa-compress text-blue-600 mt-0.5"></i>
-                                        <div>
-                                            <p class="text-sm font-medium text-text-primary">Image Compression</p>
-                                            <p class="text-xs text-text-secondary mt-1">Save 2.1GB bandwidth/day</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <button class="w-full mt-4 px-3 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
-                                Apply All Optimizations
-                            </button>
-                        </div>
-
-                        <!-- Cost Forecast -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Cost Forecast</h3>
-                            <div class="space-y-3 text-sm">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Current Month</span>
-                                    <span class="font-medium">$12,450</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Projected</span>
-                                    <span class="font-medium">$14,200</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">With Optimization</span>
-                                    <span class="font-medium text-success">$10,800</span>
-                                </div>
-                                <div class="pt-3 border-t border-border">
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-medium">Potential Savings</span>
-                                        <span class="font-bold text-success">$3,400/mo</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Performance Charts -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                    <!-- Response Time Chart -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-xl font-semibold text-text-primary mb-4">Response Time (24h)</h3>
-                        <canvas id="responseChart" height="200"></canvas>
-                    </div>
-                    
-                    <!-- Traffic Distribution -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-xl font-semibold text-text-primary mb-4">Traffic Distribution</h3>
-                        <canvas id="trafficChart" height="200"></canvas>
-                    </div>
-                </div>
-
-                <!-- Infrastructure Map -->
-                <div class="bg-card-bg border border-border rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-text-primary mb-4">Global Infrastructure</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="border border-border rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-2">
-                                <h4 class="font-medium text-text-primary">US East</h4>
-                                <span class="w-2 h-2 bg-success rounded-full"></span>
-                            </div>
-                            <div class="space-y-2 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Instances</span>
-                                    <span>5 active</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Load</span>
-                                    <span>72%</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Users</span>
-                                    <span>18.5k</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="border border-border rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-2">
-                                <h4 class="font-medium text-text-primary">EU West</h4>
-                                <span class="w-2 h-2 bg-success rounded-full"></span>
-                            </div>
-                            <div class="space-y-2 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Instances</span>
-                                    <span>3 active</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Load</span>
-                                    <span>65%</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Users</span>
-                                    <span>12.3k</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="border border-border rounded-lg p-4">
-                            <div class="flex items-center justify-between mb-2">
-                                <h4 class="font-medium text-text-primary">Asia Pacific</h4>
-                                <span class="w-2 h-2 bg-warning rounded-full animate-pulse"></span>
-                            </div>
-                            <div class="space-y-2 text-xs">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Instances</span>
-                                    <span>4 active (+2)</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Load</span>
-                                    <span class="text-warning">88%</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Users</span>
-                                    <span>14.4k</span>
+                                        <p class="text-xs text-text-secondary">Comprehensive system health analysis.</p>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -441,71 +687,39 @@
         // Initialize navigation
         initializeNavigation('apps');
 
-        // App navigation
-        const appPages = [
-            'app-economaestro.html',
-            'app-runway.html',
-            'app-cofoundermatch.html',
-            'app-validateai.html',
-            'app-shipfast.html',
-            'app-firstusers.html',
-            'app-pitchperfect.html',
-            'app-launchpad.html',
-            'app-scaleops.html',
-            'app-delightiq.html',
-            'app-brandforge.html',
-            'app-salesflow.html',
-            'app-insighthub.html',
-            'app-searchmaster.html',
-            'app-goglobal.html',
-            'app-legalshield.html',
-            'app-teamsync.html'
-        ];
-
-        // Update counter
-        const currentUrl = window.location.pathname.split('/').pop();
-        const currentIndex = appPages.indexOf(currentUrl);
-        if (currentIndex !== -1) {
-            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
-        }
-
-        function navigateApp(direction) {
-            const currentUrl = window.location.pathname.split('/').pop();
-            const currentIndex = appPages.indexOf(currentUrl);
-            
-            if (currentIndex === -1) return;
-            
-            let newIndex;
-            if (direction === 'next') {
-                newIndex = (currentIndex + 1) % appPages.length;
-            } else {
-                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
-            }
-            
-            window.location.href = appPages[newIndex];
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'ArrowLeft') {
-                navigateApp('prev');
-            } else if (event.altKey && event.key === 'ArrowRight') {
-                navigateApp('next');
-            }
-        });
-        
-        // Response Time Chart
-        const responseCtx = document.getElementById('responseChart').getContext('2d');
-        new Chart(responseCtx, {
+        // Initialize performance chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
                 datasets: [{
+                    label: 'CPU Usage',
+                    data: [45, 52, 68, 82, 75, 69, 58],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.1)`,
+                    tension: 0.4,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }, {
+                    label: 'Memory Usage',
+                    data: [38, 42, 58, 64, 61, 55, 49],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary-rgb')}, 0.1)`,
+                    tension: 0.4,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }, {
                     label: 'Response Time (ms)',
-                    data: [180, 195, 220, 340, 285, 245, 210],
-                    borderColor: '#3B82F6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    tension: 0.4
+                    data: [125, 132, 185, 210, 195, 178, 156],
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--accent-primary'),
+                    backgroundColor: `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-primary-rgb')}, 0.05)`,
+                    tension: 0.4,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
                 }]
             },
             options: {
@@ -513,59 +727,84 @@
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            usePointStyle: true,
+                            font: {
+                                size: 12
+                            }
+                        }
                     }
                 },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: false,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            },
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 11
+                            }
+                        }
                     }
                 }
             }
         });
         
-        // Traffic Distribution Chart
-        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
-        new Chart(trafficCtx, {
-            type: 'bar',
-            data: {
-                labels: ['API', 'Web', 'Mobile', 'Admin', 'Webhooks'],
-                datasets: [{
-                    label: 'Requests/min',
-                    data: [4500, 3200, 2800, 450, 250],
-                    backgroundColor: [
-                        '#3B82F6',
-                        '#10B981',
-                        '#8B5CF6',
-                        '#F59E0B',
-                        '#6B7280'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-        
-        function runOptimization() {
-            alert('AI optimization analysis would run here');
-        }
-        
-        // launchApp function is now handled by app-launch-panel.js
-        
-        // Go back to previous page
+        // Go back function
         function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // Fallback to apps page if no history
-                window.location.href = 'apps.html';
+            window.location.href = 'apps.html';
+        }
+
+        // Navigate between apps
+        function navigateApp(direction) {
+            const apps = [
+                'app-economaestro.html',
+                'app-runway.html',
+                'app-investorlens.html',
+                'app-cofoundermatch.html',
+                'app-validateai.html',
+                'app-shipfast.html',
+                'app-firstusers.html',
+                'app-pitchperfect.html',
+                'app-launchpad.html',
+                'app-scaleops.html',
+                'app-delightiq.html',
+                'app-brandforge.html',
+                'app-salesflow.html',
+                'app-insighthub.html',
+                'app-searchmaster.html',
+                'app-legalshield.html',
+                'app-teamsync.html',
+                'app-goglobal.html'
+            ];
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const currentIndex = apps.indexOf(currentPage);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = currentIndex === 0 ? apps.length - 1 : currentIndex - 1;
+                } else {
+                    newIndex = currentIndex === apps.length - 1 ? 0 : currentIndex + 1;
+                }
+                window.location.href = apps[newIndex];
             }
         }
     </script>

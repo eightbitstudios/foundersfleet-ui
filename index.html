@@ -8,35 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="boarding-pass-styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
         /* Keep minimal custom styles for Tailwind config */
-        .hidden { display: none !important; }
         
         /* Radar animation */
         @keyframes radar-sweep {
@@ -315,27 +293,28 @@
 </head>
 <body class="bg-black font-inter">
     <!-- Sticky Header -->
-    <header class="fixed top-0 left-0 right-0 h-[76px] bg-black z-50 border-b border-white/10">
-        <div class="h-full flex items-center justify-between">
+    <header class="fixed top-0 left-0 right-0 h-[60px] md:h-[76px] bg-black z-50 border-b border-white/10">
+        <div class="h-full flex items-center justify-between px-3 md:px-0">
             <!-- Logo -->
-            <div class="w-20 h-full flex items-center justify-center">
-                <a href="flightplan.html" class="flex items-center justify-center w-10 h-10 bg-white rounded-lg no-underline">
-                    <span class="text-black font-bold">FF</span>
+            <div class="md:w-20 h-full flex items-center md:justify-center">
+                <a href="flightplan.html" class="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 bg-white rounded-lg no-underline">
+                    <span class="text-black font-bold text-sm md:text-base">FF</span>
                 </a>
             </div>
             
             <!-- FoundersFleet text -->
-            <div class="flex-1 flex items-center">
-                <span class="text-white text-xl font-semibold">FoundersFleet</span>
+            <div class="flex-1 flex items-center md:pl-0 pl-2">
+                <span class="text-white text-base md:text-xl font-semibold">FoundersFleet</span>
             </div>
             
             <!-- Right side buttons -->
-            <div class="flex items-center gap-4 pr-5">
-                <span class="text-white/60 text-sm">Invite Only. Verification Required.</span>
-                <button onclick="openBoardingPass()" class="px-6 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-white/90 transition-all">
-                    Board the Fleet
+            <div class="flex items-center gap-2 md:gap-4 md:pr-5">
+                <span class="text-white/60 text-sm hidden md:inline">Invite Only. Verification Required.</span>
+                <button onclick="openBoardingPass()" class="px-3 md:px-6 py-1.5 md:py-2 bg-white text-black rounded-lg text-xs md:text-sm font-semibold hover:bg-white/90 transition-all">
+                    <span class="hidden md:inline">Board the Fleet</span>
+                    <span class="md:hidden">Board</span>
                 </button>
-                <button onclick="window.location.href='flightplan.html'" class="px-6 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-white/90 transition-all">
+                <button onclick="window.location.href='flightplan.html'" class="px-3 md:px-6 py-1.5 md:py-2 bg-white text-black rounded-lg text-xs md:text-sm font-semibold hover:bg-white/90 transition-all">
                     Enter
                 </button>
             </div>
@@ -343,23 +322,23 @@
     </header>
 
     <!-- Main Content -->
-    <div class="pt-32">
+    <div class="pt-16 md:pt-32">
         <div class="max-w-4xl mx-auto text-center px-4">
             <!-- Headline -->
-            <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+            <h2 class="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight">
                 Turn Solo Starts into Shared Momentum
             </h2>
 
             <!-- Subhead -->
-            <h3 class="text-2xl font-bold text-white/80 mb-8">Join the Ranks. Form a Squad. Take Flight.</h3>
+            <h3 class="text-lg md:text-2xl font-bold text-white/80 mb-4 md:mb-8">Join the Ranks. Form a Squad. Take Flight.</h3>
 
             <!-- Body -->
-            <p class="text-lg text-white/70 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p class="text-base md:text-lg text-white/70 mb-4 md:mb-8 max-w-3xl mx-auto leading-relaxed">
                 FoundersFleet is a private network where startup builders fly. Start free with one squad and one app. Upgrade if needed.
             </p>
             
             <!-- Launch Goal -->
-            <p class="text-sm font-bold text-white/90 uppercase tracking-wider mb-8">
+            <p class="text-xs md:text-sm font-bold text-white/90 uppercase tracking-wider mb-4 md:mb-8">
                 MISSION: HELP 100 FOUNDERS LAUNCH IN 2026.
             </p>
         </div>
@@ -373,13 +352,13 @@
                     <!-- Founder cards will repeat for seamless scrolling -->
                     <div class="flex gap-4">
                         <!-- Sarah Chen -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Sarah Chen</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Sarah Chen</h3>
                                     <p class="text-white/60 text-xs">Founder @ DataSync</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Building the future of real-time data collaboration for enterprises.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Building the future of real-time data collaboration for enterprises.</p>
                                 <div class="flex items-center gap-4 text-xs">
                                     <span class="text-white/50">B2B SaaS</span>
                                     <span class="text-white/30">•</span>
@@ -389,13 +368,13 @@
                         </div>
                         
                         <!-- Marcus Johnson -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Marcus Johnson</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Marcus Johnson</h3>
                                     <p class="text-white/60 text-xs">Founder @ FlowState</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Revolutionizing productivity with AI-powered workflow automation.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Revolutionizing productivity with AI-powered workflow automation.</p>
                                 <div class="flex items-center gap-4 text-xs">
                                     <span class="text-white/50">AI/ML</span>
                                     <span class="text-white/30">•</span>
@@ -405,13 +384,13 @@
                         </div>
                         
                         <!-- Elena Rodriguez -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Elena Rodriguez</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Elena Rodriguez</h3>
                                     <p class="text-white/60 text-xs">Founder @ GreenCart</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Sustainable e-commerce platform connecting conscious consumers.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Sustainable e-commerce platform connecting conscious consumers.</p>
                                 <div class="flex items-center gap-4 text-xs">
                                     <span class="text-white/50">E-commerce</span>
                                     <span class="text-white/30">•</span>
@@ -421,13 +400,13 @@
                         </div>
                         
                         <!-- Alex Kim -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Alex Kim</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Alex Kim</h3>
                                     <p class="text-white/60 text-xs">Founder @ HealthPal</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Making healthcare accessible through telemedicine innovation.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Making healthcare accessible through telemedicine innovation.</p>
                                 <div class="flex items-center gap-4 text-xs">
                                     <span class="text-white/50">HealthTech</span>
                                     <span class="text-white/30">•</span>
@@ -440,13 +419,13 @@
                     <!-- Duplicate for seamless loop -->
                     <div class="flex gap-4">
                         <!-- Sarah Chen -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Sarah Chen</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Sarah Chen</h3>
                                     <p class="text-white/60 text-xs">Founder @ DataSync</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Building the future of real-time data collaboration for enterprises.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Building the future of real-time data collaboration for enterprises.</p>
                                 <div class="flex items-center gap-4 text-xs">
                                     <span class="text-white/50">B2B SaaS</span>
                                     <span class="text-white/30">•</span>
@@ -456,13 +435,13 @@
                         </div>
                         
                         <!-- Marcus Johnson -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Marcus Johnson</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Marcus Johnson</h3>
                                     <p class="text-white/60 text-xs">Founder @ FlowState</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Revolutionizing productivity with AI-powered workflow automation.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Revolutionizing productivity with AI-powered workflow automation.</p>
                                 <div class="flex items-center gap-4 text-xs">
                                     <span class="text-white/50">AI/ML</span>
                                     <span class="text-white/30">•</span>
@@ -472,13 +451,13 @@
                         </div>
                         
                         <!-- Elena Rodriguez -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Elena Rodriguez</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Elena Rodriguez</h3>
                                     <p class="text-white/60 text-xs">Founder @ GreenCart</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Sustainable e-commerce platform connecting conscious consumers.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Sustainable e-commerce platform connecting conscious consumers.</p>
                                 <div class="flex items-center gap-4 text-xs">
                                     <span class="text-white/50">E-commerce</span>
                                     <span class="text-white/30">•</span>
@@ -488,13 +467,13 @@
                         </div>
                         
                         <!-- Alex Kim -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Alex Kim</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Alex Kim</h3>
                                     <p class="text-white/60 text-xs">Founder @ HealthPal</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Making healthcare accessible through telemedicine innovation.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Making healthcare accessible through telemedicine innovation.</p>
                                 <div class="flex items-center gap-4 text-xs">
                                     <span class="text-white/50">HealthTech</span>
                                     <span class="text-white/30">•</span>
@@ -514,13 +493,13 @@
                     <!-- Different squad cards for variety -->
                     <div class="flex gap-4">
                         <!-- Squad Delta -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Squad Delta</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Squad Delta</h3>
                                     <p class="text-white/60 text-xs">Mobile • Pre-Seed</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Mobile-first founders revolutionizing everyday experiences.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Mobile-first founders revolutionizing everyday experiences.</p>
                                 <div class="mb-2">
                                     <span class="text-white/50 text-xs">Mobile Apps • Pre-Seed Stage</span>
                                 </div>
@@ -532,13 +511,13 @@
                         </div>
                         
                         <!-- Squad Echo -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Squad Echo</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Squad Echo</h3>
                                     <p class="text-white/60 text-xs">HealthTech • Series A</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Digital health pioneers improving patient outcomes.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Digital health pioneers improving patient outcomes.</p>
                                 <div class="mb-2">
                                     <span class="text-white/50 text-xs">Digital Health • Series A</span>
                                 </div>
@@ -550,13 +529,13 @@
                         </div>
                         
                         <!-- Squad Foxtrot -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Squad Foxtrot</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Squad Foxtrot</h3>
                                     <p class="text-white/60 text-xs">EdTech • Growth</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Reimagining education for the next generation.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Reimagining education for the next generation.</p>
                                 <div class="mb-2">
                                     <span class="text-white/50 text-xs">Education Tech • Growth Stage</span>
                                 </div>
@@ -571,13 +550,13 @@
                     <!-- Duplicate for seamless loop -->
                     <div class="flex gap-4">
                         <!-- Squad Delta -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Squad Delta</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Squad Delta</h3>
                                     <p class="text-white/60 text-xs">Mobile • Pre-Seed</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Mobile-first founders revolutionizing everyday experiences.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Mobile-first founders revolutionizing everyday experiences.</p>
                                 <div class="mb-2">
                                     <span class="text-white/50 text-xs">Mobile Apps • Pre-Seed Stage</span>
                                 </div>
@@ -589,13 +568,13 @@
                         </div>
                         
                         <!-- Squad Echo -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Squad Echo</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Squad Echo</h3>
                                     <p class="text-white/60 text-xs">HealthTech • Series A</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Digital health pioneers improving patient outcomes.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Digital health pioneers improving patient outcomes.</p>
                                 <div class="mb-2">
                                     <span class="text-white/50 text-xs">Digital Health • Series A</span>
                                 </div>
@@ -607,13 +586,13 @@
                         </div>
                         
                         <!-- Squad Foxtrot -->
-                        <div class="ticker-card flex-shrink-0 w-72 cursor-pointer" onclick="openBoardingPass()">
+                        <div class="ticker-card flex-shrink-0 w-64 md:w-72 cursor-pointer" onclick="openBoardingPass()">
                             <div class="ticker-card-content">
                                 <div class="mb-2">
-                                    <h3 class="text-base font-bold text-white">Squad Foxtrot</h3>
+                                    <h3 class="text-sm md:text-base font-bold text-white">Squad Foxtrot</h3>
                                     <p class="text-white/60 text-xs">EdTech • Growth</p>
                                 </div>
-                                <p class="text-white/70 text-sm mb-2 leading-relaxed">Reimagining education for the next generation.</p>
+                                <p class="text-white/70 text-xs md:text-sm mb-2 leading-relaxed">Reimagining education for the next generation.</p>
                                 <div class="mb-2">
                                     <span class="text-white/50 text-xs">Education Tech • Growth Stage</span>
                                 </div>

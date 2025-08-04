@@ -4,86 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GoGlobal - International Expansion Platform | FoundersFleet</title>
+    <!-- 
+    APP CATEGORY: Business Operations
+    
+    To change this app to a different category, update the CSS variables at line 72-77:
+    - Financial & Analytics (Purple): Use --financial-* variables
+    - Team Building (Green): Use --team-* variables  
+    - Marketing & Growth (Green): Use --marketing-* variables
+    - Development & Technical (Orange): Use --dev-* variables
+    - Communication (Pink): Use --comm-* variables
+    - Business Operations (Blue): Use --ops-* variables
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
-        .country-card {
-            transition: all 0.3s ease;
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team Building Apps (Green) - CoFounderMatch, TeamSync */
+            --team-primary: #10B981;
+            --team-primary-rgb: 16, 185, 129;
+            --team-primary-hover: #059669;
+            --team-secondary: #14B8A6;
+            --team-light-bg: #D1FAE5;
+            --team-light-border: #A7F3D0;
+            
+            /* Marketing & Growth Apps (Green) - SearchMaster, BrandForge */
+            --marketing-primary: #10B981;
+            --marketing-primary-rgb: 16, 185, 129;
+            --marketing-primary-hover: #059669;
+            --marketing-secondary: #14B8A6;
+            --marketing-light-bg: #D1FAE5;
+            --marketing-light-border: #A7F3D0;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Business Operations Apps (Blue) - GoGlobal, LegalShield */
+            --ops-primary: #3B82F6;
+            --ops-primary-rgb: 59, 130, 246;
+            --ops-primary-hover: #2563EB;
+            --ops-secondary: #60A5FA;
+            --ops-light-bg: #DBEAFE;
+            --ops-light-border: #BFDBFE;
+            
+            /* Current app accent colors (Business Operations category for GoGlobal) */
+            --accent-primary: var(--ops-primary);
+            --accent-primary-rgb: var(--ops-primary-rgb);
+            --accent-primary-hover: var(--ops-primary-hover);
+            --accent-secondary: var(--ops-secondary);
+            --accent-light-bg: var(--ops-light-bg);
+            --accent-light-border: var(--ops-light-border);
         }
-        .country-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+        
+        .metric-card {
+            transition: all 0.2s ease;
         }
-        .world-map {
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23F3F4F6" width="1200" height="600"/><text x="600" y="300" text-anchor="middle" fill="%23999" font-family="Arial" font-size="24">World Map Placeholder</text></svg>');
-            background-size: cover;
-            background-position: center;
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .market-score {
-            background: conic-gradient(#10B981 0deg, #10B981 calc(var(--score) * 3.6deg), #E5E5E5 calc(var(--score) * 3.6deg));
+        .trend-up {
+            color: var(--accent-primary);
         }
-        .flag-icon {
-            font-size: 2rem;
+        .trend-down {
+            color: #EF4444;
         }
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+        .trend-neutral {
+            color: #6B7280;
         }
-        .opportunity-badge {
-            animation: bounce 2s infinite;
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
         }
-        .timezone-indicator {
-            background: linear-gradient(90deg, #1E293B 0%, #3B82F6 50%, #F59E0B 100%);
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
         }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
     </style>
 </head>
-<body class="bg-background min-h-screen font-inter flex">
+<body class="bg-gray-50 min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 bg-background overflow-hidden">
+    <div class="flex-1 bg-gray-50 overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
@@ -95,376 +141,441 @@
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">GoGlobal</h1>
-                                <p class="text-sm text-text-secondary">Your guide to international expansion</p>
+                                <p class="text-sm text-text-secondary hidden md:block">International expansion intelligence</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">16 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Global Expansion Overview -->
-                <div class="mb-8 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-8 border border-emerald-100">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Your Global Footprint</h2>
-                            <p class="text-text-secondary mb-4">Expand strategically with AI-powered market insights</p>
-                            
-                            <!-- Current Presence -->
-                            <div class="flex items-center gap-8">
-                                <div>
-                                    <div class="text-3xl font-bold text-text-primary">7</div>
-                                    <div class="text-sm text-text-secondary">Active Markets</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-success">$2.4M</div>
-                                    <div class="text-sm text-text-secondary">International Revenue</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-info">23</div>
-                                    <div class="text-sm text-text-secondary">Languages Supported</div>
-                                </div>
-                                <div>
-                                    <div class="text-3xl font-bold text-warning">142</div>
-                                    <div class="text-sm text-text-secondary">Currencies</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-white rounded-lg p-4 shadow-sm text-center">
-                            <div class="opportunity-badge">
-                                <i class="fas fa-lightbulb text-4xl text-warning mb-2"></i>
-                            </div>
-                            <div class="text-sm text-text-muted">New Opportunity</div>
-                            <div class="text-lg font-bold text-text-primary">Japan</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Market Opportunities -->
-                <div class="mb-8">
-                    <h3 class="text-xl font-semibold text-text-primary mb-4">Top Market Opportunities</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Japan Market -->
-                        <div class="country-card bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-start justify-between mb-4">
-                                <div>
-                                    <div class="flag-icon mb-2">🇯🇵</div>
-                                    <h4 class="text-lg font-semibold text-text-primary">Japan</h4>
-                                    <p class="text-sm text-text-secondary">High tech adoption</p>
-                                </div>
-                                <div class="relative w-16 h-16">
-                                    <div class="market-score w-16 h-16 rounded-full" style="--score: 92"></div>
-                                    <div class="absolute inset-0 flex items-center justify-center">
-                                        <span class="text-sm font-bold">92</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Market Size</span>
-                                    <span class="font-medium">$4.2T GDP</span>
-                                </div>
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Competition</span>
-                                    <span class="font-medium text-success">Low</span>
-                                </div>
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Entry Difficulty</span>
-                                    <span class="font-medium text-warning">Medium</span>
-                                </div>
-                            </div>
-                            <button class="w-full px-4 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
-                                Explore Market →
-                            </button>
-                        </div>
-                        
-                        <!-- Germany Market -->
-                        <div class="country-card bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-start justify-between mb-4">
-                                <div>
-                                    <div class="flag-icon mb-2">🇩🇪</div>
-                                    <h4 class="text-lg font-semibold text-text-primary">Germany</h4>
-                                    <p class="text-sm text-text-secondary">EU's largest economy</p>
-                                </div>
-                                <div class="relative w-16 h-16">
-                                    <div class="market-score w-16 h-16 rounded-full" style="--score: 88"></div>
-                                    <div class="absolute inset-0 flex items-center justify-center">
-                                        <span class="text-sm font-bold">88</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Market Size</span>
-                                    <span class="font-medium">$3.8T GDP</span>
-                                </div>
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Competition</span>
-                                    <span class="font-medium text-warning">Medium</span>
-                                </div>
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Entry Difficulty</span>
-                                    <span class="font-medium text-success">Low</span>
-                                </div>
-                            </div>
-                            <button class="w-full px-4 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
-                                Explore Market →
-                            </button>
-                        </div>
-                        
-                        <!-- Brazil Market -->
-                        <div class="country-card bg-card-bg border border-border rounded-lg p-6">
-                            <div class="flex items-start justify-between mb-4">
-                                <div>
-                                    <div class="flag-icon mb-2">🇧🇷</div>
-                                    <h4 class="text-lg font-semibold text-text-primary">Brazil</h4>
-                                    <p class="text-sm text-text-secondary">Latin America leader</p>
-                                </div>
-                                <div class="relative w-16 h-16">
-                                    <div class="market-score w-16 h-16 rounded-full" style="--score: 85"></div>
-                                    <div class="absolute inset-0 flex items-center justify-center">
-                                        <span class="text-sm font-bold">85</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="space-y-2 mb-4">
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Market Size</span>
-                                    <span class="font-medium">$1.8T GDP</span>
-                                </div>
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Competition</span>
-                                    <span class="font-medium text-success">Low</span>
-                                </div>
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-text-secondary">Entry Difficulty</span>
-                                    <span class="font-medium text-danger">High</span>
-                                </div>
-                            </div>
-                            <button class="w-full px-4 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
-                                Explore Market →
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Expansion Toolkit & Insights -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-                    <!-- Market Entry Checklist -->
-                    <div class="lg:col-span-2">
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-xl font-semibold text-text-primary mb-4">Market Entry Checklist</h3>
-                            
-                            <div class="grid grid-cols-2 gap-4">
-                                <!-- Legal & Compliance -->
-                                <div class="border border-border rounded-lg p-4">
-                                    <h4 class="font-medium text-text-primary mb-3 flex items-center gap-2">
-                                        <i class="fas fa-gavel text-primary"></i>
-                                        Legal & Compliance
-                                    </h4>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Business entity registration</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Tax registration & compliance</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Data privacy laws (GDPR, etc)</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Employment laws</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <!-- Product Localization -->
-                                <div class="border border-border rounded-lg p-4">
-                                    <h4 class="font-medium text-text-primary mb-3 flex items-center gap-2">
-                                        <i class="fas fa-language text-info"></i>
-                                        Product Localization
-                                    </h4>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Language translation</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Currency support</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Local payment methods</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Cultural adaptation</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <!-- Operations Setup -->
-                                <div class="border border-border rounded-lg p-4">
-                                    <h4 class="font-medium text-text-primary mb-3 flex items-center gap-2">
-                                        <i class="fas fa-cogs text-warning"></i>
-                                        Operations Setup
-                                    </h4>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Local banking setup</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Customer support hours</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Shipping & logistics</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Local partnerships</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <!-- Marketing Strategy -->
-                                <div class="border border-border rounded-lg p-4">
-                                    <h4 class="font-medium text-text-primary mb-3 flex items-center gap-2">
-                                        <i class="fas fa-bullhorn text-success"></i>
-                                        Marketing Strategy
-                                    </h4>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Market research</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Local PR strategy</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Social media presence</span>
-                                        </label>
-                                        <label class="flex items-center gap-2 text-sm">
-                                            <input type="checkbox" class="rounded">
-                                            <span>Launch campaign</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Global Insights -->
-                    <div class="space-y-6">
-                        <!-- Currency Exchange -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Currency Insights</h3>
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-lg">💱</span>
-                                        <span class="text-sm text-text-secondary">USD/EUR</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="font-medium">0.92</div>
-                                        <div class="text-xs text-success">+0.8%</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-lg">💱</span>
-                                        <span class="text-sm text-text-secondary">USD/JPY</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="font-medium">148.52</div>
-                                        <div class="text-xs text-danger">-0.3%</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <span class="text-lg">💱</span>
-                                        <span class="text-sm text-text-secondary">USD/BRL</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <div class="font-medium">4.95</div>
-                                        <div class="text-xs text-success">+1.2%</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-4 p-3 bg-yellow-50 rounded-lg">
-                                <p class="text-xs text-yellow-700">
-                                    <i class="fas fa-info-circle mr-1"></i>
-                                    Consider hedging for currency volatility
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Japan is Your Next Big Market
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    You're ready for international expansion. With 7 active markets and strong product-market fit, Japan's high-tech market offers your best growth opportunity.
                                 </p>
                             </div>
-                        </div>
-
-                        <!-- Time Zones -->
-                        <div class="bg-card-bg border border-border rounded-lg p-6">
-                            <h3 class="text-lg font-semibold text-text-primary mb-4">Global Team Coverage</h3>
-                            <div class="mb-4">
-                                <div class="timezone-indicator h-3 rounded-full"></div>
-                            </div>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Americas</span>
-                                    <span class="font-medium">6AM - 6PM PST</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Europe</span>
-                                    <span class="font-medium">9AM - 6PM CET</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-text-secondary">Asia-Pacific</span>
-                                    <span class="font-medium">9AM - 6PM JST</span>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Global Markets</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">7</span>
+                                        <span class="text-lg text-text-secondary">active</span>
+                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">$2.4M international revenue</p>
                                 </div>
                             </div>
-                            <button class="w-full mt-4 px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
-                                Schedule Global Meeting
-                            </button>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Regional Performance -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Revenue by Region -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-xl font-semibold text-text-primary mb-4">Revenue by Region</h3>
-                        <canvas id="regionChart" height="250"></canvas>
-                    </div>
-                    
-                    <!-- Growth Opportunities -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-xl font-semibold text-text-primary mb-4">Market Growth Potential</h3>
-                        <canvas id="growthChart" height="250"></canvas>
                     </div>
                 </div>
             </div>
+
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">International Performance</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Revenue Growth -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Int'l Revenue</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$2.4M</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-globe-americas accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Growing 42% YoY — Europe leading at $1.1M.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> 42% growth
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Market Readiness -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Market Score</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">92/100</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-chart-line accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Japan market fit is excellent — tech adoption high.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-check-circle"></i> Ready to enter
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Currency Risk -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">FX Impact</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">+$84K</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-dollar-sign accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Currency gains this quarter — consider hedging strategy.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> Favorable rates
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Compliance Status -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Compliance</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">100%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-shield-alt accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">All markets compliant — GDPR, SOC2, ISO certified.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-neutral">
+                                    <i class="fas fa-check"></i> Fully compliant
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Market Analysis -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Market Opportunities -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Market Expansion Opportunities</h3>
+                                <div class="space-y-4">
+                                    <!-- Japan - Top Opportunity -->
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white text-xl">🇯🇵</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Japan</h4>
+                                                <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded-full font-medium">92/100 Score</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">$4.2T GDP • Tech-savvy market • Low competition</p>
+                                            
+                                            <!-- Market Analysis -->
+                                            <div class="bg-gray-50 rounded-lg p-3 border border-gray-200">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Why Japan Now:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-lightbulb accent-text mt-0.5"></i>
+                                                        <span>Your product category grew 38% in Japan last year</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-lightbulb accent-text mt-0.5"></i>
+                                                        <span>Direct competitor just raised $50M for Japan expansion</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-users mr-1"></i>126M population</span>
+                                                <span><i class="fas fa-language mr-1"></i>Japanese localization needed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Germany -->
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-gray-700 to-yellow-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white text-xl">🇩🇪</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Germany</h4>
+                                                <span class="px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full font-medium">88/100 Score</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-2">$3.8T GDP • EU gateway • GDPR compliant</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-check-circle text-green-500 mr-1"></i>Already compliant</span>
+                                                <span><i class="fas fa-arrow-up text-blue-500 mr-1"></i>Similar to UK market</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Brazil -->
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-green-600 to-yellow-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white text-xl">🇧🇷</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Brazil</h4>
+                                                <span class="px-2 py-1 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">85/100 Score</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-2">$1.8T GDP • LATAM leader • Complex regulations</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-exclamation-triangle text-yellow-500 mr-1"></i>Tax complexity</span>
+                                                <span><i class="fas fa-globe-americas mr-1"></i>215M population</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- India - New -->
+                                    <div class="flex items-start gap-4 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-green-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white text-xl">🇮🇳</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">India</h4>
+                                                <span class="px-2 py-1 bg-purple-100 text-purple-600 text-xs rounded-full font-medium">Rising Fast</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">$3.7T GDP • Fastest growing major economy</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-rocket text-purple-500 mr-1"></i>8.2% GDP growth</span>
+                                                <button class="accent-text hover:opacity-80 font-medium">Analyze market →</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Market Entry Timeline -->
+                            <div class="bg-white rounded-lg border border-gray-200 p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Japan Market Entry Timeline</h3>
+                                    <span class="text-xs accent-text font-medium">6-month plan</span>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <!-- Month 1-2 -->
+                                    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-search accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Research & Legal Setup</h4>
+                                            </div>
+                                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Months 1-2</span>
+                                        </div>
+                                        <ul class="space-y-1 text-sm text-text-secondary ml-10">
+                                            <li>• Market research & competitor analysis</li>
+                                            <li>• Legal entity formation (KK or GK)</li>
+                                            <li>• Banking & tax registration</li>
+                                            <li>• Hire local legal advisor</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Month 3-4 -->
+                                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-green-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-language accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Product Localization</h4>
+                                            </div>
+                                            <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full">Months 3-4</span>
+                                        </div>
+                                        <ul class="space-y-1 text-sm text-text-secondary ml-10">
+                                            <li>• Japanese language translation</li>
+                                            <li>• Payment method integration (Konbini, etc.)</li>
+                                            <li>• Cultural UX adaptation</li>
+                                            <li>• Local customer support setup</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Month 5-6 -->
+                                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-purple-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-rocket accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Launch & Scale</h4>
+                                            </div>
+                                            <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">Months 5-6</span>
+                                        </div>
+                                        <ul class="space-y-1 text-sm text-text-secondary ml-10">
+                                            <li>• Soft launch with beta users</li>
+                                            <li>• PR campaign & partnerships</li>
+                                            <li>• Performance marketing</li>
+                                            <li>• Scale based on metrics</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <button class="w-full mt-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm font-medium">
+                                    Download Full Japan Playbook →
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Insights & Actions -->
+                        <div class="space-y-6">
+                            <!-- Market Readiness Score -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Japan Readiness</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-green-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-check accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Product-Market Fit</span>
+                                            </div>
+                                            <span class="text-sm font-bold text-green-600">95%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-green-500 h-2 rounded-full" style="width: 95%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Similar products thriving</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-yellow-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-language accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Localization Ready</span>
+                                            </div>
+                                            <span class="text-sm font-bold text-yellow-600">60%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-yellow-500 h-2 rounded-full" style="width: 60%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Translation in progress</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-green-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-building accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Legal Structure</span>
+                                            </div>
+                                            <i class="fas fa-check-circle text-green-500"></i>
+                                        </div>
+                                        <p class="text-xs text-text-muted">KK entity registered</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Currency Tracker -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">FX Rates</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">USD/JPY</span>
+                                            <span class="text-sm font-medium accent-text">¥148.52</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-xs text-text-muted">
+                                            <span>Today: -0.3%</span>
+                                            <span>30D: +2.1%</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">USD/EUR</span>
+                                            <span class="text-sm font-medium accent-text">€0.92</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-xs text-text-muted">
+                                            <span>Today: +0.8%</span>
+                                            <span>30D: -1.2%</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Impact on Revenue</span>
+                                            <span class="text-sm font-medium text-green-600">+$84K</span>
+                                        </div>
+                                        <p class="text-xs text-text-muted">This quarter (unhedged)</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Expansion Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Japan Market Report</span>
+                                            <i class="fas fa-download text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Detailed 50-page analysis</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Find Local Partners</span>
+                                            <i class="fas fa-handshake text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Vetted partner network</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Compliance Checklist</span>
+                                            <i class="fas fa-clipboard-check text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Japan-specific requirements</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Schedule Advisor Call</span>
+                                            <i class="fas fa-phone text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Talk to Japan expert</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -473,139 +584,45 @@
         // Initialize navigation
         initializeNavigation('apps');
 
-        // App navigation
-        const appPages = [
-            'app-economaestro.html',
-            'app-runway.html',
-            'app-cofoundermatch.html',
-            'app-validateai.html',
-            'app-shipfast.html',
-            'app-firstusers.html',
-            'app-pitchperfect.html',
-            'app-launchpad.html',
-            'app-scaleops.html',
-            'app-delightiq.html',
-            'app-brandforge.html',
-            'app-salesflow.html',
-            'app-insighthub.html',
-            'app-searchmaster.html',
-            'app-goglobal.html',
-            'app-legalshield.html',
-            'app-teamsync.html'
-        ];
-
-        // Update counter
-        const currentUrl = window.location.pathname.split('/').pop();
-        const currentIndex = appPages.indexOf(currentUrl);
-        if (currentIndex !== -1) {
-            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
-        }
-
-        function navigateApp(direction) {
-            const currentUrl = window.location.pathname.split('/').pop();
-            const currentIndex = appPages.indexOf(currentUrl);
-            
-            if (currentIndex === -1) return;
-            
-            let newIndex;
-            if (direction === 'next') {
-                newIndex = (currentIndex + 1) % appPages.length;
-            } else {
-                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
-            }
-            
-            window.location.href = appPages[newIndex];
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'ArrowLeft') {
-                navigateApp('prev');
-            } else if (event.altKey && event.key === 'ArrowRight') {
-                navigateApp('next');
-            }
-        });
-        
-        // Revenue by Region Chart
-        const regionCtx = document.getElementById('regionChart').getContext('2d');
-        new Chart(regionCtx, {
-            type: 'pie',
-            data: {
-                labels: ['North America', 'Europe', 'Asia-Pacific', 'Latin America', 'Middle East'],
-                datasets: [{
-                    data: [45, 25, 20, 7, 3],
-                    backgroundColor: [
-                        '#3B82F6',
-                        '#10B981',
-                        '#F59E0B',
-                        '#8B5CF6',
-                        '#EF4444'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            font: {
-                                size: 12
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        
-        // Growth Potential Chart
-        const growthCtx = document.getElementById('growthChart').getContext('2d');
-        new Chart(growthCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Japan', 'Germany', 'Brazil', 'India', 'Australia'],
-                datasets: [{
-                    label: 'Growth Potential (%)',
-                    data: [85, 78, 82, 92, 68],
-                    backgroundColor: [
-                        'rgba(16, 185, 129, 0.8)',
-                        'rgba(59, 130, 246, 0.8)',
-                        'rgba(245, 158, 11, 0.8)',
-                        'rgba(139, 92, 246, 0.8)',
-                        'rgba(236, 72, 153, 0.8)'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                }
-            }
-        });
-        
-        // launchApp function is now handled by app-launch-panel.js
-        
-        // Go back to previous page
+        // Go back function
         function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // Fallback to apps page if no history
-                window.location.href = 'apps.html';
+            window.location.href = 'apps.html';
+        }
+
+        // Navigate between apps
+        function navigateApp(direction) {
+            const apps = [
+                'app-economaestro.html',
+                'app-runway.html',
+                'app-investorlens.html',
+                'app-cofoundermatch.html',
+                'app-validateai.html',
+                'app-shipfast.html',
+                'app-firstusers.html',
+                'app-pitchperfect.html',
+                'app-launchpad.html',
+                'app-scaleops.html',
+                'app-delightiq.html',
+                'app-brandforge.html',
+                'app-salesflow.html',
+                'app-insighthub.html',
+                'app-searchmaster.html',
+                'app-legalshield.html',
+                'app-teamsync.html',
+                'app-goglobal.html'
+            ];
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const currentIndex = apps.indexOf(currentPage);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = currentIndex === 0 ? apps.length - 1 : currentIndex - 1;
+                } else {
+                    newIndex = currentIndex === apps.length - 1 ? 0 : currentIndex + 1;
+                }
+                window.location.href = apps[newIndex];
             }
         }
     </script>

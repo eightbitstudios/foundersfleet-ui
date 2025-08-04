@@ -8,37 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="boarding-pass-styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="notifications-component.js"></script>
     <script src="search-component.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
         /* Keep minimal custom styles for Tailwind config */
@@ -84,15 +60,15 @@
     <div class="flex-1 bg-background overflow-hidden">
         <main class="h-full overflow-auto">
             <!-- Page Content -->
-            <div class="max-w-[1200px] mx-auto px-8 py-8">
+            <div class="max-w-[1200px] mx-auto px-4 md:px-8 py-4 md:py-8">
                 <!-- Page Header -->
-                <div class="mb-8 flex items-start justify-between">
+                <div class="mb-4 md:mb-8 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
-                        <h1 class="text-3xl font-bold text-text-primary mb-2">Your Flight Plan</h1>
-                        <p class="text-text-secondary">Welcome back, Don. You're making great progress on your founder journey</p>
+                        <h1 class="text-2xl md:text-3xl font-bold text-text-primary mb-1 md:mb-2">Your Flight Plan</h1>
+                        <p class="text-sm md:text-base text-text-secondary">Welcome back, Don. You're making great progress on your founder journey</p>
                     </div>
                     <div class="relative">
-                        <button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all" onclick="toggleActionMenu()">
+                        <button class="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover transition-all w-full md:w-auto" onclick="toggleActionMenu()">
                             <span>Actions</span>
                             <i class="fas fa-chevron-down text-xs"></i>
                         </button>
@@ -112,29 +88,29 @@
                 </div>
 
                 <!-- Onboarding Welcome Module -->
-                <div class="mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-8">
+                <div class="mb-4 md:mb-8 bg-gradient-to-r from-primary to-gray-800 text-white rounded-lg p-4 md:p-8">
                     <div>
                         <div class="max-w-2xl">
-                            <h2 class="text-2xl font-bold mb-3">Welcome to FoundersFleet! 🎉</h2>
-                            <p class="text-lg mb-4 text-white/90">
+                            <h2 class="text-xl md:text-2xl font-bold mb-3">Welcome to FoundersFleet! 🎉</h2>
+                            <p class="text-base md:text-lg mb-4 text-white/90">
                                 Let's set up your personalized Flight Plan and get you matched with other founders at your stage.
                             </p>
-                            <div class="flex items-center gap-6 mb-6">
+                            <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 mb-4 md:mb-6">
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-route text-white/80"></i>
-                                    <span class="text-sm text-white/80">Pick Objectives</span>
+                                    <span class="text-xs md:text-sm text-white/80">Pick Objectives</span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-check-circle text-white/80"></i>
-                                    <span class="text-sm text-white/80">Get matched with a squad</span>
+                                    <span class="text-xs md:text-sm text-white/80">Get matched with a squad</span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <i class="fas fa-clock text-white/80"></i>
-                                    <span class="text-sm text-white/80">Takes less than 5 minutes</span>
+                                    <span class="text-xs md:text-sm text-white/80">Takes less than 5 minutes</span>
                                 </div>
                             </div>
                             <div class="flex items-center gap-4">
-                                <button onclick="window.location.href='onboarding-profile.html'" class="px-6 py-3 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all font-medium">
+                                <button onclick="window.location.href='onboarding-profile.html'" class="px-4 md:px-6 py-2 md:py-3 bg-white text-primary rounded-lg hover:bg-gray-100 transition-all font-medium text-sm md:text-base">
                                     Start Setup
                                     <i class="fas fa-arrow-right ml-2"></i>
                                 </button>
@@ -144,7 +120,7 @@
                 </div>
 
                 <!-- Search Bar -->
-                <div class="mb-6">
+                <div class="mb-4 md:mb-6">
                     <div class="relative">
                         <input type="text" id="objectives-search" placeholder="Search objectives by name or description..." class="w-full px-4 py-3 pl-12 bg-white border border-border rounded-lg focus:outline-none focus:border-primary transition-all" onkeypress="handleSearch(event)">
                         <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -152,46 +128,46 @@
                 </div>
 
                 <!-- Flight Plan Container -->
-                <div class="mb-8 bg-card-bg border border-border rounded-lg p-8">
-                    <div class="mb-8">
-                        <h2 class="text-2xl font-bold text-text-primary mb-2">Your Top Objectives</h2>
-                        <p class="text-sm text-text-secondary mt-2">Choose what objectives to focus on right now.</p>
+                <div class="mb-4 md:mb-8 bg-card-bg border border-border rounded-lg p-4 md:p-8">
+                    <div class="mb-4 md:mb-8">
+                        <h2 class="text-xl md:text-2xl font-bold text-text-primary mb-2">Your Top Objectives</h2>
+                        <p class="text-xs md:text-sm text-text-secondary mt-2">Choose what objectives to focus on right now.</p>
                     </div>
                     
                     <!-- Selected Objectives in Priority Order -->
                     <div class="relative" id="selected-objectives-container">
                             
                             <!-- Slot 1: Idea Validation Objective -->
-                            <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer mb-6 relative" data-objective="idea-validation" onclick="window.location.href='objective-detail.html?objective=idea-validation'">
+                            <div class="objective-priority-card bg-card-bg border border-border rounded-lg p-4 md:p-6 hover:shadow-md transition-all cursor-pointer mb-4 md:mb-6 relative" data-objective="idea-validation" onclick="window.location.href='objective-detail.html?objective=idea-validation'">
                                 <!-- Remove button and grabber in upper right -->
-                                <div class="absolute top-4 right-4 flex items-center gap-2">
-                                    <button class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('idea-validation')">
+                                <div class="absolute top-3 md:top-4 right-3 md:right-4 flex items-center gap-2">
+                                    <button class="px-2 md:px-3 py-1 bg-gray-200 text-gray-700 text-xs md:text-sm rounded hover:bg-gray-300 transition-all" onclick="event.stopPropagation(); removeObjective('idea-validation')">
                                         Remove
                                     </button>
-                                    <i class="fas fa-grip-vertical text-gray-300 cursor-move"></i>
+                                    <i class="fas fa-grip-vertical text-gray-300 cursor-move hidden md:block"></i>
                                 </div>
                                 <div class="flex">
                                         <!-- Left Section - Main Content -->
                                         <div class="flex-1">
                                             <!-- Icon and Title on same line -->
-                                            <div class="flex items-center gap-3 mb-3">
-                                                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
-                                                    <i class="fas fa-lightbulb text-sm text-white"></i>
+                                            <div class="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                                                <div class="w-6 h-6 md:w-8 md:h-8 bg-black rounded-lg flex items-center justify-center flex-shrink-0">
+                                                    <i class="fas fa-lightbulb text-xs md:text-sm text-white"></i>
                                                 </div>
-                                                <h3 class="text-2xl font-bold text-text-primary">Idea Validation</h3>
+                                                <h3 class="text-lg md:text-2xl font-bold text-text-primary">Idea Validation</h3>
                                             </div>
-                                            <p class="text-sm text-text-secondary mb-3">Research, validate, and refine your concept to ensure you're solving a real problem that people will pay for.</p>
-                                            <p class="text-sm text-text-primary font-medium">2/6 Missions Complete</p>
+                                            <p class="text-xs md:text-sm text-text-secondary mb-2 md:mb-3">Research, validate, and refine your concept to ensure you're solving a real problem that people will pay for.</p>
+                                            <p class="text-xs md:text-sm text-text-primary font-medium">2/6 Missions Complete</p>
                                         </div>
                                     </div>
                                     <!-- Current Mission Indicator -->
-                                    <div class="mt-4 pt-4 border-t border-border">
-                                        <div class="flex items-center justify-between">
+                                    <div class="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-border">
+                                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                                             <div class="flex items-center gap-2">
                                                 <div class="w-2 h-2 bg-warning rounded-full animate-pulse"></div>
-                                                <span class="text-sm font-medium text-text-primary">Current: Customer Discovery Sprint</span>
+                                                <span class="text-xs md:text-sm font-medium text-text-primary">Current: Customer Discovery Sprint</span>
                                             </div>
-                                            <i class="fas fa-arrow-right text-gray-400 text-sm"></i>
+                                            <i class="fas fa-arrow-right text-gray-400 text-xs md:text-sm"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -269,13 +245,13 @@
                 </div>
 
                 <!-- More Objectives Section -->
-                <div class="mb-8">
+                <div class="mb-4 md:mb-8">
                     <div class="mb-4">
-                        <h2 class="text-xl font-semibold text-text-primary mb-2">More Objectives</h2>
-                        <p class="text-text-secondary">Add more areas to your flight plan</p>
+                        <h2 class="text-lg md:text-xl font-semibold text-text-primary mb-1 md:mb-2">More Objectives</h2>
+                        <p class="text-xs md:text-base text-text-secondary">Add more areas to your flight plan</p>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                         <!-- Operations & Legal -->
                         <div class="bg-card-bg border border-border rounded-lg p-6 hover:shadow-md transition-all cursor-pointer relative" onclick="window.location.href='objective-detail.html?objective=operations-legal'">
                             <!-- Add button in upper right -->

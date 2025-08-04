@@ -4,367 +4,545 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CoFounderMatch - Find Your Perfect Co-founder | FoundersFleet</title>
+    <!-- 
+    APP CATEGORY: Team Building
+    
+    To change this app to a different category, update the CSS variables at line 63-68:
+    - Financial & Analytics (Purple): Use --financial-* variables
+    - Team Building (Green): Use --team-* variables  
+    - Marketing & Growth (Green): Use --marketing-* variables
+    - Development & Technical (Orange): Use --dev-* variables
+    - Communication (Pink): Use --comm-* variables
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
-        .founder-card {
-            transition: all 0.3s ease;
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team Building Apps (Green) - CoFounderMatch, TeamSync */
+            --team-primary: #10B981;
+            --team-primary-rgb: 16, 185, 129;
+            --team-primary-hover: #059669;
+            --team-secondary: #14B8A6;
+            --team-light-bg: #D1FAE5;
+            --team-light-border: #A7F3D0;
+            
+            /* Marketing & Growth Apps (Green) - ValidateAI, LaunchPad */
+            --marketing-primary: #10B981;
+            --marketing-primary-rgb: 16, 185, 129;
+            --marketing-primary-hover: #059669;
+            --marketing-secondary: #14B8A6;
+            --marketing-light-bg: #D1FAE5;
+            --marketing-light-border: #A7F3D0;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Current app accent colors (Team Building category for CoFounderMatch) */
+            --accent-primary: var(--team-primary);
+            --accent-primary-rgb: var(--team-primary-rgb);
+            --accent-primary-hover: var(--team-primary-hover);
+            --accent-secondary: var(--team-secondary);
+            --accent-light-bg: var(--team-light-bg);
+            --accent-light-border: var(--team-light-border);
         }
-        .founder-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-        }
-        .match-score {
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-        }
-        .skill-tag {
+        
+        .metric-card {
             transition: all 0.2s ease;
         }
-        .skill-tag:hover {
-            transform: scale(1.05);
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .compatibility-ring {
-            stroke-dasharray: 314;
-            stroke-dashoffset: 314;
-            animation: fillRing 1.5s ease-out forwards;
+        .trend-up {
+            color: var(--accent-primary);
         }
-        @keyframes fillRing {
-            to {
-                stroke-dashoffset: 94; /* 70% filled */
-            }
+        .trend-down {
+            color: var(--accent-secondary);
         }
+        .trend-neutral {
+            color: #6B7280;
+        }
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
+        }
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
+        }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
     </style>
 </head>
-<body class="bg-background min-h-screen font-inter flex">
+<body class="bg-gray-50 min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 bg-background overflow-hidden">
+    <div class="flex-1 bg-gray-50 overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
                             <i class="fas fa-arrow-left text-text-secondary"></i>
                         </button>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-user-friends text-white"></i>
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">CoFounderMatch</h1>
-                                <p class="text-sm text-text-secondary">AI-powered co-founder matching</p>
+                                <p class="text-sm text-text-secondary hidden md:block">Find your perfect co-founder with AI matching</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">4 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Your Match Stats -->
-                <div class="mb-8 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl p-8 border border-blue-100">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Your Co-founder Matches</h2>
-                            <p class="text-text-secondary">Based on your skills, interests, and working style</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-4xl font-bold text-text-primary mb-1">12</div>
-                            <div class="text-sm text-text-secondary">High-quality matches</div>
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Find Your Perfect Co-founder
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    AI-powered matching connects you with co-founders who complement your skills, share your vision, and are ready to commit to building something great together.
+                                </p>
+                            </div>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Quality Matches Available</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">127</span>
+                                        <span class="text-lg accent-text flex items-center">
+                                            <i class="fas fa-arrow-up mr-1"></i>+12
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">Active this week</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Quick Filters -->
-                <div class="flex gap-2 mb-6 flex-wrap">
-                    <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm">All Matches</button>
-                    <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">Technical Co-founder</button>
-                    <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">Business Co-founder</button>
-                    <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">Design Co-founder</button>
-                    <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">Same Timezone</button>
-                    <button class="px-4 py-2 bg-white border border-border rounded-lg text-sm hover:border-primary">Ready to Commit</button>
-                </div>
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Your Co-founder Search Analytics</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Profile Completion -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Profile Match</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">92%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-user-check accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Complete your profile to increase match quality and attract better co-founders.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +8% this week
+                                </span>
+                            </div>
+                        </div>
 
-                <!-- Matches Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                    <!-- Match Card 1 -->
-                    <div class="founder-card bg-card-bg border border-border rounded-lg overflow-hidden">
-                        <div class="p-6">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                                        <span class="text-white font-semibold">AK</span>
+                        <!-- Response Rate -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Response Rate</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">67%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-reply accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">High response rate indicates strong interest — personalize your messages more.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +12%
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Active Conversations -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Active Chats</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">8</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-comments accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Great momentum — schedule video calls with your top 3 conversations this week.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +3 new
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Success Rate -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Match Success</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">34%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-handshake accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Above average success rate — focus on quality over quantity in your outreach.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +6%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Top Matches -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Top Potential Matches -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Top Potential Co-founders</h3>
+                                
+                                <div class="space-y-4">
+                                    <!-- Top Match 1 -->
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white font-semibold">AK</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Alex Kim</h4>
+                                                <span class="px-2 py-1 bg-gray-100 accent-text text-xs rounded-full font-medium">92% Match</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">Full-stack developer with 8 years experience. Previously CTO at a YC startup. Looking to build in fintech.</p>
+                                            
+                                            <!-- Action Items -->
+                                            <div class="bg-white rounded-lg p-3 border border-gray-200">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Why This Match Works:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Complementary skills: Technical + Business</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Shared interest in fintech vertical</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Similar commitment level and timezone</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-clock mr-1"></i>40-60 hrs/week</span>
+                                                <span><i class="fas fa-map-marker-alt mr-1"></i>SF Bay Area</span>
+                                                <button class="accent-text hover:opacity-80 font-medium">
+                                                    <i class="fas fa-comment mr-1"></i>Send Message
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <!-- Top Match 2 -->
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white font-semibold">SP</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Sarah Park</h4>
+                                                <span class="px-2 py-1 bg-gray-100 accent-text text-xs rounded-full font-medium">88% Match</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Ex-Google PM with marketplace expertise. Led 0-1 products. Passionate about sustainable commerce.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-clock mr-1"></i>Full-time ready</span>
+                                                <span><i class="fas fa-map-marker-alt mr-1"></i>NYC</span>
+                                                <button class="accent-text-secondary hover:opacity-80 font-medium">
+                                                    <i class="fas fa-comment mr-1"></i>Send Message
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Top Match 3 -->
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-white font-semibold">RM</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Raj Mehta</h4>
+                                                <span class="px-2 py-1 bg-gray-100 accent-text text-xs rounded-full font-medium">85% Match</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Serial entrepreneur. Built and sold 2 startups. Strong in AI/ML and business strategy.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-clock mr-1"></i>Part-time start</span>
+                                                <span><i class="fas fa-map-marker-alt mr-1"></i>Remote</span>
+                                                <button class="accent-text hover:opacity-80 font-medium">
+                                                    <i class="fas fa-comment mr-1"></i>Send Message
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Co-founder Success Framework -->
+                            <div class="bg-white rounded-lg border border-gray-200 p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Co-founder Success Framework</h3>
+                                    <span class="text-xs accent-text font-medium">Based on successful partnerships</span>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <!-- Framework Step 1 -->
+                                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-handshake accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Start with a Trial Project</h4>
+                                            </div>
+                                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">Week 1-2</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">Work on a small project together before committing. This reveals working styles and compatibility.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>View project templates
+                                            </button>
+                                            <span class="text-text-muted">• 2-week commitment</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Framework Step 2 -->
+                                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-balance-scale accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Define Equity & Roles</h4>
+                                            </div>
+                                            <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">Week 3-4</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">Have the equity conversation early. Use our founder agreement templates to avoid future conflicts.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text-secondary hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>Download templates
+                                            </button>
+                                            <span class="text-text-muted">• Legal framework included</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Profile & Insights -->
+                        <div class="space-y-6">
+                            <!-- Your Profile Strength -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Your Profile Strength</h3>
+                                <div class="space-y-3">
                                     <div>
-                                        <h3 class="font-semibold text-text-primary">Alex Kim</h3>
-                                        <p class="text-sm text-text-secondary">Technical Co-founder</p>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-user accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Profile Completeness</span>
+                                            </div>
+                                            <span class="text-sm font-bold">92%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 92%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Add work samples to reach 100%</p>
                                     </div>
-                                </div>
-                                <div class="match-score text-white px-3 py-1 rounded-full text-sm font-semibold">
-                                    92%
-                                </div>
-                            </div>
-                            
-                            <p class="text-sm text-text-secondary mb-4">Full-stack developer with 8 years experience. Previously CTO at a YC startup. Looking to build in fintech.</p>
-                            
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="skill-tag px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">React</span>
-                                <span class="skill-tag px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">Node.js</span>
-                                <span class="skill-tag px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs">AWS</span>
-                                <span class="skill-tag px-2 py-1 bg-green-50 text-green-700 rounded text-xs">Fintech</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-between text-xs text-text-muted mb-4">
-                                <span><i class="fas fa-clock mr-1"></i>40-60 hrs/week</span>
-                                <span><i class="fas fa-map-marker-alt mr-1"></i>SF Bay Area</span>
-                            </div>
-                            
-                            <div class="flex gap-2">
-                                <button class="flex-1 px-3 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
-                                    <i class="fas fa-comment mr-1"></i>Message
-                                </button>
-                                <button class="flex-1 px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
-                                    View Profile
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Match Card 2 -->
-                    <div class="founder-card bg-card-bg border border-border rounded-lg overflow-hidden">
-                        <div class="p-6">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
-                                        <span class="text-white font-semibold">SP</span>
-                                    </div>
+                                    
                                     <div>
-                                        <h3 class="font-semibold text-text-primary">Sarah Park</h3>
-                                        <p class="text-sm text-text-secondary">Business Co-founder</p>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-eye accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Profile Views</span>
+                                            </div>
+                                            <span class="text-sm font-bold">156</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 78%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Great visibility — 34% above average</p>
                                     </div>
-                                </div>
-                                <div class="match-score text-white px-3 py-1 rounded-full text-sm font-semibold">
-                                    88%
-                                </div>
-                            </div>
-                            
-                            <p class="text-sm text-text-secondary mb-4">Ex-Google PM with marketplace expertise. Led 0-1 products. Passionate about sustainable commerce.</p>
-                            
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="skill-tag px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">Product</span>
-                                <span class="skill-tag px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">Growth</span>
-                                <span class="skill-tag px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">Marketplaces</span>
-                                <span class="skill-tag px-2 py-1 bg-green-50 text-green-700 rounded text-xs">B2C</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-between text-xs text-text-muted mb-4">
-                                <span><i class="fas fa-clock mr-1"></i>Full-time ready</span>
-                                <span><i class="fas fa-map-marker-alt mr-1"></i>NYC</span>
-                            </div>
-                            
-                            <div class="flex gap-2">
-                                <button class="flex-1 px-3 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
-                                    <i class="fas fa-comment mr-1"></i>Message
-                                </button>
-                                <button class="flex-1 px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
-                                    View Profile
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Match Card 3 -->
-                    <div class="founder-card bg-card-bg border border-border rounded-lg overflow-hidden">
-                        <div class="p-6">
-                            <div class="flex items-start justify-between mb-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center">
-                                        <span class="text-white font-semibold">RM</span>
-                                    </div>
                                     <div>
-                                        <h3 class="font-semibold text-text-primary">Raj Mehta</h3>
-                                        <p class="text-sm text-text-secondary">Technical + Business</p>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-star accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Match Quality</span>
+                                            </div>
+                                            <span class="text-sm font-bold">87%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 87%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">High-quality matches based on preferences</p>
                                     </div>
                                 </div>
-                                <div class="match-score text-white px-3 py-1 rounded-full text-sm font-semibold">
-                                    85%
-                                </div>
                             </div>
-                            
-                            <p class="text-sm text-text-secondary mb-4">Serial entrepreneur. Built and sold 2 startups. Strong in AI/ML and business strategy.</p>
-                            
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                <span class="skill-tag px-2 py-1 bg-orange-50 text-orange-700 rounded text-xs">AI/ML</span>
-                                <span class="skill-tag px-2 py-1 bg-orange-50 text-orange-700 rounded text-xs">Python</span>
-                                <span class="skill-tag px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">Strategy</span>
-                                <span class="skill-tag px-2 py-1 bg-green-50 text-green-700 rounded text-xs">B2B SaaS</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-between text-xs text-text-muted mb-4">
-                                <span><i class="fas fa-clock mr-1"></i>Part-time start</span>
-                                <span><i class="fas fa-map-marker-alt mr-1"></i>Remote</span>
-                            </div>
-                            
-                            <div class="flex gap-2">
-                                <button class="flex-1 px-3 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
-                                    <i class="fas fa-comment mr-1"></i>Message
-                                </button>
-                                <button class="flex-1 px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
-                                    View Profile
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- More match cards... -->
-                </div>
+                            <!-- Industry Trends -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Co-founder Market Trends</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Most Sought Skills</span>
+                                            <span class="text-sm font-medium">Technical</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 68%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">68% of founders seeking technical co-founders</p>
+                                    </div>
 
-                <!-- Compatibility Insights -->
-                <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
-                    <h2 class="text-xl font-semibold text-text-primary mb-4">Your Compatibility Profile</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="text-center">
-                            <div class="relative w-24 h-24 mx-auto mb-3">
-                                <svg class="w-24 h-24 transform -rotate-90">
-                                    <circle cx="48" cy="48" r="40" stroke="#E5E5E5" stroke-width="8" fill="none"></circle>
-                                    <circle cx="48" cy="48" r="40" stroke="#10B981" stroke-width="8" fill="none" 
-                                            class="compatibility-ring" style="stroke-dashoffset: 94;"></circle>
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span class="text-xl font-bold">85%</span>
-                                </div>
-                            </div>
-                            <h3 class="font-medium text-text-primary">Skills Match</h3>
-                            <p class="text-sm text-text-secondary">Complementary skills</p>
-                        </div>
-                        
-                        <div class="text-center">
-                            <div class="relative w-24 h-24 mx-auto mb-3">
-                                <svg class="w-24 h-24 transform -rotate-90">
-                                    <circle cx="48" cy="48" r="40" stroke="#E5E5E5" stroke-width="8" fill="none"></circle>
-                                    <circle cx="48" cy="48" r="40" stroke="#3B82F6" stroke-width="8" fill="none" 
-                                            class="compatibility-ring" style="stroke-dashoffset: 63;"></circle>
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span class="text-xl font-bold">90%</span>
-                                </div>
-                            </div>
-                            <h3 class="font-medium text-text-primary">Work Style</h3>
-                            <p class="text-sm text-text-secondary">Similar approach</p>
-                        </div>
-                        
-                        <div class="text-center">
-                            <div class="relative w-24 h-24 mx-auto mb-3">
-                                <svg class="w-24 h-24 transform -rotate-90">
-                                    <circle cx="48" cy="48" r="40" stroke="#E5E5E5" stroke-width="8" fill="none"></circle>
-                                    <circle cx="48" cy="48" r="40" stroke="#F59E0B" stroke-width="8" fill="none" 
-                                            class="compatibility-ring" style="stroke-dashoffset: 125;"></circle>
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span class="text-xl font-bold">75%</span>
-                                </div>
-                            </div>
-                            <h3 class="font-medium text-text-primary">Time Commitment</h3>
-                            <p class="text-sm text-text-secondary">Good alignment</p>
-                        </div>
-                        
-                        <div class="text-center">
-                            <div class="relative w-24 h-24 mx-auto mb-3">
-                                <svg class="w-24 h-24 transform -rotate-90">
-                                    <circle cx="48" cy="48" r="40" stroke="#E5E5E5" stroke-width="8" fill="none"></circle>
-                                    <circle cx="48" cy="48" r="40" stroke="#8B5CF6" stroke-width="8" fill="none" 
-                                            class="compatibility-ring" style="stroke-dashoffset: 94;"></circle>
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span class="text-xl font-bold">82%</span>
-                                </div>
-                            </div>
-                            <h3 class="font-medium text-text-primary">Vision Alignment</h3>
-                            <p class="text-sm text-text-secondary">Shared goals</p>
-                        </div>
-                    </div>
-                </div>
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Avg. Time to Partner</span>
+                                            <span class="text-sm font-medium">3.2 months</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">You're ahead of schedule with active conversations</p>
+                                    </div>
 
-                <!-- Tips Section -->
-                <div class="bg-card-bg border border-border rounded-lg p-6">
-                    <h3 class="text-lg font-semibold text-text-primary mb-4">Co-founder Success Tips</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-lightbulb text-warning mt-1"></i>
-                            <div>
-                                <h4 class="font-medium text-text-primary">Start with a trial project</h4>
-                                <p class="text-sm text-text-secondary">Work on a small project together before committing</p>
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Success Rate (90 days)</span>
+                                            <span class="text-sm font-medium accent-text">23%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 23%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Your 34% rate is well above platform average</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-handshake text-info mt-1"></i>
-                            <div>
-                                <h4 class="font-medium text-text-primary">Define equity early</h4>
-                                <p class="text-sm text-text-secondary">Have the equity conversation in the first few meetings</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-comments text-success mt-1"></i>
-                            <div>
-                                <h4 class="font-medium text-text-primary">Communicate openly</h4>
-                                <p class="text-sm text-text-secondary">Set expectations about commitment and working style</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-file-contract text-danger mt-1"></i>
-                            <div>
-                                <h4 class="font-medium text-text-primary">Get it in writing</h4>
-                                <p class="text-sm text-text-secondary">Use a founder agreement template to avoid future conflicts</p>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Browse New Matches</span>
+                                            <i class="fas fa-arrow-right text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">12 new potential co-founders joined this week</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Schedule Video Calls</span>
+                                            <i class="fas fa-video text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Move conversations forward with face-to-face meetings</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Update Preferences</span>
+                                            <i class="fas fa-cog text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Refine your matching criteria and requirements</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Export Matches</span>
+                                            <i class="fas fa-download text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Download your match data for offline review</p>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -378,68 +556,45 @@
         // Initialize navigation
         initializeNavigation('apps');
 
-        // App navigation
-        const appPages = [
-            'app-economaestro.html',
-            'app-runway.html',
-            'app-cofoundermatch.html',
-            'app-validateai.html',
-            'app-shipfast.html',
-            'app-firstusers.html',
-            'app-pitchperfect.html',
-            'app-launchpad.html',
-            'app-scaleops.html',
-            'app-delightiq.html',
-            'app-brandforge.html',
-            'app-salesflow.html',
-            'app-insighthub.html',
-            'app-searchmaster.html',
-            'app-goglobal.html',
-            'app-legalshield.html',
-            'app-teamsync.html'
-        ];
-
-        // Update counter
-        const currentUrl = window.location.pathname.split('/').pop();
-        const currentIndex = appPages.indexOf(currentUrl);
-        if (currentIndex !== -1) {
-            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
-        }
-
-        function navigateApp(direction) {
-            const currentUrl = window.location.pathname.split('/').pop();
-            const currentIndex = appPages.indexOf(currentUrl);
-            
-            if (currentIndex === -1) return;
-            
-            let newIndex;
-            if (direction === 'next') {
-                newIndex = (currentIndex + 1) % appPages.length;
-            } else {
-                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
-            }
-            
-            window.location.href = appPages[newIndex];
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'ArrowLeft') {
-                navigateApp('prev');
-            } else if (event.altKey && event.key === 'ArrowRight') {
-                navigateApp('next');
-            }
-        });
-        
-        // launchApp function is now handled by app-launch-panel.js
-        
-        // Go back to previous page
+        // Go back function
         function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // Fallback to apps page if no history
-                window.location.href = 'apps.html';
+            window.location.href = 'apps.html';
+        }
+
+        // Navigate between apps
+        function navigateApp(direction) {
+            const apps = [
+                'app-economaestro.html',
+                'app-runway.html',
+                'app-investorlens.html',
+                'app-cofoundermatch.html',
+                'app-validateai.html',
+                'app-shipfast.html',
+                'app-firstusers.html',
+                'app-pitchperfect.html',
+                'app-launchpad.html',
+                'app-scaleops.html',
+                'app-delightiq.html',
+                'app-brandforge.html',
+                'app-salesflow.html',
+                'app-insighthub.html',
+                'app-searchmaster.html',
+                'app-legalshield.html',
+                'app-teamsync.html',
+                'app-goglobal.html'
+            ];
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const currentIndex = apps.indexOf(currentPage);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = currentIndex === 0 ? apps.length - 1 : currentIndex - 1;
+                } else {
+                    newIndex = currentIndex === apps.length - 1 ? 0 : currentIndex + 1;
+                }
+                window.location.href = apps[newIndex];
             }
         }
     </script>

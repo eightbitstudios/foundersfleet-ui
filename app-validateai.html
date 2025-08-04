@@ -4,336 +4,545 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ValidateAI - Idea Validation Assistant | FoundersFleet</title>
+    <!-- 
+    APP CATEGORY: Idea Validation
+    
+    To change this app to a different category, update the CSS variables at line 63-68:
+    - Financial & Analytics (Purple): Use --financial-* variables
+    - Team Building (Green): Use --team-* variables  
+    - Idea Validation (Blue): Use --validation-* variables
+    - Development & Technical (Orange): Use --dev-* variables
+    - Communication (Pink): Use --comm-* variables
+    -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
-        .validation-card {
-            transition: all 0.3s ease;
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team Building Apps (Green) - CoFounderMatch, TeamSync */
+            --team-primary: #10B981;
+            --team-primary-rgb: 16, 185, 129;
+            --team-primary-hover: #059669;
+            --team-secondary: #14B8A6;
+            --team-light-bg: #D1FAE5;
+            --team-light-border: #A7F3D0;
+            
+            /* Idea Validation Apps (Blue) - ValidateAI, LaunchPad */
+            --validation-primary: #2563EB;
+            --validation-primary-rgb: 37, 99, 235;
+            --validation-primary-hover: #1D4ED8;
+            --validation-secondary: #0EA5E9;
+            --validation-light-bg: #DBEAFE;
+            --validation-light-border: #BFDBFE;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Current app accent colors (Idea Validation category for ValidateAI) */
+            --accent-primary: var(--validation-primary);
+            --accent-primary-rgb: var(--validation-primary-rgb);
+            --accent-primary-hover: var(--validation-primary-hover);
+            --accent-secondary: var(--validation-secondary);
+            --accent-light-bg: var(--validation-light-bg);
+            --accent-light-border: var(--validation-light-border);
         }
-        .validation-card:hover {
+        
+        .metric-card {
+            transition: all 0.2s ease;
+        }
+        .metric-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .score-ring {
-            stroke-dasharray: 440;
-            stroke-dashoffset: 440;
-            animation: fillScore 1.5s ease-out forwards;
+        .trend-up {
+            color: var(--accent-primary);
         }
-        @keyframes fillScore {
-            to {
-                stroke-dashoffset: 132; /* 70% score */
-            }
+        .trend-down {
+            color: var(--accent-secondary);
         }
-        .pulse-dot {
-            animation: pulse 2s infinite;
+        .trend-neutral {
+            color: #6B7280;
         }
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 0.7;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
         }
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
+        }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
     </style>
 </head>
-<body class="bg-background min-h-screen font-inter flex">
+<body class="bg-gray-50 min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 bg-background overflow-hidden">
+    <div class="flex-1 bg-gray-50 overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
                             <i class="fas fa-arrow-left text-text-secondary"></i>
                         </button>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-lightbulb text-white"></i>
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">ValidateAI</h1>
-                                <p class="text-sm text-text-secondary">AI-powered idea validation</p>
+                                <p class="text-sm text-text-secondary hidden md:block">AI-powered idea validation and market analysis</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">5 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Current Validation -->
-                <div class="mb-8 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl p-8 border border-yellow-100">
-                    <div class="flex items-start justify-between">
-                        <div class="flex-1">
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Your Idea Validation Score</h2>
-                            <p class="text-text-secondary mb-4">AI-driven analysis of your startup idea based on market signals</p>
-                            <div class="flex items-center gap-4">
-                                <div class="relative w-32 h-32">
-                                    <svg class="w-32 h-32 transform -rotate-90">
-                                        <circle cx="64" cy="64" r="56" stroke="#E5E5E5" stroke-width="12" fill="none"></circle>
-                                        <circle cx="64" cy="64" r="56" stroke="#F59E0B" stroke-width="12" fill="none" 
-                                                class="score-ring"></circle>
-                                    </svg>
-                                    <div class="absolute inset-0 flex items-center justify-center">
-                                        <div class="text-center">
-                                            <div class="text-3xl font-bold text-text-primary">73</div>
-                                            <div class="text-sm text-text-secondary">Score</div>
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Validate Your Startup Idea
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    AI-powered analysis combines market data, competitor research, and customer signals to give you a comprehensive validation score and actionable insights.
+                                </p>
+                            </div>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Current Validation Score</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">8.3</span>
+                                        <span class="text-lg accent-text flex items-center">
+                                            <i class="fas fa-arrow-up mr-1"></i>/10
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">Strong potential</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Validation Analysis Breakdown</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Market Size -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Market Size</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$2.3B</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-globe accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">TAM with 15% CAGR — large addressable market with strong growth trajectory.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> Growing 15% YoY
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Problem Severity -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Problem Score</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">9.2</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-fire accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Critical pain point — 78% of users report experiencing this problem weekly.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> High urgency
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Competition Level -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Competition</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">6.8</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-chess accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Moderate competition — differentiation opportunities exist in the market.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-neutral">
+                                    <i class="fas fa-minus"></i> Manageable
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Market Timing -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Timing Score</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">8.5</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-clock accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Excellent timing — emerging trends and technology maturation align perfectly.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> Right moment
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Validation Insights -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Key Validation Insights -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">AI-Powered Validation Insights</h3>
+                                
+                                <div class="space-y-4">
+                                    <!-- Problem-Solution Fit Insight -->
+                                    <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-bullseye accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Strong Problem-Solution Fit</h4>
+                                                <span class="px-2 py-1 bg-gray-100 accent-text text-xs rounded-full font-medium">Excellent</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">78% of surveyed users reported experiencing this problem weekly. Your solution directly addresses the core pain point with innovative technology.</p>
+                                            
+                                            <!-- Action Items -->
+                                            <div class="bg-white rounded-lg p-3 border border-gray-200">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Recommended Validation Steps:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Conduct 5 more customer interviews to reach statistical significance</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Build MVP landing page to test conversion rates</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Run small paid ads test ($100) to validate customer acquisition</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-chart-line mr-1"></i>92% confidence</span>
+                                                <span><i class="fas fa-users mr-1"></i>127 survey responses</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Market Timing Insight -->
+                                    <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-clock accent-text-secondary"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Perfect Market Timing</h4>
+                                                <span class="px-2 py-1 bg-gray-100 accent-text-secondary text-xs rounded-full font-medium">Optimal</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Google search volume up 45% YoY, 3 competitors raised funding recently, emerging technology stack matured.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-search mr-1"></i>+45% search volume</span>
+                                                <span><i class="fas fa-dollar-sign mr-1"></i>$120M invested</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Competitive Advantage -->
+                                    <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-shield-alt accent-text"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Clear Differentiation Path</h4>
+                                                <span class="px-2 py-1 bg-gray-100 accent-text text-xs rounded-full font-medium">Strong</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Competitors focus on enterprise; opportunity in SMB market with 10x simpler onboarding.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-users mr-1"></i>SMB whitespace</span>
+                                                <span><i class="fas fa-rocket mr-1"></i>10x faster setup</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <h3 class="text-lg font-semibold text-text-primary mb-1">Strong Potential</h3>
-                                    <p class="text-sm text-text-secondary">Your idea shows promise with some areas to refine</p>
+                            </div>
+
+                            <!-- Market Research Framework -->
+                            <div class="bg-white rounded-lg border border-gray-200 p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Validation Research Progress</h3>
+                                    <span class="text-xs accent-text font-medium">15/20 interviews complete</span>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <!-- Customer Interviews -->
+                                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-comments accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Customer Interviews</h4>
+                                            </div>
+                                            <span class="text-xs bg-gray-100 accent-text px-2 py-1 rounded-full">15/20 complete</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">78% validated core problem, 65% expressed purchase intent at proposed price point.</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>Schedule interviews
+                                            </button>
+                                            <span class="text-text-muted">• 5 more needed</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Survey Data -->
+                                    <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-poll accent-text-secondary text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Survey Responses</h4>
+                                            </div>
+                                            <span class="text-xs bg-gray-100 accent-text-secondary px-2 py-1 rounded-full">127 responses</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">Exceeded target of 100 responses. Key insights: willing to pay $65/mo (competitors charge $49/mo).</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-2 mb-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 100%"></div>
+                                        </div>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text-secondary hover:opacity-80 font-medium">
+                                                <i class="fas fa-chart-bar mr-1"></i>View detailed results
+                                            </button>
+                                            <span class="text-text-muted">• Complete</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-center bg-white rounded-lg p-4 shadow-sm">
-                            <div class="text-sm text-text-muted mb-1">Confidence Level</div>
-                            <div class="text-2xl font-bold text-success">High</div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Validation Categories -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <div class="validation-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-medium text-text-primary">Market Size</h3>
-                            <span class="text-2xl">🎯</span>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary mb-1">8/10</div>
-                        <p class="text-sm text-text-secondary">$2.3B TAM with 15% CAGR</p>
-                        <div class="mt-3 w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-success h-2 rounded-full" style="width: 80%"></div>
-                        </div>
-                    </div>
+                        <!-- Right Column - Market Signals & Actions -->
+                        <div class="space-y-6">
+                            <!-- Market Signals -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Live Market Signals</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-search accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Search Interest</span>
+                                            </div>
+                                            <span class="text-sm font-bold accent-text">+45%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Google search volume increasing steadily</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-dollar-sign accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Funding Activity</span>
+                                            </div>
+                                            <span class="text-sm font-bold accent-text">$120M</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 70%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">3 competitors raised funding in last 6 months</p>
+                                    </div>
 
-                    <div class="validation-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-medium text-text-primary">Competition</h3>
-                            <span class="text-2xl">⚔️</span>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary mb-1">6/10</div>
-                        <p class="text-sm text-text-secondary">Moderate competition, differentiation possible</p>
-                        <div class="mt-3 w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-warning h-2 rounded-full" style="width: 60%"></div>
-                        </div>
-                    </div>
-
-                    <div class="validation-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-medium text-text-primary">Problem Severity</h3>
-                            <span class="text-2xl">🔥</span>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary mb-1">9/10</div>
-                        <p class="text-sm text-text-secondary">Critical pain point for target users</p>
-                        <div class="mt-3 w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-success h-2 rounded-full" style="width: 90%"></div>
-                        </div>
-                    </div>
-
-                    <div class="validation-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-3">
-                            <h3 class="font-medium text-text-primary">Timing</h3>
-                            <span class="text-2xl">⏰</span>
-                        </div>
-                        <div class="text-2xl font-bold text-text-primary mb-1">7/10</div>
-                        <p class="text-sm text-text-secondary">Good timing, emerging trends</p>
-                        <div class="mt-3 w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-info h-2 rounded-full" style="width: 70%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Key Insights -->
-                <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
-                    <h2 class="text-xl font-semibold text-text-primary mb-4">Key Validation Insights</h2>
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-success/10 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-check text-success text-sm"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-text-primary">Strong Problem-Solution Fit</h3>
-                                <p class="text-sm text-text-secondary">78% of surveyed users reported experiencing this problem weekly. Your solution directly addresses the core pain point.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-warning/10 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-exclamation text-warning text-sm"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-text-primary">Consider Narrowing Initial Focus</h3>
-                                <p class="text-sm text-text-secondary">The target market is broad. Consider starting with a specific niche (e.g., B2B SaaS companies with 10-50 employees).</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-info/10 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-lightbulb text-info text-sm"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-text-primary">Pricing Strategy Opportunity</h3>
-                                <p class="text-sm text-text-secondary">Competitors average $49/mo. Users indicated willingness to pay $65/mo for your proposed features.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Validation Methods -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                    <!-- Customer Research -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-text-primary mb-4">Customer Research Progress</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium text-text-primary">Interviews Completed</span>
-                                    <span class="text-sm text-text-secondary">15/20</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
+                                                    <i class="fas fa-comments accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Social Buzz</span>
+                                            </div>
+                                            <span class="text-sm font-bold accent-text">+120%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Reddit and Twitter mentions up significantly</p>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium text-text-primary">Survey Responses</span>
-                                    <span class="text-sm text-text-secondary">127/100</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium text-text-primary">Landing Page Conversions</span>
-                                    <span class="text-sm text-text-secondary">23%</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-info h-2 rounded-full" style="width: 70%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button class="w-full mt-4 px-4 py-2 bg-section-bg text-text-primary rounded-lg hover:bg-gray-200 transition-all text-sm">
-                            <i class="fas fa-plus mr-2"></i>Add Research Data
-                        </button>
-                    </div>
 
-                    <!-- Market Signals -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-lg font-semibold text-text-primary mb-4">Market Signals</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-success rounded-full pulse-dot"></div>
-                                <p class="text-sm text-text-primary">Google search volume up 45% YoY</p>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-success rounded-full pulse-dot"></div>
-                                <p class="text-sm text-text-primary">3 competitors raised funding in last 6 months</p>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-warning rounded-full pulse-dot"></div>
-                                <p class="text-sm text-text-primary">Reddit mentions increased 120% this quarter</p>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-info rounded-full pulse-dot"></div>
-                                <p class="text-sm text-text-primary">Product Hunt similar tools getting 500+ upvotes</p>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-4 p-3 bg-section-bg rounded-lg">
-                            <p class="text-xs text-text-secondary">
-                                <i class="fas fa-info-circle mr-1"></i>
-                                AI analyzes 50+ data sources for real-time market signals
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                            <!-- Validation Score History -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Validation Score Trend</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">This Week</span>
+                                            <span class="text-sm font-medium accent-text">8.3/10</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 83%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Score improved +0.4 points from additional research</p>
+                                    </div>
 
-                <!-- Next Steps -->
-                <div class="bg-card-bg border border-border rounded-lg p-6">
-                    <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended Next Steps</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <button class="p-4 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                            <i class="fas fa-comments text-2xl text-primary mb-2"></i>
-                            <h4 class="font-medium text-text-primary">Complete Interviews</h4>
-                            <p class="text-sm text-text-secondary mt-1">5 more customer interviews to reach statistical significance</p>
-                        </button>
-                        
-                        <button class="p-4 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                            <i class="fas fa-rocket text-2xl text-primary mb-2"></i>
-                            <h4 class="font-medium text-text-primary">Build Landing Page</h4>
-                            <p class="text-sm text-text-secondary mt-1">Test value proposition with a conversion-focused page</p>
-                        </button>
-                        
-                        <button class="p-4 bg-section-bg rounded-lg hover:bg-gray-200 transition-all text-left">
-                            <i class="fas fa-chart-line text-2xl text-primary mb-2"></i>
-                            <h4 class="font-medium text-text-primary">Run Paid Ads Test</h4>
-                            <p class="text-sm text-text-secondary mt-1">$100 Facebook ads to validate customer acquisition cost</p>
-                        </button>
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Last Week</span>
+                                            <span class="text-sm font-medium">7.9/10</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 79%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Initial validation based on market analysis</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Industry Average</span>
+                                            <span class="text-sm font-medium">6.1/10</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-gray-400 h-2 rounded-full" style="width: 61%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Your idea scores 36% above average</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Next Steps -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Recommended Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Complete Customer Interviews</span>
+                                            <i class="fas fa-comments text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">5 more interviews to reach statistical significance</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Build Landing Page</span>
+                                            <i class="fas fa-rocket text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Test value proposition with conversion-focused page</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Run Paid Ads Test</span>
+                                            <i class="fas fa-chart-line text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">$100 Facebook ads to validate customer acquisition cost</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Export Validation Report</span>
+                                            <i class="fas fa-download text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Download comprehensive analysis for investors</p>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -345,68 +554,45 @@
         // Initialize navigation
         initializeNavigation('apps');
 
-        // App navigation
-        const appPages = [
-            'app-economaestro.html',
-            'app-runway.html',
-            'app-cofoundermatch.html',
-            'app-validateai.html',
-            'app-shipfast.html',
-            'app-firstusers.html',
-            'app-pitchperfect.html',
-            'app-launchpad.html',
-            'app-scaleops.html',
-            'app-delightiq.html',
-            'app-brandforge.html',
-            'app-salesflow.html',
-            'app-insighthub.html',
-            'app-searchmaster.html',
-            'app-goglobal.html',
-            'app-legalshield.html',
-            'app-teamsync.html'
-        ];
-
-        // Update counter
-        const currentUrl = window.location.pathname.split('/').pop();
-        const currentIndex = appPages.indexOf(currentUrl);
-        if (currentIndex !== -1) {
-            document.getElementById('app-counter').textContent = `${currentIndex + 1} of ${appPages.length}`;
-        }
-
-        function navigateApp(direction) {
-            const currentUrl = window.location.pathname.split('/').pop();
-            const currentIndex = appPages.indexOf(currentUrl);
-            
-            if (currentIndex === -1) return;
-            
-            let newIndex;
-            if (direction === 'next') {
-                newIndex = (currentIndex + 1) % appPages.length;
-            } else {
-                newIndex = currentIndex === 0 ? appPages.length - 1 : currentIndex - 1;
-            }
-            
-            window.location.href = appPages[newIndex];
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(event) {
-            if (event.altKey && event.key === 'ArrowLeft') {
-                navigateApp('prev');
-            } else if (event.altKey && event.key === 'ArrowRight') {
-                navigateApp('next');
-            }
-        });
-        
-        // launchApp function is now handled by app-launch-panel.js
-        
-        // Go back to previous page
+        // Go back function
         function goBack() {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                // Fallback to apps page if no history
-                window.location.href = 'apps.html';
+            window.location.href = 'apps.html';
+        }
+
+        // Navigate between apps
+        function navigateApp(direction) {
+            const apps = [
+                'app-economaestro.html',
+                'app-runway.html',
+                'app-investorlens.html',
+                'app-cofoundermatch.html',
+                'app-validateai.html',
+                'app-shipfast.html',
+                'app-firstusers.html',
+                'app-pitchperfect.html',
+                'app-launchpad.html',
+                'app-scaleops.html',
+                'app-delightiq.html',
+                'app-brandforge.html',
+                'app-salesflow.html',
+                'app-insighthub.html',
+                'app-searchmaster.html',
+                'app-legalshield.html',
+                'app-teamsync.html',
+                'app-goglobal.html'
+            ];
+            
+            const currentPage = window.location.pathname.split('/').pop();
+            const currentIndex = apps.indexOf(currentPage);
+            
+            if (currentIndex !== -1) {
+                let newIndex;
+                if (direction === 'prev') {
+                    newIndex = currentIndex === 0 ? apps.length - 1 : currentIndex - 1;
+                } else {
+                    newIndex = currentIndex === apps.length - 1 ? 0 : currentIndex + 1;
+                }
+                window.location.href = apps[newIndex];
             }
         }
     </script>

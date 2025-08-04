@@ -7,434 +7,588 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind-config.js"></script>
     <script src="nav-component.js"></script>
     <script src="app-launch-panel.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary': '#000000',
-                        'primary-hover': '#333333',
-                        'background': '#F8F9FA',
-                        'card-bg': '#FFFFFF',
-                        'text-primary': '#000000',
-                        'text-secondary': '#666666',
-                        'text-muted': '#999999',
-                        'border': '#E5E5E5',
-                        'section-bg': '#FAFAFA',
-                        'success': '#10B981',
-                        'warning': '#F59E0B',
-                        'danger': '#EF4444',
-                        'info': '#3B82F6'
-                    },
-                    borderRadius: {
-                        'xl': '32px'
-                    },
-                    fontFamily: {
-                        'inter': ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
-                    }
-                }
-            }
-        }
+        tailwind.config = tailwindConfig;
     </script>
     <style>
-        .channel-card {
-            transition: all 0.3s ease;
+        :root {
+            /* App Category Color Systems */
+            
+            /* Financial & Analytics Apps (Purple) - EconoMaestro, Runway */
+            --financial-primary: #9333EA;
+            --financial-primary-rgb: 147, 51, 234;
+            --financial-primary-hover: #7E22CE;
+            --financial-secondary: #6366F1;
+            --financial-light-bg: #F3E8FF;
+            --financial-light-border: #E9D5FF;
+            
+            /* Team Building Apps (Green) - CoFounderMatch, TeamSync */
+            --team-primary: #10B981;
+            --team-primary-rgb: 16, 185, 129;
+            --team-primary-hover: #059669;
+            --team-secondary: #14B8A6;
+            --team-light-bg: #D1FAE5;
+            --team-light-border: #A7F3D0;
+            
+            /* First Customers Apps (Green) - FirstUsers */
+            --customers-primary: #10B981;
+            --customers-primary-rgb: 16, 185, 129;
+            --customers-primary-hover: #059669;
+            --customers-secondary: #14B8A6;
+            --customers-light-bg: #D1FAE5;
+            --customers-light-border: #A7F3D0;
+            
+            /* Development & Technical Apps (Orange) - ShipFast, DevOps */
+            --dev-primary: #F97316;
+            --dev-primary-rgb: 249, 115, 22;
+            --dev-primary-hover: #EA580C;
+            --dev-secondary: #FB923C;
+            --dev-light-bg: #FED7AA;
+            --dev-light-border: #FDBA74;
+            
+            /* Communication Apps (Pink) - PitchPerfect, Investor CRM */
+            --comm-primary: #EC4899;
+            --comm-primary-rgb: 236, 72, 153;
+            --comm-primary-hover: #DB2777;
+            --comm-secondary: #F472B6;
+            --comm-light-bg: #FCE7F3;
+            --comm-light-border: #FBCFE8;
+            
+            /* Current app accent colors (First Customers category for FirstUsers) */
+            --accent-primary: var(--customers-primary);
+            --accent-primary-rgb: var(--customers-primary-rgb);
+            --accent-primary-hover: var(--customers-primary-hover);
+            --accent-secondary: var(--customers-secondary);
+            --accent-light-bg: var(--customers-light-bg);
+            --accent-light-border: var(--customers-light-border);
         }
-        .channel-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
-        .user-avatar {
+        
+        .metric-card {
             transition: all 0.2s ease;
         }
-        .user-avatar:hover {
-            transform: scale(1.1);
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        .conversion-funnel {
-            background: linear-gradient(to bottom, #3B82F6 0%, #8B5CF6 100%);
-            clip-path: polygon(10% 0%, 90% 0%, 80% 100%, 20% 100%);
+        .trend-up {
+            color: var(--accent-primary);
         }
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .trend-down {
+            color: var(--accent-secondary);
         }
-        .new-user {
-            animation: slideIn 0.5s ease-out;
+        .trend-neutral {
+            color: #6B7280;
         }
+        
+        /* Accent color utilities */
+        .accent-bg-light { background-color: var(--accent-light-bg); }
+        .accent-border-light { border-color: var(--accent-light-border); }
+        .accent-bg-light-secondary { 
+            background-color: color-mix(in srgb, var(--accent-secondary) 10%, white);
+        }
+        .accent-border-light-secondary { 
+            border-color: color-mix(in srgb, var(--accent-secondary) 20%, white);
+        }
+        .accent-text { color: var(--accent-primary); }
+        .accent-text-secondary { color: var(--accent-secondary); }
+        .accent-bg { background-color: var(--accent-primary); }
+        .accent-bg-secondary { background-color: var(--accent-secondary); }
+        .accent-bg-hover:hover { background-color: var(--accent-primary-hover); }
+        .accent-bg-secondary-hover:hover { background-color: var(--accent-secondary-hover); }
     </style>
 </head>
-<body class="bg-background min-h-screen font-inter flex">
+<body class="bg-gray-50 min-h-screen font-inter flex">
     <!-- Navigation Placeholder -->
-    <div id="nav-placeholder" style="width: 5rem; height: 100vh; background-color: #000000; position: sticky; top: 0; flex-shrink: 0;"></div>
+    <div id="nav-placeholder"></div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 bg-background overflow-hidden">
+    <div class="flex-1 bg-gray-50 overflow-hidden">
         <main class="h-full overflow-auto">
-            <!-- App Header -->
-            <div class="bg-white border-b border-border px-8 py-4 sticky top-0 z-10">
+            <!-- App Header Bar -->
+            <div class="bg-white border-b border-border px-4 md:px-8 py-3 sticky top-0 z-10">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
                         <button onclick="goBack()" class="p-2 hover:bg-section-bg rounded-lg transition-all">
                             <i class="fas fa-arrow-left text-text-secondary"></i>
                         </button>
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-users text-white"></i>
                             </div>
                             <div>
                                 <h1 class="text-xl font-bold text-text-primary">FirstUsers</h1>
-                                <p class="text-sm text-text-secondary">Find and convert your early adopters</p>
+                                <p class="text-sm text-text-secondary hidden md:block">Acquire and convert your first customers</p>
                             </div>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="flex items-center gap-2">
                             <button onclick="navigateApp('prev')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Previous App">
-                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-left text-gray-400 group-hover:text-gray-600"></i>
                             </button>
-                            <span id="app-counter" class="text-xs text-text-secondary px-2">X of 15</span>
+                            <span id="app-counter" class="text-sm text-text-secondary px-2 hidden md:inline">7 of 18</span>
                             <button onclick="navigateApp('next')" class="p-2 hover:bg-gray-100 rounded-lg transition-all group" title="Next App">
-                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-primary"></i>
+                                <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600"></i>
                             </button>
                         </div>
-                        <button onclick="launchApp()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-all">
-                            <i class="fas fa-play mr-2"></i>Configure
+                        <button onclick="launchApp()" class="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-all text-sm">
+                            <i class="fas fa-cog mr-2"></i>Configure
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Page Content -->
-            <div class="px-8 py-6">
-                <!-- Customer Acquisition Dashboard -->
-                <div class="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-8 border border-purple-100">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <h2 class="text-2xl font-bold text-text-primary mb-2">Your First 100 Users</h2>
-                            <p class="text-text-secondary mb-4">Track your journey to product-market fit</p>
-                            <div class="flex items-center gap-8">
-                                <div>
-                                    <div class="text-4xl font-bold text-text-primary">27</div>
-                                    <div class="text-sm text-text-secondary">Active Users</div>
-                                </div>
-                                <div>
-                                    <div class="text-4xl font-bold text-success">+15%</div>
-                                    <div class="text-sm text-text-secondary">This Week</div>
-                                </div>
-                                <div>
-                                    <div class="text-4xl font-bold text-info">$1,350</div>
-                                    <div class="text-sm text-text-secondary">MRR</div>
-                                </div>
+            <!-- Hero Section -->
+            <div class="px-4 md:px-8 py-6">
+                <div>
+                    <div class="bg-white rounded-lg border border-border p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div class="flex-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-3">
+                                    Find Your First 100 Customers
+                                </h2>
+                                <p class="text-base md:text-lg text-text-secondary mb-4">
+                                    Identify, engage, and convert early adopters who will become your most valuable customers and advocates.
+                                </p>
                             </div>
-                        </div>
-                        <div class="bg-white rounded-lg p-4 shadow-sm text-center">
-                            <div class="text-sm text-text-muted mb-1">Next Milestone</div>
-                            <div class="text-3xl font-bold text-text-primary mb-1">100</div>
-                            <div class="text-sm text-text-secondary">users</div>
-                            <div class="mt-2 bg-gray-200 rounded-full h-2 w-32">
-                                <div class="bg-purple-500 h-2 rounded-full" style="width: 27%"></div>
+                            
+                            <!-- Key Metric Highlight -->
+                            <div class="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                                <div class="text-center">
+                                    <p class="text-sm text-text-secondary mb-2">Active Users</p>
+                                    <div class="flex items-baseline justify-center gap-2">
+                                        <span class="text-4xl font-bold accent-text">27</span>
+                                        <span class="text-lg accent-text flex items-center">
+                                            <i class="fas fa-arrow-up mr-1"></i>+15%
+                                        </span>
+                                    </div>
+                                    <p class="text-xs text-text-muted mt-2">This week</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Acquisition Channels -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    <!-- Product Hunt -->
-                    <div class="channel-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-rocket text-orange-600"></i>
-                                </div>
-                                <h3 class="font-semibold text-text-primary">Product Hunt</h3>
-                            </div>
-                            <span class="px-2 py-1 bg-success/10 text-success text-xs rounded-full">Ready</span>
-                        </div>
-                        <div class="space-y-3 mb-4">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">Expected Users</span>
-                                <span class="font-medium">200-500</span>
-                            </div>
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">Prep Time</span>
-                                <span class="font-medium">2 weeks</span>
-                            </div>
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">Success Rate</span>
-                                <span class="font-medium text-success">85%</span>
-                            </div>
-                        </div>
-                        <button class="w-full px-4 py-2 bg-primary text-white rounded text-sm hover:bg-primary-hover transition-all">
-                            Prepare Launch
-                        </button>
-                    </div>
-
-                    <!-- Reddit Communities -->
-                    <div class="channel-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                                    <i class="fab fa-reddit text-orange-600"></i>
-                                </div>
-                                <h3 class="font-semibold text-text-primary">Reddit</h3>
-                            </div>
-                            <span class="px-2 py-1 bg-warning/10 text-warning text-xs rounded-full">Active</span>
-                        </div>
-                        <div class="space-y-3 mb-4">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">Subreddits</span>
-                                <span class="font-medium">5 targeted</span>
-                            </div>
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">Posts/Week</span>
-                                <span class="font-medium">3-5</span>
-                            </div>
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">Conversion</span>
-                                <span class="font-medium text-info">12%</span>
-                            </div>
-                        </div>
-                        <button class="w-full px-4 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
-                            View Strategy
-                        </button>
-                    </div>
-
-                    <!-- Twitter/X Outreach -->
-                    <div class="channel-card bg-card-bg border border-border rounded-lg p-6">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <i class="fab fa-twitter text-blue-600"></i>
-                                </div>
-                                <h3 class="font-semibold text-text-primary">Twitter/X</h3>
-                            </div>
-                            <span class="px-2 py-1 bg-info/10 text-info text-xs rounded-full">Building</span>
-                        </div>
-                        <div class="space-y-3 mb-4">
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">Followers</span>
-                                <span class="font-medium">342</span>
-                            </div>
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">Engagement</span>
-                                <span class="font-medium">4.2%</span>
-                            </div>
-                            <div class="flex items-center justify-between text-sm">
-                                <span class="text-text-secondary">DMs Sent</span>
-                                <span class="font-medium">45/100</span>
-                            </div>
-                        </div>
-                        <button class="w-full px-4 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
-                            Find Prospects
-                        </button>
-                    </div>
-                </div>
-
-                <!-- User Acquisition Funnel -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                    <!-- Funnel Visualization -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-xl font-semibold text-text-primary mb-4">Acquisition Funnel</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium">Visitors</span>
-                                    <span class="text-sm text-text-secondary">1,234</span>
-                                </div>
-                                <div class="bg-blue-100 h-12 rounded flex items-center px-4">
-                                    <div class="bg-blue-500 h-8 rounded" style="width: 100%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium">Sign-ups</span>
-                                    <span class="text-sm text-text-secondary">156 (12.6%)</span>
-                                </div>
-                                <div class="bg-purple-100 h-12 rounded flex items-center px-4">
-                                    <div class="bg-purple-500 h-8 rounded" style="width: 70%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium">Activated</span>
-                                    <span class="text-sm text-text-secondary">89 (57%)</span>
-                                </div>
-                                <div class="bg-pink-100 h-12 rounded flex items-center px-4">
-                                    <div class="bg-pink-500 h-8 rounded" style="width: 45%"></div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-sm font-medium">Paying</span>
-                                    <span class="text-sm text-text-secondary">27 (30%)</span>
-                                </div>
-                                <div class="bg-green-100 h-12 rounded flex items-center px-4">
-                                    <div class="bg-green-500 h-8 rounded" style="width: 20%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Users -->
-                    <div class="bg-card-bg border border-border rounded-lg p-6">
-                        <h3 class="text-xl font-semibold text-text-primary mb-4">Recent Sign-ups</h3>
-                        <div class="space-y-3 max-h-80 overflow-y-auto">
-                            <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg new-user">
-                                <div class="user-avatar w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
-                                    JD
-                                </div>
-                                <div class="flex-1">
-                                    <div class="font-medium text-text-primary">John Doe</div>
-                                    <div class="text-xs text-text-secondary">john@company.com • 5 min ago</div>
-                                </div>
-                                <span class="px-2 py-1 bg-success text-white text-xs rounded">Paid</span>
-                            </div>
-                            
-                            <div class="flex items-center gap-3 p-3 bg-section-bg rounded-lg">
-                                <div class="user-avatar w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-                                    SM
-                                </div>
-                                <div class="flex-1">
-                                    <div class="font-medium text-text-primary">Sarah Miller</div>
-                                    <div class="text-xs text-text-secondary">sarah@startup.io • 2 hours ago</div>
-                                </div>
-                                <span class="px-2 py-1 bg-info text-white text-xs rounded">Trial</span>
-                            </div>
-                            
-                            <div class="flex items-center gap-3 p-3 bg-section-bg rounded-lg">
-                                <div class="user-avatar w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center text-white font-semibold">
-                                    AK
-                                </div>
-                                <div class="flex-1">
-                                    <div class="font-medium text-text-primary">Alex Kim</div>
-                                    <div class="text-xs text-text-secondary">alex@tech.com • 3 hours ago</div>
-                                </div>
-                                <span class="px-2 py-1 bg-warning text-white text-xs rounded">Free</span>
-                            </div>
-                            
-                            <div class="flex items-center gap-3 p-3 bg-section-bg rounded-lg">
-                                <div class="user-avatar w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
-                                    RP
-                                </div>
-                                <div class="flex-1">
-                                    <div class="font-medium text-text-primary">Rachel Park</div>
-                                    <div class="text-xs text-text-secondary">rachel@design.co • 5 hours ago</div>
-                                </div>
-                                <span class="px-2 py-1 bg-gray-500 text-white text-xs rounded">Inactive</span>
-                            </div>
-                        </div>
-                        
-                        <button class="w-full mt-4 px-3 py-2 bg-section-bg text-text-primary rounded text-sm hover:bg-gray-200 transition-all">
-                            View All Users
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Outreach Templates -->
-                <div class="bg-card-bg border border-border rounded-lg p-6 mb-8">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-xl font-semibold text-text-primary">Outreach Templates</h3>
-                        <button class="text-sm text-primary hover:text-primary-hover">
-                            <i class="fas fa-plus mr-1"></i>Add Template
-                        </button>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="border border-border rounded-lg p-4 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex items-center gap-2 mb-2">
-                                <i class="fas fa-envelope text-primary"></i>
-                                <h4 class="font-medium text-text-primary">Cold Email</h4>
-                            </div>
-                            <p class="text-sm text-text-secondary mb-3">Personalized outreach for B2B prospects</p>
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="text-text-muted">23% open rate</span>
-                                <button class="text-primary hover:text-primary-hover">Use →</button>
-                            </div>
-                        </div>
-                        
-                        <div class="border border-border rounded-lg p-4 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex items-center gap-2 mb-2">
-                                <i class="fab fa-linkedin text-blue-600"></i>
-                                <h4 class="font-medium text-text-primary">LinkedIn DM</h4>
-                            </div>
-                            <p class="text-sm text-text-secondary mb-3">Connect with decision makers</p>
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="text-text-muted">31% response rate</span>
-                                <button class="text-primary hover:text-primary-hover">Use →</button>
-                            </div>
-                        </div>
-                        
-                        <div class="border border-border rounded-lg p-4 hover:border-primary transition-all cursor-pointer">
-                            <div class="flex items-center gap-2 mb-2">
-                                <i class="fab fa-twitter text-blue-400"></i>
-                                <h4 class="font-medium text-text-primary">Twitter Reply</h4>
-                            </div>
-                            <p class="text-sm text-text-secondary mb-3">Engage with potential users</p>
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="text-text-muted">15% conversion</span>
-                                <button class="text-primary hover:text-primary-hover">Use →</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Growth Experiments -->
-                <div class="bg-card-bg border border-border rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-text-primary mb-4">Growth Experiments</h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-success rounded-full"></div>
+            <!-- Dashboard Content -->
+            <div class="px-4 md:px-8 py-6">
+                <div class="max-w-7xl mx-auto">
+                    <!-- Key Metrics Row -->
+                    <h3 class="text-lg font-semibold text-text-primary mb-4">Customer Acquisition Metrics</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <!-- Conversion Rate -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
                                 <div>
-                                    <span class="font-medium text-text-primary">Free Trial Extension</span>
-                                    <span class="text-sm text-text-secondary ml-2">14 → 30 days</span>
+                                    <span class="text-sm font-bold text-text-primary">Conversion Rate</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">12.6%</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-chart-line accent-text text-sm"></i>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-sm text-success">+24% conversion</span>
-                                <button class="text-xs text-primary hover:text-primary-hover">Details →</button>
+                            <p class="text-xs text-text-secondary">Above average for SaaS — focus on activating signups to paying customers.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +2.1% this week
+                                </span>
                             </div>
                         </div>
-                        
-                        <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-warning rounded-full"></div>
+
+                        <!-- Customer Acquisition Cost -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
                                 <div>
-                                    <span class="font-medium text-text-primary">Referral Program</span>
-                                    <span class="text-sm text-text-secondary ml-2">Give $20, Get $20</span>
+                                    <span class="text-sm font-bold text-text-primary">Avg CAC</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">$45</p>
+                                </div>
+                                <div class="p-2 bg-gray-100 rounded-lg">
+                                    <i class="fas fa-dollar-sign accent-text text-sm"></i>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-sm text-warning">Testing...</span>
-                                <button class="text-xs text-primary hover:text-primary-hover">Monitor →</button>
+                            <p class="text-xs text-text-secondary">Great unit economics — each customer costs $45 to acquire with $50 LTV.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -$8 improved
+                                </span>
                             </div>
                         </div>
-                        
-                        <div class="flex items-center justify-between p-3 bg-section-bg rounded-lg">
-                            <div class="flex items-center gap-3">
-                                <div class="w-2 h-2 bg-danger rounded-full"></div>
+
+                        <!-- Active Campaigns -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
                                 <div>
-                                    <span class="font-medium text-text-primary">Exit Intent Popup</span>
-                                    <span class="text-sm text-text-secondary ml-2">10% discount</span>
+                                    <span class="text-sm font-bold text-text-primary">Active Channels</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">5</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-bullhorn accent-text text-sm"></i>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3">
-                                <span class="text-sm text-danger">-5% UX score</span>
-                                <button class="text-xs text-primary hover:text-primary-hover">Stop →</button>
+                            <p class="text-xs text-text-secondary">Product Hunt launch ready — expect 200-500 new signups this week.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-up">
+                                    <i class="fas fa-arrow-up"></i> +2 channels
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Time to First Value -->
+                        <div class="metric-card bg-card-bg rounded-lg p-4 border border-border">
+                            <div class="flex items-start justify-between mb-2">
+                                <div>
+                                    <span class="text-sm font-bold text-text-primary">Time to Value</span>
+                                    <p class="text-2xl font-bold text-text-primary mt-1">2.1d</p>
+                                </div>
+                                <div class="p-2 accent-bg-light rounded-lg">
+                                    <i class="fas fa-clock accent-text text-sm"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-text-secondary">Fast activation — users see value quickly. Optimize onboarding further.</p>
+                            <div class="mt-2 flex items-center gap-1">
+                                <span class="text-xs trend-down">
+                                    <i class="fas fa-arrow-down"></i> -0.5 days
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Column - Customer Acquisition -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Top Customer Acquisition Channels -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Top Acquisition Channels</h3>
+                                
+                                <div class="space-y-4">
+                                    <!-- Product Hunt Launch -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fas fa-rocket text-white"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Product Hunt Launch</h4>
+                                                <span class="px-2 py-1 accent-bg accent-text text-xs rounded-full font-medium text-white">Ready</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary mb-3">Launch prep complete. Expect 200-500 signups. Team rally scheduled for launch day.</p>
+                                            
+                                            <!-- Action Items -->
+                                            <div class="bg-white rounded-lg p-3 accent-border-light border">
+                                                <p class="text-xs font-medium text-text-primary mb-2">Launch Day Action Plan:</p>
+                                                <ul class="space-y-1 text-xs text-text-secondary">
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Share launch across all social channels at 12:01 AM PST</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Email founder network and ask for upvotes</span>
+                                                    </li>
+                                                    <li class="flex items-start gap-2">
+                                                        <i class="fas fa-check accent-text mt-0.5"></i>
+                                                        <span>Monitor comments and respond within 30 minutes</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            <div class="mt-3 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-calendar mr-1"></i>This Tuesday</span>
+                                                <span><i class="fas fa-users mr-1"></i>Expected: 200-500 users</span>
+                                                <button class="accent-text hover:opacity-80 font-medium">
+                                                    <i class="fas fa-play mr-1"></i>Launch Now
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Reddit Communities -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light-secondary rounded-lg accent-border-light-secondary border">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fab fa-reddit text-white"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Reddit Communities</h4>
+                                                <span class="px-2 py-1 accent-bg-secondary text-white text-xs rounded-full font-medium">Active</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">5 targeted subreddits, 3-5 posts per week. 12% conversion rate from comments to signups.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-users mr-1"></i>5 communities</span>
+                                                <span><i class="fas fa-chart-line mr-1"></i>12% conversion</span>
+                                                <button class="accent-text-secondary hover:opacity-80 font-medium">
+                                                    <i class="fas fa-search mr-1"></i>Find More
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Twitter Outreach -->
+                                    <div class="flex items-start gap-4 p-4 accent-bg-light rounded-lg accent-border-light border">
+                                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <i class="fab fa-twitter text-white"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-start justify-between mb-1">
+                                                <h4 class="font-medium text-text-primary">Twitter Outreach</h4>
+                                                <span class="px-2 py-1 accent-bg accent-text text-xs rounded-full font-medium text-white">Building</span>
+                                            </div>
+                                            <p class="text-sm text-text-secondary">Growing following organically. 342 followers, 4.2% engagement. 45/100 DMs sent this week.</p>
+                                            <div class="mt-2 flex items-center gap-4 text-xs text-text-muted">
+                                                <span><i class="fas fa-users mr-1"></i>342 followers</span>
+                                                <span><i class="fas fa-heart mr-1"></i>4.2% engagement</span>
+                                                <button class="accent-text hover:opacity-80 font-medium">
+                                                    <i class="fas fa-paper-plane mr-1"></i>Send DMs
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Customer Success Framework -->
+                            <div class="accent-bg-light rounded-lg accent-border-light border p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="text-lg font-semibold text-text-primary">Customer Success Playbook</h3>
+                                    <span class="text-xs accent-text font-medium">Based on successful early adopters</span>
+                                </div>
+                                
+                                <div class="space-y-3">
+                                    <!-- Framework Step 1 -->
+                                    <div class="bg-white rounded-lg p-4 accent-border-light border">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-user-plus accent-text text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Welcome & Onboard</h4>
+                                            </div>
+                                            <span class="text-xs accent-bg-light accent-text px-2 py-1 rounded-full">Day 1</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">Personal welcome email + guided product tour. Get them to their first "aha moment" within 2 days.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>View onboarding flow
+                                            </button>
+                                            <span class="text-text-muted">• 2.1 day avg to value</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Framework Step 2 -->
+                                    <div class="bg-white rounded-lg p-4 accent-border-light border">
+                                        <div class="flex items-start justify-between mb-2">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light-secondary rounded flex items-center justify-center">
+                                                    <i class="fas fa-heart accent-text-secondary text-sm"></i>
+                                                </div>
+                                                <h4 class="font-medium text-text-primary">Build Relationship</h4>
+                                            </div>
+                                            <span class="text-xs accent-bg-light-secondary accent-text-secondary px-2 py-1 rounded-full">Week 1-2</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mb-2">Regular check-ins, feature requests, and success celebrations. Turn users into advocates.</p>
+                                        <div class="flex items-center gap-3 text-xs">
+                                            <button class="accent-text-secondary hover:opacity-80 font-medium">
+                                                <i class="fas fa-arrow-right mr-1"></i>Customer success templates
+                                            </button>
+                                            <span class="text-text-muted">• 85% satisfaction rate</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Analytics & Insights -->
+                        <div class="space-y-6">
+                            <!-- Conversion Funnel -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Conversion Funnel</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-eye accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Visitors</span>
+                                            </div>
+                                            <span class="text-sm font-bold">1,234</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 100%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Great traffic growth — up 23% this month</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-user-plus accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Sign-ups</span>
+                                            </div>
+                                            <span class="text-sm font-bold">156 (12.6%)</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 70%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Above average conversion rate</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-check accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Activated</span>
+                                            </div>
+                                            <span class="text-sm font-bold">89 (57%)</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 57%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Strong activation — good onboarding</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-8 h-8 accent-bg-light rounded flex items-center justify-center">
+                                                    <i class="fas fa-credit-card accent-text text-xs"></i>
+                                                </div>
+                                                <span class="text-sm font-medium">Paying</span>
+                                            </div>
+                                            <span class="text-sm font-bold accent-text">27 (30%)</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 30%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Excellent conversion to paid</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Recent Customers -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Recent Customers</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">This Week</span>
+                                            <span class="text-sm font-medium">+4 customers</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 80%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">On track for 15-20 monthly goal</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Avg. Deal Size</span>
+                                            <span class="text-sm font-medium accent-text">$50</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 65%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Healthy unit economics with $45 CAC</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Customer LTV</span>
+                                            <span class="text-sm font-medium">$240</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Strong retention — 5:1 LTV:CAC ratio</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Growth Insights -->
+                            <div class="bg-card-bg rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Growth Insights</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Best Performing Channel</span>
+                                            <span class="text-sm font-medium">Organic Search</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">45% of signups, 18% conversion rate</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Referral Rate</span>
+                                            <span class="text-sm font-medium accent-text">12%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg-secondary h-2 rounded-full" style="width: 12%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">Growing word-of-mouth momentum</p>
+                                    </div>
+
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="text-sm text-text-secondary">Feature Adoption</span>
+                                            <span class="text-sm font-medium">Core: 85%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="accent-bg h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <p class="text-xs text-text-muted mt-1">High engagement with key features</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-border p-6">
+                                <h3 class="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Launch Product Hunt</span>
+                                            <i class="fas fa-rocket text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Everything ready for Tuesday launch</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Send Customer Survey</span>
+                                            <i class="fas fa-survey text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Get feedback from your first 27 customers</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Update Onboarding</span>
+                                            <i class="fas fa-route text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Improve time-to-value even further</p>
+                                    </button>
+                                    
+                                    <button class="w-full p-3 bg-white border border-border rounded-lg hover:bg-gray-50 transition-all text-left">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <span class="text-sm font-medium text-text-primary">Export Customer Data</span>
+                                            <i class="fas fa-download text-text-muted"></i>
+                                        </div>
+                                        <p class="text-xs text-text-secondary">Download your customer list for analysis</p>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -452,6 +606,7 @@
         const appPages = [
             'app-economaestro.html',
             'app-runway.html',
+            'app-investorlens.html',
             'app-cofoundermatch.html',
             'app-validateai.html',
             'app-shipfast.html',
